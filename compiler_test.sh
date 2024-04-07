@@ -22,8 +22,6 @@ OUTSCFG=tests/milestone2/cfg/outs
 
 BENCHMARKS=tests/milestone2/benchmarks/*
 
-UTILFILE=tests/util.c
-
 errors_flag=false
 cfg_flag=false
 
@@ -43,7 +41,7 @@ function runBenchmarkTests()
           cat $llvm | sed '/^\s*$/d' | wc -l
           echo ""
 
-          if clang -o $benchmark/$f $llvm $UTILFILE; then
+          if clang -o $benchmark/$f $llvm ; then
 
               echo "Checking Normal Input..."
               $benchmark/$f < $benchmark/input > $benchmark/output
