@@ -15,12 +15,12 @@ export CLASSPATH="$BASE_DIR/given_parser/antlr-4.12.0-complete.jar:$CLASSPATH"
 export CLASSPATH="$BASE_DIR/given_parser/javax.json-1.0.4.jar:$CLASSPATH"
 ```
 
-
 ## Using the Parser
 
 Now you should be able to use the built parser via
 
 `java MiniCompiler <source.mini>`
+
 
 # Provided Test Script
 
@@ -31,4 +31,24 @@ You may also simply build your own if you are comfortable with some
 other framework.
 
 Regardless, you will want some kind of a regression suite setup so that
-changes during future modules do not break previous functionality. 
+changes during future modules do not break previous functionality.
+
+
+# Using the LLVM Toolchain on ARM server
+
+Included is a script called `enable_llvm_toolchain.sh` 
+
+If you run this on the arm.csc.calpoly.edu server, you should be able to use 
+all of the llvm v7.0.1 toolchain natively. 
+
+```
+[07:15:14] srbeard@arm:~/courses/csc431/csc-431-template $ opt --version
+-bash: opt: command not found
+[07:15:16] srbeard@arm:~/courses/csc431/csc-431-template $ ./enable_llvm_scl.sh
+[07:15:19] srbeard@arm:~/courses/csc431/csc-431-template $ opt --version
+LLVM (http://llvm.org/):
+  LLVM version 7.0.1
+  Optimized build.
+  Default target: aarch64-unknown-linux-gnu
+  Host CPU: (unknown)
+```
