@@ -50,12 +50,29 @@ public class MiniToAstExpressionVisitor
    }
 
    @Override
+   public Expression visitNewArrayExpr(MiniParser.NewArrayExprContext ctx)
+   {
+      return new NewArrayExpression(
+              ctx.getStart().getLine(),
+              ctx.INTEGER().getText());
+   }
+
+   @Override
    public Expression visitDotExpr(MiniParser.DotExprContext ctx)
    {
       return new DotExpression(
          ctx.getStart().getLine(),
          visit(ctx.expression()),
          ctx.ID().getText());
+   }
+
+   @Override
+   public Expression visitIndexExpr(MiniParser.IndexExprContext ctx)
+   {
+      return new IndexExpression(
+              ctx.getStart().getLine(),
+              visit(ctx.lft),
+              visit(ctx.idx));
    }
 
    @Override

@@ -22,6 +22,12 @@ public class MiniToAstTypeVisitor
    }
 
    @Override
+   public Type visitArrayType(MiniParser.ArrayTypeContext ctx)
+   {
+      return new ArrayType();
+   }
+
+   @Override
    public Type visitReturnTypeReal(MiniParser.ReturnTypeRealContext ctx)
    {
       return visit(ctx.type());

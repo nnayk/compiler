@@ -2,6 +2,8 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.json.JsonValue;
 
 public class MiniCompiler

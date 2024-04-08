@@ -93,6 +93,16 @@ public class MiniToJsonVisitor
    }
 
    @Override
+   public JsonValue visitArrayType(MiniParser.ArrayTypeContext ctx)
+   {
+      JsonArrayBuilder abuilder = factory.createArrayBuilder();
+
+      abuilder.add("int_array");
+
+      return abuilder.build().getJsonString(0);
+   }
+
+   @Override
    public JsonValue visitDeclarations(MiniParser.DeclarationsContext ctx)
    {
       JsonArrayBuilder abuilder = factory.createArrayBuilder();
@@ -335,6 +345,16 @@ public class MiniToJsonVisitor
    }
 
    @Override
+   public JsonValue visitLvalueIndex(MiniParser.LvalueIndexContext ctx)
+   {
+      return factory.createObjectBuilder()
+              .add("line", ctx.getStart().getLine())
+              .add("left", visit(ctx.lvalue()))
+              .add("index", visit(ctx.expression()))
+              .build();
+   }
+
+   @Override
    public JsonValue visitIntegerExpr(MiniParser.IntegerExprContext ctx)
    {
       return factory.createObjectBuilder()
@@ -386,6 +406,17 @@ public class MiniToJsonVisitor
    }
 
    @Override
+   public JsonValue visitNewArrayExpr(MiniParser.NewArrayExprContext ctx)
+   {
+      return factory.createObjectBuilder()
+              .add("line", ctx.getStart().getLine())
+              .add("exp", "new")
+              .add("id", "int_array")
+              .add("size", ctx.INTEGER().getText())
+              .build();
+   }
+
+   @Override
    public JsonValue visitDotExpr(MiniParser.DotExprContext ctx)
    {
       return factory.createObjectBuilder()
@@ -394,6 +425,17 @@ public class MiniToJsonVisitor
          .add("left", visit(ctx.expression()))
          .add("id", ctx.ID().getText())
          .build();
+   }
+
+   @Override
+   public JsonValue visitIndexExpr(MiniParser.IndexExprContext ctx)
+   {
+      return factory.createObjectBuilder()
+              .add("line", ctx.getStart().getLine())
+              .add("exp", "index")
+              .add("left", visit(ctx.lft))
+              .add("index", visit(ctx.idx))
+              .build();
    }
 
    private static boolean doubleNegatingUnary(String op,

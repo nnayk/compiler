@@ -140,11 +140,17 @@ public class MiniToAstStatementVisitor
          return new LvalueId(lctx.getStart().getLine(),
             lctx.ID().getText());
       }
-      else
+      else if (ctx instanceof MiniParser.LvalueDotContext)
       {
          MiniParser.LvalueDotContext lctx = (MiniParser.LvalueDotContext)ctx;
          return new LvalueDot(lctx.getStart().getLine(),
             visitLvalueNested(lctx.lvalue()), lctx.ID().getText());
+      }
+      else
+      {
+         MiniParser.LvalueIndexContext lctx = (MiniParser.LvalueIndexContext)ctx;
+         return new LvalueIndex(lctx.getStart().getLine(),
+                 visitLvalueNested(lctx.lvalue()), expressionVisitor.visit(lctx.expression()));
       }
    }
 

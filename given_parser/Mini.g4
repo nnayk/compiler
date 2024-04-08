@@ -29,6 +29,7 @@ type
    :  'int'             # IntType
    |  'bool'            # BoolType
    |  'struct' ID       # StructType
+   |  'int_array'       # ArrayType
    ;
 declarations
    :  (declaration)*
@@ -70,10 +71,12 @@ statementList
 lvalue
    :  ID                                              # LvalueId
    |  lvalue '.' ID                                   # LvalueDot
+   |  lvalue '[' expression ']'                       # LvalueIndex
    ;
 expression
    :  ID '(' arguments ')'                               # InvocationExpr
    |  expression ('.' ID)                                # DotExpr
+   |  lft=expression '[' idx=expression ']'              # IndexExpr
    |  op=('-' | '!') expression                          # UnaryExpr
    |  lft=expression op=('*' | '/') rht=expression                # BinaryExpr
    |  lft=expression op=('+' | '-') rht=expression                # BinaryExpr
@@ -86,6 +89,7 @@ expression
    |  'true'                                             # TrueExpr
    |  'false'                                            # FalseExpr
    |  'new' ID                                           # NewExpr
+   |  'new int_array[' INTEGER ']'                       # NewArrayExpr
    |  'null'                                             # NullExpr
    |  '(' expression ')'                                 # NestedExpr
    ;
