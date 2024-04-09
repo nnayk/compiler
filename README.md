@@ -11,7 +11,7 @@ $HOME/courses/csc431.
 ```
 BASE_DIR=$HOME/courses/csc431
 
-export CLASSPATH="$BASE_DIR/given_parser/antlr-4.12.0-complete.jar:$CLASSPATH"
+export CLASSPATH="$BASE_DIR/given_parser/antlr-4.8.0-complete.jar:$CLASSPATH"
 export CLASSPATH="$BASE_DIR/given_parser/javax.json-1.0.4.jar:$CLASSPATH"
 ```
 
