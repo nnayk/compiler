@@ -12,11 +12,11 @@ fun main() int
    times = read;
 
    i = 0;
-   while(i < end)
+   while(i < times)
    {
      temp = x;
      x = y;
-     y = x;
+     y = temp;
      i = i + 1;
    }
 
