@@ -36,6 +36,7 @@ public class MiniCompiler
          MiniToAstProgramVisitor programVisitor =
             new MiniToAstProgramVisitor();
          ast.Program program = programVisitor.visit(tree);
+         System.out.println("program= "+program);
       }
    }
 
@@ -43,6 +44,7 @@ public class MiniCompiler
 
    private static void parseParameters(String [] args)
    {
+      // _inputFile = "test.mini";
       for (int i = 0; i < args.length; i++)
       {
          if (args[i].charAt(0) == '-')

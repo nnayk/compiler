@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+# will be programming in cpp
+*.java
 
 # Log file
 *.log

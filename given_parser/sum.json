@@ -1,0 +1,269 @@
+{
+    "types": [],
+    "declarations": [],
+    "functions": [
+      {
+        "line": 1,
+        "id": "sum",
+        "parameters": [
+          {
+            "line": 1,
+            "type": "int_array",
+            "id": "arr"
+          },
+          {
+            "line": 1,
+            "type": "int",
+            "id": "size"
+          },
+          {
+            "line": 1,
+            "type": "int",
+            "id": "index"
+          }
+        ],
+        "return_type": "int",
+        "declarations": [],
+        "body": [
+          {
+            "line": 3,
+            "stmt": "if",
+            "guard": {
+              "line": 3,
+              "exp": "binary",
+              "operator": ">=",
+              "lft": {
+                "line": 3,
+                "exp": "id",
+                "id": "index"
+              },
+              "rht": {
+                "line": 3,
+                "exp": "id",
+                "id": "size"
+              }
+            },
+            "then": {
+              "stmt": "block",
+              "list": [
+                {
+                  "line": 5,
+                  "stmt": "return",
+                  "exp": {
+                    "line": 5,
+                    "exp": "num",
+                    "value": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "line": 8,
+            "stmt": "return",
+            "exp": {
+              "line": 8,
+              "exp": "binary",
+              "operator": "+",
+              "lft": {
+                "line": 8,
+                "exp": "index",
+                "left": {
+                  "line": 8,
+                  "exp": "id",
+                  "id": "arr"
+                },
+                "index": {
+                  "line": 8,
+                  "exp": "id",
+                  "id": "index"
+                }
+              },
+              "rht": {
+                "line": 8,
+                "exp": "invocation",
+                "id": "sum",
+                "args": [
+                  {
+                    "line": 8,
+                    "exp": "id",
+                    "id": "arr"
+                  },
+                  {
+                    "line": 8,
+                    "exp": "id",
+                    "id": "size"
+                  },
+                  {
+                    "line": 8,
+                    "exp": "binary",
+                    "operator": "+",
+                    "lft": {
+                      "line": 8,
+                      "exp": "id",
+                      "id": "index"
+                    },
+                    "rht": {
+                      "line": 8,
+                      "exp": "num",
+                      "value": "1"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "line": 11,
+        "id": "main",
+        "parameters": [],
+        "return_type": "int",
+        "declarations": [
+          {
+            "line": 13,
+            "type": "int_array",
+            "id": "arr"
+          },
+          {
+            "line": 14,
+            "type": "int",
+            "id": "index"
+          }
+        ],
+        "body": [
+          {
+            "line": 16,
+            "stmt": "assign",
+            "source": {
+              "line": 16,
+              "exp": "new",
+              "id": "int_array",
+              "size": "10"
+            },
+            "target": {
+              "line": 16,
+              "id": "arr"
+            }
+          },
+          {
+            "line": 17,
+            "stmt": "assign",
+            "source": {
+              "line": 17,
+              "exp": "num",
+              "value": "0"
+            },
+            "target": {
+              "line": 17,
+              "id": "index"
+            }
+          },
+          {
+            "line": 19,
+            "stmt": "while",
+            "guard": {
+              "line": 19,
+              "exp": "binary",
+              "operator": "<",
+              "lft": {
+                "line": 19,
+                "exp": "id",
+                "id": "index"
+              },
+              "rht": {
+                "line": 19,
+                "exp": "num",
+                "value": "10"
+              }
+            },
+            "body": {
+              "stmt": "block",
+              "list": [
+                {
+                  "line": 21,
+                  "stmt": "assign",
+                  "source": {
+                    "line": 21,
+                    "exp": "read"
+                  },
+                  "target": {
+                    "line": 21,
+                    "left": {
+                      "line": 21,
+                      "id": "arr"
+                    },
+                    "index": {
+                      "line": 21,
+                      "exp": "id",
+                      "id": "index"
+                    }
+                  }
+                },
+                {
+                  "line": 22,
+                  "stmt": "assign",
+                  "source": {
+                    "line": 22,
+                    "exp": "binary",
+                    "operator": "+",
+                    "lft": {
+                      "line": 22,
+                      "exp": "id",
+                      "id": "index"
+                    },
+                    "rht": {
+                      "line": 22,
+                      "exp": "num",
+                      "value": "1"
+                    }
+                  },
+                  "target": {
+                    "line": 22,
+                    "id": "index"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "line": 25,
+            "stmt": "print",
+            "exp": {
+              "line": 25,
+              "exp": "invocation",
+              "id": "sum",
+              "args": [
+                {
+                  "line": 25,
+                  "exp": "id",
+                  "id": "arr"
+                },
+                {
+                  "line": 25,
+                  "exp": "num",
+                  "value": "10"
+                },
+                {
+                  "line": 25,
+                  "exp": "num",
+                  "value": "0"
+                }
+              ]
+            },
+            "endl": true
+          },
+          {
+            "line": 27,
+            "stmt": "return",
+            "exp": {
+              "line": 27,
+              "exp": "num",
+              "value": "0"
+            }
+          }
+        ]
+      }
+    ]
+  }
