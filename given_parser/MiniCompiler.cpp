@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
     if(argc < 2)
     {
-        std::cout << "Please provide a Mini program" << std::endl;
+        std::cerr << "Please provide a Mini program" << std::endl;
         return -1;
     }
     std::ifstream fileStream(argv[1]); // Open a file for reading
