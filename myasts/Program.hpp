@@ -9,15 +9,13 @@
 namespace ast {
 
 class Program {
-private:
+public:
     std::vector<TypeDeclaration*> types; // Pointer to TypeDeclaration objects
     std::vector<Declaration*> decls;     // Pointer to Declaration objects
     std::vector<Function*> funcs;        // Pointer to Function objects
-
-public:
     // Constructor
-    Program(std::vector<TypeDeclaration*> types, std::vector<Declaration*> decls,
-            std::vector<Function*> funcs);
+    Program();
+    ~Program();
 };
 
 } // namespace ast

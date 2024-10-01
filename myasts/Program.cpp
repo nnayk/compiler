@@ -1,11 +1,21 @@
 #include "Program.hpp"
 
-namespace ast {
+namespace ast{
+    // Constructor implementation that creates empty lists
+    Program::Program() : types(), decls(), funcs() {}
 
-// Constructor initializes the types, decls, and funcs vectors
-Program::Program(std::vector<TypeDeclaration*> types, std::vector<Declaration*> decls,
-                 std::vector<Function*> funcs)
-    : types(types), decls(decls), funcs(funcs) {}
+    // Destructor implementation to clean up dynamically allocated memory
+    Program::~Program() {
+        for (TypeDeclaration* type : types) {
+            delete type;
+        }
 
-} // namespace ast
+        for (Declaration* decl : decls) {
+            delete decl;
+        }
 
+        for (Function* func : funcs) {
+            delete func;
+        }
+    }
+}

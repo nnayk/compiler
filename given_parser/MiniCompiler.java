@@ -44,24 +44,23 @@ public class MiniCompiler
 
    private static void parseParameters(String [] args)
    {
-      // _inputFile = "test.mini";
-      for (int i = 0; i < args.length; i++)
-      {
-         if (args[i].charAt(0) == '-')
-         {
-            System.err.println("unexpected option: " + args[i]);
-            System.exit(1);
-         }
-         else if (_inputFile != null)
-         {
-            System.err.println("too many files specified");
-            System.exit(1);
-         }
-         else
-         {
-            _inputFile = args[i];
-         }
-      }
+       for (int i = 0; i < args.length; i++)
+       {
+          if (args[i].charAt(0) == '-')
+          {
+             System.err.println("unexpected option: " + args[i]);
+             System.exit(1);
+          }
+          else if (_inputFile != null)
+          {
+             System.err.println("too many files specified");
+             System.exit(1);
+          }
+          else
+          {
+             _inputFile = args[i];
+          }
+       }
    }
 
    private static void error(String msg)
