@@ -1,0 +1,1 @@
+g++ -Wall -Werror -pedantic -std=c++14 MiniCompiler.cpp Program.cpp Parser.cpp -lfmt 

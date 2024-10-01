@@ -1,0 +1,71 @@
+#include "Parser.hpp"
+#include "IntType.hpp"
+#include "BoolType.hpp"
+#include "StructType.hpp"
+#include "ArrayType.hpp"
+#include <iostream> //DELETE
+#include "spdlog/spdlog.h" 
+#include <string>
+#include <memory>
+#include <typeinfo>
+
+std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
+    spdlog::info("inside parse_types()");
+    std::vector<ast::TypeDeclaration*> type_declarations;
+    // Logic for populating type_declarations from json_object
+    //     // Dynamically allocate TypeDeclaration objects and add them to the vector
+    for (nlohmann::json::const_iterator it = data.begin(); it != data.end(); ++it) {
+        std::cout << it.key() << " : " << it.value() << "\n" << std::endl;
+        //type_declarations.push_back(new TypeDeclaration(/* arguments */));
+    }
+    return type_declarations;     
+}
+
+std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
+    spdlog::info("inside parse_decls()");
+    std::vector<ast::Declaration*> declarations;
+    int lineNum;
+    std::shared_ptr<ast::Type> type;
+    std::string name;
+    // Logic for populating type_declarations from json_object
+    //     // Dynamically allocate Declaration objects and add them to the vector
+    for(auto &el : data) {
+        std::cout << "line = " << el["line"] << std::endl;    
+        lineNum = el["line"];
+        type = createType(el["type"]); 
+        name = el["id"];
+        spdlog::debug("Extracted var {} on line {}",name,lineNum);
+    }
+    //declarations.push_back(new Declaration(lineNum,type,name));
+    return declarations;     
+}
+
+std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
+    spdlog::info("inside parse_funcs()");
+    std::vector<ast::Function*> functions;
+    // Logic for populating type_functions from json_object
+    //     // Dynamically allocate Function objects and add them to the vector
+    for (nlohmann::json::const_iterator it = data.begin(); it != data.end(); ++it) {
+        //functions.push_back(new Function(/* arguments */));
+    }
+    return functions;     
+}
+
+std::shared_ptr<ast::Type> createType(const std::string name) {
+    std::shared_ptr<ast::Type> type;
+    if(name=="int") {
+        spdlog::debug("int type");
+        type = std::make_shared<ast::IntType>();
+    } else if(name=="bool") {
+        spdlog::debug("bool type");
+        type = std::make_shared<ast::BoolType>();
+    } else if(name=="int_array") {
+        spdlog::debug("int_array type");
+        type = std::make_shared<ast::ArrayType>();
+    } else {
+        spdlog::debug("struct type");
+        //TODO: change this to struct type. will need to pass in lineNum and var name to this function
+        type = std::make_shared<ast::IntType>();
+    }
+    return type;
+}
