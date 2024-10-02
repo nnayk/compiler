@@ -16,5 +16,15 @@ public:
 
 } // namespace ast
 
+//Specialize fmt::formatter for IntType
+template <>
+struct fmt::formatter<ast::IntType> : fmt::formatter<std::string> {
+       auto format(const ast::IntType decl, format_context &ctx) const ->decltype(ct
+x.out()
+                  ) {
+                  return format_to(ctx.out(), "[IntType()]");
+                           }
+};
+
 #endif // INT_TYPE_HPP
 

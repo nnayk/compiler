@@ -25,6 +25,11 @@ int main(int argc, char *argv[]) {
     // parse the types
     //p.typeDecls = parse_typeDecls(data["types"]); // FIX THE ITERATION FOR THIS + funcs
     p.decls = parse_decls(data["declarations"]);
+    for(auto d: p.decls)
+    {
+        spdlog::debug("hey");
+        spdlog::info(*d);
+    }
     //p.funcs = parse_funcs(data["functions"]);
     // parse the declarations
     // parse the types
