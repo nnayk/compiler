@@ -1,3 +1,3 @@
-CFLAGS=-Wall -Werror -pedantic -std=c++14
+CFLAGS=-Wall -pedantic -std=c++14 -g #-Werror
 all:
-	g++ $(CFLAGS) MiniCompiler.cpp Program.cpp Parser.cpp -lfmt 
+	g++ $(CFLAGS) MiniCompiler.cpp Program.cpp Parser.cpp Declaration.cpp StructType.cpp TypeDeclaration.cpp -lfmt 
