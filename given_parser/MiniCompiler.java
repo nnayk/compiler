@@ -8,10 +8,11 @@ import javax.json.JsonValue;
 
 public class MiniCompiler
 {
+   private static String _inputFile = null;
    public static void main(String[] args)
    {
       parseParameters(args);
-
+        
       CommonTokenStream tokens = new CommonTokenStream(createLexer());
       MiniParser parser = new MiniParser(tokens);
       ParseTree tree = parser.program();
@@ -38,9 +39,10 @@ public class MiniCompiler
          ast.Program program = programVisitor.visit(tree);
          System.out.println("program= "+program);
       }
+
+      System.out.println("input file = " + _inputFile);
    }
 
-   private static String _inputFile = null;
 
    private static void parseParameters(String [] args)
    {

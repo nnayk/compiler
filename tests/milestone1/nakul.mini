@@ -1,7 +1,23 @@
 # sum.mini w/my experimental modifications (like this comment)
 
-# add a global var
+# add global vars
+struct A
+{
+    int q;
+    bool v;
+};
+
+struct B
+{
+    int r;
+    int_array arr;
+};
+
+
+struct A data;
 int abc;
+bool boo;
+int_array nums;
 
 fun sum(int_array arr, int size, int index) int
 {

@@ -1,1 +1,6 @@
-g++ -Wall -Werror -pedantic -std=c++14 MiniCompiler.cpp Program.cpp Parser.cpp -lfmt 
+g++ -Wall -pedantic -std=c++14 -g  MiniCompiler.cpp Program.cpp Parser.cpp Declaration.cpp StructType.cpp TypeDeclaration.cpp -lfmt 
+In file included from TypeDeclaration.cpp:1:
+./TypeDeclaration.hpp:12:9: warning: private field 'lineNum' is not used [-Wunused-private-field]
+    int lineNum;
+        ^
+1 warning generated.

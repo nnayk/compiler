@@ -1,4 +1,5 @@
 #include "Declaration.hpp"
+#include <spdlog/spdlog.h>
 
 namespace ast {
 
@@ -20,6 +21,6 @@ std::shared_ptr<Type> Declaration::getType() const {
 const std::string& Declaration::getName() const {
     return name_;
 }
-
 } // namespace ast
+
 
