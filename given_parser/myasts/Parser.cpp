@@ -57,11 +57,31 @@ std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
 
 std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
     spdlog::info("inside parse_funcs()");
+    int lineNum;
+    std::string name;
+    std::string retType;
     std::vector<ast::Function*> functions;
-    // Logic for populating type_functions from json_object
-    //     // Dynamically allocate Function objects and add them to the vector
-    for (nlohmann::json::const_iterator it = data.begin(); it != data.end(); ++it) {
-        //functions.push_back(new Function(/* arguments */));
+    ast::Function* current_function;
+    std::shared_ptr<ast::Type> type;
+    for(auto &funcEl : data) {
+        lineNum = funcEl["line"];
+        name = funcEl["id"];
+        type = createType("function",name,lineNum); 
+        //typeDecl = new ast::TypeDeclaration(lineNum,name,{});
+        current_function = new ast::Function(lineNum,name,{},NULL,{},NULL);
+        /*
+        for(auto &typeEl : funcEl["fields"]) {
+            lineNum = typeEl["line"];
+            spdlog::debug("field on lineNum {}", lineNum);
+            name = typeEl["id"];
+            type = createType(typeEl["type"],name,lineNum);
+            declarations.push_back(ast::Declaration(lineNum,type,name));
+        }
+        typeDecl->fields=declarations;
+        type_declarations.push_back(typeDecl);
+        declarations.clear();
+        */
+        functions.push_back(current_function);
     }
     return functions;     
 }

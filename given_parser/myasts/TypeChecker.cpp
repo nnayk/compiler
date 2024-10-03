@@ -23,27 +23,24 @@ int main(int argc, char *argv[]) {
     ast::Program p;
     // special iterator member functions for objects
     // parse the types
-    p.typeDecls = parse_typeDecls(data["types"]); 
     p.decls = parse_decls(data["declarations"]);
     spdlog::debug("{} decls",p.decls.size());
     for(auto d: p.decls)
     {
         spdlog::info(*d);
     }
+    p.typeDecls = parse_typeDecls(data["types"]); 
     spdlog::debug("{} structs",p.typeDecls.size());
     for(auto d: p.typeDecls)
     {
         spdlog::info(*d);
     }
-    //p.funcs = parse_funcs(data["functions"]);
-    // parse the declarations
-    // parse the types
-    /*
-    std::string line;
-    while (std::getline(jsonStream, line)) {
-        std::cout << line << std::endl; // Print each line from the file
+    p.funcs = parse_funcs(data["functions"]);
+    spdlog::debug("{} functions",p.funcs.size());
+    for(auto f: p.funcs)
+    {
+        spdlog::info(*f);
     }
-    */
     jsonStream.close(); // Always close the file when done
     return 0;
 }

@@ -1,0 +1,2 @@
+g++ -c -Wall -pedantic -std=c++14 -g  Parser.cpp -o Parser.o
+g++ -Wall -pedantic -std=c++14 -g  -o typeChecker TypeChecker.o Parser.o Program.o Declaration.o StructType.o TypeDeclaration.o Function.o -lfmt

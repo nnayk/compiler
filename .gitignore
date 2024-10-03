@@ -32,3 +32,5 @@ typeChecker
 
 #other 
 *.swp
+*.json
+myTee.txt
