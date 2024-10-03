@@ -21,5 +21,15 @@ public:
 
 } // namespace ast
 
+//Specialize fmt::formatter for StructType
+/*
+template <>
+struct fmt::formatter<ast::StructType> : fmt::formatter<std::string> {
+       auto format(const ast::StructType decl, format_context &ctx) const ->decltype(ctx.out()
+                  ) {
+                  return format_to(ctx.out(), "[StructType()]");
+                           }
+};
+*/
 #endif // STRUCTTYPE_HPP
 

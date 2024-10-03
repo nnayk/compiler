@@ -23,11 +23,17 @@ int main(int argc, char *argv[]) {
     ast::Program p;
     // special iterator member functions for objects
     // parse the types
-    //p.typeDecls = parse_typeDecls(data["types"]); // FIX THE ITERATION FOR THIS + funcs
+    p.typeDecls = parse_typeDecls(data["types"]); 
+    std::cout<<"hi";
     p.decls = parse_decls(data["declarations"]);
+    spdlog::debug("{} decls",p.decls.size());
     for(auto d: p.decls)
     {
-        spdlog::debug("hey");
+        spdlog::info(*d);
+    }
+    spdlog::debug("{} structs",p.typeDecls.size());
+    for(auto d: p.typeDecls)
+    {
         spdlog::info(*d);
     }
     //p.funcs = parse_funcs(data["functions"]);

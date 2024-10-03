@@ -10,27 +10,31 @@
 #include <typeinfo>
 
 std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
-    spdlog::info("inside parse_types()");
+    spdlog::info("inside parse_typeDecls()");
     std::vector<ast::TypeDeclaration*> type_declarations;
     std::vector<ast::Declaration> declarations;
     int lineNum;
     std::shared_ptr<ast::Type> type;
     std::string name;
+    ast::TypeDeclaration * typeDecl;
     // Logic for populating type_declarations from json_object
     //     // Dynamically allocate TypeDeclaration objects and add them to the vector
     for(auto &structEl : data) {
         std::cout << "line = " << structEl["line"] << std::endl;    
         lineNum = structEl["line"];
         name = structEl["id"];
-        type = createType(structEl["type"],name,lineNum); 
+        std::cout << "loopdy doop" << std::endl;
+        type = createType("struct",name,lineNum); 
+        std::cout << "loopdy doop 2" << std::endl;
         spdlog::debug("Extracted var {} on line {}",name,lineNum);
+        typeDecl = new ast::TypeDeclaration(lineNum,name,declarations); 
         for(auto &typeEl : structEl["fields"]) {
             lineNum = typeEl["line"];
             name = typeEl["id"];
             type = createType(typeEl["type"],name,lineNum);
             declarations.push_back(ast::Declaration(lineNum,type,name));
         }
-        type_declarations.push_back(new ast::TypeDeclaration(lineNum,name,declarations));
+        type_declarations.push_back(typeDecl);
         declarations.clear();
     }
     return type_declarations;     
@@ -50,8 +54,8 @@ std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
         name = el["id"];
         type = createType(el["type"],name,lineNum); 
         spdlog::debug("Extracted var {} on line {}",name,lineNum);
+        declarations.push_back(new ast::Declaration(lineNum,type,name));
     }
-    declarations.push_back(new ast::Declaration(lineNum,type,name));
     return declarations;     
 }
 
@@ -68,6 +72,7 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
 
 std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var,
                                       const int lineNum) {
+    spdlog::debug("typeStr={},var={},lineNum={}",typeStr,var,lineNum);
     std::shared_ptr<ast::Type> type;
     if(typeStr=="int") {
         spdlog::debug("int type");
@@ -78,7 +83,7 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::stri
     } else if(typeStr=="int_array") {
         spdlog::debug("int_array type");
         type = std::make_shared<ast::ArrayType>();
-    } else {
+    } else if(typeStr=="struct") {
         spdlog::debug("struct type");
         //TODO: change this to struct type. will need to pass in lineNum and var typeStr to this function
         type = std::make_shared<ast::StructType>(lineNum,var);

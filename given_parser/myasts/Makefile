@@ -7,8 +7,10 @@ all: typeChecker
 typeChecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
 	g++ $(CFLAGS) -o typeChecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
 
-.cpp.o:
+.cpp.o: 
 	g++ -c $(CFLAGS) $< -o $@
+#%.o: %.cpp %.hpp 
+#	g++ -c $(CFLAGS) $< -o $@ $(LIBS)
 
 cleano:
 	rm -rf *.o
