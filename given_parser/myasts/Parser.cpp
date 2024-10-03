@@ -69,15 +69,14 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
         type = createType("function",name,lineNum); 
         //typeDecl = new ast::TypeDeclaration(lineNum,name,{});
         current_function = new ast::Function(lineNum,name,{},NULL,{},NULL);
-        /*
-        for(auto &typeEl : funcEl["fields"]) {
-            lineNum = typeEl["line"];
-            spdlog::debug("field on lineNum {}", lineNum);
-            name = typeEl["id"];
-            type = createType(typeEl["type"],name,lineNum);
-            declarations.push_back(ast::Declaration(lineNum,type,name));
+        for(auto &param : funcEl["parameters"]) {
+            lineNum = param["line"];
+            name = param["id"];
+            type = createType(param["type"],name,lineNum);
+            current_function->params.push_back(ast::Declaration(lineNum,type,name));
         }
-        typeDecl->fields=declarations;
+        /*
+		typeDecl->fields=declarations;
         type_declarations.push_back(typeDecl);
         declarations.clear();
         */

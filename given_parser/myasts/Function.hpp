@@ -2,7 +2,7 @@
 #define FUNCTION_HPP
 
 #include <string>
-#include <list>
+#include <vector>
 #include <memory>
 #include "Declaration.hpp"
 #include "Statement.hpp"
@@ -13,15 +13,15 @@ class Function {
 public:
     int lineNum;  // Line number of the function definition
     std::string name;  // Name of the function
-    std::list<std::shared_ptr<Declaration>> params;  // Function parameters
+    std::vector<Declaration> params;  // Function parameters
     std::shared_ptr<Type> retType;  // Return type
-    std::list<std::shared_ptr<Declaration>> locals;  // Local declarations
+    std::vector<Declaration> locals;  // Local declarations
     std::shared_ptr<Statement> body;  // Function body
     // Constructor
     Function(int lineNum, const std::string& name,
-             const std::list<std::shared_ptr<Declaration>>& params,
+             const std::vector<Declaration>& params,
              std::shared_ptr<Type> retType,
-             const std::list<std::shared_ptr<Declaration>>& locals,
+             const std::vector<Declaration>& locals,
              std::shared_ptr<Statement> body);
 };
 
@@ -39,7 +39,7 @@ public:
                  if(!first) {
                      out=format_to(out,", ");
                  }
-                 out=format_to(out,"{}",*param);
+                 out=format_to(out,"{}",param);
                  first=false;
               }
               out=format_to(out,"]]");
