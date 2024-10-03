@@ -42,6 +42,16 @@ public:
                  out=format_to(out,"{}",param);
                  first=false;
               }
+              out=format_to(out,"]");
+              out = format_to(out, ", locals = [");
+              first=true;
+              for(auto local:decl.locals) {
+                 if(!first) {
+                     out=format_to(out,", ");
+                 }
+                 out=format_to(out,"{}",local);
+                 first=false;
+              }
               out=format_to(out,"]]");
               return out;
                        }

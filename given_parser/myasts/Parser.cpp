@@ -75,6 +75,12 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
             type = createType(param["type"],name,lineNum);
             current_function->params.push_back(ast::Declaration(lineNum,type,name));
         }
+        for(auto &local : funcEl["declarations"]) {
+            lineNum = local["line"];
+            name = local["id"];
+            type = createType(local["type"],name,lineNum);
+            current_function->locals.push_back(ast::Declaration(lineNum,type,name));
+        }
         /*
 		typeDecl->fields=declarations;
         type_declarations.push_back(typeDecl);
