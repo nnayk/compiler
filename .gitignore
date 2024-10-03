@@ -2,6 +2,7 @@
 *.class
 # will be programming in cpp
 *.java
+*.o
 
 # Log file
 *.log
@@ -27,3 +28,7 @@ replay_pid*
 
 #executables
 *.out
+typeChecker
+
+#other 
+*.swp

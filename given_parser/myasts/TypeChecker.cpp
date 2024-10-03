@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     // special iterator member functions for objects
     // parse the types
     p.typeDecls = parse_typeDecls(data["types"]); 
-    std::cout<<"hi";
     p.decls = parse_decls(data["declarations"]);
     spdlog::debug("{} decls",p.decls.size());
     for(auto d: p.decls)

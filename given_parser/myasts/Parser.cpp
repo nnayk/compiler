@@ -20,20 +20,18 @@ std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
     // Logic for populating type_declarations from json_object
     //     // Dynamically allocate TypeDeclaration objects and add them to the vector
     for(auto &structEl : data) {
-        std::cout << "line = " << structEl["line"] << std::endl;    
         lineNum = structEl["line"];
         name = structEl["id"];
-        std::cout << "loopdy doop" << std::endl;
         type = createType("struct",name,lineNum); 
-        std::cout << "loopdy doop 2" << std::endl;
-        spdlog::debug("Extracted var {} on line {}",name,lineNum);
-        typeDecl = new ast::TypeDeclaration(lineNum,name,declarations); 
+        typeDecl = new ast::TypeDeclaration(lineNum,name,{}); 
         for(auto &typeEl : structEl["fields"]) {
             lineNum = typeEl["line"];
+            spdlog::debug("field on lineNum {}", lineNum);
             name = typeEl["id"];
             type = createType(typeEl["type"],name,lineNum);
             declarations.push_back(ast::Declaration(lineNum,type,name));
         }
+        typeDecl->fields=declarations;
         type_declarations.push_back(typeDecl);
         declarations.clear();
     }
@@ -49,11 +47,9 @@ std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
     // Logic for populating type_declarations from json_object
     //     // Dynamically allocate Declaration objects and add them to the vector
     for(auto &el : data) {
-        std::cout << "line = " << el["line"] << std::endl;    
         lineNum = el["line"];
         name = el["id"];
         type = createType(el["type"],name,lineNum); 
-        spdlog::debug("Extracted var {} on line {}",name,lineNum);
         declarations.push_back(new ast::Declaration(lineNum,type,name));
     }
     return declarations;     
@@ -72,7 +68,6 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
 
 std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var,
                                       const int lineNum) {
-    spdlog::debug("typeStr={},var={},lineNum={}",typeStr,var,lineNum);
     std::shared_ptr<ast::Type> type;
     if(typeStr=="int") {
         spdlog::debug("int type");
