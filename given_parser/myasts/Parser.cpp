@@ -12,7 +12,6 @@
 std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
     spdlog::info("inside parse_typeDecls()");
     std::vector<ast::TypeDeclaration*> type_declarations;
-    std::vector<ast::Declaration> declarations;
     int lineNum;
     std::shared_ptr<ast::Type> type;
     std::string name;
@@ -29,11 +28,9 @@ std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
             spdlog::debug("field on lineNum {}", lineNum);
             name = typeEl["id"];
             type = createType(typeEl["type"],name,lineNum);
-            declarations.push_back(ast::Declaration(lineNum,type,name));
+            typeDecl->fields.push_back(ast::Declaration(lineNum,type,name));
         }
-        typeDecl->fields=declarations;
         type_declarations.push_back(typeDecl);
-        declarations.clear();
     }
     return type_declarations;     
 }
