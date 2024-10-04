@@ -58,8 +58,9 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
     std::string name;
     std::string retType;
     std::vector<ast::Function*> functions;
-    ast::Function* current_function;
+    ast::Function* current_function; //TODO: change this to unique ptr
     std::shared_ptr<ast::Type> type;
+    std::shared_ptr<ast::BlockStatement> body=NULL;;
     for(auto &funcEl : data) {
         lineNum = funcEl["line"];
         name = funcEl["id"];
@@ -78,14 +79,91 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
             type = createType(local["type"],name,lineNum);
             current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         }
-        /*
-		typeDecl->fields=declarations;
-        type_declarations.push_back(typeDecl);
-        declarations.clear();
-        */
+        for(auto raw_stmt : funcEl["body"]) {
+            spdlog::debug("stmt: ");
+            spdlog::debug(raw_stmt["stmt"]);
+            auto stmt = parse_statement(raw_stmt);  
+            if(!body) {
+                body = std::make_shared<ast::BlockStatement>(raw_stmt["line"],std::vector<std::shared_ptr<ast::Statement>>{stmt}); // use getLineNum()
+            }
+            else {
+                body->statements.push_back(stmt);
+            }
+        }
+        current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         functions.push_back(current_function);
     }
     return functions;     
+}
+/*
+ * This function parses the json for the top level statement. It creates
+ * and returns a statement object with nested expressions.
+*/
+std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
+	spdlog::debug("inside parse_statement");
+	spdlog::debug("json={}",json.dump());
+    std::shared_ptr<ast::Statement> stmt;
+    auto stmtStr = json["stmt"];
+    if(stmtStr == "block") {
+        // no line number! use line number of the first nested expr
+    } else if(stmtStr == "assign") {
+        stmt = parse_assignment(json);
+    } else if(stmtStr == "print") {
+    } else if(stmtStr == "if") {
+    } else if(stmtStr=="while") {
+    } else if(stmtStr == "delete") {
+    } else if(stmtStr == "return") {
+    } else if(stmtStr == "invocation") {
+    } else {
+        // print stmt
+        // make sure to consider println -- see benchmark.json for example structure
+    }
+    return stmt;
+}
+
+std::shared_ptr<ast::AssignmentStatement> parse_assignment(const nlohmann::json &json) {
+	spdlog::debug("inside parse_assignment");
+	int lineNum = json["line"];
+	std::shared_ptr<ast::Lvalue> target = parse_lvalue(json["target"]);
+	std::shared_ptr<ast::Expression> source = parse_expr(json["source"]);
+	return make_shared<ast::AssignmentStatement>(lineNum,target,source);	
+}
+
+std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
+	spdlog::debug("inside {}",__func__);
+    int lineNum = json["line"];
+    spdlog::debug("line = {}",lineNum);
+	if(json.contains("left")) {
+        if(json.contains("index")) {
+            std::shared_ptr<ast::LvalueIndex> lvalue;
+            spdlog::debug("LvalueIndex");
+            lvalue = std::make_shared<ast::LvalueIndex>(lineNum,nullptr,nullptr);
+            lvalue->index = parse_expr(json["index"]);
+            lvalue->left  = parse_lvalue(json["left"]); 
+            return lvalue;
+        } else {
+            std::shared_ptr<ast::LvalueDot> lvalue;
+            spdlog::debug("LvalueDot");
+            return lvalue;
+        }
+	} else {
+        std::shared_ptr<ast::LvalueId> lvalue;
+        spdlog::debug("LvalueId");
+        lvalue = parse_lvalueId(lineNum,json);
+        return lvalue;
+    }
+}
+
+/*
+ * Takes in json w/an "id" key and returns an LvalueId object
+*/
+std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &json) {
+    return std::make_shared<ast::LvalueId>(lineNum,json["id"]);
+}
+
+std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
+    std::shared_ptr<ast::Expression> expr = nullptr;
+    return expr;
 }
 
 std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var,

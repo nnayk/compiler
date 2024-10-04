@@ -5,14 +5,13 @@
 #include "Statement.hpp"
 #include <vector>
 #include <memory>
+#include <spdlog/spdlog.h>
 
 namespace ast {
 
 class BlockStatement : public AbstractStatement {
-private:
-    std::vector<std::shared_ptr<Statement>> statements;
-
 public:
+    std::vector<std::shared_ptr<Statement>> statements;
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);
 
@@ -22,4 +21,26 @@ public:
 
 } // namespace ast
 
+ //Specialize fmt::formatter for Function
+ template <>
+ struct fmt::formatter<ast::BlockStatement> : fmt::formatter<std::string> {
+    auto format(const ast::BlockStatement decl, format_context &ctx) const ->decltype(ctx.out()
+       ) {
+              return format_to(ctx.out(), "[BlockStatement(lineNum = {},# of statements = {})", decl.lineNum,decl.statements.size());
+              // TODO: print the child statement instances (similar to Type() issue)
+              /*
+              auto out = format_to(ctx.out(), "[BlockStatement(lineNum = {},statements = [)", decl.lineNum);
+              bool first=true;
+              for(auto statement:decl.statements) {
+                 if(!first) {
+                     out=format_to(out,", ");
+                 }
+                 out=format_to(out,"{}",statement);
+                 first=false;
+              }
+              out=format_to(out,"]");
+              return out;
+              */
+                       }
+};
 #endif // BLOCKSTATEMENT_HPP

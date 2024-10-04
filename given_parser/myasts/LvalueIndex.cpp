@@ -3,21 +3,7 @@
 namespace ast {
 
 // Constructor
-LvalueIndex::LvalueIndex(int lineNum, Expression* left, Expression* index)
+LvalueIndex::LvalueIndex(int lineNum, std::shared_ptr<Lvalue> left, std::shared_ptr<Expression> index)
     : lineNum(lineNum), left(left), index(index) {}
-
-// Getter methods
-int LvalueIndex::getLineNum() const {
-    return lineNum;
-}
-
-Expression* LvalueIndex::getLeft() const {
-    return left;
-}
-
-Expression* LvalueIndex::getIndex() const {
-    return index;
-}
-
 } // namespace ast
 

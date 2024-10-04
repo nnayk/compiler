@@ -9,7 +9,7 @@ class IntType : public Type {
 public:
     // Constructor
     IntType() {}
-
+    
     // Destructor
     virtual ~IntType() = default; // Default virtual destructor
 };

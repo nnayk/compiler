@@ -8,18 +8,11 @@ namespace ast {
 
 class LvalueIndex : public Lvalue {
 public:
-    // Constructor
-    LvalueIndex(int lineNum, Expression* left, Expression* index);
-
-    // Getter methods
-    int getLineNum() const;
-    Expression* getLeft() const;
-    Expression* getIndex() const;
-
-private:
     int lineNum;           // Line number in source code
-    Expression* left;      // Expression on the left side
-    Expression* index;     // Expression representing the index
+    std::shared_ptr<Lvalue> left;      // Lvalue on the left side
+    std::shared_ptr<Expression> index;     // Lvalue representing the index
+    // Constructor
+    LvalueIndex(int lineNum, std::shared_ptr<Lvalue> left, std::shared_ptr<Expression> index);
 };
 
 } // namespace ast

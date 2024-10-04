@@ -6,18 +6,17 @@
 namespace ast {
 
 class AbstractStatement : public Statement {
-protected:
-    const int lineNum;  // Equivalent to 'private final int' in Java
-
 public:
+    const int lineNum;  // Equivalent to 'private final int' in Java
     // Constructor
     AbstractStatement(int lineNum);
 
     // Virtual destructor for proper cleanup of derived objects
     virtual ~AbstractStatement() {}
-
-    // Getter for lineNum
-    int getLineNum() const;
+	
+	int getLineNum() const override {
+        return this->lineNum;
+    }
 };
 
 }  // namespace ast
