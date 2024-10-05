@@ -125,6 +125,7 @@ std::shared_ptr<ast::AssignmentStatement> parse_assignment(const nlohmann::json 
 	spdlog::debug("inside parse_assignment");
 	int lineNum = json["line"];
 	std::shared_ptr<ast::Lvalue> target = parse_lvalue(json["target"]);
+    spdlog::debug("target parsed, now gonna parse source");
 	std::shared_ptr<ast::Expression> source = parse_expr(json["source"]);
 	return make_shared<ast::AssignmentStatement>(lineNum,target,source);	
 }
@@ -142,8 +143,10 @@ std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
             lvalue->left  = parse_lvalue(json["left"]); 
             return lvalue;
         } else {
-            std::shared_ptr<ast::LvalueDot> lvalue;
             spdlog::debug("LvalueDot");
+            std::shared_ptr<ast::LvalueDot> lvalue;
+            lvalue = std::make_shared<ast::LvalueDot>(lineNum,nullptr,json["id"]);
+            lvalue->left  = parse_lvalue(json["left"]); 
             return lvalue;
         }
 	} else {
@@ -162,7 +165,23 @@ std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &
 }
 
 std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
+	spdlog::debug("inside {}",__func__);
     std::shared_ptr<ast::Expression> expr = nullptr;
+    const std::string &exprStr = json["exp"];
+    spdlog::debug("parsing {} expr",exprStr);
+    if(exprStr == "invocation") {
+    } else if(exprStr == "dot") {
+    } else if(exprStr == "index") {
+    } else if(exprStr == "unary") {
+    } else if(exprStr == "binary") {
+    } else if(exprStr == "id") {
+    } else if(exprStr == "num") {
+    } else if(exprStr == "new") {
+        // could be either a NewArrayExpr of a NewExpr, have to consider both
+        // NewArrayExpr will have a size attribute, newExpr (ie a new struct
+        // won't)
+    } else if(exprStr == "null") {
+    }
     return expr;
 }
 
