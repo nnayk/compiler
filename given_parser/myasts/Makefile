@@ -1,4 +1,4 @@
-CFLAGS=-Wall -pedantic -std=c++20 -g #-Werror
+CFLAGS=-Wall -pedantic -std=c++20 -g -Werror
 LIBS=-lfmt
 TYPECHECKER_OBJS=TypeChecker.o Parser.o
 AST_OBJS=Program.o Declaration.o StructType.o TypeDeclaration.o Function.o \

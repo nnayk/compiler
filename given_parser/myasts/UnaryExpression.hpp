@@ -15,6 +15,8 @@ public:
     };
     static std::shared_ptr<UnaryExpression> create(int lineNum, const std::string& opStr, std::shared_ptr<Expression> operand);
     UnaryExpression(int lineNum, Operator operatorType, std::shared_ptr<Expression> operand);
+    Operator getOperatorType() const { return operatorType; }
+    std::shared_ptr<Expression> getOperand() const { return operand; } 
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;

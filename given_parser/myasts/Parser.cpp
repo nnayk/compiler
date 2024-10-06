@@ -133,7 +133,7 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
         // print stmt
         // make sure to consider println -- see benchmark.json for example structure
     }
-    //return stmt;
+    return stmt;
 }
 /*
 std::shared_ptr<ast::PrintStatement> parse_block(const nlohmann::json &json) {
