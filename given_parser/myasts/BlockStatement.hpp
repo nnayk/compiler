@@ -11,6 +11,7 @@ namespace ast {
 
 class BlockStatement : public AbstractStatement {
 public:
+    int lineNum;
     std::vector<std::shared_ptr<Statement>> statements;
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);

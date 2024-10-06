@@ -1,7 +1,6 @@
 #include "TypeDeclaration.hpp"
 #include "Declaration.hpp"
 #include "Function.hpp"
-#include "Statement.hpp"
 #include "BlockStatement.hpp"
 #include "AssignmentStatement.hpp"
 //#include "AllExpressions.hpp"
@@ -19,3 +18,4 @@ std::shared_ptr<ast::AssignmentStatement> parse_assignment(const nlohmann::json 
 std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json);
 std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json);
 std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &json);
+std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json);
