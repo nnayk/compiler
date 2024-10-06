@@ -7,9 +7,10 @@
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
+    spdlog::debug("Reading file {}",argv[1]);
     std::ifstream jsonStream(argv[1]); // Open a file for reading
     if (!jsonStream.is_open()) {
-        std::cerr << "Error: Could not open the file!" << std::endl;
+        std::cerr << "Error: Could not open the file " << argv[1] << "!" << std::endl;
         return 1;
     }
     nlohmann::json data = nlohmann::json::parse(jsonStream);

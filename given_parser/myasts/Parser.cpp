@@ -116,11 +116,11 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
 	spdlog::debug("inside parse_statement");
 	spdlog::debug("json={}",json.dump());
     std::shared_ptr<ast::Statement> stmt;
-    auto stmtStr = json["stmt"];
-    if(stmtStr == "block") {
+    const std::string stmtStr = json["stmt"];
+    if(false || stmtStr == "block") {
         return parse_block(json);
     } else if(stmtStr == "assign") {
-        stmt = parse_assignment(json);
+        return parse_assignment(json);
     } else if(stmtStr == "print") {
         //return parse_print(json);
     } else if(stmtStr == "if") {
