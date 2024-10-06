@@ -5,7 +5,7 @@
 #include "Lvalue.hpp"
 #include "Expression.hpp"
 #include <memory>
-
+#include <spdlog/spdlog.h>
 namespace ast {
 
 class AssignmentStatement : public AbstractStatement {
@@ -22,6 +22,10 @@ public:
 
     // Getter for source
     std::shared_ptr<Expression> getSource() const;
+
+    std::string display() const override {
+        return fmt::format("AssignmentStatement(lineNum={})",lineNum);
+    }
 };
 
 }  // namespace ast

@@ -73,13 +73,11 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
     std::vector<ast::Function*> functions;
     ast::Function* current_function; //TODO: change this to unique ptr
     std::shared_ptr<ast::Type> type;
-    std::shared_ptr<ast::BlockStatement> body=NULL;;
+    std::shared_ptr<ast::BlockStatement> body=nullptr;
     for(auto &funcEl : data) {
         lineNum = funcEl["line"];
         name = funcEl["id"];
-        type = createType("function",name,lineNum); 
-        //typeDecl = new ast::TypeDeclaration(lineNum,name,{});
-        current_function = new ast::Function(lineNum,name,{},NULL,{},NULL);
+        current_function = new ast::Function(lineNum,name,{},NULL,{},nullptr);
         for(auto &param : funcEl["parameters"]) {
             lineNum = param["line"];
             name = param["id"];
@@ -104,6 +102,8 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
                 body->statements.push_back(stmt);
             }
         }
+        current_function->body = body;
+        current_function->retType = createType(funcEl["return_type"],"",body->lineNum);
         functions.push_back(current_function);
     }
     return functions;     
@@ -122,7 +122,7 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     } else if(stmtStr == "assign") {
         return parse_assignment(json);
     } else if(stmtStr == "print") {
-        //return parse_print(json);
+        return parse_print(json);
     } else if(stmtStr == "if") {
     } else if(stmtStr=="while") {
     } else if(stmtStr == "delete") {
@@ -135,18 +135,11 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     }
     return stmt;
 }
-/*
-std::shared_ptr<ast::PrintStatement> parse_block(const nlohmann::json &json) {
+
+std::shared_ptr<ast::PrintStatement> parse_print(const nlohmann::json &json) {
 	spdlog::debug("inside {}",__func__);
-    std::vector<std::shared_ptr<ast::Statement>> stmts;
-    auto block = std::make_shared<ast::BlockStatement>(-1,std::vector<std::shared_ptr<ast::Statement>>()); // line number unknown for now
-	for(auto raw_stmt : json["list"]) {
-        block->statements.push_back(parse_statement(raw_stmt));
-    }
-    block->lineNum = block->statements.at(0)->getLineNum();
-    return block;
+    return std::make_shared<ast::PrintStatement>(json["line"],parse_expr(json["exp"]),json["endl"]);
 }
-*/
 std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json) {
 	spdlog::debug("inside {}",__func__);
     std::vector<std::shared_ptr<ast::Statement>> stmts;
@@ -245,6 +238,11 @@ std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
     return expr;
 }
 
+/*
+Creates and returns the type object given the type json identifier, var name,
+and line number.
+NOTE: var name (2nd param) is only used for struct case. 
+*/
 std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var,
                                       const int lineNum) {
     std::shared_ptr<ast::Type> type;
@@ -259,7 +257,6 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::stri
         type = std::make_shared<ast::ArrayType>();
     } else if(typeStr=="struct") {
         spdlog::debug("struct type");
-        //TODO: change this to struct type. will need to pass in lineNum and var typeStr to this function
         type = std::make_shared<ast::StructType>(lineNum,var);
     }
     return type;

@@ -3,8 +3,7 @@
 namespace ast {
 
 // Constructor initializes the base class and sets the expression
-PrintStatement::PrintStatement(int lineNum, Expression* expression)
-    : AbstractStatement(lineNum), expression(expression) {}
-
+PrintStatement::PrintStatement(int lineNum, std::shared_ptr<Expression> expression, bool newLine)
+    : AbstractStatement(lineNum), expression(expression), newLine(newLine) {}
 } // namespace ast
 

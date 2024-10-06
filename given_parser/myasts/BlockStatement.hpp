@@ -15,8 +15,19 @@ public:
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);
 
-    // Static method to create an empty block
-    static std::shared_ptr<BlockStatement> emptyBlock();
+	// Static method to create an empty block
+	static std::shared_ptr<BlockStatement> emptyBlock();
+	std::string display() const override {
+		std::string result = "START OF BLOCK STATEMENTS\n";
+		result += fmt::format("BlockStatement(lineNum={}, statements=[", lineNum);
+		
+		for (const auto& stmt : statements) {
+			result += stmt->display() + ", ";
+		}
+		
+		result += "])\nEND OF BLOCKSTATEMENT";
+		return result;
+	}
 };
 
 } // namespace ast
