@@ -6,11 +6,11 @@ UnaryExpression::UnaryExpression(int lineNum, Operator operatorType, std::shared
     : AbstractExpression(lineNum), operatorType(operatorType), operand(operand) {
 }
 
-UnaryExpression UnaryExpression::create(int lineNum, const std::string& opStr, std::shared_ptr<Expression> operand) {
+std::shared_ptr<UnaryExpression> UnaryExpression::create(int lineNum, const std::string& opStr, std::shared_ptr<Expression> operand) {
     if (opStr == "!") {
-        return UnaryExpression(lineNum, Operator::NOT, operand);
+        return std::make_shared<UnaryExpression>(lineNum, Operator::NOT, operand);
     } else if (opStr == "-") {
-        return UnaryExpression(lineNum, Operator::MINUS, operand);
+        return std::make_shared<UnaryExpression>(lineNum, Operator::MINUS, operand);
     } else {
         throw std::invalid_argument("Invalid operator");
     }

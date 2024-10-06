@@ -3,8 +3,21 @@
 #include "BoolType.hpp"
 #include "StructType.hpp"
 #include "ArrayType.hpp"
+#include "DotExpression.hpp"
+#include "InvocationExpression.hpp"
+#include "IndexExpression.hpp"
+#include "UnaryExpression.hpp"
+#include "BinaryExpression.hpp"
+#include "IdentifierExpression.hpp"
+#include "IntegerExpression.hpp"
+#include "TrueExpression.hpp"
+#include "FalseExpression.hpp"
+#include "NewArrayExpression.hpp"
+#include "NewExpression.hpp"
+#include "NullExpression.hpp"
+
 #include <iostream> //DELETE
-#include "spdlog/spdlog.h" 
+#include <spdlog/spdlog.h> 
 #include <string>
 #include <memory>
 #include <typeinfo>
@@ -166,21 +179,44 @@ std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &
 
 std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
 	spdlog::debug("inside {}",__func__);
-    std::shared_ptr<ast::Expression> expr = nullptr;
     const std::string &exprStr = json["exp"];
+    const int lineNum = json["line"];
+    std::shared_ptr<ast::Expression> expr;
     spdlog::debug("parsing {} expr",exprStr);
     if(exprStr == "invocation") {
+        std::vector<std::shared_ptr<ast::Expression>> args;
+        expr = std::make_shared<ast::InvocationExpression>(lineNum,json["name"].dump(),args);
+        for(auto arg:json["args"]) {
+            args.push_back(parse_expr(arg));
+        }
+        std::dynamic_pointer_cast<ast::InvocationExpression>(expr)->arguments = args;
     } else if(exprStr == "dot") {
+        expr = std::make_shared<ast::DotExpression>(lineNum,parse_expr(json["left"]),json["id"]);
     } else if(exprStr == "index") {
+        expr = std::make_shared<ast::IndexExpression>(lineNum,parse_expr(json["left"]),parse_expr(json["index"]));
     } else if(exprStr == "unary") {
+        expr = ast::UnaryExpression::create(lineNum,json["operator"],parse_expr(json["operand"]));
     } else if(exprStr == "binary") {
+        expr = ast::BinaryExpression::create(lineNum,json["operator"],parse_expr(json["lft"]),parse_expr(json["rht"]));
     } else if(exprStr == "id") {
+        expr = std::make_shared<ast::IdentifierExpression>(lineNum,json["id"]); 
     } else if(exprStr == "num") {
+        expr = std::make_shared<ast::IntegerExpression>(lineNum,json["value"]);
+    } else if(exprStr == "true") {
+        expr = std::make_shared<ast::TrueExpression>(lineNum);
+    } else if(exprStr == "false") {
+        expr = std::make_shared<ast::FalseExpression>(lineNum);
     } else if(exprStr == "new") {
         // could be either a NewArrayExpr of a NewExpr, have to consider both
         // NewArrayExpr will have a size attribute, newExpr (ie a new struct
         // won't)
+        if(json.contains("size")) {
+            expr = std::make_shared<ast::NewArrayExpression>(lineNum,json["size"]);
+        } else {
+            expr = std::make_shared<ast::NewExpression>(lineNum,json["id"]);
+        }
     } else if(exprStr == "null") {
+            expr = std::make_shared<ast::NullExpression>(lineNum);
     }
     return expr;
 }

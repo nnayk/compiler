@@ -2,6 +2,7 @@
 #define NEW_EXPRESSION_HPP
 
 #include "AbstractExpression.hpp"
+#include <string>
 
 namespace ast {
 

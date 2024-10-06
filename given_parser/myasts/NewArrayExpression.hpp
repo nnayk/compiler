@@ -1,6 +1,7 @@
 #ifndef NEW_ARRAY_EXPRESSION_HPP
 #define NEW_ARRAY_EXPRESSION_HPP
 
+#include <string>
 #include "AbstractExpression.hpp"
 
 namespace ast {

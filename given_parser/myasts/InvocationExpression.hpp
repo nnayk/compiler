@@ -10,6 +10,8 @@ namespace ast {
 
 class InvocationExpression : public AbstractExpression {
 public:
+    std::string name; // The name of the invoked function
+    std::vector<std::shared_ptr<Expression>> arguments; // List of arguments
     // Constructor
     InvocationExpression(int lineNum, const std::string& name,
                         const std::vector<std::shared_ptr<Expression>>& arguments);
@@ -19,10 +21,6 @@ public:
 
     // Getter for the arguments
     std::vector<std::shared_ptr<Expression>> getArguments() const;
-
-private:
-    std::string name; // The name of the invoked function
-    std::vector<std::shared_ptr<Expression>> arguments; // List of arguments
 };
 
 } // namespace ast

@@ -8,20 +8,23 @@
 namespace ast {
 
 class UnaryExpression : public AbstractExpression {
-private:
-    Operator operatorType;
-    std::shared_ptr<Expression> operand;
-
-    UnaryExpression(int lineNum, Operator operatorType, std::shared_ptr<Expression> operand);
-
 public:
-    static UnaryExpression create(int lineNum, const std::string& opStr, std::shared_ptr<Expression> operand);
-
     enum class Operator {
         NOT,
         MINUS
     };
+    static std::shared_ptr<UnaryExpression> create(int lineNum, const std::string& opStr, std::shared_ptr<Expression> operand);
+    UnaryExpression(int lineNum, Operator operatorType, std::shared_ptr<Expression> operand);
+
 
     int getLineNum() const {
         return lineNum; // Assuming you have a way
+    }
+private:
+    Operator operatorType;
+    std::shared_ptr<Expression> operand;
 
+};
+
+}
+#endif
