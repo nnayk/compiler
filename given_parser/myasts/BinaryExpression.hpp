@@ -19,7 +19,6 @@ private:
     Operator operatorType;  // Use a type for the operator
     std::shared_ptr<Expression> left;   // Pointer to the left expression
     std::shared_ptr<Expression> right;  // Pointer to the right expression
-
     // Private constructor
     BinaryExpression(int lineNum, Operator operatorType,
                      std::shared_ptr<Expression> left, std::shared_ptr<Expression> right);

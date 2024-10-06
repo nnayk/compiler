@@ -118,24 +118,25 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     std::shared_ptr<ast::Statement> stmt;
     auto stmtStr = json["stmt"];
     if(stmtStr == "block") {
-        stmt = parse_block(json);
-        // no line number! use line number of the first nested expr
+        return parse_block(json);
     } else if(stmtStr == "assign") {
         stmt = parse_assignment(json);
     } else if(stmtStr == "print") {
+        //return parse_print(json);
     } else if(stmtStr == "if") {
     } else if(stmtStr=="while") {
     } else if(stmtStr == "delete") {
     } else if(stmtStr == "return") {
     } else if(stmtStr == "invocation") {
     } else {
+        // raise exception
         // print stmt
         // make sure to consider println -- see benchmark.json for example structure
     }
-    return stmt;
+    //return stmt;
 }
-
-std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json) {
+/*
+std::shared_ptr<ast::PrintStatement> parse_block(const nlohmann::json &json) {
 	spdlog::debug("inside {}",__func__);
     std::vector<std::shared_ptr<ast::Statement>> stmts;
     auto block = std::make_shared<ast::BlockStatement>(-1,std::vector<std::shared_ptr<ast::Statement>>()); // line number unknown for now
@@ -143,6 +144,17 @@ std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json) {
         block->statements.push_back(parse_statement(raw_stmt));
     }
     block->lineNum = block->statements.at(0)->getLineNum();
+    return block;
+}
+*/
+std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json) {
+	spdlog::debug("inside {}",__func__);
+    std::vector<std::shared_ptr<ast::Statement>> stmts;
+    auto block = std::make_shared<ast::BlockStatement>(-1,std::vector<std::shared_ptr<ast::Statement>>()); // line number unknown for now
+	for(auto raw_stmt : json["list"]) {
+        block->statements.push_back(parse_statement(raw_stmt));
+    }
+    block->setLineNum(block->statements.at(0)->getLineNum());
     return block;
 }
 

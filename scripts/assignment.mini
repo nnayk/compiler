@@ -1,0 +1,27 @@
+struct A
+{
+   int i;
+   int j1;
+   bool b;
+   struct A a;
+};
+struct B
+{
+   struct A a;
+};
+fun main() int {
+	struct B j;
+    y=true;
+   q=new int_array[3];
+   x=2+3;
+   j.ttu = -3;
+   obj.s.w.e=65;
+   data[4] = 3;
+   pata.e[3]=99;
+   r = array[5];
+    #q=j.a.a.a.mfgnds;
+    x[1]=3;
+	return j.a.a.a.j1;
+    #print abcde.fop;
+    #result=(foo(4+5,34)+91)-5;
+}

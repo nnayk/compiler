@@ -1,0 +1,8 @@
+fun main() int
+{
+  int h;
+   #{
+#    h=7;
+   #}
+   return 0;
+}

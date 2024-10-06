@@ -7,7 +7,7 @@ namespace ast {
 
 class AbstractStatement : public Statement {
 public:
-    const int lineNum;  // Equivalent to 'private final int' in Java
+    int lineNum;  // Equivalent to 'private final int' in Java
     // Constructor
     AbstractStatement(int lineNum);
 
@@ -16,6 +16,10 @@ public:
 	
 	int getLineNum() const override {
         return this->lineNum;
+    }
+
+    void setLineNum(int line) {
+        this->lineNum = line;
     }
 };
 
