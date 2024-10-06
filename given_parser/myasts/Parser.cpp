@@ -89,6 +89,7 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
         for(auto &local : funcEl["declarations"]) {
             lineNum = local["line"];
             name = local["id"];
+            spdlog::debug("found function local var {} on line {}",name,lineNum);
             type = createType(local["type"],name,lineNum);
             current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         }
@@ -103,7 +104,6 @@ std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
                 body->statements.push_back(stmt);
             }
         }
-        current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         functions.push_back(current_function);
     }
     return functions;     
@@ -185,7 +185,7 @@ std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
     spdlog::debug("parsing {} expr",exprStr);
     if(exprStr == "invocation") {
         std::vector<std::shared_ptr<ast::Expression>> args;
-        expr = std::make_shared<ast::InvocationExpression>(lineNum,json["name"].dump(),args);
+        expr = std::make_shared<ast::InvocationExpression>(lineNum,json["id"].dump(),args);
         for(auto arg:json["args"]) {
             args.push_back(parse_expr(arg));
         }
