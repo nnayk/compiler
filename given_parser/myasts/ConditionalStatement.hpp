@@ -23,6 +23,9 @@ public:
 
     // Destructor
     virtual ~ConditionalStatement() = default;
+    std::string display() const override {
+        return fmt::format("ConditionalStatement(lineNum={})",lineNum);
+    }
 };
 
 } // namespace ast

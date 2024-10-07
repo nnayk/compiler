@@ -124,16 +124,31 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     } else if(stmtStr == "print") {
         return parse_print(json);
     } else if(stmtStr == "if") {
+        return parse_conditional(json);
     } else if(stmtStr=="while") {
+        //return parse_loop(json);
     } else if(stmtStr == "delete") {
-    } else if(stmtStr == "return") {
+        //return parse_delete(json);
+    } else if(stmtStr == "//return") {
+        //return parse_//return(json);
     } else if(stmtStr == "invocation") {
+        //return parse_invocation(json);
     } else {
         // raise exception
-        // print stmt
-        // make sure to consider println -- see benchmark.json for example structure
     }
     return stmt;
+}
+
+std::shared_ptr<ast::ConditionalStatement> parse_conditional(const nlohmann::json &json) {
+	spdlog::debug("inside {}",__func__);
+    int lineNum = json["line"];
+    std::shared_ptr<ast::Expression> guard = parse_expr(json["guard"]);
+    std::shared_ptr<ast::Statement> thenBlock = parse_statement(json["then"]);
+    std::shared_ptr<ast::Statement> elseBlock = nullptr;
+    if(json.contains("else")) {
+        elseBlock = parse_statement(json["else"]);
+    }
+    return std::make_shared<ast::ConditionalStatement>(lineNum,guard,thenBlock,elseBlock);
 }
 
 std::shared_ptr<ast::PrintStatement> parse_print(const nlohmann::json &json) {
