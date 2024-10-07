@@ -126,7 +126,7 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     } else if(stmtStr == "if") {
         return parse_conditional(json);
     } else if(stmtStr=="while") {
-        //return parse_loop(json);
+        return parse_loop(json);
     } else if(stmtStr == "delete") {
         //return parse_delete(json);
     } else if(stmtStr == "//return") {
@@ -138,6 +138,15 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     }
     return stmt;
 }
+
+std::shared_ptr<ast::WhileStatement> parse_loop(const nlohmann::json &json) {
+    spdlog::debug("inside {}", __func__);
+    int lineNum = json["line"];
+    std::shared_ptr<ast::Expression> guard = parse_expr(json["guard"]);
+    std::shared_ptr<ast::Statement> body = parse_statement(json["body"]);
+    return std::make_shared<ast::WhileStatement>(lineNum, guard, body);
+}
+
 
 std::shared_ptr<ast::ConditionalStatement> parse_conditional(const nlohmann::json &json) {
 	spdlog::debug("inside {}",__func__);

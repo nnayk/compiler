@@ -2,7 +2,7 @@
 
 namespace ast {
 
-WhileStatement::WhileStatement(int lineNum, Expression* guard, Statement* body)
+WhileStatement::WhileStatement(int lineNum, std::shared_ptr<Expression> guard, std::shared_ptr<Statement> body)
     : AbstractStatement(lineNum), guard(guard), body(body) {}
 
 } // namespace ast

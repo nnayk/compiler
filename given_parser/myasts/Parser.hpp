@@ -5,6 +5,7 @@
 #include "AssignmentStatement.hpp"
 #include "PrintStatement.hpp"
 #include "ConditionalStatement.hpp"
+#include "WhileStatement.hpp"
 //#include "AllExpressions.hpp"
 #include "LvalueId.hpp"
 #include "LvalueDot.hpp"
@@ -23,3 +24,4 @@ std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &
 std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json);
 std::shared_ptr<ast::PrintStatement> parse_print(const nlohmann::json &json);
 std::shared_ptr<ast::ConditionalStatement> parse_conditional(const nlohmann::json &json);
+std::shared_ptr<ast::WhileStatement> parse_loop(const nlohmann::json &json);

@@ -9,11 +9,14 @@ namespace ast {
 
 class WhileStatement : public AbstractStatement {
 private:
-    Expression* guard;  // Pointer for polymorphic behavior
-    Statement* body;    // Pointer for polymorphic behavior
+    std::shared_ptr<Expression> guard;  // Pointer for polymorphic behavior
+    std::shared_ptr<Statement> body;    // Pointer for polymorphic behavior
 
 public:
-    WhileStatement(int lineNum, Expression* guard, Statement* body);
+    WhileStatement(int lineNum, std::shared_ptr<Expression> guard, std::shared_ptr<Statement> body);
+	std::string display() const override {
+		return fmt::format("WhileStatement(lineNum={})",lineNum);
+	}
 };
 
 } // namespace ast
