@@ -3,16 +3,21 @@
 
 #include "AbstractStatement.hpp"
 #include "Expression.hpp"
+#include <memory>
 
 namespace ast {
 
 class ReturnStatement : public AbstractStatement {
 private:
-    Expression* expression; // Pointer to the expression
+    std::shared_ptr<Expression> expression; // Pointer to the expression
 
 public:
     // Constructor
-    ReturnStatement(int lineNum, Expression* expression);
+    ReturnStatement(int lineNum, std::shared_ptr<Expression> expression);
+	// Virtual function for display
+    std::string display() const override {
+        return fmt::format("ReturnStatement(lineNum={})", lineNum);
+    }
 };
 
 } // namespace ast

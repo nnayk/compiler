@@ -9,7 +9,11 @@ class ReturnEmptyStatement : public AbstractStatement {
 public:
     // Constructor
     ReturnEmptyStatement(int lineNum);
+    std::string display() const override {
+        return fmt::format("ReturnEmptyStatement(lineNum={})",lineNum);
+    }
 };
+
 
 } // namespace ast
 

@@ -7,6 +7,8 @@
 #include "ConditionalStatement.hpp"
 #include "WhileStatement.hpp"
 #include "DeleteStatement.hpp"
+#include "ReturnStatement.hpp"
+#include "ReturnEmptyStatement.hpp"
 //#include "AllExpressions.hpp"
 #include "LvalueId.hpp"
 #include "LvalueDot.hpp"
@@ -27,3 +29,4 @@ std::shared_ptr<ast::PrintStatement> parse_print(const nlohmann::json &json);
 std::shared_ptr<ast::ConditionalStatement> parse_conditional(const nlohmann::json &json);
 std::shared_ptr<ast::WhileStatement> parse_loop(const nlohmann::json &json);
 std::shared_ptr<ast::DeleteStatement> parse_delete(const nlohmann::json &json);
+std::shared_ptr<ast::ReturnStatement> parse_nonempty_return(const nlohmann::json &json);

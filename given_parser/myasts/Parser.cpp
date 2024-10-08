@@ -129,8 +129,14 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
         return parse_loop(json);
     } else if(stmtStr == "delete") {
         return parse_delete(json);
-    } else if(stmtStr == "//return") {
-        //return parse_//return(json);
+    } else if(stmtStr == "return") {
+        //TODO: check if it's an empty return and if so just return the object.
+        // Otherwise parse the nonempty return
+        if(!json.contains("exp")) {
+            return std::make_shared<ast::ReturnEmptyStatement>(json["line"]);
+        } else {
+            return parse_nonempty_return(json);
+        }
     } else if(stmtStr == "invocation") {
         //return parse_invocation(json);
     } else {
@@ -139,9 +145,16 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     return stmt;
 }
 
+std::shared_ptr<ast::ReturnStatement> parse_nonempty_return(const nlohmann::json &json) {
+    spdlog::debug("inside {}", __func__);
+    // Extract line number and expression from the JSON
+    int lineNum = json["line"];
+    std::shared_ptr<ast::Expression> expression = parse_expr(json["exp"]);
+    // Create and return a new ReturnStatement object
+    return std::make_shared<ast::ReturnStatement>(lineNum, expression);
+}
 std::shared_ptr<ast::DeleteStatement> parse_delete(const nlohmann::json &json) {
     spdlog::debug("inside {}", __func__);
-
     // Extract line number and expression from the JSON
     int lineNum = json["line"];
     std::shared_ptr<ast::Expression> expression = parse_expr(json["exp"]);
