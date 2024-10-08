@@ -14,6 +14,9 @@ public:
 
     // Getter for the expression
     std::shared_ptr<Expression> getExpression() const;
+    std::string display() const override {
+        return fmt::format("DeleteStatement(lineNum={})",lineNum);
+    }
 
 private:
     std::shared_ptr<Expression> expression_;

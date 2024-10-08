@@ -128,7 +128,7 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
     } else if(stmtStr=="while") {
         return parse_loop(json);
     } else if(stmtStr == "delete") {
-        //return parse_delete(json);
+        return parse_delete(json);
     } else if(stmtStr == "//return") {
         //return parse_//return(json);
     } else if(stmtStr == "invocation") {
@@ -137,6 +137,17 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
         // raise exception
     }
     return stmt;
+}
+
+std::shared_ptr<ast::DeleteStatement> parse_delete(const nlohmann::json &json) {
+    spdlog::debug("inside {}", __func__);
+
+    // Extract line number and expression from the JSON
+    int lineNum = json["line"];
+    std::shared_ptr<ast::Expression> expression = parse_expr(json["exp"]);
+
+    // Create and return a new DeleteStatement object
+    return std::make_shared<ast::DeleteStatement>(lineNum, expression);
 }
 
 std::shared_ptr<ast::WhileStatement> parse_loop(const nlohmann::json &json) {

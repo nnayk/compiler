@@ -7,7 +7,8 @@ LvalueIndex.o LvalueDot.o InvocationExpression.o DotExpression.o \
 AbstractExpression.o IndexExpression.o UnaryExpression.o BinaryExpression.o \
 IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
 NewArrayExpression.o NewExpression.o PrintStatement.o ConditionalStatement.o \
-WhileStatement.o 
+WhileStatement.o DeleteStatement.o 
+
 all: typeChecker
 
 typeChecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
