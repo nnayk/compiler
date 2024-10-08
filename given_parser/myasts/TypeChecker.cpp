@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include "Program.hpp"
-#include "Parser.hpp"
-#include "spdlog/spdlog.h"
+#include "TypeChecker.hpp"
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
@@ -43,5 +38,24 @@ int main(int argc, char *argv[]) {
         spdlog::info(*f);
     }
     jsonStream.close(); // Always close the file when done
+    
+    std::string typeCheckErrMsg;
+    if((typeCheckErrMsg = typeCheck(p)) != "") {
+        std::cerr << typeCheckErrMsg << std::endl;
+        return -1;
+    } else {
+        spdlog::debug("typechecking passed");
+    }
     return 0;
+}
+
+/*
+ * Performs static type checking of the given program
+ * Returns:
+ * empty string on success
+ * error message string on failure
+*/
+std::string typeCheck(ast::Program &p) {
+    std::string msg="";
+    return msg;
 }
