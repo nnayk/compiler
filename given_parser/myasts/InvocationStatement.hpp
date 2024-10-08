@@ -3,6 +3,7 @@
 
 #include "AbstractStatement.hpp"
 #include <memory>
+#include "Expression.hpp"
 
 namespace ast {
 
@@ -13,6 +14,10 @@ public:
 
     // Getter for the expression
     std::shared_ptr<Expression> getExpression() const;
+ 	
+	std::string display() const override {
+     	return fmt::format("InovcationStatement(lineNum={})",lineNum);
+ 	}
 
 private:
     std::shared_ptr<Expression> expression; // The expression to be invoked

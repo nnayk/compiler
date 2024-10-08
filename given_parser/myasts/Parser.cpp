@@ -138,13 +138,26 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
             return parse_nonempty_return(json);
         }
     } else if(stmtStr == "invocation") {
-        //return parse_invocation(json);
+        return parse_invocation(json);
     } else {
         // raise exception
     }
     return stmt;
 }
 
+std::shared_ptr<ast::InvocationStatement> parse_invocation(const nlohmann::json &json) {
+    spdlog::debug("inside {}", __func__);
+    // Extract line number and expression from the JSON
+    int lineNum = json["line"];
+    std::vector<std::shared_ptr<ast::Expression>> args;
+    std::shared_ptr<ast::InvocationExpression> outmost_invocation = std::make_shared<ast::InvocationExpression>(lineNum,json["id"],args);
+    std::shared_ptr<ast::InvocationStatement> stmt = std::make_shared<ast::InvocationStatement>(lineNum,outmost_invocation);
+    for(auto arg_json: json["args"]) {
+        args.push_back(parse_expr(arg_json));
+    }
+    outmost_invocation->arguments = args;
+    return stmt;
+}
 std::shared_ptr<ast::ReturnStatement> parse_nonempty_return(const nlohmann::json &json) {
     spdlog::debug("inside {}", __func__);
     // Extract line number and expression from the JSON
