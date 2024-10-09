@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     typeCheck(p,errPtr);
     if(errPtr->length() > 0) { 
         std::cerr << *errPtr << std::endl;
-        return -1;
+        return 9;
     } else {
         spdlog::debug("typechecking passed");
     }

@@ -22,20 +22,20 @@
 #include <memory>
 #include <typeinfo>
 
-std::vector<ast::TypeDeclaration*> parse_typeDecls(const nlohmann::json& data) {
+std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohmann::json& data) {
     spdlog::info("inside parse_typeDecls()");
-    std::vector<ast::TypeDeclaration*> type_declarations;
+    std::vector<std::shared_ptr<ast::TypeDeclaration>> type_declarations;
     int lineNum;
     std::shared_ptr<ast::Type> type;
     std::string name;
-    ast::TypeDeclaration * typeDecl;
+    std::shared_ptr<ast::TypeDeclaration> typeDecl;
     // Logic for populating type_declarations from json_object
     //     // Dynamically allocate TypeDeclaration objects and add them to the vector
     for(auto &structEl : data) {
         lineNum = structEl["line"];
         name = structEl["id"];
         type = createType("struct",name,lineNum); 
-        typeDecl = new ast::TypeDeclaration(lineNum,name,{}); 
+        typeDecl = std::make_shared<ast::TypeDeclaration>(lineNum,name,std::vector<ast::Declaration>()); 
         for(auto &typeEl : structEl["fields"]) {
             lineNum = typeEl["line"];
             spdlog::debug("field on lineNum {}", lineNum);

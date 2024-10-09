@@ -6,10 +6,6 @@ namespace ast{
 
     // Destructor implementation to clean up dynamically allocated memory
     Program::~Program() {
-        for (TypeDeclaration* type : typeDecls) {
-            delete type;
-        }
-
         for (Declaration* decl : decls) {
             delete decl;
         }
