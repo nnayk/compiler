@@ -1,4 +1,5 @@
 #include "TypeChecker.hpp"
+#include "Env.hpp"
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
