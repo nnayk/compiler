@@ -40,9 +40,10 @@ int main(int argc, char *argv[]) {
     }
     jsonStream.close(); // Always close the file when done
     
-    std::string typeCheckErrMsg;
-    if((typeCheckErrMsg = typeCheck(p)) != "") {
-        std::cerr << typeCheckErrMsg << std::endl;
+    std::shared_ptr<std::string> errPtr = std::make_shared<std::string>("");
+    typeCheck(p,errPtr);
+    if(errPtr->length() > 0) { 
+        std::cerr << *errPtr << std::endl;
         return -1;
     } else {
         spdlog::debug("typechecking passed");
@@ -56,7 +57,16 @@ int main(int argc, char *argv[]) {
  * empty string on success
  * error message string on failure
 */
-std::string typeCheck(ast::Program &p) {
-    std::string msg="";
-    return msg;
+std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
+    spdlog::info("inside {}",__func__);
+    if(!validate_globals(p,msgPtr)) {
+        spdlog::debug("issue with globals, msg = {}",*msgPtr);
+        return msgPtr;
+    }
+    return msgPtr;
+}
+
+int validate_globals(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
+    *msgPtr = "abc";
+    return 1;
 }

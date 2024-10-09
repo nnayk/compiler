@@ -6,4 +6,5 @@
 #include "Parser.hpp"
 #include "spdlog/spdlog.h"
 
-std::string typeCheck(ast::Program &p);
+std::shared_ptr<std::string> typeCheck(ast::Program &,std::shared_ptr<std::string> msgPtr);
+int validate_globals(ast::Program &p,std::shared_ptr<std::string> msgPtr);

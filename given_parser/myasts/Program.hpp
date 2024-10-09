@@ -10,8 +10,8 @@ namespace ast {
 
 class Program {
 public:
-    std::vector<TypeDeclaration*> typeDecls; // Pointer to TypeDeclaration objects
-    std::vector<Declaration*> decls;     // Pointer to Declaration objects
+    std::vector<TypeDeclaration*> typeDecls; // Pointer to TypeDeclaration objects (global struct definitions)
+    std::vector<Declaration*> decls;     // Pointer to Declaration objects (pointer to global var declarations)
     std::vector<Function*> funcs;        // Pointer to Function objects
     // Constructor
     Program();
