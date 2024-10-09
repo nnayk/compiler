@@ -59,14 +59,19 @@ int main(int argc, char *argv[]) {
 */
 std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
     spdlog::info("inside {}",__func__);
-    if(!validate_globals(p,msgPtr)) {
+    if(!validate_typeDecls(p,msgPtr)) {
         spdlog::debug("issue with globals, msg = {}",*msgPtr);
         return msgPtr;
     }
     return msgPtr;
 }
 
-int validate_globals(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
+/*
+Validate that all the structs have unique names and that the attributes in each
+struct has a unique name
+*/
+//TODO: change it to accept a reference to a list of typedecls
+int validate_typeDecls(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
     *msgPtr = "abc";
     return 1;
 }
