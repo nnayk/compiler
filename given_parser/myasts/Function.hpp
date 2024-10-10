@@ -17,6 +17,7 @@ public:
     std::shared_ptr<Type> retType;  // Return type
     std::vector<Declaration> locals;  // Local declarations
     std::shared_ptr<Statement> body;  // Function body
+    const std::string& getName() const;
     // Constructor
     Function(int lineNum, const std::string& name,
              const std::vector<Declaration>& params,

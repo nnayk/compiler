@@ -1,0 +1,25 @@
+struct A{
+    int x;
+    # TC 1
+    #int x; 
+};
+
+#TC 1
+#struct A{
+#    int z;
+#};
+
+fun main() int {
+    return 1;
+}
+
+fun foo(int a, bool a) int {
+    return 8;
+}
+
+#TC 1: Duplicate function
+#fun foo() int {
+#    return 98;
+#}
+
+

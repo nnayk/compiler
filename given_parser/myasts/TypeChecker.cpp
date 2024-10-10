@@ -98,6 +98,7 @@ int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDe
             }
             fieldNames.insert(field.getName());
         }
+		fieldNames.clear();
         // Add the name to the set
         structNames.insert(typeDecl->name);
     }
@@ -136,12 +137,24 @@ int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
 				   std::shared_ptr<std::string> msgPtr) {
 	// Check that function names are unique
 	std::unordered_set<std::string> funcNames;
+	std::unordered_set<std::string> paramNames;
+	std::unordered_set<std::string> localNames;
 	for(const auto& func : funcs) {
 		spdlog::debug("func name = {}",func->name);
 		if(funcNames.find(func->name) != funcNames.end()) {
 	 		*msgPtr = "Duplicate function name found: " + func->name;
 		 	return 0;  // Return failure
 	 	}
+		// Check param names are unique
+        for (const auto& param : func->params) {
+            if (paramNames.find(param.getName()) != paramNames.end()) {
+                *msgPtr = "Duplicate param name '" + param.getName() + "' found in type: " + func->name;
+                return 0;  // Return failure
+            }
+            paramNames.insert(param.getName());
+        }
+		paramNames.clear();
+		// Check local var names are unique
 		funcNames.insert(func->name);
     }
 	return 1;	
