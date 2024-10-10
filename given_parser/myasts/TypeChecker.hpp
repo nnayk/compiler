@@ -7,4 +7,4 @@
 #include "spdlog/spdlog.h"
 
 std::shared_ptr<std::string> typeCheck(ast::Program &,std::shared_ptr<std::string> msgPtr);
-int validate_typeDecls(ast::Program &p,std::shared_ptr<std::string> msgPtr);
+int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,std::shared_ptr<std::string> msgPtr);

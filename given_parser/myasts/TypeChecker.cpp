@@ -1,5 +1,7 @@
 #include "TypeChecker.hpp"
 #include "Env.hpp"
+#include <unordered_set>
+
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
@@ -59,7 +61,7 @@ int main(int argc, char *argv[]) {
 */
 std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
     spdlog::info("inside {}",__func__);
-    if(!validate_typeDecls(p,msgPtr)) {
+    if(!validate_typeDecls(p.typeDecls,msgPtr)) {
         spdlog::debug("issue with globals, msg = {}",*msgPtr);
         return msgPtr;
     }
@@ -71,7 +73,19 @@ Validate that all the structs have unique names and that the attributes in each
 struct has a unique name
 */
 //TODO: change it to accept a reference to a list of typedecls
-int validate_typeDecls(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
+int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,
+					   std::shared_ptr<std::string> msgPtr) {
+	std::unordered_set<std::string> uniqueNames;
+	for (const auto& typeDecl : typeDecls) {
+        // Check if the name is already in the set
+        if (uniqueNames.find(typeDecl->name) != uniqueNames.end()) {
+            *msgPtr = "Duplicate type name found: " + typeDecl->name;
+            return 0;  // Return failure
+        }
+
+        // Add the name to the set
+        uniqueNames.insert(typeDecl->name);
+    }
     *msgPtr = "abc";
     return 1;
 }
