@@ -11,11 +11,10 @@ namespace ast {
 class Program {
 public:
     std::vector<std::shared_ptr<TypeDeclaration>> typeDecls; // Pointer to TypeDeclaration objects (global struct definitions)
-    std::vector<Declaration*> decls;     // Pointer to Declaration objects (pointer to global var declarations)
-    std::vector<Function*> funcs;        // Pointer to Function objects
+    std::vector<std::shared_ptr<Declaration>> decls;     // Pointer to Declaration objects (pointer to global var declarations)
+    std::vector<std::shared_ptr<Function>> funcs;        // Pointer to Function objects
     // Constructor
     Program();
-    ~Program();
 };
 
 } // namespace ast

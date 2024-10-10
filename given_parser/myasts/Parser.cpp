@@ -48,9 +48,9 @@ std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohman
     return type_declarations;     
 }
 
-std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
+std::vector<std::shared_ptr<ast::Declaration>> parse_decls(const nlohmann::json& data) {
     spdlog::info("inside parse_decls()");
-    std::vector<ast::Declaration*> declarations;
+    std::vector<std::shared_ptr<ast::Declaration>> declarations;
     int lineNum;
     std::shared_ptr<ast::Type> type;
     std::string name;
@@ -60,24 +60,24 @@ std::vector<ast::Declaration*> parse_decls(const nlohmann::json& data) {
         lineNum = el["line"];
         name = el["id"];
         type = createType(el["type"],name,lineNum); 
-        declarations.push_back(new ast::Declaration(lineNum,type,name));
+        declarations.push_back(std::make_shared<ast::Declaration>(lineNum,type,name));
     }
     return declarations;     
 }
 
-std::vector<ast::Function*> parse_funcs(const nlohmann::json& data) {
+std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& data) {
     spdlog::info("inside parse_funcs()");
     int lineNum;
     std::string name;
     std::string retType;
-    std::vector<ast::Function*> functions;
-    ast::Function* current_function; //TODO: change this to unique ptr
+    std::vector<std::shared_ptr<ast::Function>> functions;
+    std::shared_ptr<ast::Function> current_function; //TODO: change this to unique ptr
     std::shared_ptr<ast::Type> type;
     std::shared_ptr<ast::BlockStatement> body=nullptr;
     for(auto &funcEl : data) {
         lineNum = funcEl["line"];
         name = funcEl["id"];
-        current_function = new ast::Function(lineNum,name,{},NULL,{},nullptr);
+        current_function = std::make_shared<ast::Function>(lineNum,name,std::vector<ast::Declaration>(),nullptr,std::vector<ast::Declaration>(),nullptr);
         for(auto &param : funcEl["parameters"]) {
             lineNum = param["line"];
             name = param["id"];

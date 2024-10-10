@@ -17,8 +17,8 @@
 #include <nlohmann/json.hpp>
 
 std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohmann::json& json_object);
-std::vector<ast::Declaration*> parse_decls(const nlohmann::json& json_object);
-std::vector<ast::Function*> parse_funcs(const nlohmann::json& json_object);
+std::vector<std::shared_ptr<ast::Declaration>> parse_decls(const nlohmann::json& json_object);
+std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& json_object);
 std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var, const int lineNum);
 std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json);
 std::shared_ptr<ast::AssignmentStatement> parse_assignment(const nlohmann::json &json);
