@@ -148,12 +148,24 @@ int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
 		// Check param names are unique
         for (const auto& param : func->params) {
             if (paramNames.find(param.getName()) != paramNames.end()) {
-                *msgPtr = "Duplicate param name '" + param.getName() + "' found in type: " + func->name;
+                *msgPtr = "Duplicate param name '" + param.getName() + "' found:" + func->name;
                 return 0;  // Return failure
             }
             paramNames.insert(param.getName());
         }
+		// Check local names are unique (and that there's no overlap w/param names)
+        for (const auto& local : func->locals) {
+            if (localNames.find(local.getName()) != localNames.end()) {
+                *msgPtr = "Duplicate local name '" + local.getName() + "' found:" + func->name;
+                return 0;  // Return failure
+            } else if (paramNames.find(local.getName()) != paramNames.end()) {
+                *msgPtr = "Duplicate local name (existing param!) '" + local.getName() + "' found:" + func->name;
+                return 0;  // Return failure
+            }
+            localNames.insert(local.getName());
+        }
 		paramNames.clear();
+		localNames.clear();
 		// Check local var names are unique
 		funcNames.insert(func->name);
     }
