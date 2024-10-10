@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     typeCheck(p,errPtr);
     if(errPtr->length() > 0) { 
         std::cerr << *errPtr << std::endl;
-        return 9;
+        return 1;
     } else {
         spdlog::debug("typechecking passed");
     }
@@ -75,17 +75,27 @@ struct has a unique name
 //TODO: change it to accept a reference to a list of typedecls
 int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,
 					   std::shared_ptr<std::string> msgPtr) {
-	std::unordered_set<std::string> uniqueNames;
+	// Check that struct names are unique
+	std::unordered_set<std::string> structNames;
+	std::unordered_set<std::string> fieldNames;
 	for (const auto& typeDecl : typeDecls) {
-        // Check if the name is already in the set
-        if (uniqueNames.find(typeDecl->name) != uniqueNames.end()) {
+        if (structNames.find(typeDecl->name) != structNames.end()) {
             *msgPtr = "Duplicate type name found: " + typeDecl->name;
             return 0;  // Return failure
         }
-
+		// Check that each field in the TypeDeclaration has a unique name
+        std::unordered_set<std::string> fieldNames;
+        for (const auto& field : typeDecl->fields) {
+            if (fieldNames.find(field.getName()) != fieldNames.end()) {
+                *msgPtr = "Duplicate field name '" + field.getName() + "' found in type: " + typeDecl->name;
+                return 0;  // Return failure
+            }
+            fieldNames.insert(field.getName());
+        }
         // Add the name to the set
-        uniqueNames.insert(typeDecl->name);
+        structNames.insert(typeDecl->name);
     }
+	// Check that each struct has unique field names
     *msgPtr = "abc";
     return 1;
 }
