@@ -64,7 +64,13 @@ std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::stri
     if(!validate_typeDecls(p.typeDecls,msgPtr)) {
         spdlog::debug("issue with globals, msg = {}",*msgPtr);
         return msgPtr;
-    }
+    } else if(!validate_decls(p.decls,msgPtr)) {
+        spdlog::debug("issue with globals, msg = {}",*msgPtr);
+        return msgPtr;
+    } else if(!validate_funcs(p.funcs,msgPtr)) {
+        spdlog::debug("issue with functions, msg = {}",*msgPtr);
+        return msgPtr;
+	}
     return msgPtr;
 }
 
@@ -98,4 +104,45 @@ int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDe
 	// Check that each struct has unique field names
     *msgPtr = "abc";
     return 1;
+}
+
+/*
+Validate that all the globals have unique names
+*/
+//TODO: change it to accept a reference to a list of typedecls
+int validate_decls(std::vector<std::shared_ptr<ast::Declaration>> decls,
+					   std::shared_ptr<std::string> msgPtr) {
+	// Check that global var names are unique
+	std::unordered_set<std::string> globalNames;
+	for (const auto& decl : decls) {
+		if (globalNames.find(decl->getName()) != globalNames.end()) {
+		 *msgPtr = "Duplicate declaration name found: " + decl->getName();
+		 return 0;  // Return failure
+		}
+		globalNames.insert(decl->getName());	
+	}
+	return 1;
+}
+
+/*
+Validates all the functions for the following:
+1. each function's name is unique
+2. unique param names for each function
+3. unique local var names for each function
+4. typecheck body for each function
+*/
+//TODO: change it to accept a reference to a list of typedecls
+int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
+				   std::shared_ptr<std::string> msgPtr) {
+	// Check that function names are unique
+	std::unordered_set<std::string> funcNames;
+	for(const auto& func : funcs) {
+		spdlog::debug("func name = {}",func->name);
+		if(funcNames.find(func->name) != funcNames.end()) {
+	 		*msgPtr = "Duplicate function name found: " + func->name;
+		 	return 0;  // Return failure
+	 	}
+		funcNames.insert(func->name);
+    }
+	return 1;	
 }
