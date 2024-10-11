@@ -1,8 +1,8 @@
 #include "Env.hpp"
 
-Entry::Entry(const ast::Type &t): type(t) {}
+Entry::Entry(std::shared_ptr<ast::Type> t): type(t) {}
 Env::Env() {}
 
-void Env::addBinding(const std::string &key, const Entry& entry) {
+void Env::addBinding(const std::string &key, std::shared_ptr<Entry> entry) {
     this->bindings[key].push_back(entry);
 }

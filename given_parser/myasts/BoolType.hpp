@@ -12,6 +12,9 @@ public:
 
     // Destructor
     virtual ~BoolType() = default;
+	std::string display() const override {
+		return fmt::format("BoolType()");
+	}
 };
 
 } // namespace ast

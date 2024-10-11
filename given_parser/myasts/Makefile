@@ -1,14 +1,14 @@
 CFLAGS=-Wall -pedantic -std=c++20 -g -Werror
 LIBS=-lfmt
 TYPECHECKER_OBJS=TypeChecker.o Parser.o
-AST_OBJS=Program.o Declaration.o StructType.o TypeDeclaration.o Function.o \
+AST_OBJS=Program.o Declaration.o TypeDeclaration.o Function.o \
 BlockStatement.o AbstractStatement.o AssignmentStatement.o LvalueId.o \
 LvalueIndex.o LvalueDot.o InvocationExpression.o DotExpression.o \
 AbstractExpression.o IndexExpression.o UnaryExpression.o BinaryExpression.o \
 IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
 NewArrayExpression.o NewExpression.o PrintStatement.o ConditionalStatement.o \
 WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
-InvocationStatement.o Env.o
+InvocationStatement.o Env.o ReadExpression.o
 
 all: typeChecker
 

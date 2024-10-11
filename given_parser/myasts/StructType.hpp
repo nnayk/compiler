@@ -12,11 +12,14 @@ private:
     std::string name;
 
 public:
-    StructType(int lineNum, const std::string& name);
+    StructType(int lineNum, const std::string& name): lineNum(lineNum), name(name) {}
     
     // Optional: Getters for lineNum and name if needed
     int getLineNum() const { return lineNum; }
     std::string getName() const { return name; }
+	std::string display() const override {
+		return fmt::format("StructType()");
+	}
 };
 
 } // namespace ast

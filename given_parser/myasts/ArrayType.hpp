@@ -12,6 +12,9 @@ public:
 
     // Virtual destructor for proper cleanup
     virtual ~ArrayType() {}
+	std::string display() const override {
+		return fmt::format("ArrayType()");
+	}
 };
 
 }  // namespace ast

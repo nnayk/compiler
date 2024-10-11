@@ -26,6 +26,5 @@ struct fmt::formatter<ast::Statement> : fmt::formatter<std::string> {
    }
 };
 
-
 #endif // STATEMENT_HPP
 

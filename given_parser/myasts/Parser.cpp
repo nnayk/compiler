@@ -15,6 +15,8 @@
 #include "NewArrayExpression.hpp"
 #include "NewExpression.hpp"
 #include "NullExpression.hpp"
+#include "ReadExpression.hpp"
+#include "TypeException.hpp"
 
 #include <iostream> //DELETE
 #include <spdlog/spdlog.h> 
@@ -42,6 +44,7 @@ std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohman
             name = typeEl["id"];
             type = createType(typeEl["type"],name,lineNum);
             typeDecl->fields.push_back(ast::Declaration(lineNum,type,name));
+            spdlog::debug("type={}",*type);
         }
         type_declarations.push_back(typeDecl);
     }
@@ -141,6 +144,7 @@ std::shared_ptr<ast::Statement> parse_statement(const nlohmann::json &json) {
         return parse_invocation(json);
     } else {
         // raise exception
+        throw TypeException(fmt::format("Unknown statement {}",stmtStr));
     }
     return stmt;
 }
@@ -295,6 +299,10 @@ std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
         }
     } else if(exprStr == "null") {
             expr = std::make_shared<ast::NullExpression>(lineNum);
+    } else if(exprStr == "read") {
+            expr = std::make_shared<ast::ReadExpression>(lineNum);
+    } else {
+        throw TypeException(fmt::format("Unknown expression {}",exprStr));
     }
     return expr;
 }
@@ -316,7 +324,7 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::stri
     } else if(typeStr=="int_array") {
         spdlog::debug("int_array type");
         type = std::make_shared<ast::ArrayType>();
-    } else if(typeStr=="struct") {
+    } else { 
         spdlog::debug("struct type");
         type = std::make_shared<ast::StructType>(lineNum,var);
     }

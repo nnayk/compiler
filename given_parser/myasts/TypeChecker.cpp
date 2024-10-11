@@ -4,8 +4,9 @@
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
-    spdlog::debug("Reading file {}",argv[1]);
-    std::ifstream jsonStream(argv[1]); // Open a file for reading
+    //spdlog::debug("Reading file {}",argv[1]);
+    //std::ifstream jsonStream(argv[1]); // Open a file for reading
+    std::ifstream jsonStream("stats.json");
     if (!jsonStream.is_open()) {
         std::cerr << "Error: Could not open the file " << argv[1] << "!" << std::endl;
         return 1;
@@ -31,12 +32,14 @@ int main(int argc, char *argv[]) {
     spdlog::debug("{} structs",p.typeDecls.size());
     for(auto d: p.typeDecls)
     {
+        spdlog::debug("dec name = {}",d->name);
         spdlog::info(*d);
     }
     p.funcs = parse_funcs(data["functions"]);
     spdlog::debug("{} functions",p.funcs.size());
     for(auto f: p.funcs)
     {
+        spdlog::debug("func name = {}",f->name);
         spdlog::info(*f);
     }
     jsonStream.close(); // Always close the file when done
@@ -57,8 +60,11 @@ int main(int argc, char *argv[]) {
 void typecheck(ast::Program &p,std::shared_ptr<Env> tle) {
     spdlog::info("inside {}",__func__);
     validate_typeDecls(p.typeDecls);
+    spdlog::debug("Struct TLE: {}",structTLE);
     validate_decls(p.decls);
+    spdlog::debug("Global vars TLE: {}",globalsTLE);
     validate_funcs(p.funcs);
+    spdlog::debug("Func TLE: {}",funcTLE);
 }
 
 /*
@@ -70,22 +76,23 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
 	// Check that struct names are unique
 	std::unordered_set<std::string> structNames;
 	std::unordered_set<std::string> fieldNames;
+    std::shared_ptr<StructEntry> structE;
+    std::shared_ptr<AttrEntry> attrE;
 	for(const auto& typeDecl : typeDecls) {
-		StructEntry structE(ast::StructType(typeDecl->lineNum,typeDecl->name)); 
+		structE = std::make_shared<StructEntry>(std::make_shared<ast::StructType>(typeDecl->lineNum,typeDecl->name)); 
         if (structNames.find(typeDecl->name) != structNames.end()) {
             throw TypeException(fmt::format("Duplicate type name found: {}", typeDecl->name));
         }
 		// Check that each field in the TypeDeclaration has a unique name
         std::unordered_set<std::string> fieldNames;
         int offset = 0;
+        structE->attrEnv = std::make_shared<Env>();
         for (const auto& field : typeDecl->fields) {
             if (fieldNames.find(field.getName()) != fieldNames.end()) {
                 throw TypeException(fmt::format("Duplicate field name {} found in type: {}", field.getName(), typeDecl->name));
             }
-            //TODO: add attributes to struct env
-            structE.attrEnv = std::make_shared<Env>();
-            AttrEntry attrE(*field.getType(),offset++);
-            structE.attrEnv->addBinding(field.getName(),attrE);
+            attrE = std::make_shared<AttrEntry>(field.getType(),offset++);
+            structE->attrEnv->addBinding(field.getName(),attrE);
             fieldNames.insert(field.getName());
         }
 		fieldNames.clear();
@@ -106,8 +113,8 @@ void validate_decls(std::vector<std::shared_ptr<ast::Declaration>> &decls) {
 		if (globalNames.find(decl->getName()) != globalNames.end()) {
             throw TypeException(fmt::format("Duplicate declaration name found: {}", decl->getName()));
 		}
-		entry = std::make_shared<Entry>(*decl->getType());
-        globalsTLE.addBinding(decl->getName(),*entry);
+		entry = std::make_shared<Entry>(decl->getType());
+        globalsTLE.addBinding(decl->getName(),entry);
 		globalNames.insert(decl->getName());	
 	}
 }
@@ -137,7 +144,7 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
                 throw TypeException(fmt::format("Duplicate param name {} found in function {}", param.getName(), func->name));
             }
             paramNames.insert(param.getName());
-            //localEnv.addBinding(param.getName(),Entry(param.getType()));
+            localEnv.addBinding(param.getName(),std::make_shared<Entry>(param.getType()));
         }
 		// Check local names are unique (and that there's no overlap w/param names)
         for (const auto& local : func->locals) {
@@ -146,13 +153,14 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
             } else if (paramNames.find(local.getName()) != paramNames.end()) {
                 throw TypeException(fmt::format("Duplicate local name {} found in function {} (clases w/param)", local.getName(), func->name));
             }
+            localEnv.addBinding(local.getName(),std::make_shared<Entry>(local.getType()));
             localNames.insert(local.getName());
         }
         func->typecheck(localEnv);
 		paramNames.clear();
 		localNames.clear();
-		// Check local var names are unique
-		funcNames.insert(func->name);
+		funcTLE.addBinding(func->name,std::make_shared<Entry>(func->retType));
+        funcNames.insert(func->name);
     }
 }
 
