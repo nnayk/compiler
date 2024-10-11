@@ -7,6 +7,9 @@ BlockStatement::BlockStatement(int lineNum, const std::vector<std::shared_ptr<St
     : AbstractStatement(lineNum), statements(statements) {}
 
 void BlockStatement::typecheck(Env &env) {
+    for(auto &stmt:statements) {
+        stmt->typecheck(env);
+    }
 }
 
 } // namespace ast

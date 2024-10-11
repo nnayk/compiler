@@ -17,12 +17,12 @@ public:
     
     // Destructor
     virtual ~PrintStatement() = default; // Default destructor
-    virtual void typecheck(Env &env) override;
     bool getNewLine() {return newLine;}
     std::shared_ptr<Expression> getExpression() {return expression;}
     std::string display() const override {
             return fmt::format("PrintStatement(lineNum={},newLine?={})",lineNum,newLine);
     }
+    virtual void typecheck(Env &env) override;
 };
 
 } // namespace ast
