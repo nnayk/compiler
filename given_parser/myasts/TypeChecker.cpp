@@ -77,13 +77,14 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
         }
 		// Check that each field in the TypeDeclaration has a unique name
         std::unordered_set<std::string> fieldNames;
+        int offset = 0;
         for (const auto& field : typeDecl->fields) {
             if (fieldNames.find(field.getName()) != fieldNames.end()) {
                 throw TypeException(fmt::format("Duplicate field name {} found in type: {}", field.getName(), typeDecl->name));
             }
             //TODO: add attributes to struct env
             structE.attrEnv = std::make_shared<Env>();
-            Entry attrE(*field.getType());
+            AttrEntry attrE(*field.getType(),offset++);
             structE.attrEnv->addBinding(field.getName(),attrE);
             fieldNames.insert(field.getName());
         }

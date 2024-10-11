@@ -13,6 +13,12 @@ public:
     Entry(const ast::Type &t);
 };
 
+class AttrEntry : public Entry {
+public:
+    int offset; // offset in the struct
+    // Constructor
+    AttrEntry(const ast::Type &t, int offset): Entry(t), offset(offset) {}
+};
 class StructEntry : public Entry {
 public:
     std::shared_ptr<Env> attrEnv; // used to track struct attributes
