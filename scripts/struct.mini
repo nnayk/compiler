@@ -1,0 +1,8 @@
+struct A {
+    int x;
+};
+
+fun main() int {
+    struct A data;
+    data.x = 5;
+}

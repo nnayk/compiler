@@ -13,7 +13,9 @@ fun main() int {
     return 1;
 }
 
-fun foo(int a, bool a) int {
+fun foo(int a, bool q) int {
+    int q;
+    bool q;
     return 8;
 }
 
