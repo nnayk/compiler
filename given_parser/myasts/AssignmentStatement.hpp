@@ -16,6 +16,7 @@ private:
 public:
     // Constructor
     AssignmentStatement(int lineNum, std::shared_ptr<Lvalue> target, std::shared_ptr<Expression> source);
+    virtual void typecheck(Env &env) override;
 
     // Getter for target
     std::shared_ptr<Lvalue> getTarget() const;

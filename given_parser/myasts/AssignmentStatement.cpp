@@ -16,5 +16,8 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
     return source;
 }
 
+void AssignmentStatement::typecheck(Env &env) {
+}
+
 
 }  // namespace ast

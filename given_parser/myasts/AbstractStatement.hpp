@@ -2,6 +2,7 @@
 #define ABSTRACT_STATEMENT_HPP
 
 #include "Statement.hpp"
+#include "Env.hpp"
 
 namespace ast {
 
@@ -21,6 +22,7 @@ public:
     void setLineNum(int line) {
         this->lineNum = line;
     }
+
 };
 
 }  // namespace ast

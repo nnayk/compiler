@@ -18,6 +18,8 @@ public:
 	std::string display() const override {
      	return fmt::format("InovcationStatement(lineNum={})",lineNum);
  	}
+	
+	void typecheck(Env &env) override;
 
 private:
     std::shared_ptr<Expression> expression; // The expression to be invoked

@@ -18,6 +18,7 @@ public:
     std::string display() const override {
         return fmt::format("ReturnStatement(lineNum={})", lineNum);
     }
+     void typecheck(Env &env) override;
 };
 
 } // namespace ast

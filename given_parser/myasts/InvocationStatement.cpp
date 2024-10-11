@@ -11,5 +11,8 @@ std::shared_ptr<Expression> InvocationStatement::getExpression() const {
     return expression;
 }
 
+void InvocationStatement::typecheck(Env &env) {
+}
+
 } // namespace ast
 

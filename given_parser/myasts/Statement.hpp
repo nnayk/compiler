@@ -3,6 +3,7 @@
 
 #include <spdlog/spdlog.h>
 #include <string>
+#include "Env.hpp"
 
 namespace ast {
 
@@ -12,6 +13,7 @@ public:
     virtual ~Statement() = default; // Virtual destructor for proper cleanup of derived classes
     virtual int getLineNum() const =0;
     virtual std::string display() const = 0;
+    virtual void typecheck(Env &env) = 0;
 };
 
 } // namespace ast

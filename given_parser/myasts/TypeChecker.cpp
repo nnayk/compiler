@@ -43,7 +43,8 @@ int main(int argc, char *argv[]) {
     jsonStream.close(); // Always close the file when done
     
     std::shared_ptr<std::string> errPtr = std::make_shared<std::string>("");
-    typeCheck(p,errPtr);
+	std::shared_ptr<Env> tle = std::make_shared<Env>();
+    typeCheck(p,errPtr,tle);
     if(errPtr->length() > 0) { 
         std::cerr << *errPtr << std::endl;
         return 1;
@@ -59,15 +60,15 @@ int main(int argc, char *argv[]) {
  * empty string on success
  * error message string on failure
 */
-std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::string> msgPtr) {
+std::shared_ptr<std::string> typeCheck(ast::Program &p,std::shared_ptr<std::string> msgPtr,std::shared_ptr<Env> tle) {
     spdlog::info("inside {}",__func__);
-    if(!validate_typeDecls(p.typeDecls,msgPtr)) {
+    if(!validate_typeDecls(p.typeDecls,msgPtr,tle)) {
         spdlog::debug("issue with globals, msg = {}",*msgPtr);
         return msgPtr;
-    } else if(!validate_decls(p.decls,msgPtr)) {
+    } else if(!validate_decls(p.decls,msgPtr,tle)) {
         spdlog::debug("issue with globals, msg = {}",*msgPtr);
         return msgPtr;
-    } else if(!validate_funcs(p.funcs,msgPtr)) {
+    } else if(!validate_funcs(p.funcs,msgPtr,tle)) {
         spdlog::debug("issue with functions, msg = {}",*msgPtr);
         return msgPtr;
 	}
@@ -80,11 +81,14 @@ struct has a unique name
 */
 //TODO: change it to accept a reference to a list of typedecls
 int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,
-					   std::shared_ptr<std::string> msgPtr) {
+					   std::shared_ptr<std::string> msgPtr,std::shared_ptr<Env> tle) {
 	// Check that struct names are unique
 	std::unordered_set<std::string> structNames;
 	std::unordered_set<std::string> fieldNames;
+    std::shared_ptr<Entry> entry = nullptr;
 	for (const auto& typeDecl : typeDecls) {
+		entry = std::make_shared<Entry>(ast::StructType(typeDecl->lineNum,typeDecl->name)); 
+		tle->addBinding(typeDecl->name,*entry);    
         if (structNames.find(typeDecl->name) != structNames.end()) {
             *msgPtr = "Duplicate type name found: " + typeDecl->name;
             return 0;  // Return failure
@@ -101,7 +105,7 @@ int validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDe
 		fieldNames.clear();
         // Add the name to the set
         structNames.insert(typeDecl->name);
-    }
+	}
 	// Check that each struct has unique field names
     *msgPtr = "abc";
     return 1;
@@ -112,7 +116,7 @@ Validate that all the globals have unique names
 */
 //TODO: change it to accept a reference to a list of typedecls
 int validate_decls(std::vector<std::shared_ptr<ast::Declaration>> decls,
-					   std::shared_ptr<std::string> msgPtr) {
+					   std::shared_ptr<std::string> msgPtr,std::shared_ptr<Env> tle) {
 	// Check that global var names are unique
 	std::unordered_set<std::string> globalNames;
 	for (const auto& decl : decls) {
@@ -134,7 +138,7 @@ Validates all the functions for the following:
 */
 //TODO: change it to accept a reference to a list of typedecls
 int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
-				   std::shared_ptr<std::string> msgPtr) {
+				   std::shared_ptr<std::string> msgPtr,std::shared_ptr<Env> tle) {
 	// Check that function names are unique
 	std::unordered_set<std::string> funcNames;
 	std::unordered_set<std::string> paramNames;
@@ -164,6 +168,7 @@ int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
             }
             localNames.insert(local.getName());
         }
+        func->typecheck(*tle);
 		paramNames.clear();
 		localNames.clear();
 		// Check local var names are unique
@@ -171,3 +176,4 @@ int validate_funcs(std::vector<std::shared_ptr<ast::Function>> funcs,
     }
 	return 1;	
 }
+

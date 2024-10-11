@@ -3,6 +3,7 @@
 
 #include "AbstractStatement.hpp"
 #include "Statement.hpp"
+#include "Env.hpp"
 #include <vector>
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -14,6 +15,7 @@ public:
     std::vector<std::shared_ptr<Statement>> statements;
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);
+    virtual void typecheck(Env &env) override;
 
 	// Static method to create an empty block
 	static std::shared_ptr<BlockStatement> emptyBlock();
@@ -28,6 +30,7 @@ public:
 		result += "])\nEND OF BLOCKSTATEMENT";
 		return result;
 	}
+    
 };
 
 } // namespace ast

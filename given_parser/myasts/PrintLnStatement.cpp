@@ -6,5 +6,8 @@ namespace ast {
 PrintLnStatement::PrintLnStatement(int lineNum, Expression* expression)
     : AbstractStatement(lineNum), expression(expression) {}
 
+void typecheck(Env &env) override {
+}
+
 } // namespace ast
 

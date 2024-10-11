@@ -9,5 +9,8 @@ ConditionalStatement::ConditionalStatement(int lineNum,
                                            std::shared_ptr<Statement> elseBlock)
     : AbstractStatement(lineNum), guard(guard), thenBlock(thenBlock), elseBlock(elseBlock) {}
 
+void ConditionalStatement::typecheck(Env &env) {
+}
+
 } // namespace ast
 

@@ -6,6 +6,7 @@
 #include <memory>
 #include "Declaration.hpp"
 #include "Statement.hpp"
+#include "Env.hpp"
 
 namespace ast {
 
@@ -18,12 +19,14 @@ public:
     std::vector<Declaration> locals;  // Local declarations
     std::shared_ptr<Statement> body;  // Function body
     const std::string& getName() const;
+    std::shared_ptr<Env> env;
     // Constructor
     Function(int lineNum, const std::string& name,
              const std::vector<Declaration>& params,
              std::shared_ptr<Type> retType,
              const std::vector<Declaration>& locals,
              std::shared_ptr<Statement> body);
+    void typecheck(Env env);
 };
 
 } // namespace ast

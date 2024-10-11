@@ -6,5 +6,8 @@ namespace ast {
 ReturnStatement::ReturnStatement(int lineNum, std::shared_ptr<ast::Expression> expression)
     : AbstractStatement(lineNum), expression(expression) {}
 
+void ReturnStatement::typecheck(Env &env) {
+}
+
 } // namespace ast
 
