@@ -27,6 +27,7 @@ void AssignmentStatement::typecheck(Env &env) {
     } else if(typeid(targetType) != typeid(sourceType)) {
         spdlog::debug("target type {} != source type {}",*targetType,*sourceType);
     }
+    spdlog::debug("line {}: target type {} ~ source type {}",this->getLineNum(),*targetType,*sourceType);
     // add the lhs to the env
     env.addBinding(target->getId(),std::make_shared<Entry>(targetType));
 }

@@ -4,21 +4,13 @@
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
-    //spdlog::debug("Reading file {}",argv[1]);
-    //std::ifstream jsonStream(argv[1]); // Open a file for reading
-    std::ifstream jsonStream("stats.json");
+    spdlog::debug("Reading file {}",argv[1]);
+    std::ifstream jsonStream(argv[1]); // Open a file for reading
     if (!jsonStream.is_open()) {
         std::cerr << "Error: Could not open the file " << argv[1] << "!" << std::endl;
         return 1;
     }
     nlohmann::json data = nlohmann::json::parse(jsonStream);
-    // delete this, was debugging
-    /*
-    for (json::iterator it = data.begin(); it != data.end(); ++it) {
-       std::cout << it.key() << " : " << it.value() << "\n";
-       std::cout << data[it.key()] << std::endl;
-    }
-    */
     ast::Program p;
     // special iterator member functions for objects
     // parse the types

@@ -1,6 +1,11 @@
 #ifndef EXPRESSION_HPP
 #define EXPRESSION_HPP
 #include "Types.hpp"
+#include "Env.hpp"
+
+extern Env structTLE; 
+extern Env globalsTLE; 
+extern Env funcTLE; 
 
 namespace ast {
 
