@@ -6,7 +6,7 @@ BlockStatement.o AbstractStatement.o AssignmentStatement.o LvalueId.o \
 LvalueIndex.o LvalueDot.o InvocationExpression.o DotExpression.o \
 AbstractExpression.o IndexExpression.o UnaryExpression.o BinaryExpression.o \
 IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
-NewArrayExpression.o NewExpression.o PrintStatement.o ConditionalStatement.o \
+NewExpression.o PrintStatement.o ConditionalStatement.o \
 WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
 InvocationStatement.o Env.o ReadExpression.o
 

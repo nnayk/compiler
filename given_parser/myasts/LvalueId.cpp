@@ -15,5 +15,12 @@ std::string LvalueId::getId() const {
     return id;
 }
 
+/*
+Resolve the Lvalue to a base type. If not possible raise an exception.
+*/
+ std::shared_ptr<Type> LvalueId::resolveType() const {
+    return std::make_shared<NullType>();
+}
+
 } // namespace ast
 

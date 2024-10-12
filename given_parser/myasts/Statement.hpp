@@ -4,6 +4,7 @@
 #include <spdlog/spdlog.h>
 #include <string>
 #include "Env.hpp"
+#include <typeinfo>
 
 namespace ast {
 

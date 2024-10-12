@@ -2,7 +2,6 @@
 #include "IntType.hpp"
 #include "BoolType.hpp"
 #include "StructType.hpp"
-#include "ArrayType.hpp"
 #include "DotExpression.hpp"
 #include "InvocationExpression.hpp"
 #include "IndexExpression.hpp"
@@ -12,7 +11,6 @@
 #include "IntegerExpression.hpp"
 #include "TrueExpression.hpp"
 #include "FalseExpression.hpp"
-#include "NewArrayExpression.hpp"
 #include "NewExpression.hpp"
 #include "NullExpression.hpp"
 #include "ReadExpression.hpp"
@@ -230,20 +228,11 @@ std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
     int lineNum = json["line"];
     spdlog::debug("line = {}",lineNum);
 	if(json.contains("left")) {
-        if(json.contains("index")) {
-            std::shared_ptr<ast::LvalueIndex> lvalue;
-            spdlog::debug("LvalueIndex");
-            lvalue = std::make_shared<ast::LvalueIndex>(lineNum,nullptr,nullptr);
-            lvalue->index = parse_expr(json["index"]);
-            lvalue->left  = parse_lvalue(json["left"]); 
-            return lvalue;
-        } else {
-            spdlog::debug("LvalueDot");
-            std::shared_ptr<ast::LvalueDot> lvalue;
-            lvalue = std::make_shared<ast::LvalueDot>(lineNum,nullptr,json["id"]);
-            lvalue->left  = parse_lvalue(json["left"]); 
-            return lvalue;
-        }
+        spdlog::debug("LvalueDot");
+        std::shared_ptr<ast::LvalueDot> lvalue;
+        lvalue = std::make_shared<ast::LvalueDot>(lineNum,nullptr,json["id"]);
+        lvalue->left  = parse_lvalue(json["left"]); 
+        return lvalue;
 	} else {
         std::shared_ptr<ast::LvalueId> lvalue;
         spdlog::debug("LvalueId");
@@ -289,18 +278,11 @@ std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
     } else if(exprStr == "false") {
         expr = std::make_shared<ast::FalseExpression>(lineNum);
     } else if(exprStr == "new") {
-        // could be either a NewArrayExpr of a NewExpr, have to consider both
-        // NewArrayExpr will have a size attribute, newExpr (ie a new struct
-        // won't)
-        if(json.contains("size")) {
-            expr = std::make_shared<ast::NewArrayExpression>(lineNum,json["size"]);
-        } else {
-            expr = std::make_shared<ast::NewExpression>(lineNum,json["id"]);
-        }
+        expr = std::make_shared<ast::NewExpression>(lineNum,json["id"]);
     } else if(exprStr == "null") {
-            expr = std::make_shared<ast::NullExpression>(lineNum);
+        expr = std::make_shared<ast::NullExpression>(lineNum);
     } else if(exprStr == "read") {
-            expr = std::make_shared<ast::ReadExpression>(lineNum);
+        expr = std::make_shared<ast::ReadExpression>(lineNum);
     } else {
         throw TypeException(fmt::format("Unknown expression {}",exprStr));
     }
@@ -321,9 +303,6 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::stri
     } else if(typeStr=="bool") {
         spdlog::debug("bool type");
         type = std::make_shared<ast::BoolType>();
-    } else if(typeStr=="int_array") {
-        spdlog::debug("int_array type");
-        type = std::make_shared<ast::ArrayType>();
     } else { 
         spdlog::debug("struct type");
         type = std::make_shared<ast::StructType>(lineNum,var);

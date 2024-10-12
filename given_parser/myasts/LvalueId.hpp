@@ -13,7 +13,8 @@ public:
 
     // Getter methods
     int getLineNum() const;
-    std::string getId() const;
+    std::string getId() const override;
+    std::shared_ptr<Type> resolveType() const override;
 
 private:
     int lineNum;      // Line number in source code

@@ -18,7 +18,8 @@ public:
     // Getter methods
     int getLineNum() const;
     std::shared_ptr<Lvalue> getLeft() const;
-    std::string getId() const;
+    std::shared_ptr<Type> resolveType() const override;
+    std::string getId() const override;
 };
 
 } // namespace ast

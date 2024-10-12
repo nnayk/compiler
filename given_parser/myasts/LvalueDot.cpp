@@ -19,5 +19,10 @@ std::string LvalueDot::getId() const {
     return id;
 }
 
+std::shared_ptr<Type> LvalueDot::resolveType() const {
+    //TODO: implement
+    return std::make_shared<NullType>();
+}
+
 } // namespace ast
 

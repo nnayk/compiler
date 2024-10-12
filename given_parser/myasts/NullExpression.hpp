@@ -9,6 +9,7 @@ class NullExpression : public AbstractExpression {
 public:
     // Constructor
     NullExpression(int lineNum) : AbstractExpression(lineNum) {}
+    std::shared_ptr<Type> resolveType() override { return std::make_shared<NullType>(); }
 };
 
 } // namespace ast

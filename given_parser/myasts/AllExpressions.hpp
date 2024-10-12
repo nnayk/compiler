@@ -6,7 +6,6 @@
 //#include "IndexExpression.hpp"
 //#include "IntegerExpression.hpp"
 //#include "InvocationExpression.hpp"
-#include "NewArrayExpression.hpp"
 #include "NewExpression.hpp"
 #include "NullExpression.hpp"
 #include "ReadExpression.hpp"
