@@ -32,10 +32,11 @@ public:
 };
 class Env {
 public:
-    std::unordered_map<std::string,std::vector<std::shared_ptr<Entry>>> bindings;
+    std::unordered_map<std::string,std::shared_ptr<Entry>> bindings;
     // Constructor
     Env();
     void addBinding(const std::string &key,std::shared_ptr<Entry> entry);
+    std::shared_ptr<Entry> lookup(const std::string &id);
 };
 
 template <>
@@ -85,11 +86,10 @@ struct fmt::formatter<Env> : fmt::formatter<std::string> {
         // Format the number of bindings
         out = fmt::format_to(out, "Number of bindings: {}\n", env.bindings.size());
         // Loop through the bindings
-        for (const auto& [key, entries] : env.bindings) {
+        for (const auto& [key, entryPtr] : env.bindings) {
             // Format each key
             out = fmt::format_to(out, "Key: {}\n", key);
             // Format the entries for this key (assuming we have an appropriate formatter for Entry)
-			for (const auto& entryPtr : entries) {
 				if (auto structEntry = std::dynamic_pointer_cast<StructEntry>(entryPtr)) {
 					// Format as StructEntry
 					out = fmt::format_to(out, "  StructEntry: {}\n", *structEntry);
@@ -100,7 +100,6 @@ struct fmt::formatter<Env> : fmt::formatter<std::string> {
 					// Default case for Entry
 					out = fmt::format_to(out, "  Entry: {}\n", *entryPtr);
 				}
-			}
         }
         return out;
    }

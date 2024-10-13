@@ -7,6 +7,7 @@ namespace ast {
 
 class TrueExpression : public AbstractExpression {
 public:
+    std::shared_ptr<Type> resolveType(Env &env) override;
     TrueExpression(int lineNum);
 };
 

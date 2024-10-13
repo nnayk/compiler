@@ -19,15 +19,19 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
 
 void AssignmentStatement::typecheck(Env &env) {
     // Get the type of the lhs and rhs
-    auto targetType = this->target->resolveType();
-    auto sourceType = this->source->resolveType();
+    auto targetType = this->target->resolveType(env);
+    auto sourceType = this->source->resolveType(env);
+	const Type& targetRef = *targetType;
+    const Type& sourceRef = *sourceType;
+    const bool typesAreEqual = typeid(targetRef) == typeid(sourceRef);
     // Make sure the types are equal (unless it's null assignment to a struct)
     if(std::dynamic_pointer_cast<StructType >(targetType) && std::dynamic_pointer_cast<NullType >(sourceType)) {
         spdlog::debug("Found null assignment to struct");
-    } else if(typeid(targetType) != typeid(sourceType)) {
+    } else if(!typesAreEqual) {
         spdlog::debug("target type {} != source type {}",*targetType,*sourceType);
     }
     spdlog::debug("line {}: target type {} ~ source type {}",this->getLineNum(),*targetType,*sourceType);
+    spdlog::debug("equal? {}",typesAreEqual);
     // add the lhs to the env
     env.addBinding(target->getId(),std::make_shared<Entry>(targetType));
 }

@@ -18,7 +18,7 @@ std::string LvalueId::getId() const {
 /*
 Resolve the Lvalue to a base type. If not possible raise an exception.
 */
- std::shared_ptr<Type> LvalueId::resolveType() const {
+ std::shared_ptr<Type> LvalueId::resolveType(Env &env) const {
     return std::make_shared<NullType>();
 }
 

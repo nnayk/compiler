@@ -16,5 +16,15 @@ std::shared_ptr<UnaryExpression> UnaryExpression::create(int lineNum, const std:
     }
 }
 
+std::shared_ptr<Type> UnaryExpression::resolveType(Env &env) {
+    auto operandType = this->getOperand()->resolveType(env);
+    // only valid operand types are ints or bools
+    if(typeid(operandType) == typeid(ast::IntType) || typeid(operandType) == typeid(ast::BoolType)) {
+        return operandType;
+    } else {
+        throw TypeException(fmt::format("Invalid unary operand of type {}",*operandType));
+    }
+}
+
 } // namespace ast
 

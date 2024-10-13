@@ -20,6 +20,7 @@ public:
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;
+    std::shared_ptr<Type> resolveType(Env &env) override;
 
 };
 

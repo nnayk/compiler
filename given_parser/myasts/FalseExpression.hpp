@@ -9,6 +9,7 @@ class FalseExpression : public AbstractExpression {
 public:
     // Constructor
     FalseExpression(int lineNum);
+    std::shared_ptr<Type> resolveType(Env &env) override;
 };
 
 } // namespace ast

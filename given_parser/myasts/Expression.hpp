@@ -2,6 +2,7 @@
 #define EXPRESSION_HPP
 #include "Types.hpp"
 #include "Env.hpp"
+#include "TypeException.hpp"
 
 extern Env structTLE; 
 extern Env globalsTLE; 
@@ -13,7 +14,7 @@ namespace ast {
 class Expression {
 public:
     virtual ~Expression() = default; // Virtual destructor for proper cleanup
-    virtual std::shared_ptr<ast::Type> resolveType() {return std::make_shared<IntType>();}
+    virtual std::shared_ptr<ast::Type> resolveType(Env &env) {return std::make_shared<IntType>();}
 };
 
 }  // namespace ast

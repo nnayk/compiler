@@ -70,6 +70,7 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
 	std::unordered_set<std::string> fieldNames;
     std::shared_ptr<StructEntry> structE;
     std::shared_ptr<AttrEntry> attrE;
+    spdlog::info("inside {}",__func__);
 	for(const auto& typeDecl : typeDecls) {
 		structE = std::make_shared<StructEntry>(std::make_shared<ast::StructType>(typeDecl->lineNum,typeDecl->name)); 
         if (structNames.find(typeDecl->name) != structNames.end()) {
@@ -98,6 +99,7 @@ Validate that all the globals have unique names
 */
 //TODO: change it to accept a reference to a list of typedecls
 void validate_decls(std::vector<std::shared_ptr<ast::Declaration>> &decls) {
+    spdlog::info("inside {}",__func__);
 	// Check that global var names are unique
 	std::unordered_set<std::string> globalNames;
     std::shared_ptr<Entry> entry = nullptr;
@@ -120,6 +122,7 @@ Validates all the functions for the following:
 */
 //TODO: change it to accept a reference to a list of typedecls
 void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
+    spdlog::info("inside {}",__func__);
 	// Check that function names are unique
 	std::unordered_set<std::string> funcNames;
 	std::unordered_set<std::string> paramNames;

@@ -19,7 +19,7 @@ std::string LvalueDot::getId() const {
     return id;
 }
 
-std::shared_ptr<Type> LvalueDot::resolveType() const {
+std::shared_ptr<Type> LvalueDot::resolveType(Env &env) const {
     //TODO: implement
     return std::make_shared<NullType>();
 }

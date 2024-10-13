@@ -1,3 +1,5 @@
+#ifndef TYPE_EXCEPTION_HPP
+#define TYPE_EXCEPTION_HPP
 #include <iostream>
 #include <exception>
 #include <string>
@@ -16,4 +18,4 @@ public:
         return message.c_str();
     }
 };
-
+#endif

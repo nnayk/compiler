@@ -14,7 +14,7 @@ public:
     // Getter methods
     int getLineNum() const;
     std::string getId() const override;
-    std::shared_ptr<Type> resolveType() const override;
+    std::shared_ptr<Type> resolveType(Env &env) const override;
 
 private:
     int lineNum;      // Line number in source code

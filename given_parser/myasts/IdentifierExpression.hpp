@@ -13,6 +13,7 @@ public:
 
     // Getter for the identifier
     const std::string& getId() const;
+    std::shared_ptr<Type> resolveType(Env &env) override;
 
 private:
     std::string id;  // Identifier string

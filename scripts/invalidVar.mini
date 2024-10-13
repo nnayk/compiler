@@ -1,0 +1,4 @@
+fun main() int {
+    int x;
+    x=y;
+}
