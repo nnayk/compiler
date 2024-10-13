@@ -11,7 +11,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     nlohmann::json data = nlohmann::json::parse(jsonStream);
-    ast::Program p;
     // special iterator member functions for objects
     // parse the types
     p.decls = parse_decls(data["declarations"]);

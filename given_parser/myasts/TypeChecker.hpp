@@ -14,6 +14,7 @@
 Env structTLE;
 Env globalsTLE;
 Env funcTLE;
+ast::Program p;
 
 void typecheck(ast::Program &p,std::shared_ptr<Env> tle);
 void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &typeDecls);

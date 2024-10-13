@@ -17,5 +17,22 @@ std::vector<std::shared_ptr<Expression>> InvocationExpression::getArguments() co
     return arguments;
 }
 
+/*
+Typechecks the function params and returns the return type of the function
+being called
+*/
+std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
+	// Check that the types of the params match the expected types of the 
+	// function params (also check that the function exists in the 1st place)
+	/*
+	auto args = this->getArguments();
+	if(args.size() != 
+	for(auto arg : args) {
+		arg->resolveType(env);
+	} 
+	*/
+    return nullptr;
+} 
+
 } // namespace ast
 

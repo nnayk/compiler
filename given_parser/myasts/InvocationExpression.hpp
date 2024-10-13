@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "Program.hpp"
+
+extern ast::Program p;
 
 namespace ast {
 
@@ -15,7 +18,7 @@ public:
     // Constructor
     InvocationExpression(int lineNum, const std::string& name,
                         const std::vector<std::shared_ptr<Expression>>& arguments);
-
+	std::shared_ptr<Type> resolveType(Env &env) override;
     // Getter for the name
     std::string getName() const;
 
