@@ -13,6 +13,7 @@ public:
 
     // Getter for the value
     std::string getValue() const;
+    std::shared_ptr<Type> resolveType(Env &env) override;
 
 private:
     std::string value; // The integer value as a string

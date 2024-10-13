@@ -11,5 +11,9 @@ std::string IntegerExpression::getValue() const {
     return value;
 }
 
+std::shared_ptr<Type> IntegerExpression::resolveType(Env &env) {
+    return std::make_shared<IntType>();
+}
+
 } // namespace ast
 
