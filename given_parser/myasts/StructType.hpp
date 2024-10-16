@@ -13,6 +13,9 @@ private:
 
 public:
     StructType(int lineNum, const std::string& name): lineNum(lineNum), name(name) {}
+    std::string get_llvm() const override {
+		return fmt::format("%%struct.{}",name);
+	}
     
     // Optional: Getters for lineNum and name if needed
     int getLineNum() const { return lineNum; }

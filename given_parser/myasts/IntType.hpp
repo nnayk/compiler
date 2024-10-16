@@ -16,6 +16,10 @@ public:
 	std::string display() const override {
 		return fmt::format("IntType()");
 	}
+	
+    std::string get_llvm() const override {
+		return "i32";
+	}
 };
 
 } // namespace ast

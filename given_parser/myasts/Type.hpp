@@ -9,6 +9,7 @@ public:
     // Virtual destructor for proper cleanup of derived classes
     virtual ~Type() = default;
     virtual std::string display() const = 0;
+    virtual std::string get_llvm() const = 0;
 };
 }  // namespace ast
 

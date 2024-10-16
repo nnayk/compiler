@@ -1,4 +1,5 @@
 #include "TypeDeclaration.hpp"
+#include "Types.hpp"
 
 namespace ast {
 
@@ -7,14 +8,20 @@ TypeDeclaration::TypeDeclaration(int lineNum, const std::string& name, const std
 }
 
 std::string TypeDeclaration::get_llvm() {
-    std::string llvm_str = fmt::format("%%struct.{} = type {{ ",this->name);
+    std::string llvm_str = fmt::format("%struct.{} = type {{ ",this->name);
     int index=0;
     auto fields_size = this->fields.size();
     for(auto attr : this->fields) {
-        if(index<fields_size-1) {
-            llvm_str += fmt::format("{}, ",attr.get_llvm());
+        if(std::dynamic_pointer_cast<ast::StructType>(attr.getType())) {
+            spdlog::debug("nested struct ptr");
+            llvm_str += "ptr";
         } else {
-            llvm_str += fmt::format("{} }}",attr.get_llvm());
+            llvm_str += attr.get_llvm();
+        }
+        if(index<fields_size-1) {
+            llvm_str += ", ";
+        } else {
+            llvm_str += " }}";
         }
         index++;
     }

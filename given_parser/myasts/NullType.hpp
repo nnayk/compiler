@@ -16,6 +16,10 @@ public:
 	std::string display() const override {
 		return fmt::format("NullType()");
 	}
+    
+    std::string get_llvm() const override {
+		return "null";
+	}
 };
 
 } // namespace ast

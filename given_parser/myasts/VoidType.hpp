@@ -10,6 +10,9 @@ class VoidType : public Type {
 	std::string display() const override {
 		return fmt::format("VoidType()");
 	}
+    std::string get_llvm() const override {
+		return "void";
+	}
 };
 
 } // namespace ast

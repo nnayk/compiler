@@ -15,6 +15,9 @@ public:
 	std::string display() const override {
 		return fmt::format("BoolType()");
 	}
+	std::string get_llvm() const override {
+		return "i8";
+	}
 };
 
 } // namespace ast
