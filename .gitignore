@@ -29,8 +29,11 @@ replay_pid*
 #executables
 *.out
 typeChecker
+cfg
 
 #other 
 *.swp
 *.json
 myTee.txt
+tmp/
+.DS_STORE
