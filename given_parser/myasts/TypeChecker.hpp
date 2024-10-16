@@ -10,6 +10,7 @@
 #include "Env.hpp"
 #include "Types.hpp"
 #include "TypeException.hpp"
+#include "CfgProg.hpp"
 
 Env structTLE;
 Env globalsTLE;

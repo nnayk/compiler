@@ -1,9 +1,15 @@
 #include "TypeChecker.hpp"
 #include "Env.hpp"
+#include "CfgProg.hpp"
+#include "BlockStatement.hpp"
 #include <unordered_set>
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
+    if(argc != 2) {
+        spdlog::debug("usage: cfg <file>.json");
+        return -1;
+    }
     spdlog::debug("Reading file {}",argv[1]);
     std::ifstream jsonStream(argv[1]); // Open a file for reading
     if (!jsonStream.is_open()) {
@@ -37,8 +43,10 @@ int main(int argc, char *argv[]) {
     
     std::shared_ptr<std::string> errPtr = std::make_shared<std::string>("");
 	std::shared_ptr<Env> tle = std::make_shared<Env>();
-    typecheck(p,tle);
-    spdlog::debug("typechecking passed");
+    //typecheck(p,tle);
+    spdlog::debug("Skipping typechecking for now");
+    //spdlog::debug("typechecking passed");
+    auto cfg_prog = CfgProg::build(p); 
     return 0;
 }
 

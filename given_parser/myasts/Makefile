@@ -9,11 +9,15 @@ IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
 NewExpression.o PrintStatement.o ConditionalStatement.o \
 WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
 InvocationStatement.o Env.o ReadExpression.o
+CFG_OBJS=CfgProg.o CfgFunc.o
 
-all: typeChecker
+all: cfg
 
-typeChecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
-	g++ $(CFLAGS) -o typeChecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
+cfg: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS)
+	g++ $(CFLAGS) -o cfg $(TYPECHECKER_OBJS) $(AST_OBJS) $(CFG_OBJS) $(LIBS)
+
+typechecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
+	g++ $(CFLAGS) -o typechecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
 
 .cpp.o: 
 	g++ -c $(CFLAGS) $< -o $@
@@ -24,4 +28,4 @@ cleano:
 	rm -rf *.o
 
 clean:
-	rm -f *.o typeChecker
+	rm -f *.o typechecker
