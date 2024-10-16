@@ -17,6 +17,7 @@ public:
     int getLineNum() const;
     std::shared_ptr<Type> getType() const;
     const std::string& getName() const;
+    std::string get_llvm();
 
 private:
     int lineNum_;

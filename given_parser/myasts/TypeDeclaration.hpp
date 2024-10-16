@@ -12,7 +12,9 @@ public:
     int lineNum;
     std::string name;
     std::vector<Declaration> fields;
+    //std::string llvm_str;
     TypeDeclaration(int lineNum, const std::string& name, const std::vector<Declaration>& fields);
+    std::string get_llvm();
 };
 
 } // namespace ast

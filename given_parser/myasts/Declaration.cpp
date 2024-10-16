@@ -12,6 +12,9 @@ int Declaration::getLineNum() const {
     return lineNum_;
 }
 
+std::string Declaration::get_llvm() {
+    return this->getName();
+}
 // Getter for type
 std::shared_ptr<Type> Declaration::getType() const {
     return type_;

@@ -16,8 +16,8 @@ all: cfg
 cfg: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS)
 	g++ $(CFLAGS) -o cfg $(TYPECHECKER_OBJS) $(AST_OBJS) $(CFG_OBJS) $(LIBS)
 
-typechecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
-	g++ $(CFLAGS) -o typechecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
+#typechecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
+#	g++ $(CFLAGS) -o typechecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
 
 .cpp.o: 
 	g++ -c $(CFLAGS) $< -o $@
