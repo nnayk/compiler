@@ -16,11 +16,7 @@ std::shared_ptr<Lvalue> AssignmentStatement::getTarget() const {
 std::shared_ptr<Expression> AssignmentStatement::getSource() const {
     return source;
 }
-/*
-void AssignmentStatement::add_to_cfg(CfgFunc &cfg) {
-    
-}
-*/
+
 void AssignmentStatement::typecheck(Env &env) {
     // Get the type of the lhs and rhs
     auto targetType = this->target->resolveType(env);

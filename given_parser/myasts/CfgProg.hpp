@@ -14,4 +14,24 @@ class CfgProg {
     private: 
         CfgProg(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,std::vector<std::shared_ptr<ast::Declaration>> globals, std::vector<std::shared_ptr<CfgFunc>> funcs ); 
 };
+
+//Specialize fmt::formatter for CfgFunc
+template <>
+struct fmt::formatter<CfgProg> : fmt::formatter<std::string> {
+   auto format(const CfgProg &cfg_prog, format_context &ctx) const ->decltype(ctx.out()) {
+		auto out = fmt::format_to(ctx.out(),"TYPE DECLS:");
+		for(auto typeDecl : cfg_prog.typeDecls) {
+			out = fmt::format_to(out,"{}",*typeDecl);
+		}
+   		out = fmt::format_to(out,"\nGLOBALS:");
+		for(auto global : cfg_prog.globals) {
+			out = fmt::format_to(out,"{}",*global);
+		}
+   		out = fmt::format_to(out,"\nFUNCS:");
+		for(auto func : cfg_prog.funcs) {
+			out = fmt::format_to(out,"{} ",*func);
+		}
+		return out;
+	}
+};
 #endif

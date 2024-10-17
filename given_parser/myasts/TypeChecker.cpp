@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
     //typecheck(p,tle);
     spdlog::debug("typechecking skipped");
     //spdlog::debug("typechecking passed");
-    auto cfg_prog = CfgProg::build(p); 
+    auto cfg_prog = CfgProg::build(p);
+    spdlog::info("CFG: {}",*cfg_prog);
     return 0;
 }
 

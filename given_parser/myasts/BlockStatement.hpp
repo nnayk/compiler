@@ -30,7 +30,6 @@ public:
 		result += "])\nEND OF BLOCKSTATEMENT";
 		return result;
 	}
-    
 };
 
 } // namespace ast
