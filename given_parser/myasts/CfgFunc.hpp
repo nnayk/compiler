@@ -13,7 +13,7 @@ class CfgFunc {
         std::vector<Bblock> blocks;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
    private:
-        CfgFunc(std::vector<ast::Declaration> params,std::shared_ptr<ast::Type> retType,
-                std::vector<ast::Declaration> locals, std::vector<Bblock> blocks);
+        CfgFunc(std::vector<ast::Declaration> params);//,std::shared_ptr<ast::Type> retType,
+//                std::vector<ast::Declaration> locals, std::vector<Bblock> blocks);
 };
 #endif

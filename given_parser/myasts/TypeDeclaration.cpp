@@ -21,7 +21,7 @@ std::string TypeDeclaration::get_llvm() {
         if(index<fields_size-1) {
             llvm_str += ", ";
         } else {
-            llvm_str += " }}";
+            llvm_str += " }";
         }
         index++;
     }
