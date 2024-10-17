@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
     }
     spdlog::debug("Reading file {}",argv[1]);
     std::ifstream jsonStream(argv[1]); // Open a file for reading
+    //std::ifstream jsonStream("../../scripts/json/stats.json"); // Open a file for reading
     if (!jsonStream.is_open()) {
         std::cerr << "Error: Could not open the file " << argv[1] << "!" << std::endl;
         return 1;
