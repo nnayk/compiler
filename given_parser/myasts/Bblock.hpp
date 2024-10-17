@@ -1,11 +1,14 @@
 #ifndef BBLOCK_HPP
 #define BBLOCK_HPP
-#include "BlockStatement.hpp"
-#include "CfgFunc.hpp"
+#include "Statement.hpp"
 #include <memory>
+
+namespace ast {
+    class BlockStatement;
+}
 class Bblock {
     public:
-        std::vector<ast::BlockStatement> stmts;
+        std::vector<ast::Statement> stmts;
         std::shared_ptr<Bblock> parent;
         std::vector<std::shared_ptr<Bblock>> children;
         Bblock() {}

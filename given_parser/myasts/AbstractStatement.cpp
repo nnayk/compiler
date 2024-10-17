@@ -11,4 +11,8 @@ void AbstractStatement::add_to_cfg(CfgFunc &cfg) {
 }
 */
 
+Bblock*add_to_cfg() {
+    return nullptr;
+}
+
 }  // namespace ast
