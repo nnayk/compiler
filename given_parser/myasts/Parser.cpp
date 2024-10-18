@@ -216,7 +216,9 @@ std::shared_ptr<ast::BlockStatement> parse_block(const nlohmann::json &json) {
 	for(auto raw_stmt : json["list"]) {
         block->statements.push_back(parse_statement(raw_stmt));
     }
-    block->setLineNum(block->statements.at(0)->getLineNum());
+    if(block->statements.size() > 0) {
+        block->setLineNum(block->statements.at(0)->getLineNum());
+    }
     return block;
 }
 
