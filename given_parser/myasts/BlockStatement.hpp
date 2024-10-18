@@ -30,6 +30,7 @@ public:
 		result += "])\nEND OF BLOCKSTATEMENT";
 		return result;
 	}
+    virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
 };
 
 } // namespace ast

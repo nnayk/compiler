@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
         spdlog::info(*f);
     }
     jsonStream.close(); // Always close the file when done
-    
     std::shared_ptr<std::string> errPtr = std::make_shared<std::string>("");
 	std::shared_ptr<Env> tle = std::make_shared<Env>();
     //typecheck(p,tle);

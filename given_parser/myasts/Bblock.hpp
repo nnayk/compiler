@@ -10,8 +10,9 @@ namespace ast {
 class Bblock {
     public:
         std::vector<std::shared_ptr<ast::Statement>> stmts;
-        std::shared_ptr<Bblock> parent;
+        std::vector<std::shared_ptr<Bblock>> parent;
         std::vector<std::shared_ptr<Bblock>> children;
+        int visited = 0; // for display purposes
         Bblock() {}
 };
 
@@ -23,7 +24,7 @@ struct fmt::formatter<Bblock> : fmt::formatter<std::string> {
 		for(auto stmt : block.stmts) {
 			out = fmt::format_to(out,"{}",*stmt);//->display());
 		}
-		out = fmt::format_to(out,"NUMBER OF CHILDREN: {}", block.children.size());
+		out = fmt::format_to(out,"NUMBER OF CHILDREN: {} ", block.children.size());
 		out = fmt::format_to(out,"CHILDREN: ");
 		return out;
    }

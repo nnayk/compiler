@@ -8,7 +8,7 @@
 
 namespace ast {
 
-class ConditionalStatement : public AbstractStatement {
+class ConditionalStatement : public AbstractStatement { 
 private:
     std::shared_ptr<Expression> guard;
     std::shared_ptr<Statement> thenBlock;
@@ -27,6 +27,7 @@ public:
     std::string display() const override {
         return fmt::format("ConditionalStatement(lineNum={})",lineNum);
     }
+	virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
 };
 
 } // namespace ast
