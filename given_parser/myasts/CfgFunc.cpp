@@ -8,12 +8,10 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     //auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(std::move(f.params),std::move(f.retType),std::move(f.locals),std::vector<Bblock>()));
     auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(f.name,std::move(f.params),std::move(f.retType),std::move(f.locals)));//,std::vector<Bblock>()));
     cfg_func->blocks = f.body->get_cfg();
-	spdlog::debug("BUILT CFG FUNC {}", cfg_func->name);
     return cfg_func;
 }
 
 std::string CfgFunc::display() const {
-	spdlog::debug("display: {}",this->name);
 	auto output = fmt::format("{} (ret type = {}): \n",this->name,*this->retType);
 	for(auto param : this->params) {
 		output += fmt::format("{}",param);
@@ -26,7 +24,6 @@ std::string CfgFunc::display() const {
 	for(auto block : this->blocks) {
 		output += fmt::format("{}",*block);
 	}
-	spdlog::debug("output={}",output);
 	output += fmt::format("\n");	
 	return output;
 }

@@ -22,7 +22,7 @@ class CfgFunc {
 template <>
 struct fmt::formatter<CfgFunc> : fmt::formatter<std::string> {
    auto format(const CfgFunc &cfg_func, format_context &ctx) const ->decltype(ctx.out()) {
-       return fmt::format_to(ctx.out(),"we we {}",cfg_func.display());
+       return fmt::format_to(ctx.out(),"{}",cfg_func.display());
    }
 };
 #endif

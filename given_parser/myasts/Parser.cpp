@@ -78,6 +78,7 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
     for(auto &funcEl : data) {
         lineNum = funcEl["line"];
         name = funcEl["id"];
+        spdlog::debug("parsing function {}",name);
         current_function = std::make_shared<ast::Function>(lineNum,name,std::vector<ast::Declaration>(),nullptr,std::vector<ast::Declaration>(),nullptr);
         for(auto &param : funcEl["parameters"]) {
             lineNum = param["line"];
@@ -93,8 +94,10 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
             current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         }
         for(auto raw_stmt : funcEl["body"]) {
-            spdlog::debug("stmt: ");
+            spdlog::debug("stmt:");
             spdlog::debug(raw_stmt["stmt"]);
+            std::string line = std::to_string(int(raw_stmt["line"]));
+            std::cout << line << std::endl;
             auto stmt = parse_statement(raw_stmt);  
             if(!body) {
                 body = std::make_shared<ast::BlockStatement>(raw_stmt["line"],std::vector<std::shared_ptr<ast::Statement>>{stmt}); // use getLineNum()
@@ -106,6 +109,9 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
         current_function->body = body;
         current_function->retType = createType(funcEl["return_type"],"",body->lineNum);
         functions.push_back(current_function);
+        body = nullptr;
+        spdlog::debug("done parsing function");
+        spdlog::debug("function immediately {}\n",*current_function);
     }
     return functions;     
 }
