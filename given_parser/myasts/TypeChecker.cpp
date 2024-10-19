@@ -3,6 +3,7 @@
 #include "CfgProg.hpp"
 #include "BlockStatement.hpp"
 #include <unordered_set>
+#include <cassert>
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug

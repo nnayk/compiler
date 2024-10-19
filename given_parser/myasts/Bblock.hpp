@@ -20,12 +20,17 @@ class Bblock {
 template <>
 struct fmt::formatter<Bblock> : fmt::formatter<std::string> {
    auto format(const Bblock &block, format_context &ctx) const ->decltype(ctx.out()) {
-   		auto out = fmt::format_to(ctx.out(),"STATEMENTS:");
+        auto out = fmt::format_to(ctx.out(),"BBLOCK:\n");
+        out = fmt::format_to(out,"Head statement: ");
+        if(block.stmts.size() > 0)
+            out = fmt::format_to(out,"{}",*(block.stmts[0]));
+        else
+            out = fmt::format_to(out,"Null stmt, dummy block");
+		out = fmt::format_to(out,"\nNUMBER OF CHILDREN: {}\n", block.children.size());
+        out = fmt::format_to(out,"STATEMENTS:\n");
 		for(auto stmt : block.stmts) {
 			out = fmt::format_to(out,"{}",*stmt);//->display());
 		}
-		out = fmt::format_to(out,"NUMBER OF CHILDREN: {} ", block.children.size());
-		out = fmt::format_to(out,"CHILDREN: ");
 		return out;
    }
 };

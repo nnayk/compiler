@@ -1,5 +1,6 @@
 #include "ConditionalStatement.hpp"
 #include "Bblock.hpp"
+#include <cassert>
 
 namespace ast {
 
@@ -25,14 +26,37 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     //TODO: check that elseBlock is non-null. If it's null then will have to point
     // if_block directly to dummy (guarantee that left/first child is thenBlock and
     // right/second child is elseBlock)
-    //auto else_blocks = this->elseBlock->get_cfg();
+    std::vector<std::shared_ptr<Bblock>> else_blocks;
+    //this->elseBlock is guaranteed to be null if there's no else stmt
+    if(this->elseBlock) else_blocks = this->elseBlock->get_cfg();
     spdlog::debug("ConditionalStatement: Done building CFGs for then and else");
     auto dummy_block = std::make_shared<Bblock>();
     dummy_block->visited = 21; // Shoddy debugging for now...might just make visited arr a free int and use it as visited or dummy indicator
-    // Point the children to a common dummy block
-    then_blocks[then_blocks.size()-1]->children.push_back(dummy_block);
+    // Point the children to a common dummy block. If the children are null point the if block to the dummy
+    if(then_blocks.size() > 0) {
+        then_blocks[then_blocks.size()-1]->children.push_back(dummy_block);
+        if_block->children.push_back(then_blocks[0]);
+        spdlog::debug("Added then block\n");
+    } else {
+        if_block->children.push_back(dummy_block);
+        spdlog::debug("Added then DUMMY block\n");
+    }
+    if(else_blocks.size() > 0) {
+        else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
+        if_block->children.push_back(else_blocks[0]);
+        spdlog::debug("Added else block\n");
+    } else {
+        if_block->children.push_back(dummy_block);
+        spdlog::debug("Added else DUMMY block\n");
+    }
     //else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
     blocks.push_back(if_block);
+    // if block has exactly 2 children. TODO: Update this when optimizations are made
+    assert(if_block->children.size()==2);
+    for(auto child : if_block->children) {
+        blocks.push_back(child);
+    }
+    spdlog::debug("Created if block w/{} children\n",if_block->children.size());
     return blocks;
 }
 

@@ -14,6 +14,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
 }
 
 std::string CfgFunc::display() const {
+    spdlog::debug("inside CfgFunc::{}",__func__);
 	auto output = fmt::format("{} (ret type = {}): \n",this->name,*this->retType);
     output += fmt::format("PARAMS:\n");
 	for(auto param : this->params) {
@@ -33,19 +34,19 @@ std::string CfgFunc::display() const {
             stack.pop();
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) continue;
+            output += fmt::format("START OF BBLOCK\n");
             output += fmt::format("{}",*block);
+            output += fmt::format("END OF BBLOCK\n");
             block->visited = 1;
             for(auto child : block->children) {
+                spdlog::debug("child {}",*child);
                 stack.push(child);
             }
         }
-        for(auto block : this->blocks) {
-            output += fmt::format("{}",*block);
-        }
     } else {
-        output += fmt::format("No basic blocks, empty body!\n");
+        output += fmt::format("No basic blocks, empty function body!\n");
     }
-	output += fmt::format("\n");	
+	output += fmt::format("END OF CFG FOR {}\n",this->name);	
 	return output;
 }
 

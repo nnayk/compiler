@@ -18,16 +18,17 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     // only one block will be created but have to return a vector for 
     // compatability with the get_cfg Statement wide definitin
     auto blocks = std::vector<std::shared_ptr<Bblock>>();
-    std::shared_ptr<Bblock> prev_head = nullptr;
+    std::shared_ptr<Bblock> prev_tail = nullptr;
     std::vector<std::shared_ptr<Bblock>> prev_blocks;
     std::shared_ptr<Statement> prev_stmt = nullptr;
+    spdlog::debug("{} stmts to process",this->statements.size());
     for(auto stmt : this->statements) {
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
         auto new_blocks = stmt->get_cfg();
-        spdlog::debug("BlockStatement:Done building cfg for stmt");
+        spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
         auto new_head = new_blocks[0];
-        if(prev_head) {
-            prev_head->children.push_back(new_head);
+        if(prev_tail) {
+            prev_tail->children.push_back(new_head);
         }
         //w/o this check the dummy will remain...just test this works as expected
         //for now
@@ -49,7 +50,8 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         */
         prev_stmt = stmt;
         prev_blocks = new_blocks;
-        prev_head = new_head;
+        prev_tail = new_blocks[new_blocks.size()-1];
+        spdlog::debug("prev_tail = {}\n",*prev_tail);
         blocks.insert(blocks.end(),new_blocks.begin(),new_blocks.end());
     }
     return blocks;
