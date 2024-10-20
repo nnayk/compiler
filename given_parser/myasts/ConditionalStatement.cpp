@@ -36,17 +36,25 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     if(then_blocks.size() > 0) {
         then_blocks[then_blocks.size()-1]->children.push_back(dummy_block);
         if_block->children.push_back(then_blocks[0]);
-        spdlog::debug("Added then block\n");
+        then_blocks[0]->parents.push_back(if_block);
+        spdlog::debug("Added then block: {}\n",*then_blocks[0]);
     } else {
         if_block->children.push_back(dummy_block);
+        dummy_block->parents.push_back(if_block);
         spdlog::debug("Added then DUMMY block\n");
     }
     if(else_blocks.size() > 0) {
         else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
         if_block->children.push_back(else_blocks[0]);
-        spdlog::debug("Added else block\n");
+        else_blocks[0]->parents.push_back(if_block);
+        spdlog::debug("Added else block: {}\n",*else_blocks[0]);
     } else {
         if_block->children.push_back(dummy_block);
+        auto parents = dummy_block->parents;
+        auto existing_parent = std::find(parents.begin(),parents.end(),if_block);
+        if(existing_parent == parents.end()) {
+            dummy_block->parents.push_back(if_block);
+        }
         spdlog::debug("Added else DUMMY block\n");
     }
     //else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
@@ -55,7 +63,9 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     assert(if_block->children.size()==2);
     for(auto child : if_block->children) {
         blocks.push_back(child);
+		spdlog::debug("ADDED CHILD = {}",*child);
     }
+    blocks.push_back(dummy_block);
     spdlog::debug("Created if block w/{} children\n",if_block->children.size());
     return blocks;
 }

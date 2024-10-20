@@ -1,6 +1,6 @@
 #include "CfgProg.hpp"
 #include <utility>
-#include <stack>
+#include <queue>
 
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
 
@@ -13,6 +13,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     return cfg_func;
 }
 
+// BFS display of each block in the CFG
 std::string CfgFunc::display() const {
     spdlog::debug("inside CfgFunc::{}",__func__);
 	auto output = fmt::format("{} (ret type = {}): \n",this->name,*this->retType);
@@ -27,20 +28,21 @@ std::string CfgFunc::display() const {
 	}
     output += fmt::format("BODY:\n");
     if(this->blocks.size() > 0) {
-        std::stack<std::shared_ptr<Bblock>> stack;
-        stack.push(this->blocks[0]);
-        while(!stack.empty()) {
-            auto block = stack.top();
-            stack.pop();
+        std::queue<std::shared_ptr<Bblock>> queue;
+        queue.push(this->blocks[0]);
+        while(!queue.empty()) {
+            auto block = queue.front();
+            queue.pop();
+			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) continue;
             output += fmt::format("START OF BBLOCK\n");
             output += fmt::format("{}",*block);
-            output += fmt::format("END OF BBLOCK\n");
+            output += fmt::format("END OF BBLOCK\n\n\n");
             block->visited = 1;
-            for(auto child : block->children) {
-                spdlog::debug("child {}",*child);
-                stack.push(child);
+			for(auto child : block->children) {
+                spdlog::debug("pushing child {}",*child);
+                queue.push(child);
             }
         }
     } else {

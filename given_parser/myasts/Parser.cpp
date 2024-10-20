@@ -96,11 +96,11 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
         for(auto raw_stmt : funcEl["body"]) {
             spdlog::debug("stmt:");
             spdlog::debug(raw_stmt["stmt"]);
-            std::string line = std::to_string(int(raw_stmt["line"]));
-            std::cout << line << std::endl;
+            //std::string line = std::to_string(int(raw_stmt["line"]));
+            //std::cout << line << std::endl;
             auto stmt = parse_statement(raw_stmt);  
             if(!body) {
-                body = std::make_shared<ast::BlockStatement>(raw_stmt["line"],std::vector<std::shared_ptr<ast::Statement>>{stmt}); // use getLineNum()
+                body = std::make_shared<ast::BlockStatement>(stmt->getLineNum(),std::vector<std::shared_ptr<ast::Statement>>{stmt}); // use getLineNum()
             }
             else {
                 body->statements.push_back(stmt);

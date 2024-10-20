@@ -29,6 +29,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         auto new_head = new_blocks[0];
         if(prev_tail) {
             prev_tail->children.push_back(new_head);
+            new_head->parents.push_back(prev_tail);
         }
         //w/o this check the dummy will remain...just test this works as expected
         //for now
