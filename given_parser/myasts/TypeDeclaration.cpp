@@ -8,6 +8,10 @@ TypeDeclaration::TypeDeclaration(int lineNum, const std::string& name, const std
 }
 
 std::string TypeDeclaration::get_llvm() {
+    return fmt::format("%struct.{}",this->name);
+}
+
+std::string TypeDeclaration::get_llvm_init() {
     std::string llvm_str = fmt::format("%struct.{} = type {{ ",this->name);
     int index=0;
     auto fields_size = this->fields.size();

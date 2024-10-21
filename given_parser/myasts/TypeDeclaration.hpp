@@ -15,6 +15,7 @@ public:
     //std::string llvm_str;
     TypeDeclaration(int lineNum, const std::string& name, const std::vector<Declaration>& fields);
     std::string get_llvm();
+    std::string get_llvm_init();
 };
 
 } // namespace ast
