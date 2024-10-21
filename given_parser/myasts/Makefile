@@ -8,7 +8,7 @@ AbstractExpression.o IndexExpression.o UnaryExpression.o BinaryExpression.o \
 IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
 NewExpression.o PrintStatement.o ConditionalStatement.o \
 WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
-InvocationStatement.o Env.o ReadExpression.o
+InvocationStatement.o Env.o ReadExpression.o Register.o 
 CFG_OBJS=CfgProg.o CfgFunc.o 
 
 all: cfg

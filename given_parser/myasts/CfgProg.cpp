@@ -1,4 +1,5 @@
 #include "CfgProg.hpp"
+#include <queue>
 
 CfgProg::CfgProg(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls, std::vector<std::shared_ptr<ast::Declaration>> globals,std::vector<std::shared_ptr<CfgFunc>> funcs) : typeDecls(typeDecls),globals(globals), funcs(funcs) {}
 
@@ -15,5 +16,18 @@ std::shared_ptr<CfgProg> CfgProg::build(ast::Program &p) {
         cfg_prog->funcs.push_back(CfgFunc::build(*func));
     }
     return cfg_prog;
+}
+
+std::string CfgProg::get_llvm() {
+    std::string llvm_ir = "";
+    // Generate the LLVM for each struct
+    for(auto typeDecl : this->typeDecls) {
+        
+    }
+    // Get the LLVM for each global
+    // Get the LLVM for each function
+    // Walk the CFG (BFS) and get the LLVM IR for each bblock
+    
+    return "";
 }
 

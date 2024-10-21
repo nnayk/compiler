@@ -10,4 +10,12 @@ int AbstractExpression::getLineNum() const {
     return lineNum;
 }
 
+/* Generates LLVM IR for the expression and returns the temporary register
+where the result is stored. (If it's an assignment operator then returns
+the target "register").
+*/
+std::shared_ptr<Register> AbstractExpression::get_llvm() {
+	return nullptr;		
+}
+
 }  // namespace ast

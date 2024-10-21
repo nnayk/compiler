@@ -49,6 +49,8 @@ int main(int argc, char *argv[]) {
     //spdlog::debug("typechecking passed");
     auto cfg_prog = CfgProg::build(p);
     spdlog::info("CFG: {}",*cfg_prog);
+    auto llvm_str = cfg_prog->get_llvm();
+    spdlog::info("LLVM IR:\n{}",llvm_str);
     return 0;
 }
 
@@ -117,6 +119,7 @@ void validate_decls(std::vector<std::shared_ptr<ast::Declaration>> &decls) {
             throw TypeException(fmt::format("Duplicate declaration name found: {}", decl->getName()));
 		}
 		entry = std::make_shared<Entry>(decl->getType());
+        entry->is_global = 1;
         globalsTLE.addBinding(decl->getName(),entry);
 		globalNames.insert(decl->getName());	
 	}
@@ -161,6 +164,7 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
             localNames.insert(local.getName());
         }
         func->typecheck(localEnv);
+        funcLocalEnvs[func->name] = localEnv;
 		paramNames.clear();
 		localNames.clear();
 		funcTLE.addBinding(func->name,std::make_shared<Entry>(func->retType));

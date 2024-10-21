@@ -15,6 +15,7 @@
 Env structTLE;
 Env globalsTLE;
 Env funcTLE;
+std::unordered_map<std::string,Env> funcLocalEnvs; // maps function name to local env
 ast::Program p;
 
 void typecheck(ast::Program &p,std::shared_ptr<Env> tle);
