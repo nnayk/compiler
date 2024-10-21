@@ -12,6 +12,7 @@ class Env;
 class Entry {
 public:
     std::shared_ptr<ast::Type> type;
+    int is_global = 0; // 0 = local
     // Constructor
     Entry(std::shared_ptr<ast::Type> t);
    // Virtual destructor
