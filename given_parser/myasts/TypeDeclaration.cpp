@@ -12,12 +12,7 @@ std::string TypeDeclaration::get_llvm() {
     int index=0;
     auto fields_size = this->fields.size();
     for(auto attr : this->fields) {
-        if(std::dynamic_pointer_cast<ast::StructType>(attr.getType())) {
-            spdlog::debug("nested struct ptr");
-            llvm_str += "ptr";
-        } else {
-            llvm_str += attr.get_llvm();
-        }
+        llvm_str += attr.getType()->get_llvm();
         if(index<fields_size-1) {
             llvm_str += ", ";
         } else {
