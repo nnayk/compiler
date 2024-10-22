@@ -24,6 +24,7 @@ std::string TypeDeclaration::get_llvm_init() {
         }
         index++;
     }
+    spdlog::debug("llvm_str = {}\n",llvm_str);
     return llvm_str;
 }
 

@@ -5,6 +5,13 @@ struct A {
     struct A s;
 };
 
+struct B {
+    int qr;
+    int y;
+    bool b;
+    struct A s;
+};
+
 fun main() int {
     struct A data;
     data.x = 5;

@@ -21,12 +21,12 @@ std::string CfgProg::get_llvm() {
     std::string llvm_ir = "";
     // Generate the LLVM for each struct
     for(auto typeDecl : this->typeDecls) {
-        
+        llvm_ir += fmt::format("{}\n",typeDecl->get_llvm_init());        
     }
     // Get the LLVM for each global
     // Get the LLVM for each function
     // Walk the CFG (BFS) and get the LLVM IR for each bblock
     
-    return "";
+    return llvm_ir;
 }
 
