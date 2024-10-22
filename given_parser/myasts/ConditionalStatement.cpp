@@ -35,6 +35,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     // Point the children to a common dummy block. If the children are null point the if block to the dummy
     if(then_blocks.size() > 0) {
         then_blocks[then_blocks.size()-1]->children.push_back(dummy_block);
+        dummy_block->parents.push_back(then_blocks[then_blocks.size()-1]);
         if_block->children.push_back(then_blocks[0]);
         then_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added then block: {}\n",*then_blocks[0]);
@@ -45,6 +46,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     }
     if(else_blocks.size() > 0) {
         else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
+        dummy_block->parents.push_back(else_blocks[else_blocks.size()-1]);
         if_block->children.push_back(else_blocks[0]);
         else_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added else block: {}\n",*else_blocks[0]);
@@ -52,6 +54,9 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         if_block->children.push_back(dummy_block);
         auto parents = dummy_block->parents;
         auto existing_parent = std::find(parents.begin(),parents.end(),if_block);
+        //Add the if block as a parent if not done already. If the then block
+        // was empty then the dummy block would've already added if block as a
+        // parent in if/else conditional above above
         if(existing_parent == parents.end()) {
             dummy_block->parents.push_back(if_block);
         }

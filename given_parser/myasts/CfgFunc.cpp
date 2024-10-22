@@ -25,7 +25,26 @@ std::string CfgFunc::get_llvm() {
     llvm_ir += ") ";
     llvm_ir += "{";
     //add LLVM IR for body
-    llvm_ir += "}";
+	/*
+    if(this->blocks.size() > 0) {
+        std::queue<std::shared_ptr<Bblock>> queue;
+        queue.push(this->blocks[0]);
+        while(!queue.empty()) {
+            auto block = queue.front();
+            queue.pop();
+			spdlog::debug("popped block {}",*block);
+            // TODO: change this check b/c can't print multiple times this way
+            if(block->visited == 1) continue;
+            block->visited = 1;
+			for(auto child : block->children) {
+                spdlog::debug("pushing child {}",*child);
+                queue.push(child);
+            }
+        }
+    }
+	llvm_ir += this->
+    */
+	llvm_ir += "}";
     return llvm_ir;
 }
 
