@@ -18,6 +18,7 @@ public:
     virtual ~AbstractExpression() {}
     // Getter for lineNum
     int getLineNum() const;
+    std::string get_llvm();
 };
 
 }  // namespace ast

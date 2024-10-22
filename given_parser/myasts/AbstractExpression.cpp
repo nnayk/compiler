@@ -18,4 +18,9 @@ std::shared_ptr<Register> AbstractExpression::get_llvm() {
 	return nullptr;		
 }
 
+std::string AbstractExpression::get_llvm() {
+    std::string llvm_ir = "";
+    return llvm_ir;
+}
+
 }  // namespace ast

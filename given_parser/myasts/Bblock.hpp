@@ -14,6 +14,7 @@ class Bblock {
         std::vector<std::shared_ptr<Bblock>> children;
         int visited = 0; // for display purposes
         Bblock() {}
+        std::string get_llvm();
 };
 
 //Specialize fmt::formatter for Bblock
