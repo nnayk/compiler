@@ -16,6 +16,12 @@ public:
     std::string get_llvm() const override {
 		return fmt::format("ptr",name);
 	}
+    int alignment() const override {
+        return 8;
+    };
+    std::string default_val() const override {
+        return "null";
+    };
     
     // Optional: Getters for lineNum and name if needed
     int getLineNum() const { return lineNum; }

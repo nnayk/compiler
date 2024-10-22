@@ -18,6 +18,7 @@ public:
     std::shared_ptr<Type> getType() const;
     const std::string& getName() const;
     std::string get_llvm();
+    std::string get_llvm_init(const std::string &var_type);
 
 private:
     int lineNum_;

@@ -18,6 +18,12 @@ public:
 	std::string get_llvm() const override {
 		return "i8";
 	}
+    int alignment() const override {
+        return 4;
+    };
+    std::string default_val() const override {
+        return "0";
+    };
 };
 
 } // namespace ast

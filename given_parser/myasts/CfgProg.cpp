@@ -23,9 +23,17 @@ std::string CfgProg::get_llvm() {
     for(auto typeDecl : this->typeDecls) {
         llvm_ir += fmt::format("{}\n",typeDecl->get_llvm_init());        
     }
+    llvm_ir += "\n";
     // Get the LLVM for each global
+    for(auto global : this->globals) {
+        llvm_ir += fmt::format("{}\n",global->get_llvm_init("global"));        
+    }
+    llvm_ir += "\n";
     // Get the LLVM for each function
     // Walk the CFG (BFS) and get the LLVM IR for each bblock
+    for(auto func : this->funcs) {
+        llvm_ir += fmt::format("{}\n",func->get_llvm());
+    }
     
     return llvm_ir;
 }

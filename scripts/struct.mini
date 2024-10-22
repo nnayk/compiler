@@ -12,7 +12,17 @@ struct B {
     struct A s;
 };
 
+struct B data;
+struct A abc;
+int abc;
+bool f;
+
 fun main() int {
+    struct A data;
+    data.x = 5;
+}
+
+fun foo(int x, bool y, struct A obj) int {
     struct A data;
     data.x = 5;
 }

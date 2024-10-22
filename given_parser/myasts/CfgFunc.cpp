@@ -13,6 +13,22 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     return cfg_func;
 }
 
+std::string CfgFunc::get_llvm() {
+    std::string llvm_ir = fmt::format("define noundef {} {}(",this->retType->get_llvm(),this->name);
+    //add params
+    for (size_t i = 0; i < this->params.size(); ++i) {
+		llvm_ir += this->params[i].get_llvm_init("param");
+		if (i != this->params.size() - 1) {
+			llvm_ir += ", ";
+		}
+	}  
+    llvm_ir += ") ";
+    llvm_ir += "{";
+    //add LLVM IR for body
+    llvm_ir += "}";
+    return llvm_ir;
+}
+
 // BFS display of each block in the CFG
 std::string CfgFunc::display() const {
     spdlog::debug("inside CfgFunc::{}",__func__);
