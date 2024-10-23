@@ -25,7 +25,7 @@ std::string CfgFunc::get_llvm() {
 		}
 	}  
     llvm_ir += ") ";
-    llvm_ir += "{";
+    llvm_ir += "{\n";
     //add LLVM IR for body
     if(this->blocks.size() > 0) {
         std::queue<std::shared_ptr<Bblock>> queue;

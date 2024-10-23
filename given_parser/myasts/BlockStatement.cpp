@@ -52,7 +52,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 			}
             // remove the dummy bblock from the list of bblocks
             spdlog::debug("Removing the dummy bblock from the list of bblocks");
-            //blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end()); 
+            blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end()); 
         } else if(prev_tail) {
             prev_tail->children.push_back(new_head);
             new_head->parents.push_back(prev_tail);
@@ -65,6 +65,13 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     }
     return blocks;
 }
+
+// TODO: delete this as I think bblocks won't have block statements
+std::string BlockStatement::get_llvm() { 
+	spdlog::debug("inside BlockStatement::{}\n",__func__);
+	std::string llvm_ir="BlockStatement\n";
+	return llvm_ir;
+} 
 
 /*
 std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {

@@ -25,6 +25,8 @@ public:
 
     // Getter for source
     std::shared_ptr<Expression> getSource() const;
+    
+	virtual std::string get_llvm() override;
 
     std::string display() const override {
         return fmt::format("AssignmentStatement(lineNum={})",lineNum);

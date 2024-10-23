@@ -31,6 +31,7 @@ public:
 		return result;
 	}
     virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
+    virtual std::string get_llvm() override;
 };
 
 } // namespace ast

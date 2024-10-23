@@ -17,6 +17,19 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
     return source;
 }
 
+std::string AssignmentStatement::get_llvm() {
+	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
+	std::string llvm_ir = "AssignmentStatement\n";
+	//TODO: impleement get_llvm for expr + lvalue classes
+	//std::string target_llvm = this->target->get_llvm();
+	//std::string source_llvm = this->source->get_llvm();
+	//llvm_ir += target_llvm;
+	//llvm_ir += source_llvm;
+	// Add llvm ir to perform the assignment
+	
+	return llvm_ir;
+}
+ 
 void AssignmentStatement::typecheck(Env &env) {
     // Get the type of the lhs and rhs
     auto targetType = this->target->resolveType(env);

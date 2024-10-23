@@ -23,8 +23,8 @@ std::vector<std::shared_ptr<Bblock>> AbstractStatement::get_cfg() {
 }
 
 std::string AbstractStatement::get_llvm() {
-    spdlog::debug("inside {}", __func__);
-    std::string llvm_ir = "";
+    spdlog::debug("inside AbstractStatement::{}", __func__);
+    std::string llvm_ir = "AbstractStatement\n";
     return llvm_ir;
 }
 
