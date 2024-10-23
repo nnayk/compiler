@@ -16,6 +16,7 @@ namespace ast {
       virtual ~Lvalue() = default;
       virtual std::string getId() const = 0;
       virtual std::shared_ptr<Type> resolveType(Env &env) const = 0;
+      virtual std::string get_llvm() const = 0;
  };
  }  // namespace ast
 

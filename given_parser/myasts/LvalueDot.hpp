@@ -20,6 +20,7 @@ public:
     std::shared_ptr<Lvalue> getLeft() const;
     std::shared_ptr<Type> resolveType(Env &env) const override;
     std::string getId() const override;
+    std::string get_llvm() const override;
 };
 
 } // namespace ast

@@ -23,6 +23,12 @@ std::shared_ptr<Type> LvalueDot::resolveType(Env &env) const {
     //TODO: implement
     return std::make_shared<NullType>();
 }
+    
+std::string LvalueDot::get_llvm() const {
+    std::string llvm_ir = "";
+    //TODO: implement
+    return llvm_ir;
+}
 
 } // namespace ast
 

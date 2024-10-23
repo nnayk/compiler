@@ -22,5 +22,9 @@ Resolve the Lvalue to a base type. If not possible raise an exception.
     return std::make_shared<NullType>();
 }
 
+std::string LvalueId::get_llvm() const {
+    return fmt::format("%{}",this->getId());
+}
+
 } // namespace ast
 

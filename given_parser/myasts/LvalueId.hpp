@@ -15,6 +15,7 @@ public:
     int getLineNum() const;
     std::string getId() const override;
     std::shared_ptr<Type> resolveType(Env &env) const override;
+     std::string get_llvm() const override;
 
 private:
     int lineNum;      // Line number in source code
