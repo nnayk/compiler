@@ -49,7 +49,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 					parent->children[1] = new_head;
 				}
             	new_head->parents.push_back(parent);
-			} 
+			}
+            // remove the dummy bblock from the list of bblocks
+            spdlog::debug("Removing the dummy bblock from the list of bblocks");
+            //blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end()); 
         } else if(prev_tail) {
             prev_tail->children.push_back(new_head);
             new_head->parents.push_back(prev_tail);

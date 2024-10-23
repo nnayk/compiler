@@ -70,7 +70,12 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         blocks.push_back(child);
 		spdlog::debug("ADDED CHILD = {}",*child);
     }
-    blocks.push_back(dummy_block);
+    if(std::find(blocks.begin(),blocks.end(),dummy_block) == blocks.end()) {
+        spdlog::debug("Pushing dummy block to blocks vector (not a child of if block)");
+        blocks.push_back(dummy_block);
+    } else {
+        spdlog::debug("NOT pushing dummy block to blocks vector again (child of if block)");
+    }
     spdlog::debug("Created if block w/{} children\n",if_block->children.size());
     return blocks;
 }

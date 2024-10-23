@@ -12,13 +12,13 @@ protected:
 public:
     // Constructor
     AbstractExpression(int lineNum);
-	virtual std::shared_ptr<Register> get_llvm() override;
+	virtual std::string get_llvm() override;
 
     // Virtual destructor to allow proper cleanup of derived objects
     virtual ~AbstractExpression() {}
     // Getter for lineNum
     int getLineNum() const;
-    std::string get_llvm();
+    //std::string get_llvm();
 };
 
 }  // namespace ast
