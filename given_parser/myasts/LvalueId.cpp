@@ -22,14 +22,25 @@ std::string LvalueId::getId() const {
 Resolve the Lvalue to a base type. If not possible raise an exception.
 */
 std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
-    spdlog::debug("inside LvalueId::{}\n",__func__);	
-    try {
-        std::shared_ptr<Entry> entry = env.bindings.at(this->getId());
-        this->type = entry->type;
-        return this->type;
-	} catch (const std::out_of_range& e) {
-		throw TypeException(fmt::format("LvalueId {} not found in environment",this->getId()));
-	}
+    spdlog::debug("inside LvalueId::{}\n",__func__);
+    auto id = this->getId();
+    // look in local env
+    if(env.bindings.find(id) != env.bindings.end()) {
+        auto it = env.bindings.find(id);
+        this->type = it->second->type;
+    // look in global var env
+    } else if(globalsTLE.bindings.find(id) != globalsTLE.bindings.end()) {
+        auto it = globalsTLE.bindings.find(id); 
+        this->type = it->second->type;
+    // look in global struct env
+    } else if(structTLE.bindings.find(id) != structTLE.bindings.end()) {
+        auto it = structTLE.bindings.find(id); 
+        this->type = it->second->type;
+    // look in global struct env
+    } else {
+        throw TypeException(fmt::format("LvalueId {} not found in environment",this->getId()));
+    }
+    return this->type;
 }
 
 std::string LvalueId::get_llvm() const {
