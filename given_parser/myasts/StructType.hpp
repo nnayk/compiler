@@ -27,7 +27,7 @@ public:
     int getLineNum() const { return lineNum; }
     std::string getName() const { return name; }
 	std::string display() const override {
-		return fmt::format("StructType()");
+		return fmt::format("Structname(line={},struct={})",lineNum,name);
 	}
 };
 

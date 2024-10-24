@@ -101,6 +101,8 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
         }
 		fieldNames.clear();
         structNames.insert(typeDecl->name);
+		spdlog::debug("Adding structEntry in structTLE for key: {}\n",typeDecl->name);
+		spdlog::debug("structE->name = {}\n",dynamic_pointer_cast<ast::StructType>(structE->type)->getName());
 		structTLE.addBinding(typeDecl->name,structE);    
 	}
 }

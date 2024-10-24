@@ -23,7 +23,9 @@ std::string AssignmentStatement::get_llvm() {
 	std::string llvm_ir = "AssignmentStatement\n";
 	//TODO: impleement get_llvm for expr + lvalue classes
 	std::string target_llvm = this->target->get_llvm();
+    spdlog::debug("Got target llvm\n");
 	std::string source_llvm = this->source->get_llvm();
+    spdlog::debug("Got source llvm\n");
 	llvm_ir += target_llvm;
 	llvm_ir += source_llvm;
 	//Add llvm ir to perform the assignment

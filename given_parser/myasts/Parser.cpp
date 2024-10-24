@@ -34,13 +34,13 @@ std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohman
     for(auto &structEl : data) {
         lineNum = structEl["line"];
         name = structEl["id"];
-        type = createType("struct",name,lineNum); 
+        type = createType("struct",lineNum); 
         typeDecl = std::make_shared<ast::TypeDeclaration>(lineNum,name,std::vector<ast::Declaration>()); 
         for(auto &typeEl : structEl["fields"]) {
             lineNum = typeEl["line"];
             spdlog::debug("field on lineNum {}", lineNum);
             name = typeEl["id"];
-            type = createType(typeEl["type"],name,lineNum);
+            type = createType(typeEl["type"],lineNum);
             typeDecl->fields.push_back(ast::Declaration(lineNum,type,name));
             spdlog::debug("type={}",*type);
         }
@@ -60,7 +60,7 @@ std::vector<std::shared_ptr<ast::Declaration>> parse_decls(const nlohmann::json&
     for(auto &el : data) {
         lineNum = el["line"];
         name = el["id"];
-        type = createType(el["type"],name,lineNum); 
+        type = createType(el["type"],lineNum); 
         declarations.push_back(std::make_shared<ast::Declaration>(lineNum,type,name));
     }
     return declarations;     
@@ -83,14 +83,14 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
         for(auto &param : funcEl["parameters"]) {
             lineNum = param["line"];
             name = param["id"];
-            type = createType(param["type"],name,lineNum);
+            type = createType(param["type"],lineNum);
             current_function->params.push_back(ast::Declaration(lineNum,type,name));
         }
         for(auto &local : funcEl["declarations"]) {
             lineNum = local["line"];
             name = local["id"];
             spdlog::debug("found function local var {} on line {}",name,lineNum);
-            type = createType(local["type"],name,lineNum);
+            type = createType(local["type"],lineNum);
             current_function->locals.push_back(ast::Declaration(lineNum,type,name));
         }
         for(auto raw_stmt : funcEl["body"]) {
@@ -108,11 +108,11 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
         }
         if(body) {
             current_function->body = body;
-            current_function->retType = createType(funcEl["return_type"],"",body->lineNum);
+            current_function->retType = createType(funcEl["return_type"],body->lineNum);
         // if function body is empty just create an empty statement
         } else {
             current_function->body = std::make_shared<ast::BlockStatement>(-1,std::vector<std::shared_ptr<ast::Statement>>{});
-            current_function->retType = createType(funcEl["return_type"],"",lineNum);
+            current_function->retType = createType(funcEl["return_type"],lineNum);
         }
         functions.push_back(current_function);
         body = nullptr;
@@ -308,8 +308,7 @@ Creates and returns the type object given the type json identifier, var name,
 and line number.
 NOTE: var name (2nd param) is only used for struct case. 
 */
-std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::string var,
-                                      const int lineNum) {
+std::shared_ptr<ast::Type> createType(const std::string typeStr, const int lineNum) {
     std::shared_ptr<ast::Type> type;
     if(typeStr=="int") {
         spdlog::debug("int type");
@@ -319,7 +318,7 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const std::stri
         type = std::make_shared<ast::BoolType>();
     } else { 
         spdlog::debug("struct type");
-        type = std::make_shared<ast::StructType>(lineNum,var);
+        type = std::make_shared<ast::StructType>(lineNum,typeStr);
     }
     return type;
 }

@@ -28,15 +28,17 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
     if(env.bindings.find(id) != env.bindings.end()) {
         auto it = env.bindings.find(id);
         this->type = it->second->type;
+		spdlog::debug("Local env: Found {} of type {}",id,*this->type);
     // look in global var env
     } else if(globalsTLE.bindings.find(id) != globalsTLE.bindings.end()) {
         auto it = globalsTLE.bindings.find(id); 
         this->type = it->second->type;
+		spdlog::debug("Global env: Found {} of type {}",id,*this->type);
     // look in global struct env
     } else if(structTLE.bindings.find(id) != structTLE.bindings.end()) {
+		spdlog::debug("Struct env: Found {} of type {}",id,*this->type);
         auto it = structTLE.bindings.find(id); 
         this->type = it->second->type;
-    // look in global struct env
     } else {
         throw TypeException(fmt::format("LvalueId {} not found in environment",this->getId()));
     }
