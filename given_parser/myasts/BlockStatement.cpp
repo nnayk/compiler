@@ -9,13 +9,14 @@ BlockStatement::BlockStatement(int lineNum, const std::vector<std::shared_ptr<St
     : AbstractStatement(lineNum), statements(statements) {}
 
 void BlockStatement::typecheck(Env &env) {
+    spdlog::info("inside BlockStatement::{}\n",__func__);
     for(auto &stmt:statements) {
         stmt->typecheck(env);
     }
 }
 
 std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
-    spdlog::info("inside BlockStatement::{}",__func__);
+    spdlog::info("inside BlockStatement::{}\n",__func__);
     // only one block will be created but have to return a vector for 
     // compatability with the get_cfg Statement wide definitin
     auto blocks = std::vector<std::shared_ptr<Bblock>>();

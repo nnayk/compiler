@@ -17,8 +17,9 @@ Typecheck the given function as follows:
 3. Check there's a main function that takes no params and returns an int
 */
 void Function::typecheck(Env env) { //TODO: check that env is a copy of tle
+    spdlog::info("inside Function::{}\n",__func__);
     body->typecheck(env);        
-    // TODO:#2 from description
+    // TODO:#2+#3 from description
     return;
 }
 } // namespace ast
