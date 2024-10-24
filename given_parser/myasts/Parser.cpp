@@ -106,8 +106,14 @@ std::vector<std::shared_ptr<ast::Function>> parse_funcs(const nlohmann::json& da
                 body->statements.push_back(stmt);
             }
         }
-        current_function->body = body;
-        current_function->retType = createType(funcEl["return_type"],"",body->lineNum);
+        if(body) {
+            current_function->body = body;
+            current_function->retType = createType(funcEl["return_type"],"",body->lineNum);
+        // if function body is empty just create an empty statement
+        } else {
+            current_function->body = std::make_shared<ast::BlockStatement>(-1,std::vector<std::shared_ptr<ast::Statement>>{});
+            current_function->retType = createType(funcEl["return_type"],"",lineNum);
+        }
         functions.push_back(current_function);
         body = nullptr;
         spdlog::debug("done parsing function");

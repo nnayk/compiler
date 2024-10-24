@@ -20,6 +20,7 @@ public:
 	// Static method to create an empty block
 	static std::shared_ptr<BlockStatement> emptyBlock();
 	std::string display() const override {
+        spdlog::debug("inside BlockStatement:{}\n",__func__);
 		std::string result = "START OF BLOCK STATEMENTS\n";
 		result += fmt::format("BlockStatement(lineNum={}, statements=[", lineNum);
 		

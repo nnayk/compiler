@@ -3,6 +3,7 @@
 #include <queue>
 #include <cassert>
 
+std::string TAB="\t";
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
 
 std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
@@ -26,6 +27,10 @@ std::string CfgFunc::get_llvm() {
 	}  
     llvm_ir += ") ";
     llvm_ir += "{\n";
+    // add local vars
+    for (size_t i = 0; i < this->locals.size(); ++i) {
+		llvm_ir += TAB+this->locals[i].get_llvm_init("local");
+	}  
     //add LLVM IR for body
     if(this->blocks.size() > 0) {
         std::queue<std::shared_ptr<Bblock>> queue;

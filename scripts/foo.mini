@@ -1,0 +1,4 @@
+fun main(int r,bool y, struct Dummy obj) int {
+    int x;
+    struct Dummy hello;
+}
