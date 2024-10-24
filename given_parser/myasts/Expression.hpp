@@ -16,7 +16,7 @@ namespace ast {
 // Define an empty interface for Expression
 class Expression {
 public:
-    std::shared_ptr<Register> result; // register where the expression result is stored
+    std::shared_ptr<Register> result = nullptr; // register where the expression result is stored
     virtual ~Expression() = default; // Virtual destructor for proper cleanup
     virtual std::shared_ptr<ast::Type> resolveType(Env &env) {return std::make_shared<IntType>();}
     virtual std::string get_llvm() = 0;

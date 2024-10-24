@@ -17,6 +17,7 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
     return source;
 }
 
+// Returns the non-llvm SSA string of instructions for the assignment
 std::string AssignmentStatement::get_llvm() {
 	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
 	std::string llvm_ir = "AssignmentStatement\n";
@@ -26,7 +27,11 @@ std::string AssignmentStatement::get_llvm() {
 	llvm_ir += target_llvm;
 	llvm_ir += source_llvm;
 	//Add llvm ir to perform the assignment
-	
+	//Note: Since I'm allocating all local vars on the stack (and global vars+
+    // structs are stored in global space), all vars are ptrs and the store
+    // instruction will thus be identical for non-ssa which makes things simple!
+    std::string type_llvm = this->target->type->get_llvm();
+    llvm_ir += fmt::format("store {} {}, ptr %{}, align {}\n",type_llvm,this->source->result->id,this->target->result->id,this->target->type->alignment());
 	return llvm_ir;
 }
  
