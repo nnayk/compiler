@@ -14,6 +14,10 @@ public:
     // Getters for left and index expressions
     std::shared_ptr<Expression> getLeft() const;
     std::shared_ptr<Expression> getIndex() const;
+    std::string display() const override {
+        // Not supporting IndexExpr for now so idc about the display
+        return fmt::format("IndexExpression(lineNum={})\n",lineNum);
+    }
 
 private:
     std::shared_ptr<Expression> left;  // Left expression

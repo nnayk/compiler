@@ -33,6 +33,10 @@ public:
     Operator getOperator() const { return operatorType; }
     std::shared_ptr<Expression> getLeft() const { return left; }
     std::shared_ptr<Expression> getRight() const { return right; }
+    std::string display() const override {
+        return fmt::format("BinaryExpression(lineNum={},left={},operator={},right={}\n)"
+                            ,lineNum,*this->getLeft(),static_cast<int>(this->getOperator()),*this->getRight());
+    }
 };
 
 }  // namespace ast

@@ -13,6 +13,11 @@ public:
 
     // Getter method for id
     const std::string& getId() const;
+    std::string display() const override {
+        auto output = fmt::format("NewExpression(lineNum={},struct={})",lineNum,id);
+        output+="\n";
+        return output;
+    }
 
 private:
     std::string id; // The identifier for the type being instantiated

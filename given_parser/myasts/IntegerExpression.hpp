@@ -14,6 +14,10 @@ public:
     // Getter for the value
     std::string getValue() const;
     std::shared_ptr<Type> resolveType(Env &env) override;
+    std::string display() const override {
+        return fmt::format("IntegerExpression(lineNum={},value={})\n",lineNum,this->getValue());
+    }
+    std::string get_llvm() override; 
 
 private:
     std::string value; // The integer value as a string

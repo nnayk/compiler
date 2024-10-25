@@ -10,6 +10,10 @@ public:
     // Constructor
     FalseExpression(int lineNum);
     std::shared_ptr<Type> resolveType(Env &env) override;
+    std::string display() const override {
+        return fmt::format("FalseExpression(lineNum={})\n",lineNum);
+    }
+    std::string get_llvm() override; 
 };
 
 } // namespace ast

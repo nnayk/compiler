@@ -22,10 +22,19 @@ public:
     virtual std::shared_ptr<ast::Type> resolveType(Env &env) {return std::make_shared<IntType>();}
     virtual std::string get_llvm_init() = 0;
     virtual std::string get_llvm() = 0;
+    virtual std::string display() const = 0;
 protected:
     std::shared_ptr<Register> result = nullptr; // register where the expression result is stored
 };
 
 }  // namespace ast
+//Specialize fmt::formatter for Expression
+template <>
+struct fmt::formatter<ast::Expression> : fmt::formatter<std::string> {
+   auto format(const ast::Expression &expr, format_context &ctx) const ->decltype(ctx.out()) {
+       return fmt::format_to(ctx.out(),"{}",expr.display());
+   }
+};
+
 
 #endif  // EXPRESSION_HPP

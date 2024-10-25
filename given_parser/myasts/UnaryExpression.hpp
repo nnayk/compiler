@@ -17,6 +17,12 @@ public:
     UnaryExpression(int lineNum, Operator operatorType, std::shared_ptr<Expression> operand);
     Operator getOperatorType() const { return operatorType; }
     std::shared_ptr<Expression> getOperand() const { return operand; } 
+    std::string display() const override {
+        auto output = fmt::format("UnaryExpression(lineNum={},operator={},operand={})\n",
+                                   lineNum,static_cast<int>(this->getOperatorType()),*this->getOperand());
+        output+="\n";
+        return output;
+    }
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;

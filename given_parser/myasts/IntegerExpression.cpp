@@ -15,5 +15,9 @@ std::shared_ptr<Type> IntegerExpression::resolveType(Env &env) {
     return std::make_shared<IntType>();
 }
 
+std::string IntegerExpression::get_llvm() {
+    return this->value;
+}
+
 } // namespace ast
 

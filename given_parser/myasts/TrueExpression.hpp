@@ -9,6 +9,10 @@ class TrueExpression : public AbstractExpression {
 public:
     std::shared_ptr<Type> resolveType(Env &env) override;
     TrueExpression(int lineNum);
+    std::string display() const override {
+        return fmt::format("TrueExpression(lineNum={})\n",lineNum);
+    }
+    std::string get_llvm() override; 
 };
 
 } // namespace ast

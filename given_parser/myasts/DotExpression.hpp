@@ -16,6 +16,11 @@ public:
     // Getter methods for left and id
     std::shared_ptr<Expression> getLeft() const;
     const std::string& getId() const;
+    std::string display() const override {
+        auto left = this->getLeft()->display();
+        return fmt::format("DotExpression(lineNum={},id={},left={}\n)",lineNum,this->getId(),
+                            left);
+    }
 
 private:
     std::shared_ptr<Expression> left_;  // Left expression

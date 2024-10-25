@@ -24,6 +24,14 @@ public:
 
     // Getter for the arguments
     std::vector<std::shared_ptr<Expression>> getArguments() const;
+    std::string display() const override {
+        auto output = fmt::format("InvocationExpression(lineNum={},func={},args=(",lineNum,name);
+        for(auto arg : arguments) {
+           output+=fmt::format("{},",*arg); 
+        }
+        output+="\n";
+        return output;
+    }
 };
 
 } // namespace ast

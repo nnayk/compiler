@@ -11,6 +11,11 @@ public:
     // Constructor
     ReadExpression(int lineNum);
 	std::shared_ptr<Type> resolveType(Env &env) override;
+    std::string display() const override {
+        auto output = fmt::format("ReadExpression(lineNum={})",lineNum);
+        output+="\n";
+        return output;
+    }
 };
 
 } // namespace ast

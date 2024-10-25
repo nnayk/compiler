@@ -10,6 +10,11 @@ public:
     // Constructor
     NullExpression(int lineNum) : AbstractExpression(lineNum) {}
     std::shared_ptr<Type> resolveType(Env &env) override { return std::make_shared<NullType>(); }
+    std::string display() const override {
+        auto output = fmt::format("NullExpression(lineNum={})",lineNum);
+        output+="\n";
+        return output;
+    }
 };
 
 } // namespace ast
