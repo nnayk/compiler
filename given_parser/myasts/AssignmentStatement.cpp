@@ -21,19 +21,19 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
 std::string AssignmentStatement::get_llvm() {
 	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
 	std::string llvm_ir = "AssignmentStatement\n";
-	//TODO: impleement get_llvm for expr + lvalue classes
-	std::string target_llvm = this->target->get_llvm();
+	//TODO: impleement get_llvm_init for expr + lvalue classes
+	std::string target_llvm_init = this->target->get_llvm_init();
     spdlog::debug("Got target llvm\n");
-	std::string source_llvm = this->source->get_llvm();
+	std::string source_llvm_init = this->source->get_llvm_init();
     spdlog::debug("Got source llvm\n");
-	llvm_ir += target_llvm;
-	llvm_ir += source_llvm;
+	llvm_ir += target_llvm_init;
+	llvm_ir += source_llvm_init;
 	//Add llvm ir to perform the assignment
 	//Note: Since I'm allocating all local vars on the stack (and global vars+
     // structs are stored in global space), all vars are ptrs and the store
     // instruction will thus be identical for non-ssa which makes things simple!
     std::string type_llvm = this->target->type->get_llvm();
-    llvm_ir += fmt::format("store {} {}, ptr %{}, align {}\n",type_llvm,this->source->result->id,this->target->result->id,this->target->type->alignment());
+    llvm_ir += fmt::format("store {} {}, ptr %{}, align {}\n",type_llvm,this->source->get_llvm(),this->target->get_llvm(),this->target->type->alignment());
 	return llvm_ir;
 }
  

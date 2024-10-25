@@ -14,9 +14,12 @@ int AbstractExpression::getLineNum() const {
 where the result is stored. (If it's an assignment operator then returns
 the target "register").
 */
+std::string AbstractExpression::get_llvm_init() {
+    return "";
+}
+
 std::string AbstractExpression::get_llvm() {
-    std::string llvm_ir = "";
-    return llvm_ir;
+    return "";
 }
 
 }  // namespace ast

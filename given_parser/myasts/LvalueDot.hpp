@@ -22,6 +22,7 @@ public:
     std::shared_ptr<Lvalue> getLeft() const;
     std::shared_ptr<Type> resolveType(Env &env) override;
     std::string getId() const override;
+    std::string get_llvm_init() override;
     std::string get_llvm() override;
 };
 

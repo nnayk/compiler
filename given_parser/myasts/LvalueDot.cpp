@@ -63,16 +63,20 @@ std::shared_ptr<Type> LvalueDot::resolveType(Env &env) {
  * resulting register in the LvalueDot::result attribute for each portion of
  * the dot expression
 */
-std::string LvalueDot::get_llvm() {
+std::string LvalueDot::get_llvm_init() {
     spdlog::debug("inside LvalueDot::{}\n",__func__);
     std::string llvm_ir = "";
     spdlog::debug("left = {}\n",this->left->getId());
-    llvm_ir += this->left->get_llvm();
+    llvm_ir += this->left->get_llvm_init();
     auto reg = std::make_shared<Register>();
     spdlog::debug("Got the next numerical register of {}\n",reg->id);
     this->result = reg;
     //TODO: implement
     return llvm_ir;
+}
+
+std::string LvalueDot::get_llvm() {
+    return "";
 }
 
 } // namespace ast

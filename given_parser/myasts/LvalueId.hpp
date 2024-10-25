@@ -15,6 +15,7 @@ public:
     int getLineNum() const;
     std::string getId() const override;
     std::shared_ptr<Type> resolveType(Env &env) override;
+    std::string get_llvm_init() override;
     std::string get_llvm() override;
 
 private:

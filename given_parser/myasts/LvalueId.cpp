@@ -45,9 +45,13 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
     return this->type;
 }
 
-std::string LvalueId::get_llvm() {
+std::string LvalueId::get_llvm_init() {
     spdlog::info("inside LvalueId::{}\n",__func__);
     this->result = std::make_shared<Register>(this->getId());
+    return "";
+}
+
+std::string LvalueId::get_llvm() {
     return "";
 }
 
