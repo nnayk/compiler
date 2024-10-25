@@ -23,7 +23,7 @@ namespace ast {
       virtual std::string get_llvm() = 0;
 protected:
      std::shared_ptr<Register> result; // register where the lvalue is stored
-};
+ };
  }  // namespace ast
 
  #endif

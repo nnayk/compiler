@@ -6,7 +6,8 @@ namespace ast {
 LvalueId::LvalueId(int lineNum, const std::string& id)
     : lineNum(lineNum), id(id) {
         result = std::make_shared<Register>(id);
-        result->content_type =  this->type;
+        //TODO: Think content type is not needed in Register class since I'm resolving type and storing it as an attr in Lvalue itself
+        //result->content_type =  this->type;
     }
 
 // Getter methods
@@ -34,11 +35,13 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
         auto it = globalsTLE.bindings.find(id); 
         this->type = it->second->type;
 		spdlog::debug("Global env: Found {} of type {}",id,*this->type);
+        this->result->set_global_prefix();
     // look in global struct env
     } else if(structTLE.bindings.find(id) != structTLE.bindings.end()) {
 		spdlog::debug("Struct env: Found {} of type {}",id,*this->type);
         auto it = structTLE.bindings.find(id); 
         this->type = it->second->type;
+        this->result->set_global_prefix();
     } else {
         throw TypeException(fmt::format("LvalueId {} not found in environment",this->getId()));
     }
@@ -47,12 +50,11 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
 
 std::string LvalueId::get_llvm_init() {
     spdlog::info("inside LvalueId::{}\n",__func__);
-    this->result = std::make_shared<Register>(this->getId());
     return "";
 }
 
 std::string LvalueId::get_llvm() {
-    return "";
+    return this->result->get_llvm();
 }
 
 } // namespace ast

@@ -1,6 +1,8 @@
 #include "AssignmentStatement.hpp"
 #include "Types.hpp"
 
+extern std::string TAB;
+
 namespace ast {
 
 // Constructor definition
@@ -20,21 +22,24 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
 // Returns the non-llvm SSA string of instructions for the assignment
 std::string AssignmentStatement::get_llvm() {
 	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
-	std::string llvm_ir = "AssignmentStatement\n";
+	std::string llvm_ir = "";
+    //spdlog::debug("target = {}\n",*this-target);
+    spdlog::debug("source = {}\n",*(this->source));
 	//TODO: impleement get_llvm_init for expr + lvalue classes
 	std::string target_llvm_init = this->target->get_llvm_init();
-    spdlog::debug("Got target llvm\n");
-	std::string source_llvm_init = this->source->get_llvm_init();
-    spdlog::debug("Got source llvm\n");
-	llvm_ir += target_llvm_init;
-	llvm_ir += source_llvm_init;
+    spdlog::debug("Got target llvm: {}\n",target_llvm_init);
+    spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
+    std::string source_llvm_init = this->source->get_llvm_init();
+    spdlog::debug("Got source llvm: {}\n",source_llvm_init);
+	llvm_ir += TAB+target_llvm_init;
+	llvm_ir += TAB+source_llvm_init;
 	//Add llvm ir to perform the assignment
 	//Note: Since I'm allocating all local vars on the stack (and global vars+
     // structs are stored in global space), all vars are ptrs and the store
     // instruction will thus be identical for non-ssa which makes things simple!
     std::string type_llvm = this->target->type->get_llvm();
-    llvm_ir += fmt::format("store {} {}, ptr %{}, align {}\n",type_llvm,this->source->get_llvm(),this->target->get_llvm(),this->target->type->alignment());
-    spdlog::debug("assignment llvm = {}\n",llvm_ir);
+    llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,this->source->get_llvm(),this->target->get_llvm(),this->target->type->alignment());
+    spdlog::debug("assignment llvm = {}",llvm_ir);
 	return llvm_ir;
 }
  

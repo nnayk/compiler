@@ -19,7 +19,7 @@ public:
 		return "i8";
 	}
     int alignment() const override {
-        return 4;
+        return 1;
     };
     std::string default_val() const override {
         return "0";

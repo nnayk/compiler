@@ -4,7 +4,9 @@ namespace ast {
 
 // Constructor
 LvalueDot::LvalueDot(int lineNum, std::shared_ptr<Lvalue> left, const std::string& id)
-    : lineNum(lineNum), left(left), id(id) {}
+    : lineNum(lineNum), left(left), id(id) {
+            result = std::make_shared<Register>(id);
+}
 
 // Getter methods
 int LvalueDot::getLineNum() const {
@@ -69,14 +71,14 @@ std::string LvalueDot::get_llvm_init() {
     spdlog::debug("left = {}\n",this->left->getId());
     llvm_ir += this->left->get_llvm_init();
     auto reg = std::make_shared<Register>();
-    spdlog::debug("Got the next numerical register of {}\n",reg->id);
+    spdlog::debug("Got the next numerical register of {}\n",reg->get_id());
     this->result = reg;
     //TODO: implement
     return llvm_ir;
 }
 
 std::string LvalueDot::get_llvm() {
-    return "";
+    return this->result->get_llvm();
 }
 
 } // namespace ast
