@@ -101,6 +101,16 @@ std::string LvalueDot::get_llvm_init() {
 }
 
 std::string LvalueDot::get_llvm() {
+    spdlog::debug("inside LvalueDot::{}\n",__func__);
+    spdlog::debug("id={}, llvm = {}\n",this->getId(),this->result->get_llvm());
+    if(dynamic_pointer_cast<ast::StructType>(this->type)) {
+        spdlog::debug("struct type!\n");
+        auto deref_result = this->getDerefResult();
+        if(!deref_result) {
+            spdlog::debug("null deref register for struct {}  {}\n",*this->type,this->getId());
+        }
+        return this->deref_result->get_llvm();
+    }
     return this->result->get_llvm();
 }
 
