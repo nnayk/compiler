@@ -21,8 +21,11 @@ namespace ast {
       virtual std::shared_ptr<ast::Type> resolveType(Env &env) = 0;
       virtual std::string get_llvm_init() = 0;
       virtual std::string get_llvm() = 0;
+      std::shared_ptr<Register> getDerefResult(); 
+      std::shared_ptr<Register> getResult(); 
 protected:
      std::shared_ptr<Register> result; // register where the lvalue is stored
+     std::shared_ptr<Register> deref_result = nullptr; // only for structs -- to store the single pointer
  };
  }  // namespace ast
 

@@ -24,6 +24,7 @@ public:
     std::string getId() const override;
     std::string get_llvm_init() override;
     std::string get_llvm() override;
+    std::shared_ptr<ast::StructType> getLeftType();
 };
 
 } // namespace ast

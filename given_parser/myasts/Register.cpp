@@ -10,8 +10,14 @@ Register::Register(const std::string &id,const bool &is_global) :  id(id) {
     if(is_global) prefix = Register::GLOBAL_PREFIX;
     this->prefix = prefix;
     spdlog::info("inside Register::{}\n",__func__);
-    all_regs[id] = std::make_shared<Register>(*this);
     if(id==std::to_string(reg)) reg++;
+}
+
+std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_global) {
+    spdlog::debug("inside Register::{}\n",__func__);
+    auto reg = std::make_shared<Register>(id,is_global);
+    all_regs[id] = reg->shared_from_this();
+    return reg;
 }
 
 std::string Register::get_id() {

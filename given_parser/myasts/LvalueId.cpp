@@ -1,11 +1,14 @@
 #include "LvalueId.hpp"
 
+extern std::string TAB;
+
 namespace ast {
 
 // Constructor
 LvalueId::LvalueId(int lineNum, const std::string& id)
     : lineNum(lineNum), id(id) {
-        result = std::make_shared<Register>(id);
+        spdlog::debug("inside LvalueId::{}\n",__func__);
+        result = Register::create(id); 
         //TODO: Think content type is not needed in Register class since I'm resolving type and storing it as an attr in Lvalue itself
         //result->content_type =  this->type;
     }
@@ -50,7 +53,18 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
 
 std::string LvalueId::get_llvm_init() {
     spdlog::info("inside LvalueId::{}\n",__func__);
-    return "";
+    if(dynamic_pointer_cast<ast::StructType>(this->type)) {
+        spdlog::debug("{} is a struct, loading the struct address\n",this->getId());
+        auto reg_llvm = this->result->get_llvm(); // llvm for the double ptr to the struct
+        auto alignment = this->type->alignment();
+        this->deref_result = std::make_shared<Register>();
+        auto struct_ptr_llvm = this->deref_result->get_llvm(); // llvm for the ptr to the struct
+        return TAB+fmt::format("{} = load ptr, ptr {}, align {}\n",struct_ptr_llvm,reg_llvm,alignment);
+    } else {
+        spdlog::debug("{} is not a struct, returning empty str\n",this->getId());
+        this->deref_result = nullptr;
+        return "";
+    }
 }
 
 std::string LvalueId::get_llvm() {

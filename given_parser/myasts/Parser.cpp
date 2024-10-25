@@ -259,6 +259,7 @@ std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
  * Takes in json w/an "id" key and returns an LvalueId object
 */
 std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &json) {
+//    spdlog::debug("inside LvalueId::{}\n",__func__);
     return std::make_shared<ast::LvalueId>(lineNum,json["id"]);
 }
 

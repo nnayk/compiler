@@ -31,8 +31,8 @@ std::string AssignmentStatement::get_llvm() {
     spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
     std::string source_llvm_init = this->source->get_llvm_init();
     spdlog::debug("Got source llvm: {}\n",source_llvm_init);
-	llvm_ir += TAB+target_llvm_init;
-	llvm_ir += TAB+source_llvm_init;
+	llvm_ir += target_llvm_init;
+	llvm_ir += source_llvm_init;
 	//Add llvm ir to perform the assignment
 	//Note: Since I'm allocating all local vars on the stack (and global vars+
     // structs are stored in global space), all vars are ptrs and the store
