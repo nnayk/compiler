@@ -34,6 +34,7 @@ std::string AssignmentStatement::get_llvm() {
     // instruction will thus be identical for non-ssa which makes things simple!
     std::string type_llvm = this->target->type->get_llvm();
     llvm_ir += fmt::format("store {} {}, ptr %{}, align {}\n",type_llvm,this->source->get_llvm(),this->target->get_llvm(),this->target->type->alignment());
+    spdlog::debug("assignment llvm = {}\n",llvm_ir);
 	return llvm_ir;
 }
  
