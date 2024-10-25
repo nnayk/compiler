@@ -1,4 +1,5 @@
 #include "LvalueDot.hpp"
+#include <cassert>
 
 extern std::string TAB;
 
@@ -106,9 +107,7 @@ std::string LvalueDot::get_llvm() {
     if(dynamic_pointer_cast<ast::StructType>(this->type)) {
         spdlog::debug("struct type!\n");
         auto deref_result = this->getDerefResult();
-        if(!deref_result) {
-            spdlog::debug("null deref register for struct {}  {}\n",*this->type,this->getId());
-        }
+        assert(deref_result);
         return this->deref_result->get_llvm();
     }
     return this->result->get_llvm();
