@@ -42,8 +42,10 @@ std::vector<std::shared_ptr<ast::TypeDeclaration>> parse_typeDecls(const nlohman
             name = typeEl["id"];
             type = createType(typeEl["type"],lineNum);
             typeDecl->fields.push_back(ast::Declaration(lineNum,type,name));
-            spdlog::debug("type={}",*type);
+            typeDecl->size += type->alignment();
+            spdlog::debug("type={},size={},current struct size={}\n",*type,type->alignment(),typeDecl->size);
         }
+        spdlog::debug("Created typeDecl {} with size {}\n",name,typeDecl->size);
         type_declarations.push_back(typeDecl);
     }
     return type_declarations;     

@@ -27,9 +27,10 @@ public:
 };
 class StructEntry : public Entry {
 public:
+    int size = 0; // size of struct in bytes (no padding)
     std::shared_ptr<Env> attrEnv; // used to track struct attributes
     // Constructor
-    StructEntry(std::shared_ptr<ast::Type> t): Entry(t) { std::cout << "FOO";}
+    StructEntry(std::shared_ptr<ast::Type> t,int size): Entry(t), size(size) { std::cout << "FOO";}
 };
 class Env {
 public:

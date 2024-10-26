@@ -3,11 +3,13 @@
 
 #include "AbstractExpression.hpp"
 #include <string>
+#include "Register.hpp"
 
 namespace ast {
 
 class NewExpression : public AbstractExpression {
 public:
+    int struct_size = 0;
     // Constructor
     NewExpression(int lineNum, const std::string& id);
 
@@ -18,6 +20,9 @@ public:
         output+="\n";
         return output;
     }
+    std::string get_llvm_init() override; 
+    std::string get_llvm() override; 
+    std::shared_ptr<Type> resolveType(Env &env) override;
 
 private:
     std::string id; // The identifier for the type being instantiated

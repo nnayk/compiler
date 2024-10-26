@@ -9,6 +9,7 @@ namespace ast {
 
 class TypeDeclaration {
 public:
+    int size;
     int lineNum;
     std::string name;
     std::vector<Declaration> fields;

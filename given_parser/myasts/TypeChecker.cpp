@@ -83,7 +83,7 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
     std::shared_ptr<AttrEntry> attrE;
     spdlog::info("inside {}",__func__);
 	for(const auto& typeDecl : typeDecls) {
-		structE = std::make_shared<StructEntry>(std::make_shared<ast::StructType>(typeDecl->lineNum,typeDecl->name)); 
+		structE = std::make_shared<StructEntry>(std::make_shared<ast::StructType>(typeDecl->lineNum,typeDecl->name),typeDecl->size); 
         if (structNames.find(typeDecl->name) != structNames.end()) {
             throw TypeException(fmt::format("Duplicate type name found: {}", typeDecl->name));
         }

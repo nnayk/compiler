@@ -5,6 +5,7 @@ namespace ast {
 
 TypeDeclaration::TypeDeclaration(int lineNum, const std::string& name, const std::vector<Declaration>& fields)
     : lineNum(lineNum), name(name), fields(fields) {
+    this->size = 0;
 }
 
 std::string TypeDeclaration::get_llvm() {
