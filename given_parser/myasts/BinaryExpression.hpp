@@ -39,6 +39,7 @@ public:
     }
     std::string get_llvm_init() override;
     std::string get_llvm() override;
+    std::shared_ptr<Type> resolveType(Env &env) override;
 };
 
 }  // namespace ast

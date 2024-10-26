@@ -1,5 +1,6 @@
 #include "AssignmentStatement.hpp"
 #include "Types.hpp"
+#include "TypeException.hpp"
 
 extern std::string TAB;
 
@@ -55,7 +56,7 @@ void AssignmentStatement::typecheck(Env &env) {
     if(std::dynamic_pointer_cast<StructType >(targetType) && std::dynamic_pointer_cast<NullType >(sourceType)) {
         spdlog::debug("Found null assignment to struct");
     } else if(!typesAreEqual) {
-        spdlog::debug("target type {} != source type {}",*targetType,*sourceType);
+        throw TypeException(fmt::format("target type {} != source type {}",*targetType,*sourceType));
     }
     spdlog::debug("line {}: target type {} ~ source type {}",this->getLineNum(),*targetType,*sourceType);
     spdlog::debug("equal? {}",typesAreEqual);

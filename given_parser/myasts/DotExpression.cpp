@@ -65,7 +65,7 @@ std::shared_ptr<Type> DotExpression::resolveType(Env &env) {
 	   // TODO: change this to a new Exception class ImpossibleException
        throw TypeException(fmt::format("This should be impossible b/c I already typechecked left lvalue"));
 	}   				
-    return std::make_shared<NullType>();
+    return std::make_shared<NullType>(); // ctrl flow should never reac here b/c of the else stmt above
 }
 
 std::string DotExpression::get_llvm_init() {

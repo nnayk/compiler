@@ -1,0 +1,9 @@
+fun main() int {
+    int x;
+    int y;
+    int z;
+    x=3;
+    y=4;
+    z=x+y;
+    return z;
+}

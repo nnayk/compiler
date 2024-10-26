@@ -69,7 +69,7 @@ std::shared_ptr<Type> LvalueDot::resolveType(Env &env) {
 	   // TODO: change this to a new Exception class ImpossibleException
        throw TypeException(fmt::format("This should be impossible b/c I already typechecked left lvalue"));
 	}   				
-    return std::make_shared<NullType>();
+    return std::make_shared<NullType>(); // ctrl flow should never reac here b/c of the else stmt above
 }
 
 /* Returns the LLVM string to load the Lvalue into a register. Stores the
