@@ -1,4 +1,5 @@
 #include "UnaryExpression.hpp"
+#include <typeinfo>
 
 namespace ast {
 
@@ -19,10 +20,25 @@ std::shared_ptr<UnaryExpression> UnaryExpression::create(int lineNum, const std:
 std::shared_ptr<Type> UnaryExpression::resolveType(Env &env) {
     auto operandType = this->getOperand()->resolveType(env);
     // only valid operand types are ints or bools
-    if(typeid(operandType) == typeid(ast::IntType) || typeid(operandType) == typeid(ast::BoolType)) {
-        return operandType;
+    if(dynamic_pointer_cast<ast::IntType>(operandType) || dynamic_pointer_cast<ast::BoolType>(operandType)) {
+        this->type = operandType;
+        return this->type;
     } else {
         throw TypeException(fmt::format("Invalid unary operand of type {}",*operandType));
+    }
+}
+
+std::string UnaryExpression::get_llvm() {
+    auto operand_llvm = this->getOperand()->get_llvm();
+    if(dynamic_pointer_cast<ast::IntType>(this->type)) {
+        return fmt::format("-{}",operand_llvm);
+    } else {
+        // hardcoding get_llvm for True/False Expr for now
+        if(dynamic_pointer_cast<TrueExpression>(this->getOperand())) {
+            return "0";
+        } else {
+            return "1";
+        }
     }
 }
 

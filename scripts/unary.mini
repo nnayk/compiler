@@ -1,3 +1,6 @@
 fun main() int {
-    x = 5;
+    int x;
+    bool y;
+    x = -5;
+    y = !!true;
 }

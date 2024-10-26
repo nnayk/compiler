@@ -4,6 +4,8 @@
 #include <string>
 #include <memory>
 #include "AbstractExpression.hpp"
+#include "TrueExpression.hpp"
+#include "FalseExpression.hpp"
 
 namespace ast {
 
@@ -23,6 +25,7 @@ public:
         output+="\n";
         return output;
     }
+    std::string get_llvm() override; 
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;
