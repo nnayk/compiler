@@ -14,6 +14,7 @@ private:
 public:
     StructType(int lineNum, const std::string& name): lineNum(lineNum), name(name) {}
     std::string get_llvm() const override {
+        spdlog::debug("inside StructType::{}\n",__func__);
 		return fmt::format("ptr",name);
 	}
     int alignment() const override {

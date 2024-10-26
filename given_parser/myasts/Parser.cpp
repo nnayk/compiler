@@ -319,6 +319,9 @@ std::shared_ptr<ast::Type> createType(const std::string typeStr, const int lineN
     } else if(typeStr=="bool") {
         spdlog::debug("bool type");
         type = std::make_shared<ast::BoolType>();
+    } else if(typeStr=="void") {
+        spdlog::debug("void type");
+        type = std::make_shared<ast::VoidType>();
     } else { 
         spdlog::debug("struct type");
         type = std::make_shared<ast::StructType>(lineNum,typeStr);

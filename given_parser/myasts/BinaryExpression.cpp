@@ -41,4 +41,15 @@ std::shared_ptr<BinaryExpression> BinaryExpression::create(int lineNum, const st
     }
 }
 
+std::string BinaryExpression::get_llvm_init() {
+    auto llvm_str = this->getLeft()->get_llvm_init();
+    llvm_str += this->getRight()->get_llvm_init();
+    return llvm_str;
+}
+
+std::string BinaryExpression::get_llvm() {
+    std::string llvm_str = "";
+    return llvm_str;
+}
+
 }  // namespace ast

@@ -18,6 +18,7 @@ public:
 	}
 	
     std::string get_llvm() const override {
+        spdlog::debug("inside IntType::{}\n",__func__);
 		return "i64";
 	}
     

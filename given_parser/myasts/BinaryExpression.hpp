@@ -37,6 +37,8 @@ public:
         return fmt::format("BinaryExpression(lineNum={},left={},operator={},right={}\n)"
                             ,lineNum,*this->getLeft(),static_cast<int>(this->getOperator()),*this->getRight());
     }
+    std::string get_llvm_init() override;
+    std::string get_llvm() override;
 };
 
 }  // namespace ast

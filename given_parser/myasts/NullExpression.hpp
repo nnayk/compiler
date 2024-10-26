@@ -15,6 +15,7 @@ public:
         output+="\n";
         return output;
     }
+    std::string get_llvm() override;
 };
 
 } // namespace ast

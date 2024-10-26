@@ -16,6 +16,7 @@ public:
 		return fmt::format("BoolType()");
 	}
 	std::string get_llvm() const override {
+        spdlog::debug("inside BoolType::{}\n",__func__);
 		return "i8";
 	}
     int alignment() const override {

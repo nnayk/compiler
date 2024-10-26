@@ -11,6 +11,7 @@ class VoidType : public Type {
 		return fmt::format("VoidType()");
 	}
     std::string get_llvm() const override {
+        spdlog::debug("inside VoidType::{}\n",__func__);
 		return "void";
 	}
 };

@@ -2,6 +2,7 @@
 #include <utility>
 #include <queue>
 #include <cassert>
+#include "Types.hpp"
 
 std::string TAB="\t";
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
@@ -17,6 +18,9 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
 
 std::string CfgFunc::get_llvm() {
     spdlog::debug("inside CfgFunc::{}",__func__);
+    if(dynamic_pointer_cast<ast::VoidType>(this->retType)) spdlog::debug("found void type!\n");
+    if(dynamic_pointer_cast<ast::StructType>(this->retType)) spdlog::debug("found struct type!\n");
+    this->retType->get_llvm();
     std::string llvm_ir = fmt::format("define noundef {} @{}(",this->retType->get_llvm(),this->name);
     //add params
     for (size_t i = 0; i < this->params.size(); ++i) {
