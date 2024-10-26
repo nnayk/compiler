@@ -29,6 +29,7 @@ std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
 
 std::string IdentifierExpression::get_llvm_init() {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+    spdlog::debug("id={}\n",id);
     this->deref_result = Register::create();
     auto deref_llvm = this->deref_result->get_llvm();
     spdlog::debug("deref_llvm = {}\n",deref_llvm);
@@ -39,6 +40,10 @@ std::string IdentifierExpression::get_llvm_init() {
     spdlog::debug("alignment llvm = {}\n",alignment_llvm);
     auto result_llvm = this->result->get_llvm();
     spdlog::debug("result llvm = {}\n",result_llvm);
+    assert(this->result);
+    assert(this->getResult());
+    assert(this->deref_result);
+    assert(this->getDerefResult());
     return TAB+fmt::format("{} = load {}, ptr {}, align {}\n",deref_llvm,type_llvm,result_llvm,alignment_llvm);
 }
 

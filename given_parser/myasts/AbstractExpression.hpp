@@ -14,6 +14,8 @@ public:
     AbstractExpression(int lineNum);
 	virtual std::string get_llvm_init() override;
 	virtual std::string get_llvm() override;
+    virtual std::shared_ptr<Register> getDerefResult() const override;
+    virtual std::shared_ptr<Register> getResult() const override;
 
     // Virtual destructor to allow proper cleanup of derived objects
     virtual ~AbstractExpression() {}

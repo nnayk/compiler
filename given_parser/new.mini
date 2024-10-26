@@ -7,5 +7,9 @@ struct A {
 
 fun main() int {
     struct A data;
+    struct A data2;
     data = new A;
+    data.x=3;
+    data2.x=data.y;
+    
 }

@@ -9,7 +9,6 @@ namespace ast {
 
 class IdentifierExpression : public AbstractExpression {
 public:
-     std::shared_ptr<ast::Type> type = nullptr; 
     // Constructor
     IdentifierExpression(int lineNum, const std::string& id);
 
@@ -25,7 +24,6 @@ public:
 private:
     std::string id;  // Identifier string
 protected:
-    std::shared_ptr<Register> deref_result=nullptr; // see similar comment about similar attr in Lvalue.hpp for explanation
 };
 
 } // namespace ast

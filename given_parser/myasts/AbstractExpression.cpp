@@ -22,4 +22,12 @@ std::string AbstractExpression::get_llvm() {
     return "";
 }
 
+std::shared_ptr<Register> AbstractExpression::getResult() const {
+    return this->result;
+}
+
+std::shared_ptr<Register> AbstractExpression::getDerefResult() const {
+    return this->deref_result;
+}
+
 }  // namespace ast

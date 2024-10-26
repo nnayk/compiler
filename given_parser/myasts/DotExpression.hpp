@@ -3,6 +3,7 @@
 
 #include "AbstractExpression.hpp"
 #include "Expression.hpp"
+#include "Register.hpp"
 #include <string>
 #include <memory>
 
@@ -10,6 +11,7 @@ namespace ast {
 
 class DotExpression : public AbstractExpression {
 public:
+    int offset;
     // Constructor
     DotExpression(int lineNum, std::shared_ptr<Expression> left, const std::string& id);
 
@@ -21,6 +23,10 @@ public:
         return fmt::format("DotExpression(lineNum={},id={},left={}\n)",lineNum,this->getId(),
                             left);
     }
+    std::string get_llvm_init() override;
+    std::string get_llvm() override;
+    std::shared_ptr<ast::StructType> getLeftType(); 
+    std::shared_ptr<Type> resolveType(Env &env) override; 
 
 private:
     std::shared_ptr<Expression> left_;  // Left expression
