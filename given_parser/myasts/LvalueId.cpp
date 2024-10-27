@@ -28,6 +28,9 @@ Resolve the Lvalue to a base type. If not possible raise an exception.
 std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
     spdlog::debug("inside LvalueId::{}\n",__func__);
     auto id = this->getId();
+    auto it = env.lookup(id);
+    //TODO: abstract away the lookup logic. call env.lookup() and 
+    // use the returned entry to set this->type and call this->result-.set_globa... if needed (entry will have a flag to indicate local,param,or global)
     // look in local env
     if(env.bindings.find(id) != env.bindings.end()) {
         auto it = env.bindings.find(id);

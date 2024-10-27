@@ -67,8 +67,8 @@ void AssignmentStatement::typecheck(Env &env) {
     }
     spdlog::debug("line {}: target type {} ~ source type {}",this->getLineNum(),*targetType,*sourceType);
     spdlog::debug("equal? {}",typesAreEqual);
-    // add the lhs to the env
-    env.addBinding(target->getId(),std::make_shared<Entry>(targetType));
+    // add the lhs to the env UPDATE: DONT THINK THIS IS NEEDED
+    //env.addBinding(target->getId(),std::make_shared<Entry>(targetType));
 }
 
 

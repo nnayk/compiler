@@ -12,7 +12,8 @@ class Env;
 class Entry {
 public:
     std::shared_ptr<ast::Type> type;
-    int is_global = 0; // 0 = local
+    int is_global = 0;
+    int scope = 2; // 0 = local, 1 = param, 2 = global
     // Constructor
     Entry(std::shared_ptr<ast::Type> t);
    // Virtual destructor
@@ -28,7 +29,7 @@ public:
 class StructEntry : public Entry {
 public:
     int size = 0; // size of struct in bytes (no padding)
-    std::shared_ptr<Env> attrEnv; // used to track struct attributes
+    std::shared_ptr<Env> attrEnv = nullptr; // used to track struct attributes
     // Constructor
     StructEntry(std::shared_ptr<ast::Type> t,int size): Entry(t), size(size) { std::cout << "FOO";}
 };
@@ -39,6 +40,7 @@ public:
     Env();
     void addBinding(const std::string &key,std::shared_ptr<Entry> entry);
     std::shared_ptr<Entry> lookup(const std::string &id);
+    void display(); 
 };
 
 template <>

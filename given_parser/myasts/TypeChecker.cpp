@@ -93,6 +93,7 @@ void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &type
         int offset = 0;
         structE->attrEnv = std::make_shared<Env>();
         for (const auto& field : typeDecl->fields) {
+            spdlog::debug("field={}\n",field.getName());
             if (fieldNames.find(field.getName()) != fieldNames.end()) {
                 throw TypeException(fmt::format("Duplicate field name {} found in type: {}", field.getName(), typeDecl->name));
             }
@@ -142,8 +143,9 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
 	std::unordered_set<std::string> funcNames;
 	std::unordered_set<std::string> paramNames;
 	std::unordered_set<std::string> localNames;
-    Env localEnv = Env(); // function scope env (locals + params)
+    std::shared_ptr<Env> localEnv; // function scope env (locals + params)
 	for(const auto& func : funcs) {
+        localEnv = std::make_shared<Env>();
 		spdlog::debug("func name = {}",func->name);
 		if(funcNames.find(func->name) != funcNames.end()) {
 	 		throw TypeException(fmt::format("Duplicate function name found: {}", func->name));
@@ -154,7 +156,9 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
                 throw TypeException(fmt::format("Duplicate param name {} found in function {}", param.getName(), func->name));
             }
             paramNames.insert(param.getName());
-            localEnv.addBinding(param.getName(),std::make_shared<Entry>(param.getType()));
+            auto entry = std::make_shared<Entry>(param.getType());
+            entry->scope = 1;
+            localEnv->addBinding(param.getName(),entry);
         }
 		// Check local names are unique (and that there's no overlap w/param names)
         for (const auto& local : func->locals) {
@@ -163,11 +167,13 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
             } else if (paramNames.find(local.getName()) != paramNames.end()) {
                 throw TypeException(fmt::format("Duplicate local name {} found in function {} (clases w/param)", local.getName(), func->name));
             }
-            localEnv.addBinding(local.getName(),std::make_shared<Entry>(local.getType()));
+            auto entry = std::make_shared<Entry>(local.getType());
+            entry->scope = 0;
+            localEnv->addBinding(local.getName(),entry);
             localNames.insert(local.getName());
         }
-        func->typecheck(localEnv);
-        funcLocalEnvs[func->name] = localEnv;
+        func->typecheck(*localEnv);
+        funcLocalEnvs[func->name] = *localEnv;
 		paramNames.clear();
 		localNames.clear();
 		funcTLE.addBinding(func->name,std::make_shared<Entry>(func->retType));
