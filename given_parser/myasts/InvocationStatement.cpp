@@ -12,6 +12,14 @@ std::shared_ptr<Expression> InvocationStatement::getExpression() const {
 }
 
 void InvocationStatement::typecheck(Env &env) {
+    this->getExpression()->resolveType(env);
+}
+
+std::string InvocationStatement::get_llvm() {
+    spdlog::debug("inside InvocationStatement::{}\n",__func__);
+    std::string llvm = this->getExpression()->get_llvm_init();
+    llvm += this->getExpression()->get_llvm();
+    return llvm;
 }
 
 } // namespace ast

@@ -22,5 +22,10 @@ void Function::typecheck(Env env) { //TODO: check that env is a copy of tle
     // TODO:#2+#3 from description
     return;
 }
+
+const std::string& Function::getName() const {
+    return this->name;
+}
+
 } // namespace ast
 

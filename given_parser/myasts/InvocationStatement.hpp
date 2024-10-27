@@ -20,6 +20,7 @@ public:
  	}
 	
 	void typecheck(Env &env) override;
+    virtual std::string get_llvm() override;
 
 private:
     std::shared_ptr<Expression> expression; // The expression to be invoked

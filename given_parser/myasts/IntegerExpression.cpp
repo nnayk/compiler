@@ -12,7 +12,8 @@ std::string IntegerExpression::getValue() const {
 }
 
 std::shared_ptr<Type> IntegerExpression::resolveType(Env &env) {
-    return std::make_shared<IntType>();
+    this->type = std::make_shared<IntType>();
+    return this->type;
 }
 
 std::string IntegerExpression::get_llvm() {

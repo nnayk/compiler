@@ -6,7 +6,10 @@ namespace ast {
 FalseExpression::FalseExpression(int lineNum)
     : AbstractExpression(lineNum) {}
 
-std::shared_ptr<Type> FalseExpression::resolveType(Env &env)  { return std::make_shared<BoolType>(); }
+std::shared_ptr<Type> FalseExpression::resolveType(Env &env)  { 
+    this->type = std::make_shared<BoolType>(); 
+    return this->type;
+}
 
 std::string FalseExpression::get_llvm() {
     return "0";
