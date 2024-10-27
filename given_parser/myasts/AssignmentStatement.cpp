@@ -43,10 +43,11 @@ std::string AssignmentStatement::get_llvm() {
     auto source_llvm = this->source->get_llvm();
     if(dynamic_pointer_cast<ast::InvocationExpression>(this->source)) {
         source_llvm = source_llvm.substr(1); // detab
-        llvm_ir += TAB+fmt::format("{} = {}\n",target_llvm,source_llvm); 
-    } else {
-        llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
+        auto temp_reg = Register::create();
+        llvm_ir += TAB+fmt::format("{} = {}\n",temp_reg->get_llvm(),source_llvm); 
+        source_llvm = temp_reg->get_llvm();
     }
+    llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
     spdlog::debug("assignment llvm = {}",llvm_ir);
 	return llvm_ir;
 }
