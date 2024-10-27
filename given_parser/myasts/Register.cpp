@@ -1,7 +1,7 @@
 #include "Register.hpp"
 #include <spdlog/spdlog.h>
 
-int Register::reg = 0;
+int Register::reg = 1;
 std::string Register::LOCAL_PREFIX = "%";
 std::string Register::GLOBAL_PREFIX = "@";
 std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;

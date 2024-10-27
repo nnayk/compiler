@@ -38,7 +38,19 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
 		arg->resolveType(env);
 	} 
     return nullptr;
-} 
+}
+
+std::string InvocationExpression::get_llvm_init() {
+	std::string llvm = "";
+	// load each arg
+	// call the function
+	return llvm;
+}
+ 
+std::string InvocationExpression::get_llvm() { 
+	std::string llvm = "";
+	return llvm;
+}
 
 } // namespace ast
 
