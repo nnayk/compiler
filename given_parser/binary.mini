@@ -2,8 +2,10 @@ fun main() int {
     int x;
     int y;
     int z;
+    bool le;
     x=3;
     y=4;
     z=x+y;
+    le = z <= y;
     return z;
 }

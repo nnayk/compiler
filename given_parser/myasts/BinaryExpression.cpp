@@ -49,61 +49,81 @@ std::shared_ptr<ast::Type> BinaryExpression::resolveType(Env &env) {
 	auto left_type = this->getLeft()->resolveType(env);
 	auto right_type = this->getRight()->resolveType(env);
 	assert(typeid(left_type) == typeid(right_type));
-	this->type = left_type;
-	return this->type;
+    //TODO: actually typecheck that left and right are either both ints or both bools
+	auto operatorType = this->getOperator();
+    if(operatorType==BinaryExpression::Operator::PLUS || operatorType==BinaryExpression::Operator::MINUS || operatorType==BinaryExpression::Operator::TIMES || operatorType==BinaryExpression::Operator::DIVIDE) {
+        this->type = std::make_shared<ast::IntType>();
+    } else {
+        this->type = std::make_shared<ast::BoolType>();
+    }
+    return this->type;
 }
 
 std::string BinaryExpression::get_llvm_init() {
-    auto llvm_str = this->getLeft()->get_llvm_init();
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+	auto llvm_str = this->getLeft()->get_llvm_init();
     llvm_str += this->getRight()->get_llvm_init();
 	llvm_str += TAB;
     auto operatorType = this->getOperator();
 	auto left_llvm = this->getLeft()->get_llvm();
 	auto right_llvm = this->getRight()->get_llvm();
-	auto type_llvm = this->type->get_llvm();
+	auto type_llvm = this->getLeft()->type->get_llvm();
 	this->result = Register::create();
 	auto result_llvm = this->result->get_llvm();
+	std::string operator_llvm = "";
 	switch (operatorType) {
-        case BinaryExpression::Operator::PLUS:
-            spdlog::debug("The operator is PLUS.");
-			llvm_str += fmt::format("{} = add {} {}, {}\n",result_llvm,type_llvm,left_llvm,right_llvm); 
-            break;
-        case BinaryExpression::Operator::MINUS:
-            spdlog::debug("The operator is MINUS.");
-            break;
-        case BinaryExpression::Operator::TIMES:
-            spdlog::debug("The operator is TIMES.");
-            break;
-        case BinaryExpression::Operator::DIVIDE:
-            spdlog::debug("The operator is DIVIDE.");
-            break;
-        case BinaryExpression::Operator::LT:
-            spdlog::debug("The operator is LT.");
-            break;
-        case BinaryExpression::Operator::GT:
-            spdlog::debug("The operator is GT.");
-            break;
-        case BinaryExpression::Operator::LE:
-            spdlog::debug("The operator is LE.");
-            break;
-        case BinaryExpression::Operator::GE:
-            spdlog::debug("The operator is GE.");
-            break;
-        case BinaryExpression::Operator::EQ:
-            spdlog::debug("The operator is EQ.");
-            break;
-        case BinaryExpression::Operator::NE:
-            spdlog::debug("The operator is NE.");
-            break;
-        case BinaryExpression::Operator::AND:
-            spdlog::debug("The operator is AND.");
-            break;
-        case BinaryExpression::Operator::OR:
-            spdlog::debug("The operator is OR.");
-            break;
-        default:
-			throw TypeException("Unknown operator!"); 
+		case BinaryExpression::Operator::PLUS:
+			spdlog::debug("The operator is PLUS.");
+			operator_llvm = "add";
+			break;
+		case BinaryExpression::Operator::MINUS:
+			spdlog::debug("The operator is MINUS.");
+			operator_llvm = "sub";
+			break;
+		case BinaryExpression::Operator::TIMES:
+			spdlog::debug("The operator is TIMES.");
+			operator_llvm = "mul";
+			break;
+		case BinaryExpression::Operator::DIVIDE:
+			spdlog::debug("The operator is DIVIDE.");
+			operator_llvm = "sdiv";
+			break;
+		case BinaryExpression::Operator::LT:
+			spdlog::debug("The operator is LT.");
+			operator_llvm = "icmp slt";
+			break;
+		case BinaryExpression::Operator::GT:
+			spdlog::debug("The operator is GT.");
+			operator_llvm = "icmp sgt";
+			break;
+		case BinaryExpression::Operator::LE:
+			spdlog::debug("The operator is LE.");
+			operator_llvm = "icmp sle";
+			break;
+		case BinaryExpression::Operator::GE:
+			spdlog::debug("The operator is GE.");
+			operator_llvm = "icmp sge";
+			break;
+		case BinaryExpression::Operator::EQ:
+			spdlog::debug("The operator is EQ.");
+			operator_llvm = "icmp eq";
+			break;
+		case BinaryExpression::Operator::NE:
+			spdlog::debug("The operator is NE.");
+			operator_llvm = "icmp ne";
+			break;
+		case BinaryExpression::Operator::AND:
+			spdlog::debug("The operator is AND.");
+			operator_llvm = "and";
+			break;
+		case BinaryExpression::Operator::OR:
+			spdlog::debug("The operator is OR.");
+			operator_llvm = "or";
+			break;
+		default:
+			throw TypeException("Unknown operator!");
 	} 
+	llvm_str += fmt::format("{} = {} {} {}, {}\n",result_llvm,operator_llvm,type_llvm,left_llvm,right_llvm);
     return llvm_str;
 }
 
