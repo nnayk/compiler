@@ -1,7 +1,7 @@
 #include "AssignmentStatement.hpp"
 #include "Types.hpp"
 #include "TypeException.hpp"
-
+#include "InvocationExpression.hpp"
 extern std::string TAB;
 
 namespace ast {
@@ -39,7 +39,14 @@ std::string AssignmentStatement::get_llvm() {
     // structs are stored in global space), all vars are ptrs and the store
     // instruction will thus be identical for non-ssa which makes things simple!
     std::string type_llvm = this->target->type->get_llvm();
-    llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,this->source->get_llvm(),this->target->get_llvm(),this->target->type->alignment());
+    auto target_llvm = this->target->get_llvm();
+    auto source_llvm = this->source->get_llvm();
+    if(dynamic_pointer_cast<ast::InvocationExpression>(this->source)) {
+        source_llvm = source_llvm.substr(1); // detab
+        llvm_ir += TAB+fmt::format("{} = {}\n",target_llvm,source_llvm); 
+    } else {
+        llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
+    }
     spdlog::debug("assignment llvm = {}",llvm_ir);
 	return llvm_ir;
 }

@@ -33,5 +33,6 @@ void Register::set_global_prefix() {
 }
 
 std::string Register::get_llvm() {
+    //this->references.push_back(e);
     return this->prefix+this->id;
 }

@@ -166,7 +166,10 @@ std::shared_ptr<ast::InvocationStatement> parse_invocation(const nlohmann::json 
     // Extract line number and expression from the JSON
     int lineNum = json["line"];
     std::vector<std::shared_ptr<ast::Expression>> args;
-    std::shared_ptr<ast::InvocationExpression> outmost_invocation = std::make_shared<ast::InvocationExpression>(lineNum,json["id"],args);
+    std::string id = json["id"];
+    std::shared_ptr<ast::InvocationExpression> outmost_invocation = std::make_shared<ast::InvocationExpression>(lineNum,id,args);
+    std::cout << "func = " << outmost_invocation->name << std::endl;
+    spdlog::debug("parsing invocation for function {}, invoke expr name = {}\n",id,outmost_invocation->name);
     std::shared_ptr<ast::InvocationStatement> stmt = std::make_shared<ast::InvocationStatement>(lineNum,outmost_invocation);
     for(auto arg_json: json["args"]) {
         args.push_back(parse_expr(arg_json));
@@ -246,7 +249,8 @@ std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
 	if(json.contains("left")) {
         spdlog::debug("LvalueDot");
         std::shared_ptr<ast::LvalueDot> lvalue;
-        lvalue = std::make_shared<ast::LvalueDot>(lineNum,nullptr,json["id"]);
+        std::string id = json["id"];
+        lvalue = std::make_shared<ast::LvalueDot>(lineNum,nullptr,id);
         lvalue->left  = parse_lvalue(json["left"]); 
         return lvalue;
 	} else {
@@ -262,7 +266,8 @@ std::shared_ptr<ast::Lvalue> parse_lvalue(const nlohmann::json &json) {
 */
 std::shared_ptr<ast::LvalueId> parse_lvalueId(int lineNum,const nlohmann::json &json) {
 //    spdlog::debug("inside LvalueId::{}\n",__func__);
-    return std::make_shared<ast::LvalueId>(lineNum,json["id"]);
+    std::string id = json["id"];
+    return std::make_shared<ast::LvalueId>(lineNum,id);
 }
 
 std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
@@ -273,7 +278,9 @@ std::shared_ptr<ast::Expression> parse_expr(const nlohmann::json &json) {
     spdlog::debug("parsing {} expr",exprStr);
     if(exprStr == "invocation") {
         std::vector<std::shared_ptr<ast::Expression>> args;
-        expr = std::make_shared<ast::InvocationExpression>(lineNum,json["id"].dump(),args);
+        std::string id = json["id"];
+        expr = std::make_shared<ast::InvocationExpression>(lineNum,id,args);
+        spdlog::debug("parsing invocation for function {}, invoke expr name = {}\n",id,dynamic_pointer_cast<ast::InvocationExpression>(expr)->name);
         for(auto arg:json["args"]) {
             args.push_back(parse_expr(arg));
         }

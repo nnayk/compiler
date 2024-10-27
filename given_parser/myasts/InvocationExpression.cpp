@@ -26,6 +26,8 @@ being called
 std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
 	// Check that the types of the params match the expected types of the 
 	// function params (also check that the function exists in the 1st place)
+    spdlog::debug("inside InvocationExpression::{}\n",__func__);
+    spdlog::debug("func name = {}\n",name);
 	auto args = this->getArguments();
     auto func = p.getFunction(name);
     /*
@@ -43,13 +45,15 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
         auto arg = args[index];
 		auto actual_type = arg->resolveType(env);
         auto expected_type = func->params[index].getType();
-        if(typeid(actual_type) != typeid(expected_type)) {
+        if(std::dynamic_pointer_cast<StructType>(expected_type) && std::dynamic_pointer_cast<NullType >(actual_type)) {
+            spdlog::debug("Passing null for struct obj\n");
+        } else if(typeid(actual_type) != typeid(expected_type)) {
             throw TypeException(fmt::format("Expected type {} for arg {}, got type {}\n",*expected_type,index+1,*actual_type));
         } else {
             spdlog::debug(fmt::format("Arg is correct type: expected type {} for arg {}, got type {}\n",*expected_type,index+1,*actual_type));
         }
 	} 
-    return nullptr;
+    return this->type;
 }
 
 std::string InvocationExpression::get_llvm_init() {
