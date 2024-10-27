@@ -27,8 +27,9 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
 	auto args = this->getArguments();
     auto func = p.getFunction(name);
     if(!func) {
-    
+   		throw TypeException(fmt::format("Attempt to invoke nonexistent function {}\n",name)); 
     }
+	this->type = func->retType;
     int actualArgs = args.size();
     int expectedArgs = func->params.size();
 	if(args.size() != func->params.size()) {
@@ -41,8 +42,11 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
 }
 
 std::string InvocationExpression::get_llvm_init() {
-	std::string llvm = "";
+	std::string llvm = fmt::format("call {} {}(",this->type->get_llvm(),this->name);
 	// load each arg
+	for(auto arg : this->arguments) {
+		llvm += arg->get_llvm_init();
+	}
 	// call the function
 	return llvm;
 }
