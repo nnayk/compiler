@@ -21,6 +21,7 @@ std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
     auto entry = env.lookup(id);
     if(entry) {
         this->type = entry->type;
+        this->scope = entry->scope;
         return this->type; 
     } else {
         throw TypeException(fmt::format("Unknown identifier {}",id));
@@ -30,6 +31,7 @@ std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
 std::string IdentifierExpression::get_llvm_init() {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     spdlog::debug("id={}\n",id);
+    if(this->scope == 1) return "";
     this->deref_result = Register::create();
     auto deref_llvm = this->deref_result->get_llvm();
     spdlog::debug("deref_llvm = {}\n",deref_llvm);
@@ -50,8 +52,12 @@ std::string IdentifierExpression::get_llvm_init() {
 std::string IdentifierExpression::get_llvm() {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
 	auto deref_result = this->deref_result;
-	assert(deref_result);
-	return this->deref_result->get_llvm();
+    if(deref_result) {
+        return this->deref_result->get_llvm();
+    } else {
+        assert(this->scope==1);
+        return this->result->get_llvm();
+    }
 }
 
 } // namespace ast

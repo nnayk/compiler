@@ -9,6 +9,7 @@ namespace ast {
 
 class IdentifierExpression : public AbstractExpression {
 public:
+    int scope = 0;
     // Constructor
     IdentifierExpression(int lineNum, const std::string& id);
 

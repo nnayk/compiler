@@ -78,8 +78,9 @@ std::string DotExpression::get_llvm_init() {
     spdlog::debug("Got the next numerical register of {}\n",reg->get_id());
     this->result = reg;
     auto reg_llvm = this->result->get_llvm();
-    assert(this->getLeft()->getDerefResult());
-    auto left_reg_llvm = this->getLeft()->getDerefResult()->get_llvm();
+    //assert(this->getLeft()->getDerefResult());
+    //auto left_reg_llvm = this->getLeft()->getDerefResult()->get_llvm();
+    auto left_reg_llvm = this->getLeft()->get_llvm();
     auto left_type = this->getLeftType(); 
     auto struct_name = left_type->getName();
     llvm_ir += TAB+fmt::format("{} = getelementptr inbounds %struct.{}, ptr {}, i32 0, i32 {}\n",reg_llvm,struct_name,left_reg_llvm,this->offset); // Yes the hardcoded i32 parts are intentional based on observing what clang does
@@ -90,8 +91,10 @@ std::string DotExpression::get_llvm_init() {
         auto struct_ptr_llvm = this->deref_result->get_llvm();
         llvm_ir += TAB+fmt::format("{} = load ptr, ptr {}, align {}\n",struct_ptr_llvm,reg_llvm,this->type->alignment());
     } else {
-        spdlog::debug("{} is not a struct, returning empty str\n",this->getId());
-        this->deref_result = nullptr;
+        spdlog::debug("{} is not a struct\n",this->getId());
+        this->deref_result = std::make_shared<Register>();
+        auto deref_llvm = this->deref_result->get_llvm();
+        llvm_ir += TAB+fmt::format("{} = load {}, ptr {}, align {}\n",deref_llvm,this->type->get_llvm(),reg_llvm,this->type->alignment());
     }
     return llvm_ir;
     return "";
@@ -101,11 +104,11 @@ std::string DotExpression::get_llvm() {
     spdlog::debug("inside DotExpression::{}\n",__func__);
     if(dynamic_pointer_cast<ast::StructType>(this->type)) {
         spdlog::debug("struct type!\n");
-        auto deref_result = this->getDerefResult();
-        assert(deref_result);
-        return this->deref_result->get_llvm();
     }
-    return this->result->get_llvm();
+    auto deref_result = this->getDerefResult();
+    assert(deref_result);
+    return this->deref_result->get_llvm();
+    //return this->result->get_llvm();
 }
 
 } // namespace ast
