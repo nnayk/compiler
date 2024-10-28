@@ -71,6 +71,7 @@ std::string LvalueId::get_llvm_init() {
 }
 
 std::string LvalueId::get_llvm() {
+	spdlog::debug("inside LvalueId::{}\n",__func__);
     return this->result->get_llvm();
 }
 

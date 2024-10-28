@@ -20,7 +20,8 @@ std::shared_ptr<ast::Type> NewExpression::resolveType(Env &env) {
 		auto structEntry = dynamic_pointer_cast<StructEntry>(it->second);
 		assert(structEntry);
 		this->struct_size = structEntry->size;
-		return structEntry->type;
+        this->type = structEntry->type;
+		return this->type;
 	} else {
 		throw TypeException(fmt::format("No struct named {}\n",id));
 	}

@@ -26,9 +26,13 @@ std::string AssignmentStatement::get_llvm() {
 	std::string llvm_ir = "";
     //spdlog::debug("target = {}\n",*this-target);
     spdlog::debug("source = {}\n",*(this->source));
+    assert(this->source);
+    assert(this->target);
+    assert(this->target->type);
+    assert(this->source->type);
 	//TODO: impleement get_llvm_init for expr + lvalue classes
 	std::string target_llvm_init = this->target->get_llvm_init();
-    spdlog::debug("Got target llvm: {}\n",target_llvm_init);
+    spdlog::debug("Got target llvm for id {}: {}\n",this->target->getId(),target_llvm_init);
     spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
     std::string source_llvm_init = this->source->get_llvm_init();
     spdlog::debug("Got source llvm: {}\n",source_llvm_init);

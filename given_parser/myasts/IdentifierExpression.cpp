@@ -17,10 +17,13 @@ const std::string& IdentifierExpression::getId() const {
 }
 
 std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
+    spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     auto id = this->getId();
+    spdlog::debug("id = {},lineNum={}\n",id,this->getLineNum());
     auto entry = env.lookup(id);
     if(entry) {
         this->type = entry->type;
+        spdlog::debug("set type for id {} to {}\n",id,*this->type);
         this->scope = entry->scope;
         return this->type; 
     } else {
