@@ -18,6 +18,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     spdlog::debug("ConditionalStatement:{}",__func__);
 	std::vector<std::shared_ptr<Bblock>> blocks;
 	auto if_block = std::make_shared<Bblock>(); // The head block
+    blocks.push_back(if_block);
 	if_block->stmts.push_back(shared_from_this());
     //TODO: 
     // Add left and right children (then and else blocks respectively)
@@ -37,6 +38,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         then_blocks[then_blocks.size()-1]->children.push_back(dummy_block);
         dummy_block->parents.push_back(then_blocks[then_blocks.size()-1]);
         if_block->children.push_back(then_blocks[0]);
+        blocks.insert(blocks.end(),then_blocks.begin(),then_blocks.end());
         then_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added then block: {}\n",*then_blocks[0]);
     } else {
@@ -48,6 +50,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
         dummy_block->parents.push_back(else_blocks[else_blocks.size()-1]);
         if_block->children.push_back(else_blocks[0]);
+        blocks.insert(blocks.end(),else_blocks.begin(),else_blocks.end());
         else_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added else block: {}\n",*else_blocks[0]);
     } else {
@@ -63,13 +66,14 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         spdlog::debug("Added else DUMMY block\n");
     }
     //else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
-    blocks.push_back(if_block);
     // if block has exactly 2 children. TODO: Update this when optimizations are made
     assert(if_block->children.size()==2);
+    /*
     for(auto child : if_block->children) {
         blocks.push_back(child);
 		spdlog::debug("ADDED CHILD = {}",*child);
     }
+    */
     if(std::find(blocks.begin(),blocks.end(),dummy_block) == blocks.end()) {
         spdlog::debug("Pushing dummy block to blocks vector (not a child of if block)");
         blocks.push_back(dummy_block);
@@ -77,6 +81,8 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         spdlog::debug("NOT pushing dummy block to blocks vector again (child of if block)");
     }
     spdlog::debug("Created if block w/{} children\n",if_block->children.size());
+    spdlog::debug("{}\n",*blocks[0]);
+    spdlog::debug("Conditional statement returning {} blocks\n",blocks.size());
     return blocks;
 }
 

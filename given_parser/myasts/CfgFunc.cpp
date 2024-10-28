@@ -83,11 +83,15 @@ std::string CfgFunc::display() const {
             queue.pop();
 			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way
-            if(block->visited == 1) continue;
+            if(block->visited == 1) 
+            {
+                spdlog::debug("Already visited this blocks:{}\n",*block);
+                continue;
+            }
 			bfs_blocks++;
-            output += fmt::format("START OF BBLOCK\n");
+            output += fmt::format("START OF BBLOCK #{}\n",bfs_blocks);
             output += fmt::format("{}",*block);
-            output += fmt::format("END OF BBLOCK\n\n\n");
+            output += fmt::format("END OF BBLOCK\n\n\n",bfs_blocks);
             block->visited = 1;
 			for(auto child : block->children) {
                 spdlog::debug("pushing child {}",*child);

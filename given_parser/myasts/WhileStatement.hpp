@@ -18,6 +18,7 @@ public:
 		return fmt::format("WhileStatement(lineNum={})",lineNum);
 	}
 	void typecheck(Env &env) override;
+    std::vector<std::shared_ptr<Bblock>> get_cfg() override; 
 };
 
 } // namespace ast

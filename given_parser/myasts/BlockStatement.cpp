@@ -55,15 +55,58 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             spdlog::debug("Removing the dummy bblock from the list of bblocks");
             blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end()); 
         } else if(prev_tail) {
+            // TODO: if curr stmt not an if or while stmt then merge it into
+            // prev_tail's BBlock stmts vector instead of keeping it as a separate
+            // child block
+            // Add after block
+            // URGENT: replace these 2 lines w/an addEdge method
             prev_tail->children.push_back(new_head);
             new_head->parents.push_back(prev_tail);
+            /*
+            if(dynamic_pointer_cast<ast::WhileStatement>(prev_stmt)) {
+                // add 
+                for(auto parent : prev_tail->parents) {
+                    spdlog::debug("Looking at parent {}\n",*parent);
+                    //assert(0 <= parent->children.size() && parent->children.size() <= 2);
+                    if(parent->children[0] == dummy_block) {
+                        parent->children[0] = new_head;
+                    } else {
+                        parent->children[1] = new_head;
+                    }
+                    new_head->parents.push_back(parent);
+               }
+            }
+            */
         }
+        /*
+        if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
+            // add self loop (then case)
+            new_head->children.push_back(new_head);
+            new_head->parents.push_back(new_head);
+            //TODO: append guard (condition) stmt to prev_tail as an if statement. if prev tail is null then make a new block to represent cond as prev_tail AND make prev_tail the parent of new_head since this would not have been done already. this must occur before the self loop is added with new head in order to guarantee that parents[0] is the previous block (or else it'll be the new_head)
+            auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->guard,nullptr,nullptr);
+            if(prev_tail) {
+                prev_tail->statements.push_back(cond_stmt);
+            } else {
+                prev_tail = std::make_shared<Bblock>();
+                prev_tail->statements.push_back(cond_stmt);
+                prev_tail->children.push_back(new_head);
+                new_head->parents.push_back(prev_tail);
+            }
+        }
+        */
+        // TODO: once bblock merging is done (see above TODO) these will have
+        // to be tweaked
         prev_stmt = stmt;
         prev_blocks = new_blocks;
         prev_tail = new_blocks[new_blocks.size()-1];
         spdlog::debug("prev_tail = {}\n",*prev_tail);
+        spdlog::debug("stmt = {}\n",*stmt);
+        spdlog::debug("before total # of blocks = {}, adding {} blocks\n",blocks.size(),new_blocks.size());
         blocks.insert(blocks.end(),new_blocks.begin(),new_blocks.end());
+        spdlog::debug("after total # of blocks = {}, added {} blocks\n",blocks.size(),new_blocks.size());
     }
+    spdlog::debug("FINAL # of blocks = {}\n",blocks.size());
     return blocks;
 }
 

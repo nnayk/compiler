@@ -36,7 +36,7 @@ struct fmt::formatter<Bblock> : fmt::formatter<std::string> {
             if(child->stmts.size() > 0)
                 out = fmt::format_to(out,"HEAD STMT: {}\n",*(child->stmts[0]));
             else
-                out = fmt::format_to(out,"DUMMY CHILD");
+                out = fmt::format_to(out,"DUMMY CHILD with {} children, {} parents",child->children.size(),child->parents.size());
 		}
 		out = fmt::format_to(out,"\nNUMBER OF PARENTS: {}\n", block.parents.size());
 		out = fmt::format_to(out,"PARENTS:\n");

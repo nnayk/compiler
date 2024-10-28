@@ -1,0 +1,19 @@
+fun foo(int a, int b, int c) int				
+{
+  int ret;
+  ret=0;
+  if(a)
+  {
+    ret = 1;
+    if(b)
+    {
+      ret = 2;
+      if(c)
+      {
+        ret = 3;
+      }
+    }
+  }
+  return ret;
+} 
+
