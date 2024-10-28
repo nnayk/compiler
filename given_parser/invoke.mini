@@ -1,14 +1,24 @@
-fun foo(int x, bool y) void 
+struct A{
+    int x;
+};
+fun foo(int x, bool y,struct A obj) int 
 {
-    return;
+    int f;
+    f = x+obj.x;
+    return f;
 }
 
 fun main() int 
 {
     bool arg2;
+    int q;
+    struct A data;
+    data.x=96;
     arg2 = false;
-    foo(3,arg2);
-    return 0;
+    data = new A;
+    data.x = 99;
+    q=foo(3,arg2,data);
+    return q;
 }
 
 

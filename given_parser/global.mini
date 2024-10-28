@@ -1,0 +1,6 @@
+int g;
+
+fun main() int {
+    g=3;
+    return g;
+}

@@ -1,0 +1,13 @@
+struct A{
+    int r;
+    int x;
+    bool y;
+};
+
+fun main() int {
+    struct A obj;
+    int y;
+    obj = new A;
+    obj.x = 3;
+    y=4+obj.x;
+}
