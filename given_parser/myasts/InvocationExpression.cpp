@@ -39,7 +39,7 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
     int actualArgs = args.size();
     int expectedArgs = func->params.size();
 	if(args.size() != func->params.size()) {
-        throw TypeException(fmt::format("Expected {} args, got {}",expectedArgs,actualArgs));
+        throw TypeException(fmt::format("Line {}: Expected {} args, got {}",this->getLineNum(),expectedArgs,actualArgs));
     }
 	for(int index = 0; index < actualArgs; index++) {
         auto arg = args[index];

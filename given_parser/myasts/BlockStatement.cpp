@@ -1,5 +1,6 @@
 #include "BlockStatement.hpp"
 #include "ConditionalStatement.hpp" // used during cfg construction
+#include "WhileStatement.hpp" // used during cfg construction
 #include <cassert>
 
 namespace ast {
@@ -25,6 +26,8 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     std::shared_ptr<Statement> prev_stmt = nullptr;
     spdlog::debug("{} stmts to process",this->statements.size());
     for(auto stmt : this->statements) {
+        if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
+        spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
         auto new_blocks = stmt->get_cfg();
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
@@ -41,9 +44,11 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             auto dummy_block = prev_tail; 
 			spdlog::debug("deleting dummy block with {} parents: {}\n", dummy_block->parents.size(),*dummy_block);
 			// TODO: assert it's a dummy block
+            std::string err = "Probably a while conditional stmt (see WhileStatement::get_cfg";
+            assert(dummy_block->stmts.size()==0 && err.c_str());
             for(auto parent : dummy_block->parents) {
-				spdlog::debug("Looking at parent {}\n",*parent);
-				//assert(0 <= parent->children.size() && parent->children.size() <= 2);
+				spdlog::debug("Looking at dummy parent {}\n",*parent);
+				assert(0 <= parent->children.size() && parent->children.size() <= 2);
 				if(parent->children[0] == dummy_block) {
 					parent->children[0] = new_head;
 				} else {
@@ -62,21 +67,19 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             // URGENT: replace these 2 lines w/an addEdge method
             prev_tail->children.push_back(new_head);
             new_head->parents.push_back(prev_tail);
-            /*
             if(dynamic_pointer_cast<ast::WhileStatement>(prev_stmt)) {
-                // add 
-                for(auto parent : prev_tail->parents) {
+                auto prev_head = prev_blocks[0];
+                spdlog::debug("prev_head = {}\n",*prev_head);
+                //assert(prev_head->parents.size() == 1);
+                for(auto parent : prev_head->parents) {
                     spdlog::debug("Looking at parent {}\n",*parent);
                     //assert(0 <= parent->children.size() && parent->children.size() <= 2);
-                    if(parent->children[0] == dummy_block) {
-                        parent->children[0] = new_head;
-                    } else {
-                        parent->children[1] = new_head;
-                    }
+                    parent->children.push_back(new_head);
                     new_head->parents.push_back(parent);
-               }
-            }
-            */
+                    spdlog::debug("parent now = {}\n",*parent);
+                    spdlog::debug("new_head now = {}\n",*new_head);
+                }
+            }  
         }
         /*
         if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
@@ -98,10 +101,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         // TODO: once bblock merging is done (see above TODO) these will have
         // to be tweaked
         prev_stmt = stmt;
+        spdlog::debug("prev_stmt = {}, stmt = {}\n",*prev_stmt,*stmt);
         prev_blocks = new_blocks;
         prev_tail = new_blocks[new_blocks.size()-1];
         spdlog::debug("prev_tail = {}\n",*prev_tail);
-        spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("before total # of blocks = {}, adding {} blocks\n",blocks.size(),new_blocks.size());
         blocks.insert(blocks.end(),new_blocks.begin(),new_blocks.end());
         spdlog::debug("after total # of blocks = {}, added {} blocks\n",blocks.size(),new_blocks.size());
