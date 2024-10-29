@@ -22,8 +22,13 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
 	if_block->stmts.push_back(shared_from_this());
     //TODO: 
     // Add left and right children (then and else blocks respectively)
-    spdlog::debug("ConditionalStatement:Gonna build cfg for THEN stmt {}",*(this->thenBlock));
-    auto then_blocks = this->thenBlock->get_cfg(); 
+    std::vector<std::shared_ptr<Bblock>> then_blocks;
+    if(this->thenBlock) {
+        spdlog::debug("ConditionalStatement:Gonna build cfg for THEN stmt {}",*(this->thenBlock));
+        then_blocks = this->thenBlock->get_cfg();
+    } else {
+        spdlog::debug("then block is null, not building a cfg\n");
+    }
     //TODO: check that elseBlock is non-null. If it's null then will have to point
     // if_block directly to dummy (guarantee that left/first child is thenBlock and
     // right/second child is elseBlock)

@@ -18,6 +18,7 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     std::shared_ptr<Bblock> tail_block;
     if(blocks.size() > 0) {
         tail_block = blocks[blocks.size()-1];
+        spdlog::debug("WhileStatement: picked tail block {}\n",*tail_block );
         tail_block->stmts.push_back(cond_stmt);
     // UPDATE: 10/28 9:35 pm -- this else case is not needed since the loop will be infinite
     // if the body is empty...though it'd still be nice to "support" these kinds of infinite
@@ -25,7 +26,7 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     } else {
         std::string err = "URGENT: Update ConditionalStatement get_cfg to deal w/cases where else and/or then are nullptrs -- here both are null";
         assert(true && err.c_str());
-        tail_block = cond_stmt->get_cfg()[0]; 
+        tail_block = cond_stmt->get_cfg()[0]; // incomplete...
     }
     return blocks;
 }

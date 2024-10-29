@@ -1,6 +1,6 @@
 fun main() int {
     int x;
-    #x = 3;
+    x = 3;
     while(true) {
         x = x+3;
         x = x-1;

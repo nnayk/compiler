@@ -72,6 +72,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 spdlog::debug("prev_head = {}\n",*prev_head);
                 //assert(prev_head->parents.size() == 1);
                 for(auto parent : prev_head->parents) {
+                    if(parent==prev_tail) continue; //skip self loop
                     spdlog::debug("Looking at parent {}\n",*parent);
                     //assert(0 <= parent->children.size() && parent->children.size() <= 2);
                     parent->children.push_back(new_head);
@@ -81,23 +82,31 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 }
             }  
         }
-        /*
         if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
             // add self loop (then case)
-            new_head->children.push_back(new_head);
-            new_head->parents.push_back(new_head);
+            auto new_tail = new_blocks[new_blocks.size()-1];
+            spdlog::debug("new tail = {}\n",*new_tail);
+            new_tail->children.push_back(new_head);
+            new_head->parents.push_back(new_tail);
+            spdlog::debug("now new tail = {}\n",*new_tail);
             //TODO: append guard (condition) stmt to prev_tail as an if statement. if prev tail is null then make a new block to represent cond as prev_tail AND make prev_tail the parent of new_head since this would not have been done already. this must occur before the self loop is added with new head in order to guarantee that parents[0] is the previous block (or else it'll be the new_head)
-            auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->guard,nullptr,nullptr);
+            auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->getLineNum(),static_pointer_cast<WhileStatement>(stmt)->get_guard(),nullptr,nullptr);
             if(prev_tail) {
-                prev_tail->statements.push_back(cond_stmt);
+                prev_tail->stmts.push_back(cond_stmt);
             } else {
-                prev_tail = std::make_shared<Bblock>();
-                prev_tail->statements.push_back(cond_stmt);
-                prev_tail->children.push_back(new_head);
+                auto temp = cond_stmt->get_cfg();
+                std::string err = "This is a makeshift cond stmt that only should contain the while cond stmt -- why is there >1 block???";
+                prev_tail = temp[0];
+                assert(prev_tail->children.size()==2); // 2 dummy blocks (one then, one else)
+                blocks.push_back(prev_tail);
+                // set the then block to the current while block
+                prev_tail->children[0] = new_head; 
+                // get rid of the dummy else block
+                prev_tail->children.pop_back();
+                //prev_tail->children.push_back(new_head);
                 new_head->parents.push_back(prev_tail);
             }
         }
-        */
         // TODO: once bblock merging is done (see above TODO) these will have
         // to be tweaked
         prev_stmt = stmt;
