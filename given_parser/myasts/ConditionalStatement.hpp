@@ -9,12 +9,10 @@
 namespace ast {
 
 class ConditionalStatement : public AbstractStatement { 
-private:
+public:
     std::shared_ptr<Expression> guard;
     std::shared_ptr<Statement> thenBlock;
     std::shared_ptr<Statement> elseBlock;
-
-public:
     // Constructor
     ConditionalStatement(int lineNum, 
                          std::shared_ptr<Expression> guard, 

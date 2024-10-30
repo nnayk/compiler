@@ -14,7 +14,7 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
 	std::vector<std::shared_ptr<Bblock>> blocks;
     // return the blocks with the body and create a final IF block for the cond
     blocks = this->body->get_cfg();
-    auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,nullptr,nullptr);
+    auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,shared_from_this(),nullptr);
     std::shared_ptr<Bblock> tail_block;
     if(blocks.size() > 0) {
         tail_block = blocks[blocks.size()-1];

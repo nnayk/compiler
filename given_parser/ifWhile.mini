@@ -9,5 +9,6 @@ fun main() int {
     while(true) {
         x=6;
     }
-    return 2;
+    x=7;
+    return x;
 }

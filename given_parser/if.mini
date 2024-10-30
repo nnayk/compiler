@@ -10,4 +10,5 @@ fun main() int {
         x=8;
         x=7;
     }
+    return 9;
 }
