@@ -3,6 +3,7 @@
 #include <queue>
 #include <cassert>
 #include "Types.hpp"
+#include "ConditionalStatement.hpp"
 
 std::string TAB="\t";
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
@@ -39,16 +40,36 @@ std::string CfgFunc::get_llvm() {
     if(this->blocks.size() > 0) {
         std::queue<std::shared_ptr<Bblock>> queue;
         queue.push(this->blocks[0]);
+        bool skip_children_llvm = false;
         while(!queue.empty()) {
+            skip_children_llvm = false;
             auto block = queue.front();
             queue.pop();
 			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) continue;
-            llvm_ir += block->get_llvm();
+            if(block->emit_llvm) {
+                llvm_ir += block->get_llvm();
+                spdlog::debug("NOT skipping llvm for block {}\n",*block);
+            } else {
+                spdlog::debug("skipping llvm for block {}\n",*block);
+            }
             block->visited = 1;
+            std::shared_ptr<ast::Statement> stmt = nullptr;
+            auto num_stmts = block->stmts.size();
+            if(num_stmts) {
+                stmt = block->stmts[num_stmts-1];
+                if(dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
+                    spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);
+                    skip_children_llvm = true;
+                }
+            } else {
+                spdlog::debug("dummy block!\n");
+            }
+            // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
 			for(auto child : block->children) {
                 spdlog::debug("pushing child {}",*child);
+                if(skip_children_llvm) child->emit_llvm = false;
                 queue.push(child);
             }
         }

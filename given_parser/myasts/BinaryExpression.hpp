@@ -24,6 +24,7 @@ private:
                      std::shared_ptr<Expression> left, std::shared_ptr<Expression> right);
 
 public:
+    std::shared_ptr<Register> cmp_result = nullptr;
     // Static factory method
     static std::shared_ptr<BinaryExpression> create(int lineNum, const std::string& opStr,
                                                     std::shared_ptr<Expression> left,

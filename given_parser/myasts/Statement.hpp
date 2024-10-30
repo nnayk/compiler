@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Env.hpp"
+#include "TypeException.hpp"
 //#include "Bblock.hpp"
 //#include "CfgFunc.hpp"
 #include <typeinfo>

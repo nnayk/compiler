@@ -4,6 +4,8 @@
 #include "Declaration.hpp"
 #include "Bblock.hpp"
 #include "Function.hpp"
+#include "Statement.hpp"
+
 class CfgFunc; // forward declare for build method
 class CfgFunc {
     public:

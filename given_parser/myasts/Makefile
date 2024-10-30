@@ -9,7 +9,7 @@ IdentifierExpression.o IntegerExpression.o TrueExpression.o FalseExpression.o \
 NewExpression.o PrintStatement.o ConditionalStatement.o \
 WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
 InvocationStatement.o Env.o ReadExpression.o Register.o Bblock.o Lvalue.o \
-NullExpression.o 
+NullExpression.o Label.o 
 
 CFG_OBJS=CfgProg.o CfgFunc.o 
 

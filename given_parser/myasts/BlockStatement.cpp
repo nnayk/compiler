@@ -32,6 +32,8 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         auto new_blocks = stmt->get_cfg();
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
         auto new_head = new_blocks[0];
+        spdlog::debug("new head has {} stmts: {}\n",new_head->stmts.size(),*new_head);
+        //assert(new_head->stmts.size()==1);
         //w/o this check the dummy will remain...just test this works as expected
         //for now
         // if the previous block stmt was a conditional, then replace its
@@ -50,8 +52,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 				spdlog::debug("Looking at dummy parent {}\n",*parent);
 				assert(0 <= parent->children.size() && parent->children.size() <= 2);
 				if(parent->children[0] == dummy_block) {
+                    spdlog::debug("Replacing dummy child (first child)\n");
 					parent->children[0] = new_head;
 				} else {
+                    spdlog::debug("Replacing dummy child (second child)\n");
 					parent->children[1] = new_head;
 				}
             	new_head->parents.push_back(parent);
@@ -80,7 +84,17 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                     spdlog::debug("parent now = {}\n",*parent);
                     spdlog::debug("new_head now = {}\n",*new_head);
                 }
-            }  
+            // TODO: merge blocks together
+            }
+                /*
+            } else if(!dynamic_pointer_cast<ast::WhileStatement>(prev_stmt) && !dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
+                // remove th unneeded parent child relationship
+                prev_tail->children.pop_back();
+                new_head->parents.pop_back();
+                assert(prev_tail->children.size()==0);
+                assert(new_head->parents.size()==0);
+                prev_tail->stmts.push_back(stmt);
+            }*/
         }
         if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
             // add self loop (then case)
@@ -92,18 +106,18 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             //TODO: append guard (condition) stmt to prev_tail as an if statement. if prev tail is null then make a new block to represent cond as prev_tail AND make prev_tail the parent of new_head since this would not have been done already. this must occur before the self loop is added with new head in order to guarantee that parents[0] is the previous block (or else it'll be the new_head)
             auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->getLineNum(),static_pointer_cast<WhileStatement>(stmt)->get_guard(),nullptr,nullptr);
             if(prev_tail) {
-                prev_tail->stmts.push_back(cond_stmt);
+                for(auto parent : new_head->parents) {
+                    if(parent==new_tail) continue;
+                    parent->stmts.push_back(cond_stmt);
+                }
             } else {
                 auto temp = cond_stmt->get_cfg();
                 std::string err = "This is a makeshift cond stmt that only should contain the while cond stmt -- why is there >1 block???";
                 prev_tail = temp[0];
-                assert(prev_tail->children.size()==2); // 2 dummy blocks (one then, one else)
+                assert(prev_tail->children.size()==1); 
                 blocks.push_back(prev_tail);
                 // set the then block to the current while block
                 prev_tail->children[0] = new_head; 
-                // get rid of the dummy else block
-                prev_tail->children.pop_back();
-                //prev_tail->children.push_back(new_head);
                 new_head->parents.push_back(prev_tail);
             }
         }
@@ -111,8 +125,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         // to be tweaked
         prev_stmt = stmt;
         spdlog::debug("prev_stmt = {}, stmt = {}\n",*prev_stmt,*stmt);
-        prev_blocks = new_blocks;
-        prev_tail = new_blocks[new_blocks.size()-1];
+        if(new_blocks.size()) {
+            prev_blocks = new_blocks; 
+            prev_tail = new_blocks[new_blocks.size()-1];
+        }
         spdlog::debug("prev_tail = {}\n",*prev_tail);
         spdlog::debug("before total # of blocks = {}, adding {} blocks\n",blocks.size(),new_blocks.size());
         blocks.insert(blocks.end(),new_blocks.begin(),new_blocks.end());
@@ -125,7 +141,11 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 // TODO: delete this as I think bblocks won't have block statements
 std::string BlockStatement::get_llvm() { 
 	spdlog::debug("inside BlockStatement::{}\n",__func__);
-	std::string llvm_ir="BlockStatement\n";
+	//std::string llvm_ir="BlockStatement\n";
+    std::string llvm_ir = "";
+    for(auto stmt : this->statements) {
+        llvm_ir += stmt->get_llvm();
+    }
 	return llvm_ir;
 } 
 
@@ -142,4 +162,3 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 */
 
 } // namespace ast
-

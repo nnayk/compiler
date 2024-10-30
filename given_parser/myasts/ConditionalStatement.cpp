@@ -1,6 +1,9 @@
 #include "ConditionalStatement.hpp"
 #include "Bblock.hpp"
+#include "Label.hpp"
 #include <cassert>
+
+extern std::string TAB;
 
 namespace ast {
 
@@ -12,6 +15,12 @@ ConditionalStatement::ConditionalStatement(int lineNum,
     : AbstractStatement(lineNum), guard(guard), thenBlock(thenBlock), elseBlock(elseBlock) {}
 
 void ConditionalStatement::typecheck(Env &env) {
+    auto guard_type = this->guard->resolveType(env);
+    if(!dynamic_pointer_cast<BoolType>(guard_type)) {
+        throw TypeException(fmt::format("Expected boolean guard, got type {} instead",*guard_type));
+    }
+    this->thenBlock->typecheck(env);
+    this->elseBlock->typecheck(env);
 }
 
 std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
@@ -59,20 +68,17 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         else_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added else block: {}\n",*else_blocks[0]);
     } else {
-        if_block->children.push_back(dummy_block);
-        auto parents = dummy_block->parents;
-        auto existing_parent = std::find(parents.begin(),parents.end(),if_block);
-        //Add the if block as a parent if not done already. If the then block
-        // was empty then the dummy block would've already added if block as a
-        // parent in if/else conditional above above
-        if(existing_parent == parents.end()) {
+        // if the then block was empty and now the else block was empty then there's already a parent-child relatonship between if block and dummy block. so don't do anything now.
+        auto existing_relationship = std::find(if_block->children.begin(),if_block->children.end(),dummy_block);
+        if(existing_relationship == if_block->children.end()) {
+            if_block->children.push_back(dummy_block);
             dummy_block->parents.push_back(if_block);
+            spdlog::debug("Added else DUMMY block\n");
         }
-        spdlog::debug("Added else DUMMY block\n");
     }
     //else_blocks[else_blocks.size()-1]->children.push_back(dummy_block);
-    // if block has exactly 2 children. TODO: Update this when optimizations are made
-    assert(if_block->children.size()==2);
+    // if block has exactly 2 children (or exactly 1 if both then/else are empty OR if it's a while conditional makeshift). TODO: Update this when optimizations are made
+    assert(if_block->children.size()==2 || if_block->children.size()==1);
     /*
     for(auto child : if_block->children) {
         blocks.push_back(child);
@@ -89,6 +95,24 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     spdlog::debug("{}\n",*blocks[0]);
     spdlog::debug("Conditional statement returning {} blocks\n",blocks.size());
     return blocks;
+}
+
+std::string ConditionalStatement::get_llvm() {
+    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    spdlog::debug(fmt::format("{}\n",static_cast<Statement &>(*this)));
+    std::string llvm = "";
+    auto thenLabel = std::make_shared<Label>();
+    spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
+    auto elseLabel = std::make_shared<Label>();
+    spdlog::debug("Got elseLabel {}\n",thenLabel->getLabel());
+    llvm += this->guard->get_llvm_init();
+    llvm += TAB+fmt::format("br i1 {}, label {}, label {}\n\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
+    llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
+    llvm += this->thenBlock->get_llvm()+"\n";
+    llvm += TAB+fmt::format("{}:\n",elseLabel->getLabel());
+    llvm += this->elseBlock->get_llvm()+"\n";
+    spdlog::debug("llvm={}\n",llvm);
+    return llvm;
 }
 
 } // namespace ast

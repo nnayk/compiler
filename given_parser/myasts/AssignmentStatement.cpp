@@ -1,6 +1,5 @@
 #include "AssignmentStatement.hpp"
 #include "Types.hpp"
-#include "TypeException.hpp"
 #include "InvocationExpression.hpp"
 extern std::string TAB;
 

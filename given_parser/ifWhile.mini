@@ -1,0 +1,13 @@
+fun main() int {
+    int x;
+    x=3;
+    if(x>0) {
+        x=4;
+    } else {
+        x=5;
+    }
+    while(true) {
+        x=6;
+    }
+    return 2;
+}

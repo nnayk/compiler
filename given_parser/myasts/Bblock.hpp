@@ -12,6 +12,7 @@ class Bblock {
         std::vector<std::shared_ptr<ast::Statement>> stmts;
         std::vector<std::shared_ptr<Bblock>> parents;
         std::vector<std::shared_ptr<Bblock>> children;
+        bool emit_llvm = true; // only used by conditionals for then/else blocks for now
         int visited; // for display purposes
         Bblock() { visited = 0; }
         std::string get_llvm();

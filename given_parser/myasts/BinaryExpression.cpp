@@ -151,6 +151,7 @@ std::string BinaryExpression::get_llvm_init() {
 	} 
 	llvm_str += fmt::format("{} = {} {} {}, {}\n",result_llvm,operator_llvm,type_llvm,left_llvm,right_llvm);
     llvm_str += extra_str;
+    this->cmp_result = old_result; // only applies to comparison operations -- store the i1 register to avoid redoing the work of converting the zext back to i1
     return llvm_str;
 }
 
