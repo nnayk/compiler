@@ -1,0 +1,7 @@
+fun boo(bool x) bool {
+    return x;
+}
+
+fun main() int {
+    boo(3>4);
+}

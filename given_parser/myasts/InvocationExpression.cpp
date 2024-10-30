@@ -1,4 +1,5 @@
 #include "InvocationExpression.hpp"
+#include "BinaryExpression.hpp"
 
 extern std::string TAB;
 
@@ -62,6 +63,10 @@ std::string InvocationExpression::get_llvm_init() {
 	// load each arg
 	for(auto arg : this->arguments) {
 		llvm += arg->get_llvm_init();
+        if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(arg); bin_exp && bin_exp->is_i1()) {
+            spdlog::debug("Zero extending binary expression!\n");
+            llvm += bin_exp->zext();
+        }
 	}
     return llvm;
 }

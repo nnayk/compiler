@@ -1,6 +1,7 @@
 #include "AssignmentStatement.hpp"
 #include "Types.hpp"
 #include "InvocationExpression.hpp"
+#include "BinaryExpression.hpp"
 extern std::string TAB;
 
 namespace ast {
@@ -22,6 +23,7 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
 // Returns the non-llvm SSA string of instructions for the assignment
 std::string AssignmentStatement::get_llvm() {
 	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
+    spdlog::debug("lineNum = {}\n",this->getLineNum());
 	std::string llvm_ir = "";
     //spdlog::debug("target = {}\n",*this-target);
     spdlog::debug("source = {}\n",*(this->source));
@@ -49,6 +51,10 @@ std::string AssignmentStatement::get_llvm() {
         auto temp_reg = Register::create();
         llvm_ir += TAB+fmt::format("{} = {}\n",temp_reg->get_llvm(),source_llvm); 
         source_llvm = temp_reg->get_llvm();
+    } else if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
+        spdlog::debug("Zero extending binary expression!\n");
+        llvm_ir += bin_exp->zext();
+        source_llvm = this->source->get_llvm();
     }
     llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
     spdlog::debug("assignment llvm = {}",llvm_ir);

@@ -1,0 +1,4 @@
+fun main() int {
+    bool x;
+    x = 3>4;
+}

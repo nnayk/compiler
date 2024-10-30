@@ -18,7 +18,8 @@ void InvocationStatement::typecheck(Env &env) {
 std::string InvocationStatement::get_llvm() {
     spdlog::debug("inside InvocationStatement::{}\n",__func__);
     std::string llvm = this->getExpression()->get_llvm_init();
-    llvm += this->getExpression()->get_llvm();
+    auto expr = this->getExpression();
+    llvm += expr->get_llvm();
     return llvm;
 }
 

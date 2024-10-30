@@ -24,7 +24,6 @@ private:
                      std::shared_ptr<Expression> left, std::shared_ptr<Expression> right);
 
 public:
-    std::shared_ptr<Register> cmp_result = nullptr;
     // Static factory method
     static std::shared_ptr<BinaryExpression> create(int lineNum, const std::string& opStr,
                                                     std::shared_ptr<Expression> left,
@@ -41,6 +40,8 @@ public:
     std::string get_llvm_init() override;
     std::string get_llvm() override;
     std::shared_ptr<Type> resolveType(Env &env) override;
+    bool is_i1(); 
+    std::string zext(); 
 };
 
 }  // namespace ast
