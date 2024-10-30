@@ -123,6 +123,7 @@ std::string CfgFunc::display() const {
         output += fmt::format("No basic blocks, empty function body!\n");
     }
 	output += fmt::format("END OF CFG FOR {}\n",this->name);
+    spdlog::debug("output cfg={}\n",output);
 	// sanity check
     spdlog::debug("{} blocks seen in CFG, {} blocks in CfgFunc\n",bfs_blocks,this->blocks.size());
     assert(bfs_blocks==this->blocks.size());

@@ -1,0 +1,18 @@
+fun main() int {
+    int x;
+    x = 3;
+    while(true) {
+        x = x+3;
+        x = x-1;
+        if(x/2==4) {
+            return 2;
+        } else {
+            print 3; 
+        }
+        print 5;
+    }
+    print 5;
+    return 99;
+}
+
+

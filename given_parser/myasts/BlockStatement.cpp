@@ -85,16 +85,25 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                     spdlog::debug("new_head now = {}\n",*new_head);
                 }
             // TODO: merge blocks together
-            }
-                /*
             } else if(!dynamic_pointer_cast<ast::WhileStatement>(prev_stmt) && !dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
-                // remove th unneeded parent child relationship
+                // remove the unneeded parent child relationship
                 prev_tail->children.pop_back();
                 new_head->parents.pop_back();
                 assert(prev_tail->children.size()==0);
                 assert(new_head->parents.size()==0);
                 prev_tail->stmts.push_back(stmt);
-            }*/
+                new_blocks.erase(new_blocks.begin());
+                spdlog::debug("Removed new_head={} from new_blocks, now new_blocks size = {}\n",*new_head,new_blocks.size());
+                if(auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
+                    for(auto child : new_head->children) {
+                        prev_tail->children.push_back(child);
+                        blocks.erase(std::remove(blocks.begin(),blocks.end(),new_head),blocks.end()); 
+                        // Remove the "temp" if block parent which is now obsolete
+                        child->parents.erase(std::remove(child->parents.begin(),child->parents.end(),new_head),child->parents.end());
+                        child->parents.push_back(prev_tail);
+                    }
+                }
+            }
         }
         if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
             // add self loop (then case)
