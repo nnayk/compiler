@@ -6,7 +6,14 @@ extern std::string TAB;
 std::string Bblock::get_llvm() {
     std::string llvm_ir;
     spdlog::debug("inside Bblock::{}",__func__);
-    if(label) llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
+    if(label) 
+    {
+        spdlog::debug("bblock label = {}\n",label->getLabel());
+        llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
+    }
+
+    if(jmp_label) spdlog::debug("jmp label = {}\n",jmp_label->getLabel());
+    else spdlog::debug("null jump label\n");
     for(auto stmt:this->stmts) {
         spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
         llvm_ir += stmt->get_llvm();
@@ -22,19 +29,21 @@ std::string Bblock::get_llvm() {
         std::shared_ptr<Bblock> after_block = nullptr;
         auto thenBblock = dynamic_pointer_cast<Bblock>(this->children[0]);
         assert(thenBblock);
-        if(cond_stmt->thenLabel) {
+        if(cond_stmt->thenLabel != cond_stmt->afterLabel) {
             thenBblock->label = cond_stmt->thenLabel;
             thenBblock->jmp_label = cond_stmt->afterLabel;
         } else {
+            spdlog::debug("then bblock is after bblock\n");
             thenBblock->label = cond_stmt->afterLabel;
             thenBblock->jmp_label = nullptr;
         }
         auto elseBblock = dynamic_pointer_cast<Bblock>(this->children[1]);
         assert(elseBblock);
-        if(cond_stmt->elseLabel) {
+        if(cond_stmt->elseLabel != cond_stmt->afterLabel) {
             elseBblock->label = cond_stmt->elseLabel;
             elseBblock->jmp_label = cond_stmt->afterLabel;
         } else {
+            spdlog::debug("else bblock is after bblock\n");
             elseBblock->label = cond_stmt->afterLabel;
             elseBblock->jmp_label = nullptr;
         }
@@ -45,7 +54,7 @@ std::string Bblock::get_llvm() {
             thenBblock->children[0]->label = cond_stmt->afterLabel;
         }
     } else if(this->jmp_label) {
-        llvm_ir += TAB+fmt::format("br label {}\n",jmp_label->getLabel());
+        llvm_ir += TAB+fmt::format("br label %{}\n",jmp_label->getLabel());
     }
     return llvm_ir+"\n";
 }

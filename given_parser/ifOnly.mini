@@ -1,8 +1,9 @@
 fun main() int {
     int x;
-    x=3;
+    x=6;
     if(x>2) {
-        x=4;
+        x=x/2;
     }
-    x=8;
+    return x;
+    #x=8;
 }

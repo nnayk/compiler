@@ -104,10 +104,8 @@ std::string ConditionalStatement::get_llvm() {
     spdlog::debug("line={}\n",this->getLineNum());
     spdlog::debug(fmt::format("{}\n",static_cast<Statement &>(*this)));
     std::string llvm = "";
-    bool empty_then = !this->thenBlock;
-    bool empty_else = !this->elseBlock;
-    auto then_block_stmt = dynamic_pointer_cast<BlockStatement>(this->thenBlock);
-    auto else_block_stmt = dynamic_pointer_cast<BlockStatement>(this->elseBlock);
+    bool empty_then = !this->thenBlock || !dynamic_pointer_cast<BlockStatement>(this->thenBlock)->statements.size();
+    bool empty_else = !this->elseBlock || !dynamic_pointer_cast<BlockStatement>(this->elseBlock)->statements.size();
     if(!empty_then &&!this->thenLabel) {
         this->thenLabel = std::make_shared<Label>();
         spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
@@ -128,7 +126,7 @@ std::string ConditionalStatement::get_llvm() {
         }
     }
     llvm += this->guard->get_llvm_init();
-    llvm += TAB+fmt::format("br i1 {}, label {}, label {}\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
+    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
     return llvm;
     llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
     //return llvm;
