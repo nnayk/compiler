@@ -2,6 +2,7 @@ fun main() int {
     int x;
     x=6;
     if(x>2) {
+    } else {
         x=x/2;
     }
     return x;

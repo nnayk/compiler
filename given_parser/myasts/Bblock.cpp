@@ -48,8 +48,8 @@ std::string Bblock::get_llvm() {
             elseBblock->jmp_label = nullptr;
         }
 
-        // Assign label to after block 
-        if(cond_stmt->thenLabel && cond_stmt->elseLabel) {
+        // Assign label to after block if not done yet (i.e. then and else are both noth equal to after block) 
+        if((cond_stmt->thenLabel != cond_stmt->afterLabel ) && (cond_stmt->elseLabel != cond_stmt->afterLabel)) {
             assert(thenBblock->children.size()==1);
             thenBblock->children[0]->label = cond_stmt->afterLabel;
         }

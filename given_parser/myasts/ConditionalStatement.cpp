@@ -118,11 +118,11 @@ std::string ConditionalStatement::get_llvm() {
         this->afterLabel = std::make_shared<Label>();
         spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
         if(!this->thenLabel) {
-            spdlog::debug("Setting thenLabel to afterLabel {}\n",thenLabel->getLabel());
             this->thenLabel = this->afterLabel;
+            spdlog::debug("Setting thenLabel to afterLabel {}\n",thenLabel->getLabel());
         } else if(!this->elseLabel) {
             this->elseLabel = this->afterLabel;
-            spdlog::debug("Setting thenLabel to afterLabel {}\n",elseLabel->getLabel());
+            spdlog::debug("Setting elseLabel to afterLabel {}\n",elseLabel->getLabel());
         }
     }
     llvm += this->guard->get_llvm_init();
