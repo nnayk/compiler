@@ -1,6 +1,6 @@
 #include "ConditionalStatement.hpp"
+#include "BlockStatement.hpp"
 #include "Bblock.hpp"
-#include "Label.hpp"
 #include <cassert>
 
 extern std::string TAB;
@@ -19,14 +19,15 @@ void ConditionalStatement::typecheck(Env &env) {
     if(!dynamic_pointer_cast<BoolType>(guard_type)) {
         throw TypeException(fmt::format("Expected boolean guard, got type {} instead",*guard_type));
     }
-    this->thenBlock->typecheck(env);
-    this->elseBlock->typecheck(env);
+    if(this->thenBlock) this->thenBlock->typecheck(env);
+    if(this->elseBlock) this->elseBlock->typecheck(env);
 }
 
 std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     spdlog::debug("ConditionalStatement:{}",__func__);
 	std::vector<std::shared_ptr<Bblock>> blocks;
 	auto if_block = std::make_shared<Bblock>(); // The head block
+    assert(if_block->visited==0);
     blocks.push_back(if_block);
 	if_block->stmts.push_back(shared_from_this());
     //TODO: 
@@ -94,23 +95,50 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     spdlog::debug("Created if block w/{} children\n",if_block->children.size());
     spdlog::debug("{}\n",*blocks[0]);
     spdlog::debug("Conditional statement returning {} blocks\n",blocks.size());
+    assert(if_block->visited==0);
     return blocks;
 }
 
 std::string ConditionalStatement::get_llvm() {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    spdlog::debug("line={}\n",this->getLineNum());
     spdlog::debug(fmt::format("{}\n",static_cast<Statement &>(*this)));
     std::string llvm = "";
-    auto thenLabel = std::make_shared<Label>();
-    spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
-    auto elseLabel = std::make_shared<Label>();
-    spdlog::debug("Got elseLabel {}\n",thenLabel->getLabel());
+    bool empty_then = !this->thenBlock;
+    bool empty_else = !this->elseBlock;
+    auto then_block_stmt = dynamic_pointer_cast<BlockStatement>(this->thenBlock);
+    auto else_block_stmt = dynamic_pointer_cast<BlockStatement>(this->elseBlock);
+    if(!empty_then &&!this->thenLabel) {
+        this->thenLabel = std::make_shared<Label>();
+        spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
+    }
+    if(!empty_else &&!this->elseLabel) {
+        this->elseLabel = std::make_shared<Label>();
+        spdlog::debug("Got elseLabel {}\n",elseLabel->getLabel());
+    }
+    if(!this->afterLabel) {
+        this->afterLabel = std::make_shared<Label>();
+        spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
+        if(!this->thenLabel) {
+            spdlog::debug("Setting thenLabel to afterLabel {}\n",thenLabel->getLabel());
+            this->thenLabel = this->afterLabel;
+        } else if(!this->elseLabel) {
+            this->elseLabel = this->afterLabel;
+            spdlog::debug("Setting thenLabel to afterLabel {}\n",elseLabel->getLabel());
+        }
+    }
     llvm += this->guard->get_llvm_init();
-    llvm += TAB+fmt::format("br i1 {}, label {}, label {}\n\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
+    llvm += TAB+fmt::format("br i1 {}, label {}, label {}\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
+    return llvm;
     llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
+    //return llvm;
+    spdlog::debug("gonna get thenBlock llvm for:{}\n",*thenBlock);
     llvm += this->thenBlock->get_llvm()+"\n";
     llvm += TAB+fmt::format("{}:\n",elseLabel->getLabel());
-    llvm += this->elseBlock->get_llvm()+"\n";
+    if(this->elseBlock) {
+        spdlog::debug("gonna get elseBlock llvm for:{}\n",*elseBlock);
+        llvm += this->elseBlock->get_llvm()+"\n";
+    }
     spdlog::debug("llvm={}\n",llvm);
     return llvm;
 }

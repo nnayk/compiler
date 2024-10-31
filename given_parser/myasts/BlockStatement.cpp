@@ -25,7 +25,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     std::vector<std::shared_ptr<Bblock>> prev_blocks;
     std::shared_ptr<Statement> prev_stmt = nullptr;
     spdlog::debug("{} stmts to process",this->statements.size());
+    bool is_cond_stmt, is_while_stmt;
     for(auto stmt : this->statements) {
+        is_cond_stmt = dynamic_pointer_cast<ConditionalStatement>(stmt) != nullptr;
+        is_while_stmt = dynamic_pointer_cast<WhileStatement>(stmt) != nullptr;
         if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
         spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
@@ -33,6 +36,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
         auto new_head = new_blocks[0];
         spdlog::debug("new head has {} stmts: {}\n",new_head->stmts.size(),*new_head);
+        assert(!new_head->visited);
         //assert(new_head->stmts.size()==1);
         //w/o this check the dummy will remain...just test this works as expected
         //for now
@@ -40,35 +44,42 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         // outbound dummy block with this current block
         if(dynamic_pointer_cast<ast::ConditionalStatement>(prev_stmt)) {
 			spdlog::debug("Replacing trailing dummy block for conditional on line {}\n",prev_stmt->getLineNum());
-            // Replace the trailing dummy node from the if block with current block.
-            // The dummy block should always be the last block in the mini-CFG for
-            // an if statement
             auto dummy_block = prev_tail; 
-			spdlog::debug("deleting dummy block with {} parents: {}\n", dummy_block->parents.size(),*dummy_block);
-			// TODO: assert it's a dummy block
-            std::string err = "Probably a while conditional stmt (see WhileStatement::get_cfg";
-            assert(dummy_block->stmts.size()==0 && err.c_str());
-            for(auto parent : dummy_block->parents) {
-				spdlog::debug("Looking at dummy parent {}\n",*parent);
-				assert(0 <= parent->children.size() && parent->children.size() <= 2);
-				if(parent->children[0] == dummy_block) {
-                    spdlog::debug("Replacing dummy child (first child)\n");
-					parent->children[0] = new_head;
-				} else {
-                    spdlog::debug("Replacing dummy child (second child)\n");
-					parent->children[1] = new_head;
-				}
-            	new_head->parents.push_back(parent);
-			}
-            // remove the dummy bblock from the list of bblocks
-            spdlog::debug("Removing the dummy bblock from the list of bblocks");
-            blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end()); 
+            if(is_cond_stmt || is_while_stmt) {
+                spdlog::debug("Nvm preserving dummy block b/c: is_cond_stmt = {}, is_while_stmt = {}\n",is_cond_stmt,is_while_stmt);
+                dummy_block->children.push_back(new_head);
+                new_head->parents.push_back(dummy_block);
+            } else { 
+                // Replace the trailing dummy node from the if block with current block.
+                // The dummy block should always be the last block in the mini-CFG for
+                // an if statement
+                spdlog::debug("deleting dummy block with {} parents: {}\n", dummy_block->parents.size(),*dummy_block);
+                // TODO: assert it's a dummy block
+                std::string err = "Probably a while conditional stmt (see WhileStatement::get_cfg";
+                assert(dummy_block->stmts.size()==0 && err.c_str());
+                for(auto parent : dummy_block->parents) {
+                    spdlog::debug("Looking at dummy parent {}\n",*parent);
+                    assert(0 <= parent->children.size() && parent->children.size() <= 2);
+                    if(parent->children[0] == dummy_block) {
+                        spdlog::debug("Replacing dummy child (first child)\n");
+                        parent->children[0] = new_head;
+                    } else {
+                        spdlog::debug("Replacing dummy child (second child)\n");
+                        parent->children[1] = new_head;
+                    }
+                    new_head->parents.push_back(parent);
+                }
+                // remove the dummy bblock from the list of bblocks
+                spdlog::debug("Removing the dummy bblock from the list of bblocks");
+            blocks.erase(std::remove(blocks.begin(),blocks.end(),dummy_block),blocks.end());
+            }
         } else if(prev_tail) {
             // TODO: if curr stmt not an if or while stmt then merge it into
             // prev_tail's BBlock stmts vector instead of keeping it as a separate
             // child block
             // Add after block
             // URGENT: replace these 2 lines w/an addEdge method
+            spdlog::debug("linking prev_tail = {}\n AND\n new_head={}\n",*prev_tail,*new_head);
             prev_tail->children.push_back(new_head);
             new_head->parents.push_back(prev_tail);
             if(dynamic_pointer_cast<ast::WhileStatement>(prev_stmt)) {
@@ -122,9 +133,14 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             //TODO: append guard (condition) stmt to prev_tail as an if statement. if prev tail is null then make a new block to represent cond as prev_tail AND make prev_tail the parent of new_head since this would not have been done already. this must occur before the self loop is added with new head in order to guarantee that parents[0] is the previous block (or else it'll be the new_head)
             auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->getLineNum(),static_pointer_cast<WhileStatement>(stmt)->get_guard(),stmt,nullptr);
             if(prev_tail) {
-                for(auto parent : new_head->parents) {
-                    if(parent==new_tail) continue;
-                    parent->stmts.push_back(cond_stmt);
+                if(dynamic_pointer_cast<WhileStatement>(prev_stmt)) {
+                  //for(auto parent : 
+                } else {
+                    for(auto parent : new_head->parents) {
+                        spdlog::debug("Adding while conditional to parent {}\n",*parent);
+                        if(parent==new_tail) continue;
+                        parent->stmts.push_back(cond_stmt);
+                  }
                 }
             } else {
                 auto temp = cond_stmt->get_cfg();

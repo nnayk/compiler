@@ -4,6 +4,7 @@
 #include "AbstractStatement.hpp"
 #include "Expression.hpp"
 #include "Statement.hpp"
+#include "Label.hpp"
 #include <memory>
 
 namespace ast {
@@ -13,6 +14,9 @@ public:
     std::shared_ptr<Expression> guard;
     std::shared_ptr<Statement> thenBlock;
     std::shared_ptr<Statement> elseBlock;
+    std::shared_ptr<Label> thenLabel = nullptr;
+    std::shared_ptr<Label> elseLabel = nullptr;
+    std::shared_ptr<Label> afterLabel = nullptr;
     // Constructor
     ConditionalStatement(int lineNum, 
                          std::shared_ptr<Expression> guard, 

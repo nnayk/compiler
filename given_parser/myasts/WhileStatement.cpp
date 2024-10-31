@@ -7,6 +7,13 @@ WhileStatement::WhileStatement(int lineNum, std::shared_ptr<Expression> guard, s
     : AbstractStatement(lineNum), guard(guard), body(body) {}
 
 void WhileStatement::typecheck(Env &env) {
+    spdlog::debug("inside WhileStatement::{}\n",__func__);
+    spdlog::debug("line = {}\n",this->getLineNum());
+    auto guard_type = this->guard->resolveType(env);
+    if(!dynamic_pointer_cast<BoolType>(guard_type)) {
+        throw TypeException(fmt::format("Expected boolean guard, got type {} instead",*guard_type));
+    }
+    this->body->typecheck(env);
 }
 
 std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
@@ -29,6 +36,12 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
         tail_block = cond_stmt->get_cfg()[0]; // incomplete...
     }
     return blocks;
+}
+
+std::string WhileStatement::get_llvm() {
+    spdlog::debug("inside WhileStatement::{}\n",__func__);
+    std::string llvm = "";
+    return llvm;
 }
 
 } // namespace ast

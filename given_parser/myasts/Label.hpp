@@ -1,3 +1,5 @@
+#ifndef LABEL_HPP
+#define LABEL_HPP
 #include <string>
 
 class Label {
@@ -9,3 +11,4 @@ class Label {
         const static std::string PREFIX;
         static int counter;
 };
+#endif

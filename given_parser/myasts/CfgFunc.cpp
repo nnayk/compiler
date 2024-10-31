@@ -18,7 +18,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
 }
 
 std::string CfgFunc::get_llvm() {
-    spdlog::debug("inside CfgFunc::{}",__func__);
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
     if(dynamic_pointer_cast<ast::VoidType>(this->retType)) spdlog::debug("found void type!\n");
     if(dynamic_pointer_cast<ast::StructType>(this->retType)) spdlog::debug("found struct type!\n");
     this->retType->get_llvm();
@@ -40,14 +40,17 @@ std::string CfgFunc::get_llvm() {
     if(this->blocks.size() > 0) {
         std::queue<std::shared_ptr<Bblock>> queue;
         queue.push(this->blocks[0]);
-        bool skip_children_llvm = false;
+        //bool skip_children_llvm = false;
         while(!queue.empty()) {
-            skip_children_llvm = false;
+            //skip_children_llvm = false;
             auto block = queue.front();
             queue.pop();
 			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way
-            if(block->visited == 1) continue;
+            if(block->visited == 1) {
+                spdlog::debug("Yalready visited block {}\n",*block);
+                continue;
+            }
             if(block->emit_llvm) {
                 llvm_ir += block->get_llvm();
                 spdlog::debug("NOT skipping llvm for block {}\n",*block);
@@ -60,8 +63,8 @@ std::string CfgFunc::get_llvm() {
             if(num_stmts) {
                 stmt = block->stmts[num_stmts-1];
                 if(dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
-                    spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);
-                    skip_children_llvm = true;
+                    //spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);
+                    //skip_children_llvm = true;
                 }
             } else {
                 spdlog::debug("dummy block!\n");
@@ -69,7 +72,7 @@ std::string CfgFunc::get_llvm() {
             // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
 			for(auto child : block->children) {
                 spdlog::debug("pushing child {}",*child);
-                if(skip_children_llvm) child->emit_llvm = false;
+                //if(skip_children_llvm) child->emit_llvm = false;
                 queue.push(child);
             }
         }
@@ -103,6 +106,7 @@ std::string CfgFunc::display() const {
             auto block = queue.front();
             queue.pop();
 			spdlog::debug("popped block {}",*block);
+            spdlog::debug("yay block visited: {}\n",block->visited);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) 
             {

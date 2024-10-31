@@ -3,6 +3,7 @@
 #include "Statement.hpp"
 #include <memory>
 #include <fmt/core.h>
+#include "Label.hpp"
 
 namespace ast {
     class BlockStatement;
@@ -12,10 +13,14 @@ class Bblock {
         std::vector<std::shared_ptr<ast::Statement>> stmts;
         std::vector<std::shared_ptr<Bblock>> parents;
         std::vector<std::shared_ptr<Bblock>> children;
+        std::shared_ptr<Label> label = nullptr;
+        std::shared_ptr<Label> jmp_label = nullptr;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
         int visited; // for display purposes
         Bblock() { visited = 0; }
         std::string get_llvm();
+        bool is_while_block();
+        bool is_cond_block();
 };
 
 //Specialize fmt::formatter for Bblock

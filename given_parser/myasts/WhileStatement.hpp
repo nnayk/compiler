@@ -20,6 +20,7 @@ public:
 	void typecheck(Env &env) override;
     std::vector<std::shared_ptr<Bblock>> get_cfg() override; 
     std::shared_ptr<Expression> get_guard() { return guard; }
+    std::string get_llvm() override;
 };
 
 } // namespace ast
