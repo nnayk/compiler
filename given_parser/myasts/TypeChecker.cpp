@@ -49,7 +49,16 @@ int main(int argc, char *argv[]) {
     //spdlog::debug("typechecking passed");
     auto cfg_prog = CfgProg::build(p);
     spdlog::info("CFG: {}",*cfg_prog);
-    std::string llvm = "target triple = \"x86_64-apple-macosx14.0.0\"\n"; // temp for my machine replace later when I get to ARM assembly 
+    std::string llvm = "target triple = \"x86_64-apple-macosx14.0.0\"\n"; // TODO: temp for my machine replace later when I get to ARM assembly
+    llvm += R"(declare i8* @malloc(i32)
+declare void @free(i8*)
+declare i32 @printf(i8*, ...)
+declare i32 @scanf(i8*, ...)
+@.println = private unnamed_addr constant [5 x i8] c"%ld\0A\00", align 1
+@.print = private unnamed_addr constant [5 x i8] c"%ld \00", align 1
+@.read = private unnamed_addr constant [4 x i8] c"%ld\00", align 1
+@.read_scratch = common global i32 0, align 4
+              )"; 
     llvm += cfg_prog->get_llvm();
     spdlog::info("LLVM IR:\n{}",llvm);
     return 0;
