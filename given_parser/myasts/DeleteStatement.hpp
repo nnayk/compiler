@@ -11,7 +11,7 @@ class DeleteStatement : public AbstractStatement {
 public:
     // Constructor
     DeleteStatement(int lineNum, std::shared_ptr<Expression> expression);
-	void typecheck(Env &env) override;
+	void typecheck(Env &env, Function &f) override;
     // Getter for the expression
     std::shared_ptr<Expression> getExpression() const;
     std::string display() const override {

@@ -6,7 +6,7 @@ namespace ast {
 ReturnEmptyStatement::ReturnEmptyStatement(int lineNum)
     : AbstractStatement(lineNum) {}
 
-void ReturnEmptyStatement::typecheck(Env &env) {
+void ReturnEmptyStatement::typecheck(Env &env,Function &f) {
 }
 
 } // namespace ast

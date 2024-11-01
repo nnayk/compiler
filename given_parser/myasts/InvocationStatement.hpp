@@ -19,7 +19,7 @@ public:
      	return fmt::format("InovcationStatement(lineNum={})",lineNum);
  	}
 	
-	void typecheck(Env &env) override;
+	void typecheck(Env &env, Function &f) override;
     virtual std::string get_llvm() override;
 
 private:

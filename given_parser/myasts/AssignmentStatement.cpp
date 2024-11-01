@@ -61,7 +61,7 @@ std::string AssignmentStatement::get_llvm() {
 	return llvm_ir;
 }
  
-void AssignmentStatement::typecheck(Env &env) {
+void AssignmentStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("inside AssignmentStatement::{}\n",__func__);
     // Get the type of the lhs and rhs
     auto targetType = this->target->resolveType(env);

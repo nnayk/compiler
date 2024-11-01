@@ -25,7 +25,7 @@ public:
 
     // Destructor
     virtual ~ConditionalStatement() = default;
-    virtual void typecheck(Env &env) override;
+    virtual void typecheck(Env &env, Function &f) override;
     std::string display() const override {
         return fmt::format("ConditionalStatement(lineNum={})",lineNum);
     }

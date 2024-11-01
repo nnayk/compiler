@@ -11,7 +11,7 @@ std::shared_ptr<Expression> DeleteStatement::getExpression() const {
     return expression_;
 }
 
-void DeleteStatement::typecheck(Env &env) {
+void DeleteStatement::typecheck(Env &env, Function &f) {
 }
 
 } // namespace ast

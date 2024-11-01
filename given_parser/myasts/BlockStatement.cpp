@@ -9,10 +9,10 @@ namespace ast {
 BlockStatement::BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements)
     : AbstractStatement(lineNum), statements(statements) {}
 
-void BlockStatement::typecheck(Env &env) {
+void BlockStatement::typecheck(Env &env, Function &f) {
     spdlog::info("inside BlockStatement::{}\n",__func__);
     for(auto &stmt:statements) {
-        stmt->typecheck(env);
+        stmt->typecheck(env,f);
     }
 }
 

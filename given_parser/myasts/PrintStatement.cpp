@@ -10,7 +10,7 @@ namespace ast {
 PrintStatement::PrintStatement(int lineNum, std::shared_ptr<Expression> expression, bool newLine)
     : AbstractStatement(lineNum), expression(expression), newLine(newLine) {}
 
-void PrintStatement::typecheck(Env &env) {
+void PrintStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("inside PrintStatement::{}\n",__func__);
     auto arg_type = this->expression->resolveType(env);
     assert(dynamic_pointer_cast<IntType>(arg_type));

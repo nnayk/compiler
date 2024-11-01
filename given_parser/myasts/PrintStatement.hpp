@@ -22,7 +22,7 @@ public:
     std::string display() const override {
             return fmt::format("PrintStatement(lineNum={},newLine?={})",lineNum,newLine);
     }
-    virtual void typecheck(Env &env) override;
+    virtual void typecheck(Env &env, Function &f) override;
     std::string get_llvm() override;
 };
 

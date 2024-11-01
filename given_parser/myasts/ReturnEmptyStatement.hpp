@@ -12,7 +12,7 @@ public:
     std::string display() const override {
         return fmt::format("ReturnEmptyStatement(lineNum={})",lineNum);
     }
-     void typecheck(Env &env) override;
+     void typecheck(Env &env,Function &f) override;
 };
 
 

@@ -11,7 +11,7 @@ std::shared_ptr<Expression> InvocationStatement::getExpression() const {
     return expression;
 }
 
-void InvocationStatement::typecheck(Env &env) {
+void InvocationStatement::typecheck(Env &env, Function &f) {
     this->getExpression()->resolveType(env);
 }
 

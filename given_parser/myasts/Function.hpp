@@ -9,7 +9,7 @@
 #include "Env.hpp"
 
 namespace ast {
-
+class Statement;
 class Function {
 public:
     int lineNum;  // Line number of the function definition
@@ -37,7 +37,7 @@ public:
     auto format(const ast::Function decl, format_context &ctx) const ->decltype(ctx.out()
        ) {
               spdlog::debug("Formatter for Function");
-              auto out = format_to(ctx.out(), "[Function(lineNum = {},name={},retType={},body={})", decl.lineNum,decl.name,*decl.retType,*decl.body);
+              auto out = format_to(ctx.out(), "[Function(lineNum = {},name={},retType={})", decl.lineNum,decl.name,*decl.retType);// TODO: bring this back -- add a get_body function or smth in Function.cpp. rn get an err b/c statement if fwd declared in this file ,*decl.body);
               out = format_to(out, ", params = [");
               bool first=true;
               spdlog::debug("generating param output\n");

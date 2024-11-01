@@ -14,13 +14,13 @@ ConditionalStatement::ConditionalStatement(int lineNum,
                                            std::shared_ptr<Statement> elseBlock)
     : AbstractStatement(lineNum), guard(guard), thenBlock(thenBlock), elseBlock(elseBlock) {}
 
-void ConditionalStatement::typecheck(Env &env) {
+void ConditionalStatement::typecheck(Env &env, Function &f) {
     auto guard_type = this->guard->resolveType(env);
     if(!dynamic_pointer_cast<BoolType>(guard_type)) {
         throw TypeException(fmt::format("Expected boolean guard, got type {} instead",*guard_type));
     }
-    if(this->thenBlock) this->thenBlock->typecheck(env);
-    if(this->elseBlock) this->elseBlock->typecheck(env);
+    if(this->thenBlock) this->thenBlock->typecheck(env,f);
+    if(this->elseBlock) this->elseBlock->typecheck(env,f);
 }
 
 std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {

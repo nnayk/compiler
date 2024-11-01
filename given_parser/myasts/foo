@@ -1,23 +1,6 @@
-Bblock.cpp:28:    if(this->stmts.size() && dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1])) return true;
-BlockStatement.cpp:2:#include "ConditionalStatement.hpp" // used during cfg construction
-BlockStatement.cpp:41:        if(dynamic_pointer_cast<ast::ConditionalStatement>(prev_stmt)) {
-BlockStatement.cpp:80:                    auto cond_parent = dynamic_pointer_cast<ConditionalStatement>(parent->stmts[parent->stmts.size()-1]);
-BlockStatement.cpp:104:                if(auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
-BlockStatement.cpp:123:            auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->getLineNum(),static_pointer_cast<WhileStatement>(stmt)->get_guard(),stmt,nullptr);
-CfgFunc.cpp:6:#include "ConditionalStatement.hpp"
-CfgFunc.cpp:62:                if(dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
-ConditionalStatement.cpp:1:#include "ConditionalStatement.hpp"
-ConditionalStatement.cpp:11:ConditionalStatement::ConditionalStatement(int lineNum, 
-ConditionalStatement.cpp:17:void ConditionalStatement::typecheck(Env &env) {
-ConditionalStatement.cpp:26:std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
-ConditionalStatement.cpp:27:    spdlog::debug("ConditionalStatement:{}",__func__);
-ConditionalStatement.cpp:36:        spdlog::debug("ConditionalStatement:Gonna build cfg for THEN stmt {}",*(this->thenBlock));
-ConditionalStatement.cpp:47:    spdlog::debug("ConditionalStatement: Done building CFGs for then and else");
-ConditionalStatement.cpp:100:std::string ConditionalStatement::get_llvm() {
-ConditionalStatement.cpp:101:    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
-Parser.cpp:207:std::shared_ptr<ast::ConditionalStatement> parse_conditional(const nlohmann::json &json) {
-Parser.cpp:216:    return std::make_shared<ast::ConditionalStatement>(lineNum,guard,thenBlock,elseBlock);
-Temp.cpp:13:            if((auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(curr_stmt))) {
-WhileStatement.cpp:2:#include "ConditionalStatement.hpp"
-WhileStatement.cpp:24:    auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,shared_from_this(),nullptr);
-WhileStatement.cpp:34:        std::string err = "URGENT: Update ConditionalStatement get_cfg to deal w/cases where else and/or then are nullptrs -- here both are null";
+BlockStatement.cpp:15:        stmt->typecheck(env);
+ConditionalStatement.cpp:22:    if(this->thenBlock) this->thenBlock->typecheck(env);
+ConditionalStatement.cpp:23:    if(this->elseBlock) this->elseBlock->typecheck(env);
+Function.cpp:21:    body->typecheck(env,*this);        
+TypeChecker.cpp:184:        func->typecheck(*localEnv);
+WhileStatement.cpp:17:    this->body->typecheck(env);

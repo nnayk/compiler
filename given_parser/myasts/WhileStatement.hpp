@@ -20,7 +20,7 @@ public:
 	std::string display() const override {
 		return fmt::format("WhileStatement(lineNum={})",lineNum);
 	}
-	void typecheck(Env &env) override;
+	void typecheck(Env &env, Function &f) override;
     std::vector<std::shared_ptr<Bblock>> get_cfg() override; 
     std::shared_ptr<Expression> get_guard() { return guard; }
     std::shared_ptr<Statement> get_body() { return body; }

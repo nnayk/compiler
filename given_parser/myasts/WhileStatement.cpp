@@ -7,14 +7,14 @@ namespace ast {
 WhileStatement::WhileStatement(int lineNum, std::shared_ptr<Expression> guard, std::shared_ptr<Statement> body)
     : AbstractStatement(lineNum), guard(guard), body(body) {}
 
-void WhileStatement::typecheck(Env &env) {
+void WhileStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("inside WhileStatement::{}\n",__func__);
     spdlog::debug("line = {}\n",this->getLineNum());
     auto guard_type = this->guard->resolveType(env);
     if(!dynamic_pointer_cast<BoolType>(guard_type)) {
         throw TypeException(fmt::format("Expected boolean guard, got type {} instead",*guard_type));
     }
-    this->body->typecheck(env);
+    this->body->typecheck(env,f);
 }
 
 std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {

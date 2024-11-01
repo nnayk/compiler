@@ -18,7 +18,7 @@ Typecheck the given function as follows:
 */
 void Function::typecheck(Env env) { //TODO: check that env is a copy of tle
     spdlog::info("inside Function::{}\n",__func__);
-    body->typecheck(env);        
+    body->typecheck(env,*this);        
     // TODO:#2+#3 from description
     return;
 }
