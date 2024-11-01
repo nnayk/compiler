@@ -68,8 +68,8 @@ std::string CfgFunc::get_llvm() {
                     // Recall both then and else stmts cannot be null b/c
                     // BlockStatement::get_llvm() would've just ignored this
                     // Conditional statement
-                    if(cond_stmt->thenLabel == cond_stmt->afterLabel) {
-                        //spdlog::debug("reverse pushing for cond_stmt {}\n",*cond_stmt);
+                    if((cond_stmt->thenLabel == cond_stmt->afterLabel) ) {
+                        spdlog::debug("reverse pushing for cond_stmt {}\n");//,*cond_stmt);
                         reverse_push = true;
                     }
                     //spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);

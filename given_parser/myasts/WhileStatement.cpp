@@ -1,5 +1,6 @@
 #include "WhileStatement.hpp"
 #include "ConditionalStatement.hpp"
+#include "BlockStatement.hpp"
 
 namespace ast {
 
@@ -22,6 +23,7 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     // return the blocks with the body and create a final IF block for the cond
     blocks = this->body->get_cfg();
     auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,shared_from_this(),nullptr);
+    assert(!cond_stmt->elseBlock);
     std::shared_ptr<Bblock> tail_block;
     if(blocks.size() > 0) {
         tail_block = blocks[blocks.size()-1];
@@ -41,6 +43,12 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
 std::string WhileStatement::get_llvm() {
     spdlog::debug("inside WhileStatement::{}\n",__func__);
     std::string llvm = "";
+    assert(!this->label); // a parent block should've set this in Bblock::get_llvm() for CondStatement case
+    assert(!this->afterLabel); 
+    auto body_block = dynamic_pointer_cast<BlockStatement>(this->body);
+    for(auto stmt: body_block->statements) {
+        llvm += stmt->get_llvm();
+    }
     return llvm;
 }
 

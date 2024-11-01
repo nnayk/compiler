@@ -102,10 +102,14 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
 std::string ConditionalStatement::get_llvm() {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
     spdlog::debug("line={}\n",this->getLineNum());
+    if(this->thenBlock)
+        spdlog::debug("then={}\n",*this->thenBlock);
+    if(this->elseBlock)
+        spdlog::debug("else={}\n",*this->elseBlock);
     spdlog::debug(fmt::format("{}\n",static_cast<Statement &>(*this)));
     std::string llvm = "";
-    bool empty_then = !this->thenBlock || !dynamic_pointer_cast<BlockStatement>(this->thenBlock)->statements.size();
-    bool empty_else = !this->elseBlock || !dynamic_pointer_cast<BlockStatement>(this->elseBlock)->statements.size();
+    bool empty_then = !this->thenBlock || (dynamic_pointer_cast<BlockStatement>(this->thenBlock) && (!dynamic_pointer_cast<BlockStatement>(this->thenBlock)->statements.size()));
+    bool empty_else = !this->elseBlock || (dynamic_pointer_cast<BlockStatement>(this->elseBlock) && (!dynamic_pointer_cast<BlockStatement>(this->elseBlock)->statements.size()));
     if(!empty_then &&!this->thenLabel) {
         this->thenLabel = std::make_shared<Label>();
         spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
@@ -114,6 +118,7 @@ std::string ConditionalStatement::get_llvm() {
         this->elseLabel = std::make_shared<Label>();
         spdlog::debug("Got elseLabel {}\n",elseLabel->getLabel());
     }
+    // Think the only case where afterLabel is non-null is for while stmts. In this case thenLabel should also be non-null and it should be fine that elseLabel is left null...
     if(!this->afterLabel) {
         this->afterLabel = std::make_shared<Label>();
         spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
@@ -125,8 +130,11 @@ std::string ConditionalStatement::get_llvm() {
             spdlog::debug("Setting elseLabel to afterLabel {}\n",elseLabel->getLabel());
         }
     }
+
+    auto label_1 = this->thenLabel; // idt then label can ever be null
+    auto label_2 = (this->elseLabel==nullptr) ? this->afterLabel : this->elseLabel;
     llvm += this->guard->get_llvm_init();
-    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(),thenLabel->getLabel(),elseLabel->getLabel());
+    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(),label_1->getLabel(),label_2->getLabel());
     return llvm;
     llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
     //return llvm;

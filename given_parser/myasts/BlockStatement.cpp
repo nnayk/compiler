@@ -90,7 +90,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 for(auto parent : prev_head->parents) {
                     auto cond_parent = dynamic_pointer_cast<ConditionalStatement>(parent->stmts[parent->stmts.size()-1]);
                     assert(cond_parent);
-                    cond_parent->elseBlock = stmt;
+                    //cond_parent->elseBlock = stmt;
                     //encountered self loop
                     if(parent==prev_tail) {
                         continue;    
@@ -131,7 +131,9 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             new_head->parents.push_back(new_tail);
             spdlog::debug("now new tail = {}\n",*new_tail);
             //TODO: append guard (condition) stmt to prev_tail as an if statement. if prev tail is null then make a new block to represent cond as prev_tail AND make prev_tail the parent of new_head since this would not have been done already. this must occur before the self loop is added with new head in order to guarantee that parents[0] is the previous block (or else it'll be the new_head)
-            auto cond_stmt = std::make_shared<ConditionalStatement>(stmt->getLineNum(),static_pointer_cast<WhileStatement>(stmt)->get_guard(),stmt,nullptr);
+            // For now I perform this cast to while stmt in order to access its guard + body attrs when creating the cond stmt
+            auto while_stmt = static_pointer_cast<WhileStatement>(stmt);
+            auto cond_stmt = std::make_shared<ConditionalStatement>(while_stmt->getLineNum(),while_stmt->get_guard(),while_stmt->get_body(),nullptr);
             if(prev_tail) {
                 if(dynamic_pointer_cast<WhileStatement>(prev_stmt)) {
                   //for(auto parent : 
