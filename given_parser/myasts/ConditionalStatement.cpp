@@ -111,16 +111,16 @@ std::string ConditionalStatement::get_llvm() {
     bool empty_then = !this->thenBlock || (dynamic_pointer_cast<BlockStatement>(this->thenBlock) && (!dynamic_pointer_cast<BlockStatement>(this->thenBlock)->statements.size()));
     bool empty_else = !this->elseBlock || (dynamic_pointer_cast<BlockStatement>(this->elseBlock) && (!dynamic_pointer_cast<BlockStatement>(this->elseBlock)->statements.size()));
     if(!empty_then &&!this->thenLabel) {
-        this->thenLabel = std::make_shared<Label>();
+        this->thenLabel = Label::create();
         spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
     }
     if(!empty_else &&!this->elseLabel) {
-        this->elseLabel = std::make_shared<Label>();
+        this->elseLabel = Label::create();
         spdlog::debug("Got elseLabel {}\n",elseLabel->getLabel());
     }
     // Think the only case where afterLabel is non-null is for while stmts. In this case thenLabel should also be non-null and it should be fine that elseLabel is left null...
     if(!this->afterLabel) {
-        this->afterLabel = std::make_shared<Label>();
+        this->afterLabel = Label::create();
         spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
         if(!this->thenLabel) {
             this->thenLabel = this->afterLabel;

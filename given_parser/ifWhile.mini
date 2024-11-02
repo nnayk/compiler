@@ -1,6 +1,8 @@
 fun main() int {
     int x;
+    int y;
     x=3;
+    y=0;
     if(x>0) {
         x=4;
         x=5;
@@ -8,9 +10,10 @@ fun main() int {
         x=6;
         x=7;
     }
-    while(true) {
-        x=6;
+    while(x>0) {
+        x = x-1;
+        y=y+4;
     }
     x=7;
-    return x;
+    return 12;
 }

@@ -1,9 +1,17 @@
 #include "Label.hpp"
-#include <fmt/core.h>
+#include <spdlog/spdlog.h>
 
 int Label::counter = 0;
 const std::string Label::PREFIX ="L";
-Label::Label() : id(Label::counter++) {};
+Label::Label(const std::string &id) : id(id) {
+    spdlog::debug("inside Label::{}\n",__func__);
+    if(id==std::to_string(counter)) counter++;
+};
+
+std::shared_ptr<Label> Label::create(const std::string &id) {
+    spdlog::debug("inside Label::{}\n",__func__);
+    return std::make_shared<Label>(id);
+}
 
 std::string Label::getLabel() {
     return fmt::format("{}{}",Label::PREFIX,this->id);  

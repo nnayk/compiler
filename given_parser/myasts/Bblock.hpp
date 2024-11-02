@@ -3,6 +3,7 @@
 #include "Statement.hpp"
 #include <memory>
 #include <fmt/core.h>
+#include <unordered_set>
 #include "Label.hpp"
 
 namespace ast {
@@ -21,6 +22,7 @@ class Bblock {
         std::string get_llvm();
         bool is_while_block();
         bool is_cond_block();
+        bool is_return_block();
 };
 
 //Specialize fmt::formatter for Bblock

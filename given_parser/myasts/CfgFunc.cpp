@@ -4,6 +4,10 @@
 #include <cassert>
 #include "Types.hpp"
 #include "ConditionalStatement.hpp"
+#include "ReturnStatement.hpp"
+#include "BlockStatement.hpp"
+#include "IdentifierExpression.hpp"
+#include "Label.hpp"
 
 std::string TAB="\t";
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
@@ -13,7 +17,23 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     //auto cfg_func = std::make_shared<CfgFunc>();  
     //auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(std::move(f.params),std::move(f.retType),std::move(f.locals),std::vector<Bblock>()));
     auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(f.name,std::move(f.params),std::move(f.retType),std::move(f.locals)));//,std::vector<Bblock>()));
+    cfg_func->return_block = std::make_shared<Bblock>();
+    cfg_func->return_block->label = Label::create("return");
+    auto ret_expr = std::make_shared<ast::IdentifierExpression>(-1,"_ret");
+    ret_expr->type = cfg_func->retType;
+    auto ret_stmt = std::make_shared<ast::ReturnStatement>(-1,ret_expr);
+    ret_stmt->final_return = true;
+    ret_stmt->retType = cfg_func->retType;
+    cfg_func->return_block->stmts.push_back(ret_stmt);
     cfg_func->blocks = f.body->get_cfg();
+    cfg_func->blocks.push_back(cfg_func->return_block);
+    spdlog::debug("FINAL return block = {}\n",*cfg_func->return_block);
+    auto body_block = dynamic_pointer_cast<ast::BlockStatement>(f.body);
+    for(auto block : body_block->return_bblocks) {
+        spdlog::debug("adding parent to FINAL return block: {}\n",*block);
+        block->children.push_back(cfg_func->return_block);
+        cfg_func->return_block->parents.push_back(block);
+    }
     return cfg_func;
 }
 

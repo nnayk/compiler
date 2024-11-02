@@ -1,0 +1,16 @@
+fun main() int {
+    int x;
+    x=3;
+    if(x>2) {
+        x = x+1;
+    } else {
+        x = x+2;
+    }
+
+    if(x/2==0) {
+        x=x+12;
+    } else {
+        x=4987;
+    }
+    return x;
+}

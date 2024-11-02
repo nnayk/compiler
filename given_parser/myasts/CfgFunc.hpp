@@ -13,6 +13,7 @@ class CfgFunc {
         std::vector<ast::Declaration> params;  // Function parameters
         std::shared_ptr<ast::Type> retType;  // Return type
         std::vector<ast::Declaration> locals;  // Local declarations
+        std::shared_ptr<Bblock> return_block;
         std::vector<std::shared_ptr<Bblock>> blocks;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 

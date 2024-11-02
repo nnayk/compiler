@@ -13,6 +13,7 @@ namespace ast {
 class BlockStatement : public AbstractStatement {
 public:
     std::vector<std::shared_ptr<Statement>> statements;
+    std::unordered_set<std::shared_ptr<Bblock>> return_bblocks;
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);
     virtual void typecheck(Env &env, Function &f) override;

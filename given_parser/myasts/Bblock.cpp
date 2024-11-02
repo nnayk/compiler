@@ -1,6 +1,7 @@
 #include "Bblock.hpp"
 #include "ConditionalStatement.hpp"
 #include "BlockStatement.hpp"
+#include "AssignmentStatement.hpp"
 
 extern std::string TAB;
 std::string Bblock::get_llvm() {
@@ -27,6 +28,10 @@ std::string Bblock::get_llvm() {
     for(auto stmt:this->stmts) {
         spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
         llvm_ir += stmt->get_llvm();
+    }
+    if(this->is_return_block()) {
+        spdlog::debug("adding extra br for return block:{}\n",*this);
+        llvm_ir += TAB+"br label %return\n";
     }
     if(is_cond_block()) {
         spdlog::debug("dealing with cond  block...\n");
@@ -67,7 +72,23 @@ std::string Bblock::get_llvm() {
     return llvm_ir+"\n";
 }
 
+bool Bblock::is_return_block() {
+    spdlog::debug("inside Bblock::{}\n",__func__);
+    if(auto size = this->stmts.size()) {
+        auto asgn_stmt = dynamic_pointer_cast<ast::AssignmentStatement>(this->stmts[size-1]);
+        if(asgn_stmt && asgn_stmt->getTarget()->getId() == "_ret") {
+            spdlog::debug("yes, it's a return block:{}\n",*this);
+            if(this->children.size()==1) {
+                return true;
+            assert(this->children.size()==0); // got THE return block
+            }
+        }
+    }
+    return false;
+}
+
 bool Bblock::is_while_block() {
+    spdlog::debug("inside Bblock::{}\n",__func__);
     // If there's a self loop it must be a while block
    for(auto child : this->children) {
        if(child.get()==this) return true;
@@ -76,6 +97,7 @@ bool Bblock::is_while_block() {
 }
 
 bool Bblock::is_cond_block() {
+    spdlog::debug("inside Bblock::{}\n",__func__);
     if(this->is_while_block()) return false;
     if(this->stmts.size() && dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1])) return true;
     return false;

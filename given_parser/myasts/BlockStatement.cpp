@@ -1,6 +1,7 @@
 #include "BlockStatement.hpp"
 #include "ConditionalStatement.hpp" // used during cfg construction
 #include "WhileStatement.hpp" // used during cfg construction
+#include "ReturnStatement.hpp" // used during cfg construction
 #include <cassert>
 
 namespace ast {
@@ -25,28 +26,38 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     std::vector<std::shared_ptr<Bblock>> prev_blocks;
     std::shared_ptr<Statement> prev_stmt = nullptr;
     spdlog::debug("{} stmts to process",this->statements.size());
-    bool is_cond_stmt, is_while_stmt;
+    bool is_while_stmt, is_ret_stmt, prev_ret_stmt;
     for(auto stmt : this->statements) {
-        is_cond_stmt = dynamic_pointer_cast<ConditionalStatement>(stmt) != nullptr;
+        prev_ret_stmt = dynamic_pointer_cast<ReturnStatement>(prev_stmt) != nullptr;
+        is_ret_stmt = dynamic_pointer_cast<ReturnStatement>(stmt) != nullptr;
         is_while_stmt = dynamic_pointer_cast<WhileStatement>(stmt) != nullptr;
         if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
         spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
         auto new_blocks = stmt->get_cfg();
+        if(is_ret_stmt) stmt = new_blocks[0]->stmts[0];
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
         auto new_head = new_blocks[0];
+        if(is_ret_stmt) {
+            auto ret_block = new_head;
+            if(prev_tail) ret_block = prev_tail;
+            spdlog::debug("adding return stmt to list of ret blocks:{}\n",*ret_block);
+            this->return_bblocks.insert(ret_block);
+        }
         spdlog::debug("new head has {} stmts: {}\n",new_head->stmts.size(),*new_head);
         assert(!new_head->visited);
         //assert(new_head->stmts.size()==1);
         //w/o this check the dummy will remain...just test this works as expected
         //for now
+        if(prev_ret_stmt) {
+            spdlog::debug("prev block was a return block, no merging! prev_stmt = {}\n",*prev_stmt);
+        } else if(dynamic_pointer_cast<ast::ConditionalStatement>(prev_stmt)) {
         // if the previous block stmt was a conditional, then replace its
         // outbound dummy block with this current block
-        if(dynamic_pointer_cast<ast::ConditionalStatement>(prev_stmt)) {
 			spdlog::debug("Replacing trailing dummy block for conditional on line {}\n",prev_stmt->getLineNum());
             auto dummy_block = prev_tail; 
-            if(is_cond_stmt || is_while_stmt) {
-                spdlog::debug("Nvm preserving dummy block b/c: is_cond_stmt = {}, is_while_stmt = {}\n",is_cond_stmt,is_while_stmt);
+            if(is_while_stmt) {
+                spdlog::debug("Nvm preserving dummy block b/c dealing with while stmt");
                 dummy_block->children.push_back(new_head);
                 new_head->parents.push_back(dummy_block);
             } else { 
@@ -123,7 +134,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 }
             }
         }
-        if(dynamic_pointer_cast<ast::WhileStatement>(stmt)) {
+        if(dynamic_pointer_cast<ast::WhileStatement>(stmt) && !prev_ret_stmt) {
             // add self loop (then case)
             auto new_tail = new_blocks[new_blocks.size()-1];
             spdlog::debug("new tail = {}\n",*new_tail);
