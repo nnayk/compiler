@@ -2,7 +2,11 @@
 #include "Types.hpp"
 #include "InvocationExpression.hpp"
 #include "BinaryExpression.hpp"
+#include "IdentifierExpression.hpp"
+#include "Mapping.hpp"
+
 extern std::string TAB;
+extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
 
 namespace ast {
 
@@ -59,6 +63,40 @@ std::string AssignmentStatement::get_llvm() {
     llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
     spdlog::debug("assignment llvm = {}",llvm_ir);
 	return llvm_ir;
+}
+
+std::string AssignmentStatement::get_ssa(CfgFunc &f) {
+    spdlog::debug("inside AssignmentStatement::{}\n",__func__);
+    spdlog::debug("lineNum = {}\n",this->getLineNum());
+    std::string ssa = "";
+    spdlog::debug("source = {}\n",*(this->source));
+    assert(this->source);
+    assert(this->target);
+    assert(this->target->type);
+    assert(this->source->type);
+    // if target is a struct then just generate non-ssa llvm
+    // otherwise if target is not a struct generate ssa
+    // temporary llvm won't change
+    ssa += this->source->get_llvm_init();
+    // if source is an immediate create a pseudo reg
+    std::shared_ptr<Register> reg;
+    const std::type_info& source_type = typeid(this->source->type);
+    if((source_type == typeid(IntType)) || (source_type == typeid(BoolType))) {
+        // Can get the llvm for immediates (technically it's not non-ssa specific since we're dealing with simple constants...it's just poor nomenclature for the functions which made sense at the time when I was focused on non-ssa)
+        auto val = this->source->get_llvm();
+        reg = Register::create(val,false,true);
+        //reg->content_type = 
+    // else create a non-pseudo reg
+    } else {
+        std::string source_reg = this->source->get_llvm().substr(1); // drop the prefix
+        reg = all_regs[source_reg];
+    }
+    // add the var mapping to the function map
+    // Since structs have already been handled we know we're dealing with an identifier at this point
+    auto id_expr = dynamic_pointer_cast<IdentifierExpression>(this->target);
+    assert(id_expr);
+    f.ssa_map->addEntry(id_expr->getId(),reg); 
+    return "";
 }
  
 void AssignmentStatement::typecheck(Env &env, Function &f) {

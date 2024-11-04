@@ -1,0 +1,1406 @@
+[2024-10-22 13:49:51.810] [debug] Reading file ../2.json
+[2024-10-22 13:49:51.813] [info] inside parse_decls()
+[2024-10-22 13:49:51.814] [debug] int type
+[2024-10-22 13:49:51.814] [debug] int type
+[2024-10-22 13:49:51.814] [debug] int type
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] bool type
+[2024-10-22 13:49:51.814] [debug] 7 decls
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 13,var=i,type=IntType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 13,var=j,type=IntType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 13,var=k,type=IntType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 14,var=b,type=StructType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 14,var=bb,type=StructType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 14,var=bbb,type=StructType())]
+[2024-10-22 13:49:51.814] [info] [Declaration(lineNum = 15,var=bob,type=BoolType())]
+[2024-10-22 13:49:51.814] [info] inside parse_typeDecls()
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] field on lineNum 3
+[2024-10-22 13:49:51.814] [debug] int type
+[2024-10-22 13:49:51.814] [debug] type=IntType()
+[2024-10-22 13:49:51.814] [debug] field on lineNum 4
+[2024-10-22 13:49:51.814] [debug] int type
+[2024-10-22 13:49:51.814] [debug] type=IntType()
+[2024-10-22 13:49:51.814] [debug] field on lineNum 5
+[2024-10-22 13:49:51.814] [debug] bool type
+[2024-10-22 13:49:51.814] [debug] type=BoolType()
+[2024-10-22 13:49:51.814] [debug] field on lineNum 6
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] type=StructType()
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] field on lineNum 10
+[2024-10-22 13:49:51.814] [debug] struct type
+[2024-10-22 13:49:51.814] [debug] type=StructType()
+[2024-10-22 13:49:51.815] [debug] 2 structs
+[2024-10-22 13:49:51.815] [debug] dec name = A
+[2024-10-22 13:49:51.815] [info] [TypeDeclaration(lineNum = 1,var=A), fields = [[Declaration(lineNum = 3,var=i,type=IntType())], [Declaration(lineNum = 4,var=j1,type=IntType())], [Declaration(lineNum = 5,var=b,type=BoolType())], [Declaration(lineNum = 6,var=a,type=StructType())]]]
+[2024-10-22 13:49:51.815] [debug] dec name = B
+[2024-10-22 13:49:51.815] [info] [TypeDeclaration(lineNum = 8,var=B), fields = [[Declaration(lineNum = 10,var=a,type=StructType())]]]
+[2024-10-22 13:49:51.815] [info] inside parse_funcs()
+[2024-10-22 13:49:51.815] [debug] parsing function f
+[2024-10-22 13:49:51.815] [debug] int type
+[2024-10-22 13:49:51.815] [debug] struct type
+[2024-10-22 13:49:51.815] [debug] found function local var l on line 19
+[2024-10-22 13:49:51.815] [debug] int type
+[2024-10-22 13:49:51.815] [debug] found function local var k on line 19
+[2024-10-22 13:49:51.815] [debug] int type
+[2024-10-22 13:49:51.815] [debug] stmt:
+[2024-10-22 13:49:51.815] [debug] return
+[2024-10-22 13:49:51.815] [debug] inside parse_statement
+[2024-10-22 13:49:51.815] [debug] json={"exp":{"exp":"dot","id":"i","left":{"exp":"dot","id":"a","left":{"exp":"dot","id":"a","left":{"exp":"dot","id":"a","left":{"exp":"dot","id":"a","left":{"exp":"id","id":"b","line":20},"line":20},"line":20},"line":20},"line":20},"line":20},"line":20,"stmt":"return"}
+[2024-10-22 13:49:51.815] [debug] inside parse_nonempty_return
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing dot expr
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing dot expr
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing dot expr
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing dot expr
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing dot expr
+[2024-10-22 13:49:51.815] [debug] inside parse_expr
+[2024-10-22 13:49:51.815] [debug] parsing id expr
+[2024-10-22 13:49:51.816] [debug] struct type
+[2024-10-22 13:49:51.816] [debug] done parsing function
+[2024-10-22 13:49:51.816] [debug] function immediately [Function(lineNum = 17,name=f,retType=StructType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=20, statements=[ReturnStatement(lineNum=20), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 17,var=i,type=IntType())], [Declaration(lineNum = 17,var=j,type=StructType())]], locals = [[Declaration(lineNum = 19,var=l,type=IntType())], [Declaration(lineNum = 19,var=k,type=IntType())]]]
+
+[2024-10-22 13:49:51.816] [debug] parsing function foo
+[2024-10-22 13:49:51.816] [debug] int type
+[2024-10-22 13:49:51.816] [debug] stmt:
+[2024-10-22 13:49:51.816] [debug] if
+[2024-10-22 13:49:51.816] [debug] inside parse_statement
+[2024-10-22 13:49:51.816] [debug] json={"else":{"list":[{"exp":{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"*","rht":{"args":[{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"-","rht":{"exp":"num","line":31,"value":"1"}}],"exp":"invocation","id":"foo","line":31}},"line":31,"stmt":"return"}],"stmt":"block"},"guard":{"exp":"binary","lft":{"exp":"id","id":"n","line":25},"line":25,"operator":"+","rht":{"exp":"num","line":25,"value":"0"}},"line":25,"stmt":"if","then":{"list":[{"exp":{"exp":"num","line":27,"value":"1"},"line":27,"stmt":"return"}],"stmt":"block"}}
+[2024-10-22 13:49:51.816] [debug] inside parse_conditional
+[2024-10-22 13:49:51.816] [debug] inside parse_expr
+[2024-10-22 13:49:51.816] [debug] parsing binary expr
+[2024-10-22 13:49:51.816] [debug] inside parse_expr
+[2024-10-22 13:49:51.816] [debug] parsing id expr
+[2024-10-22 13:49:51.816] [debug] inside parse_expr
+[2024-10-22 13:49:51.816] [debug] parsing num expr
+[2024-10-22 13:49:51.816] [debug] inside parse_statement
+[2024-10-22 13:49:51.816] [debug] json={"list":[{"exp":{"exp":"num","line":27,"value":"1"},"line":27,"stmt":"return"}],"stmt":"block"}
+[2024-10-22 13:49:51.816] [debug] inside parse_block
+[2024-10-22 13:49:51.816] [debug] inside parse_statement
+[2024-10-22 13:49:51.816] [debug] json={"exp":{"exp":"num","line":27,"value":"1"},"line":27,"stmt":"return"}
+[2024-10-22 13:49:51.816] [debug] inside parse_nonempty_return
+[2024-10-22 13:49:51.816] [debug] inside parse_expr
+[2024-10-22 13:49:51.816] [debug] parsing num expr
+[2024-10-22 13:49:51.816] [debug] inside parse_statement
+[2024-10-22 13:49:51.816] [debug] json={"list":[{"exp":{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"*","rht":{"args":[{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"-","rht":{"exp":"num","line":31,"value":"1"}}],"exp":"invocation","id":"foo","line":31}},"line":31,"stmt":"return"}],"stmt":"block"}
+[2024-10-22 13:49:51.816] [debug] inside parse_block
+[2024-10-22 13:49:51.816] [debug] inside parse_statement
+[2024-10-22 13:49:51.817] [debug] json={"exp":{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"*","rht":{"args":[{"exp":"binary","lft":{"exp":"id","id":"n","line":31},"line":31,"operator":"-","rht":{"exp":"num","line":31,"value":"1"}}],"exp":"invocation","id":"foo","line":31}},"line":31,"stmt":"return"}
+[2024-10-22 13:49:51.817] [debug] inside parse_nonempty_return
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing binary expr
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing id expr
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing invocation expr
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing binary expr
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing id expr
+[2024-10-22 13:49:51.817] [debug] inside parse_expr
+[2024-10-22 13:49:51.817] [debug] parsing num expr
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] done parsing function
+[2024-10-22 13:49:51.817] [debug] function immediately [Function(lineNum = 23,name=foo,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=25, statements=[ConditionalStatement(lineNum=25), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 23,var=n,type=IntType())]], locals = []]
+
+[2024-10-22 13:49:51.817] [debug] parsing function g
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] struct type
+[2024-10-22 13:49:51.817] [debug] found function local var g on line 37
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] found function local var m on line 37
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] found function local var k on line 37
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] stmt:
+[2024-10-22 13:49:51.817] [debug] return
+[2024-10-22 13:49:51.817] [debug] inside parse_statement
+[2024-10-22 13:49:51.817] [debug] json={"line":38,"stmt":"return"}
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] done parsing function
+[2024-10-22 13:49:51.817] [debug] function immediately [Function(lineNum = 35,name=g,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=38, statements=[ReturnEmptyStatement(lineNum=38), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 35,var=i,type=IntType())], [Declaration(lineNum = 35,var=j,type=StructType())]], locals = [[Declaration(lineNum = 37,var=g,type=IntType())], [Declaration(lineNum = 37,var=m,type=IntType())], [Declaration(lineNum = 37,var=k,type=IntType())]]]
+
+[2024-10-22 13:49:51.817] [debug] parsing function main
+[2024-10-22 13:49:51.817] [debug] found function local var a on line 43
+[2024-10-22 13:49:51.817] [debug] struct type
+[2024-10-22 13:49:51.817] [debug] found function local var i on line 44
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] found function local var j on line 44
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] found function local var k on line 44
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.817] [debug] found function local var b on line 45
+[2024-10-22 13:49:51.817] [debug] bool type
+[2024-10-22 13:49:51.817] [debug] found function local var h on line 46
+[2024-10-22 13:49:51.817] [debug] int type
+[2024-10-22 13:49:51.818] [debug] stmt:
+[2024-10-22 13:49:51.818] [debug] block
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"list":[{"line":48,"source":{"exp":"num","line":48,"value":"2"},"stmt":"assign","target":{"id":"i","line":48}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"i","line":49},"line":49,"operator":"<","rht":{"args":[{"exp":"num","line":49,"value":"1"},{"exp":"null","line":49}],"exp":"invocation","id":"g","line":49}},"line":49,"stmt":"if","then":{"list":[{"endl":false,"exp":{"exp":"num","line":51,"value":"1"},"line":51,"stmt":"print"}],"stmt":"block"}},{"else":{"list":[{"endl":true,"exp":{"exp":"num","line":60,"value":"3"},"line":60,"stmt":"print"}],"stmt":"block"},"guard":{"exp":"binary","lft":{"exp":"id","id":"i","line":54},"line":54,"operator":">","rht":{"args":[{"exp":"num","line":54,"value":"1"},{"exp":"null","line":54}],"exp":"invocation","id":"g","line":54}},"line":54,"stmt":"if","then":{"list":[{"endl":false,"exp":{"exp":"num","line":56,"value":"1"},"line":56,"stmt":"print"}],"stmt":"block"}},{"body":{"list":[{"endl":false,"exp":{"exp":"num","line":64,"value":"7"},"line":64,"stmt":"print"}],"stmt":"block"},"guard":{"exp":"binary","lft":{"exp":"true","line":62},"line":62,"operator":"<","rht":{"exp":"false","line":62}},"line":62,"stmt":"while"},{"args":[{"args":[{"exp":"num","line":66,"value":"1"},{"exp":"new","id":"B","line":66}],"exp":"invocation","id":"g","line":66},{"exp":"num","line":66,"value":"2"},{"exp":"new","id":"B","line":66}],"id":"f","line":66,"stmt":"invocation"},{"endl":true,"exp":{"exp":"dot","id":"bob","left":{"args":[{"exp":"num","line":67,"value":"2"},{"exp":"new","id":"B","line":67}],"exp":"invocation","id":"f","line":67},"line":67},"line":67,"stmt":"print"},{"endl":true,"exp":{"exp":"dot","id":"a","left":{"args":[{"exp":"num","line":68,"value":"2"}],"exp":"invocation","id":"foo","line":68},"line":68},"line":68,"stmt":"print"}],"stmt":"block"}
+[2024-10-22 13:49:51.818] [debug] inside parse_block
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"line":48,"source":{"exp":"num","line":48,"value":"2"},"stmt":"assign","target":{"id":"i","line":48}}
+[2024-10-22 13:49:51.818] [debug] inside parse_assignment
+[2024-10-22 13:49:51.818] [debug] inside parse_lvalue
+[2024-10-22 13:49:51.818] [debug] line = 48
+[2024-10-22 13:49:51.818] [debug] LvalueId
+[2024-10-22 13:49:51.818] [debug] target parsed, now gonna parse source
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing num expr
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"guard":{"exp":"binary","lft":{"exp":"id","id":"i","line":49},"line":49,"operator":"<","rht":{"args":[{"exp":"num","line":49,"value":"1"},{"exp":"null","line":49}],"exp":"invocation","id":"g","line":49}},"line":49,"stmt":"if","then":{"list":[{"endl":false,"exp":{"exp":"num","line":51,"value":"1"},"line":51,"stmt":"print"}],"stmt":"block"}}
+[2024-10-22 13:49:51.818] [debug] inside parse_conditional
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing binary expr
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing id expr
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing invocation expr
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing num expr
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing null expr
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"list":[{"endl":false,"exp":{"exp":"num","line":51,"value":"1"},"line":51,"stmt":"print"}],"stmt":"block"}
+[2024-10-22 13:49:51.818] [debug] inside parse_block
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"endl":false,"exp":{"exp":"num","line":51,"value":"1"},"line":51,"stmt":"print"}
+[2024-10-22 13:49:51.818] [debug] inside parse_print
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing num expr
+[2024-10-22 13:49:51.818] [debug] inside parse_statement
+[2024-10-22 13:49:51.818] [debug] json={"else":{"list":[{"endl":true,"exp":{"exp":"num","line":60,"value":"3"},"line":60,"stmt":"print"}],"stmt":"block"},"guard":{"exp":"binary","lft":{"exp":"id","id":"i","line":54},"line":54,"operator":">","rht":{"args":[{"exp":"num","line":54,"value":"1"},{"exp":"null","line":54}],"exp":"invocation","id":"g","line":54}},"line":54,"stmt":"if","then":{"list":[{"endl":false,"exp":{"exp":"num","line":56,"value":"1"},"line":56,"stmt":"print"}],"stmt":"block"}}
+[2024-10-22 13:49:51.818] [debug] inside parse_conditional
+[2024-10-22 13:49:51.818] [debug] inside parse_expr
+[2024-10-22 13:49:51.818] [debug] parsing binary expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing id expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing invocation expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing null expr
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"list":[{"endl":false,"exp":{"exp":"num","line":56,"value":"1"},"line":56,"stmt":"print"}],"stmt":"block"}
+[2024-10-22 13:49:51.819] [debug] inside parse_block
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"endl":false,"exp":{"exp":"num","line":56,"value":"1"},"line":56,"stmt":"print"}
+[2024-10-22 13:49:51.819] [debug] inside parse_print
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"list":[{"endl":true,"exp":{"exp":"num","line":60,"value":"3"},"line":60,"stmt":"print"}],"stmt":"block"}
+[2024-10-22 13:49:51.819] [debug] inside parse_block
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"endl":true,"exp":{"exp":"num","line":60,"value":"3"},"line":60,"stmt":"print"}
+[2024-10-22 13:49:51.819] [debug] inside parse_print
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"body":{"list":[{"endl":false,"exp":{"exp":"num","line":64,"value":"7"},"line":64,"stmt":"print"}],"stmt":"block"},"guard":{"exp":"binary","lft":{"exp":"true","line":62},"line":62,"operator":"<","rht":{"exp":"false","line":62}},"line":62,"stmt":"while"}
+[2024-10-22 13:49:51.819] [debug] inside parse_loop
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing binary expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing true expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing false expr
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"list":[{"endl":false,"exp":{"exp":"num","line":64,"value":"7"},"line":64,"stmt":"print"}],"stmt":"block"}
+[2024-10-22 13:49:51.819] [debug] inside parse_block
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"endl":false,"exp":{"exp":"num","line":64,"value":"7"},"line":64,"stmt":"print"}
+[2024-10-22 13:49:51.819] [debug] inside parse_print
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_statement
+[2024-10-22 13:49:51.819] [debug] json={"args":[{"args":[{"exp":"num","line":66,"value":"1"},{"exp":"new","id":"B","line":66}],"exp":"invocation","id":"g","line":66},{"exp":"num","line":66,"value":"2"},{"exp":"new","id":"B","line":66}],"id":"f","line":66,"stmt":"invocation"}
+[2024-10-22 13:49:51.819] [debug] inside parse_invocation
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing invocation expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing new expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.819] [debug] parsing num expr
+[2024-10-22 13:49:51.819] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing new expr
+[2024-10-22 13:49:51.820] [debug] inside parse_statement
+[2024-10-22 13:49:51.820] [debug] json={"endl":true,"exp":{"exp":"dot","id":"bob","left":{"args":[{"exp":"num","line":67,"value":"2"},{"exp":"new","id":"B","line":67}],"exp":"invocation","id":"f","line":67},"line":67},"line":67,"stmt":"print"}
+[2024-10-22 13:49:51.820] [debug] inside parse_print
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing dot expr
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing invocation expr
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing num expr
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing new expr
+[2024-10-22 13:49:51.820] [debug] inside parse_statement
+[2024-10-22 13:49:51.820] [debug] json={"endl":true,"exp":{"exp":"dot","id":"a","left":{"args":[{"exp":"num","line":68,"value":"2"}],"exp":"invocation","id":"foo","line":68},"line":68},"line":68,"stmt":"print"}
+[2024-10-22 13:49:51.820] [debug] inside parse_print
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing dot expr
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing invocation expr
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing num expr
+[2024-10-22 13:49:51.820] [debug] stmt:
+[2024-10-22 13:49:51.820] [debug] return
+[2024-10-22 13:49:51.820] [debug] inside parse_statement
+[2024-10-22 13:49:51.820] [debug] json={"exp":{"exp":"num","line":70,"value":"0"},"line":70,"stmt":"return"}
+[2024-10-22 13:49:51.820] [debug] inside parse_nonempty_return
+[2024-10-22 13:49:51.820] [debug] inside parse_expr
+[2024-10-22 13:49:51.820] [debug] parsing num expr
+[2024-10-22 13:49:51.820] [debug] int type
+[2024-10-22 13:49:51.820] [debug] done parsing function
+[2024-10-22 13:49:51.820] [debug] function immediately [Function(lineNum = 41,name=main,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=48, statements=[START OF BLOCK STATEMENTS
+BlockStatement(lineNum=48, statements=[AssignmentStatement(lineNum=48), ConditionalStatement(lineNum=49), ConditionalStatement(lineNum=54), WhileStatement(lineNum=62), InovcationStatement(lineNum=66), PrintStatement(lineNum=67,newLine?=true), PrintStatement(lineNum=68,newLine?=true), ])
+END OF BLOCKSTATEMENT, ReturnStatement(lineNum=70), ])
+END OF BLOCKSTATEMENT), params = [], locals = [[Declaration(lineNum = 43,var=a,type=StructType())], [Declaration(lineNum = 44,var=i,type=IntType())], [Declaration(lineNum = 44,var=j,type=IntType())], [Declaration(lineNum = 44,var=k,type=IntType())], [Declaration(lineNum = 45,var=b,type=BoolType())], [Declaration(lineNum = 46,var=h,type=IntType())]]]
+
+[2024-10-22 13:49:51.820] [debug] 4 functions
+[2024-10-22 13:49:51.820] [debug] func name = f
+[2024-10-22 13:49:51.820] [info] [Function(lineNum = 17,name=f,retType=StructType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=20, statements=[ReturnStatement(lineNum=20), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 17,var=i,type=IntType())], [Declaration(lineNum = 17,var=j,type=StructType())]], locals = [[Declaration(lineNum = 19,var=l,type=IntType())], [Declaration(lineNum = 19,var=k,type=IntType())]]]
+[2024-10-22 13:49:51.820] [debug] func name = foo
+[2024-10-22 13:49:51.820] [info] [Function(lineNum = 23,name=foo,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=25, statements=[ConditionalStatement(lineNum=25), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 23,var=n,type=IntType())]], locals = []]
+[2024-10-22 13:49:51.820] [debug] func name = g
+[2024-10-22 13:49:51.820] [info] [Function(lineNum = 35,name=g,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=38, statements=[ReturnEmptyStatement(lineNum=38), ])
+END OF BLOCKSTATEMENT), params = [[Declaration(lineNum = 35,var=i,type=IntType())], [Declaration(lineNum = 35,var=j,type=StructType())]], locals = [[Declaration(lineNum = 37,var=g,type=IntType())], [Declaration(lineNum = 37,var=m,type=IntType())], [Declaration(lineNum = 37,var=k,type=IntType())]]]
+[2024-10-22 13:49:51.820] [debug] func name = main
+[2024-10-22 13:49:51.821] [info] [Function(lineNum = 41,name=main,retType=IntType(),body=START OF BLOCK STATEMENTS
+BlockStatement(lineNum=48, statements=[START OF BLOCK STATEMENTS
+BlockStatement(lineNum=48, statements=[AssignmentStatement(lineNum=48), ConditionalStatement(lineNum=49), ConditionalStatement(lineNum=54), WhileStatement(lineNum=62), InovcationStatement(lineNum=66), PrintStatement(lineNum=67,newLine?=true), PrintStatement(lineNum=68,newLine?=true), ])
+END OF BLOCKSTATEMENT, ReturnStatement(lineNum=70), ])
+END OF BLOCKSTATEMENT), params = [], locals = [[Declaration(lineNum = 43,var=a,type=StructType())], [Declaration(lineNum = 44,var=i,type=IntType())], [Declaration(lineNum = 44,var=j,type=IntType())], [Declaration(lineNum = 44,var=k,type=IntType())], [Declaration(lineNum = 45,var=b,type=BoolType())], [Declaration(lineNum = 46,var=h,type=IntType())]]]
+[2024-10-22 13:49:51.821] [debug] typechecking skipped
+[2024-10-22 13:49:51.821] [info] inside CfgProg::build
+[2024-10-22 13:49:51.821] [debug] typeDecl LLVM IR = %struct.A
+[2024-10-22 13:49:51.821] [debug] typeDecl LLVM IR = %struct.B
+[2024-10-22 13:49:51.821] [debug] Gonna build CFG for function f
+[2024-10-22 13:49:51.821] [info] inside CfgFunc::build
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ReturnStatement(lineNum=20)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: ReturnStatement(lineNum=20)STATEMENTS:
+ReturnStatement(lineNum=20)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [debug] Gonna build CFG for function foo
+[2024-10-22 13:49:51.821] [info] inside CfgFunc::build
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=25)
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement:get_cfg
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=27, statements=[ReturnStatement(lineNum=27), ])
+END OF BLOCKSTATEMENT
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ReturnStatement(lineNum=27)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ReturnStatement(lineNum=31)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-10-22 13:49:51.821] [debug] Added then block: Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+
+[2024-10-22 13:49:51.821] [debug] Added else block: Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+
+[2024-10-22 13:49:51.821] [debug] ADDED CHILD = Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.821] [debug] ADDED CHILD = Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.821] [debug] Created if block w/2 children
+
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 4
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+
+[2024-10-22 13:49:51.821] [debug] Gonna build CFG for function g
+[2024-10-22 13:49:51.821] [info] inside CfgFunc::build
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ReturnEmptyStatement(lineNum=38)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: ReturnEmptyStatement(lineNum=38)STATEMENTS:
+ReturnEmptyStatement(lineNum=38)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [debug] Gonna build CFG for function main
+[2024-10-22 13:49:51.821] [info] inside CfgFunc::build
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 2 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=48, statements=[AssignmentStatement(lineNum=48), ConditionalStatement(lineNum=49), ConditionalStatement(lineNum=54), WhileStatement(lineNum=62), InovcationStatement(lineNum=66), PrintStatement(lineNum=67,newLine?=true), PrintStatement(lineNum=68,newLine?=true), ])
+END OF BLOCKSTATEMENT
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 7 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt AssignmentStatement(lineNum=48)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: AssignmentStatement(lineNum=48)STATEMENTS:
+AssignmentStatement(lineNum=48)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=49)
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement:get_cfg
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=51, statements=[PrintStatement(lineNum=51,newLine?=false), ])
+END OF BLOCKSTATEMENT
+[2024-10-22 13:49:51.821] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] 1 stmts to process
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Gonna build cfg for stmt PrintStatement(lineNum=51,newLine?=false)
+[2024-10-22 13:49:51.821] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.821] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.821] [debug] prev_tail = Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.821] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-10-22 13:49:51.821] [debug] Added then block: Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+
+[2024-10-22 13:49:51.821] [debug] Added else DUMMY block
+
+[2024-10-22 13:49:51.821] [debug] ADDED CHILD = Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.821] [debug] ADDED CHILD = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.822] [debug] Created if block w/2 children
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 4
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=54)
+[2024-10-22 13:49:51.822] [debug] ConditionalStatement:get_cfg
+[2024-10-22 13:49:51.822] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=56, statements=[PrintStatement(lineNum=56,newLine?=false), ])
+END OF BLOCKSTATEMENT
+[2024-10-22 13:49:51.822] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] 1 stmts to process
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt PrintStatement(lineNum=56,newLine?=false)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.822] [info] inside BlockStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] 1 stmts to process
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt PrintStatement(lineNum=60,newLine?=true)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-10-22 13:49:51.822] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-10-22 13:49:51.822] [debug] Added then block: Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+
+[2024-10-22 13:49:51.822] [debug] Added else block: Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+
+[2024-10-22 13:49:51.822] [debug] ADDED CHILD = Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.822] [debug] ADDED CHILD = Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.822] [debug] Created if block w/2 children
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 4
+[2024-10-22 13:49:51.822] [debug] Replacing trailing dummy block for conditional on line 49
+
+[2024-10-22 13:49:51.822] [debug] deleting dummy block with 2 parents: Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt WhileStatement(lineNum=62)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] Replacing trailing dummy block for conditional on line 54
+
+[2024-10-22 13:49:51.822] [debug] deleting dummy block with 2 parents: Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: WhileStatement(lineNum=62)STATEMENTS:
+WhileStatement(lineNum=62)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt InovcationStatement(lineNum=66)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: InovcationStatement(lineNum=66)STATEMENTS:
+InovcationStatement(lineNum=66)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: WhileStatement(lineNum=62)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt PrintStatement(lineNum=67,newLine?=true)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: PrintStatement(lineNum=67,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=67,newLine?=true)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt PrintStatement(lineNum=68,newLine?=true)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: PrintStatement(lineNum=68,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=68,newLine?=true)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 13
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: PrintStatement(lineNum=68,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=68,newLine?=true)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Gonna build cfg for stmt ReturnStatement(lineNum=70)
+[2024-10-22 13:49:51.822] [info] AbstractStatement::get_cfg
+[2024-10-22 13:49:51.822] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-10-22 13:49:51.822] [debug] prev_tail = Head statement: ReturnStatement(lineNum=70)STATEMENTS:
+ReturnStatement(lineNum=70)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+
+[2024-10-22 13:49:51.822] [debug] inside CfgFunc::display
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: ReturnStatement(lineNum=20)STATEMENTS:
+ReturnStatement(lineNum=20)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+[2024-10-22 13:49:51.822] [debug] inside CfgFunc::display
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: ConditionalStatement(lineNum=25)STATEMENTS:
+ConditionalStatement(lineNum=25)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+[2024-10-22 13:49:51.822] [debug] pushing child Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.822] [debug] pushing child Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.822] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+
+[2024-10-22 13:49:51.822] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+[2024-10-22 13:49:51.822] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+[2024-10-22 13:49:51.822] [debug] inside CfgFunc::display
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: ReturnEmptyStatement(lineNum=38)STATEMENTS:
+ReturnEmptyStatement(lineNum=38)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+[2024-10-22 13:49:51.823] [debug] inside CfgFunc::display
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: AssignmentStatement(lineNum=48)STATEMENTS:
+AssignmentStatement(lineNum=48)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: ConditionalStatement(lineNum=49)STATEMENTS:
+ConditionalStatement(lineNum=49)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: AssignmentStatement(lineNum=48)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: ConditionalStatement(lineNum=49)STATEMENTS:
+ConditionalStatement(lineNum=49)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: AssignmentStatement(lineNum=48)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: ConditionalStatement(lineNum=54)STATEMENTS:
+ConditionalStatement(lineNum=54)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: ConditionalStatement(lineNum=54)STATEMENTS:
+ConditionalStatement(lineNum=54)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: WhileStatement(lineNum=62)STATEMENTS:
+WhileStatement(lineNum=62)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: WhileStatement(lineNum=62)STATEMENTS:
+WhileStatement(lineNum=62)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: InovcationStatement(lineNum=66)STATEMENTS:
+InovcationStatement(lineNum=66)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: WhileStatement(lineNum=62)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: InovcationStatement(lineNum=66)STATEMENTS:
+InovcationStatement(lineNum=66)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: WhileStatement(lineNum=62)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: PrintStatement(lineNum=67,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=67,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: PrintStatement(lineNum=67,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=67,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: PrintStatement(lineNum=68,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=68,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ReturnStatement(lineNum=70)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: PrintStatement(lineNum=68,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=68,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ReturnStatement(lineNum=70)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] pushing child Head statement: ReturnStatement(lineNum=70)STATEMENTS:
+ReturnStatement(lineNum=70)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+[2024-10-22 13:49:51.823] [debug] popped block Head statement: ReturnStatement(lineNum=70)STATEMENTS:
+ReturnStatement(lineNum=70)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+[2024-10-22 13:49:51.823] [info] CFG: TYPE DECLS:[TypeDeclaration(lineNum = 1,var=A), fields = [[Declaration(lineNum = 3,var=i,type=IntType())], [Declaration(lineNum = 4,var=j1,type=IntType())], [Declaration(lineNum = 5,var=b,type=BoolType())], [Declaration(lineNum = 6,var=a,type=StructType())]]][TypeDeclaration(lineNum = 8,var=B), fields = [[Declaration(lineNum = 10,var=a,type=StructType())]]]
+GLOBALS:[Declaration(lineNum = 13,var=i,type=IntType())][Declaration(lineNum = 13,var=j,type=IntType())][Declaration(lineNum = 13,var=k,type=IntType())][Declaration(lineNum = 14,var=b,type=StructType())][Declaration(lineNum = 14,var=bb,type=StructType())][Declaration(lineNum = 14,var=bbb,type=StructType())][Declaration(lineNum = 15,var=bob,type=BoolType())]
+FUNCS:f (ret type = StructType()): 
+PARAMS:
+[Declaration(lineNum = 17,var=i,type=IntType())][Declaration(lineNum = 17,var=j,type=StructType())]
+LOCALS:
+[Declaration(lineNum = 19,var=l,type=IntType())][Declaration(lineNum = 19,var=k,type=IntType())]BODY:
+START OF BBLOCK
+Head statement: ReturnStatement(lineNum=20)STATEMENTS:
+ReturnStatement(lineNum=20)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+END OF BBLOCK
+
+
+END OF CFG FOR f
+ foo (ret type = IntType()): 
+PARAMS:
+[Declaration(lineNum = 23,var=n,type=IntType())]
+LOCALS:
+BODY:
+START OF BBLOCK
+Head statement: ConditionalStatement(lineNum=25)STATEMENTS:
+ConditionalStatement(lineNum=25)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: ReturnStatement(lineNum=27)STATEMENTS:
+ReturnStatement(lineNum=27)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: ReturnStatement(lineNum=31)STATEMENTS:
+ReturnStatement(lineNum=31)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=25)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: ReturnStatement(lineNum=27)
+HEAD STMT: ReturnStatement(lineNum=31)
+END OF BBLOCK
+
+
+END OF CFG FOR foo
+ g (ret type = IntType()): 
+PARAMS:
+[Declaration(lineNum = 35,var=i,type=IntType())][Declaration(lineNum = 35,var=j,type=StructType())]
+LOCALS:
+[Declaration(lineNum = 37,var=g,type=IntType())][Declaration(lineNum = 37,var=m,type=IntType())][Declaration(lineNum = 37,var=k,type=IntType())]BODY:
+START OF BBLOCK
+Head statement: ReturnEmptyStatement(lineNum=38)STATEMENTS:
+ReturnEmptyStatement(lineNum=38)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+END OF BBLOCK
+
+
+END OF CFG FOR g
+ main (ret type = IntType()): 
+PARAMS:
+
+LOCALS:
+[Declaration(lineNum = 43,var=a,type=StructType())][Declaration(lineNum = 44,var=i,type=IntType())][Declaration(lineNum = 44,var=j,type=IntType())][Declaration(lineNum = 44,var=k,type=IntType())][Declaration(lineNum = 45,var=b,type=BoolType())][Declaration(lineNum = 46,var=h,type=IntType())]BODY:
+START OF BBLOCK
+Head statement: AssignmentStatement(lineNum=48)STATEMENTS:
+AssignmentStatement(lineNum=48)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=49)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: ConditionalStatement(lineNum=49)STATEMENTS:
+ConditionalStatement(lineNum=49)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: AssignmentStatement(lineNum=48)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: PrintStatement(lineNum=51,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=51,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=49)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ConditionalStatement(lineNum=54)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=51,newLine?=false)
+HEAD STMT: ConditionalStatement(lineNum=49)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: ConditionalStatement(lineNum=54)STATEMENTS:
+ConditionalStatement(lineNum=54)
+NUMBER OF CHILDREN: 2
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: PrintStatement(lineNum=56,newLine?=false)STATEMENTS:
+PrintStatement(lineNum=56,newLine?=false)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: PrintStatement(lineNum=60,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=60,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: ConditionalStatement(lineNum=54)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: WhileStatement(lineNum=62)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=56,newLine?=false)
+HEAD STMT: PrintStatement(lineNum=60,newLine?=true)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: WhileStatement(lineNum=62)STATEMENTS:
+WhileStatement(lineNum=62)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: InovcationStatement(lineNum=66)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+DUMMY parent
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: InovcationStatement(lineNum=66)STATEMENTS:
+InovcationStatement(lineNum=66)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: WhileStatement(lineNum=62)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: PrintStatement(lineNum=67,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=67,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: InovcationStatement(lineNum=66)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: PrintStatement(lineNum=68,newLine?=true)STATEMENTS:
+PrintStatement(lineNum=68,newLine?=true)
+NUMBER OF CHILDREN: 1
+CHILDREN:
+HEAD STMT: ReturnStatement(lineNum=70)
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=67,newLine?=true)
+END OF BBLOCK
+
+
+START OF BBLOCK
+Head statement: ReturnStatement(lineNum=70)STATEMENTS:
+ReturnStatement(lineNum=70)
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 1
+PARENTS:
+HEAD STMT: PrintStatement(lineNum=68,newLine?=true)
+END OF BBLOCK
+
+
+END OF CFG FOR main
+ 
+[2024-10-22 13:49:51.823] [debug] llvm_str = %struct.A = type { i64, i64, i8, ptr }
+
+[2024-10-22 13:49:51.823] [debug] llvm_str = %struct.B = type { ptr }
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = i
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = j
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = k
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = b
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = bb
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = bbb
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = bob
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = i
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = j
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = n
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = i
+
+[2024-10-22 13:49:51.823] [debug] Declaration::get_llvm_init: var name = j
+
+[2024-10-22 13:49:51.823] [info] LLVM IR:
+%struct.A = type { i64, i64, i8, ptr }
+%struct.B = type { ptr }
+
+@i = global i64 0, align 8
+@j = global i64 0, align 8
+@k = global i64 0, align 8
+@b = global ptr null, align 8
+@bb = global ptr null, align 8
+@bbb = global ptr null, align 8
+@bob = global i8 0, align 4
+
+define noundef ptr @f(i64 noundef %i, ptr noundef %j) {}
+define noundef i64 @foo(i64 noundef %n) {}
+define noundef i64 @g(i64 noundef %i, ptr noundef %j) {}
+define noundef i64 @main() {}
+

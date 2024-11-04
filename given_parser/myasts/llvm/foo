@@ -1,0 +1,40 @@
+==> llvm: stable 19.1.1 (bottled), HEAD [keg-only]
+Next-gen compiler infrastructure
+https://llvm.org/
+Installed
+/usr/local/Cellar/llvm/19.1.1 (8,039 files, 2GB)
+  Poured from bottle using the formulae.brew.sh API on 2024-10-15 at 16:36:10
+From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/l/llvm.rb
+License: Apache-2.0 WITH LLVM-exception
+==> Dependencies
+Build: cmake, ninja, swig
+Required: python@3.12, xz, z3, zstd
+==> Options
+--HEAD
+	Install HEAD version
+==> Caveats
+`lld` is now provided in a separate formula:
+  brew install lld
+
+To use the bundled libunwind please use the following LDFLAGS:
+  LDFLAGS="-L/usr/local/opt/llvm/lib/unwind -lunwind"
+
+To use the bundled libc++ please use the following LDFLAGS:
+  LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -L/usr/local/opt/llvm/lib/unwind -lunwind"
+
+NOTE: You probably want to use the libunwind and libc++ provided by macOS unless you know what you're doing.
+
+llvm is keg-only, which means it was not symlinked into /usr/local,
+because macOS already provides this software and installing another version in
+parallel can cause all kinds of trouble.
+
+If you need to have llvm first in your PATH, run:
+  echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find llvm you may need to set:
+  export LDFLAGS="-L/usr/local/opt/llvm/lib"
+  export CPPFLAGS="-I/usr/local/opt/llvm/include"
+==> Analytics
+install: 62,341 (30 days), 156,434 (90 days), 670,210 (365 days)
+install-on-request: 41,456 (30 days), 83,484 (90 days), 334,977 (365 days)
+build-error: 260 (30 days)

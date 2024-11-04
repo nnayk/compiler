@@ -7,6 +7,7 @@
 #include <memory>
 #include <spdlog/spdlog.h>
 #include "Bblock.hpp"
+#include "CfgFunc.hpp"
 
 namespace ast {
 
@@ -27,6 +28,8 @@ public:
     std::shared_ptr<Expression> getSource() const;
     
 	virtual std::string get_llvm() override;
+
+    std::string get_ssa(CfgFunc &f);
 
     std::string display() const override {
         return fmt::format("AssignmentStatement(lineNum={})",lineNum);

@@ -1,0 +1,19 @@
+digraph "CFG for 'main' function" {
+	label="CFG for 'main' function";
+
+	Node0x600003725ea0 [shape=record,color="#b70d28ff", style=filled, fillcolor="#b70d2870" fontname="Courier",label="{0:\l|  %1 = icmp sgt i32 2, 0\l  br i1 %1, label %2, label %3\l|{<s0>T|<s1>F}}"];
+	Node0x600003725ea0:s0 -> Node0x600003726030[tooltip="0 -> 2\nProbability 62.50%" ];
+	Node0x600003725ea0:s1 -> Node0x600003726080[tooltip="0 -> 3\nProbability 37.50%" ];
+	Node0x600003726030 [shape=record,color="#b70d28ff", style=filled, fillcolor="#bb1b2c70" fontname="Courier",label="{2:\l|  br label %8\l}"];
+	Node0x600003726030 -> Node0x600003725fe0[tooltip="2 -> 8\nProbability 100.00%" ];
+	Node0x600003726080 [shape=record,color="#3d50c3ff", style=filled, fillcolor="#c32e3170" fontname="Courier",label="{3:\l|  %4 = icmp sgt i32 4, 7\l  br i1 %4, label %5, label %6\l|{<s0>T|<s1>F}}"];
+	Node0x600003726080:s0 -> Node0x600003725f40[tooltip="3 -> 5\nProbability 50.00%" ];
+	Node0x600003726080:s1 -> Node0x6000037260d0[tooltip="3 -> 6\nProbability 50.00%" ];
+	Node0x600003725f40 [shape=record,color="#3d50c3ff", style=filled, fillcolor="#c5333470" fontname="Courier",label="{5:\l|  br label %7\l}"];
+	Node0x600003725f40 -> Node0x600003726120[tooltip="5 -> 7\nProbability 100.00%" ];
+	Node0x6000037260d0 [shape=record,color="#3d50c3ff", style=filled, fillcolor="#c5333470" fontname="Courier",label="{6:\l|  br label %7\l}"];
+	Node0x6000037260d0 -> Node0x600003726120[tooltip="6 -> 7\nProbability 100.00%" ];
+	Node0x600003726120 [shape=record,color="#3d50c3ff", style=filled, fillcolor="#c32e3170" fontname="Courier",label="{7:\l|  br label %8\l}"];
+	Node0x600003726120 -> Node0x600003725fe0[tooltip="7 -> 8\nProbability 100.00%" ];
+	Node0x600003725fe0 [shape=record,color="#b70d28ff", style=filled, fillcolor="#b70d2870" fontname="Courier",label="{8:\l|  %.0 = phi i32 [ 2, %2 ], [ 5, %7 ]\l  ret i32 %.0\l}"];
+}

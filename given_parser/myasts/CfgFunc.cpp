@@ -11,7 +11,9 @@
 #include "Label.hpp"
 
 std::string TAB="\t";
-CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {}
+CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {
+    ssa_map = std::make_shared<Mapping>();
+}
 
 std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     spdlog::info("inside CfgFunc::{}",__func__);

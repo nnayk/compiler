@@ -5,16 +5,18 @@
 #include "Bblock.hpp"
 #include "Function.hpp"
 #include "Statement.hpp"
+#include "Mapping.hpp"
 
 class CfgFunc; // forward declare for build method
 class CfgFunc {
     public:
 		std::string name;
         std::vector<ast::Declaration> params;  // Function parameters
-        std::shared_ptr<ast::Type> retType;  // Return type
+        std::shared_ptr<ast::Type> retType = nullptr;  // Return type
         std::vector<ast::Declaration> locals;  // Local declarations
-        std::shared_ptr<Bblock> return_block;
+        std::shared_ptr<Bblock> return_block = nullptr;
         std::vector<std::shared_ptr<Bblock>> blocks;
+        std::shared_ptr<Mapping> ssa_map = nullptr;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 
 		std::string display() const;
