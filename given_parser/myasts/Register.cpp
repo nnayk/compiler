@@ -5,15 +5,16 @@ int Register::reg = 1;
 std::string Register::LOCAL_PREFIX = "%";
 std::string Register::GLOBAL_PREFIX = "@";
 std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
-Register::Register(const std::string &id,const bool &is_global) :  id(id) {       
+Register::Register(const std::string &id,const bool &is_global,const bool &is_pseudo) :  id(id) {       
     auto prefix = Register::LOCAL_PREFIX;
     if(is_global) prefix = Register::GLOBAL_PREFIX;
+    if(is_pseudo) this->pseudo = true;
     this->prefix = prefix;
     spdlog::info("inside Register::{}\n",__func__);
     if(id==std::to_string(reg)) reg++;
 }
 
-std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_global) {
+std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_global,const bool &is_pseudo) {
     spdlog::debug("inside Register::{}\n",__func__);
     auto reg = std::make_shared<Register>(id,is_global);
     all_regs[id] = reg->shared_from_this();

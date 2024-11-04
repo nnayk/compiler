@@ -1,6 +1,17 @@
-BlockStatement.cpp:15:        stmt->typecheck(env);
-ConditionalStatement.cpp:22:    if(this->thenBlock) this->thenBlock->typecheck(env);
-ConditionalStatement.cpp:23:    if(this->elseBlock) this->elseBlock->typecheck(env);
-Function.cpp:21:    body->typecheck(env,*this);        
-TypeChecker.cpp:184:        func->typecheck(*localEnv);
-WhileStatement.cpp:17:    this->body->typecheck(env);
+AssignmentStatement.cpp:        auto temp_reg = Register::create();
+BinaryExpression.cpp:	this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:            //this->result = Register::create();
+BinaryExpression.cpp:    this->result = Register::create();
+IdentifierExpression.cpp:        this->result = Register::create(id);
+IdentifierExpression.cpp:    this->deref_result = Register::create();
+LvalueId.cpp:        result = Register::create(id); 
+NewExpression.cpp:    this->result = Register::create();
+PrintStatement.cpp:    Register::create();
+Register.cpp:std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_global,const bool &is_pseudo) {

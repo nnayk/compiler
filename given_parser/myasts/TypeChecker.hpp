@@ -17,6 +17,7 @@ Env globalsTLE;
 Env funcTLE;
 std::unordered_map<std::string,Env> funcLocalEnvs; // maps function name to local env
 ast::Program p;
+bool use_ssa = false;
 
 void typecheck(ast::Program &p,std::shared_ptr<Env> tle);
 void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &typeDecls);

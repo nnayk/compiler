@@ -35,12 +35,14 @@ std::string Bblock::get_llvm() {
     }
     if(is_cond_block()) {
         spdlog::debug("dealing with cond  block...\n");
-        assert(!this->jmp_label);
         auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1]);
+        spdlog::debug("cond_stmt = {}\n",*this->stmts[this->stmts.size()-1]);
+        //assert(!this->jmp_label);
         // Get the after block and assign it the after label chosen by the cond stmt
         std::shared_ptr<Bblock> after_block = nullptr;
         auto thenBblock = dynamic_pointer_cast<Bblock>(this->children[0]);
         assert(thenBblock);
+        // Nov 3 2024: handle cases where then and/or else block is also a conditional... in this case we need to update their afterLabels
         if(cond_stmt->thenLabel != cond_stmt->afterLabel) {
             thenBblock->label = cond_stmt->thenLabel;
             thenBblock->jmp_label = cond_stmt->afterLabel;
@@ -62,7 +64,7 @@ std::string Bblock::get_llvm() {
 
         // Assign label to after block if not done yet (i.e. then and else are both noth equal to after block) 
         if((cond_stmt->thenLabel != cond_stmt->afterLabel ) && (cond_stmt->elseLabel != cond_stmt->afterLabel)) {
-            // Not true for while block as it also has a self loop
+            // Not true for while block as it also has a self loop -- URGENT: also not true for nested ifs as then block would have 2 children then. FIX THIS SO WE ITERATE OVER EACH CHILDREN, SKIPPING THE CHILD IF IT'S EQUAL TO THE THEN BLOCK. ALSO MAY NEED TO ITERATE OVER THE ELSE BLOCK AS WELL
             //assert(thenBblock->children.size()==1);
             thenBblock->children[0]->label = cond_stmt->afterLabel;
         }

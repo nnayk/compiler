@@ -1,7 +1,6 @@
 #include "CfgProg.hpp"
 #include <utility>
 #include <queue>
-#include <stack>
 #include <cassert>
 #include "Types.hpp"
 #include "ConditionalStatement.hpp"
@@ -59,15 +58,15 @@ std::string CfgFunc::get_llvm() {
 	}  
     //add LLVM IR for body
     if(this->blocks.size() > 0) {
-        std::stack<std::shared_ptr<Bblock>> stack;
-        stack.push(this->blocks[0]);
+        std::queue<std::shared_ptr<Bblock>> queue;
+        queue.push(this->blocks[0]);
         //bool skip_children_llvm = false;
-        bool reverse_push = true;
-        while(!stack.empty()) {
+        bool reverse_push = false;
+        while(!queue.empty()) {
             //skip_children_llvm = false;
-            reverse_push = true;
-            auto block = stack.top();
-            stack.pop();
+            reverse_push = false;
+            auto block = queue.front();
+            queue.pop();
 			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) {
@@ -90,8 +89,8 @@ std::string CfgFunc::get_llvm() {
                     // BlockStatement::get_llvm() would've just ignored this
                     // Conditional statement
                     if((cond_stmt->thenLabel == cond_stmt->afterLabel) ) {
-                        spdlog::debug("not reverse pushing for cond_stmt {}\n");//,*cond_stmt);
-                        reverse_push = false;
+                        spdlog::debug("reverse pushing for cond_stmt {}\n");//,*cond_stmt);
+                        reverse_push = true;
                     }
                     //spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);
                     //skip_children_llvm = true;
@@ -104,13 +103,13 @@ std::string CfgFunc::get_llvm() {
 				for (auto it = block->children.rbegin(); it != block->children.rend(); ++it) {
 					std::cout << *it << " ";
                     //spdlog::debug("pushing *it {}",*it);
-                    stack.push(*it);
+                    queue.push(*it);
 				}
             } else {
                 for(auto child : block->children) {
                     spdlog::debug("pushing child {}",*child);
                     //if(skip_children_llvm) child->emit_llvm = false;
-                    stack.push(child);
+                    queue.push(child);
                 }
             }
         }

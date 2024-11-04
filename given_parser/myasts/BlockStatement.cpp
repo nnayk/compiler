@@ -26,9 +26,11 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
     std::vector<std::shared_ptr<Bblock>> prev_blocks;
     std::shared_ptr<Statement> prev_stmt = nullptr;
     spdlog::debug("{} stmts to process",this->statements.size());
-    bool is_while_stmt, is_ret_stmt, prev_ret_stmt;
+    bool is_while_stmt, is_ret_stmt, prev_while_stmt, prev_cond_stmt, prev_ret_stmt;
     for(auto stmt : this->statements) {
         prev_ret_stmt = dynamic_pointer_cast<ReturnStatement>(prev_stmt) != nullptr;
+        prev_while_stmt = dynamic_pointer_cast<WhileStatement>(prev_stmt) != nullptr;
+        prev_cond_stmt = dynamic_pointer_cast<ConditionalStatement>(prev_stmt) != nullptr;
         is_ret_stmt = dynamic_pointer_cast<ReturnStatement>(stmt) != nullptr;
         is_while_stmt = dynamic_pointer_cast<WhileStatement>(stmt) != nullptr;
         if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
@@ -40,7 +42,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         auto new_head = new_blocks[0];
         if(is_ret_stmt) {
             auto ret_block = new_head;
-            if(prev_tail) ret_block = prev_tail;
+            // if we're gonna merge this block with prev then add prev_tail to the list of return block.
+            // The cases we won't merge is if prev_tail is an if (we'll just replace the dummy then with 
+            // curr block) or if prev_stmt was a while. TODO: make a boolean "merge" that tells whether to merge prev and curr or not
+            if(prev_tail && !prev_while_stmt && !prev_cond_stmt) ret_block = prev_tail;
             spdlog::debug("adding return stmt to list of ret blocks:{}\n",*ret_block);
             this->return_bblocks.insert(ret_block);
         }

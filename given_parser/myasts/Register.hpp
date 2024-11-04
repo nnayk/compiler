@@ -12,9 +12,9 @@ class Register : public std::enable_shared_from_this<Register> {
         static std::string LOCAL_PREFIX;
         static std::string GLOBAL_PREFIX;
         std::shared_ptr<ast::Type> content_type; // type of the value in register
-        //TODO: add pointers to expressions for every place the register is used
-        Register(const std::string &id = std::to_string(reg),const bool &is_global=false);
-        static std::shared_ptr<Register> create(const std::string &id = std::to_string(reg),const bool &is_global=false);
+        bool pseudo = false;
+        Register(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
+        static std::shared_ptr<Register> create(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
         void set_global(); // Discovered that an ID was global when resolving type and now must adjust the register prefix
         std::string get_id();
         std::string get_prefix();
@@ -26,6 +26,14 @@ class Register : public std::enable_shared_from_this<Register> {
         std::string prefix;
         std::string id;
         static int reg;
+};
+
+//Specialize fmt::formatter for Type
+template <>
+struct fmt::formatter<Register> : fmt::formatter<std::string> {
+       auto format(Register &r, format_context &ctx) const ->decltype(ctx.out()) {
+            return fmt::format_to(ctx.out(),"Register(id = {}, pseudo = {}",r.get_id(), r.pseudo);
+       }
 };
 
 

@@ -1,0 +1,1548 @@
+[2024-11-03 15:05:41.020] [debug] Reading file ../beard1.json
+[2024-11-03 15:05:41.021] [info] inside parse_decls()
+[2024-11-03 15:05:41.021] [debug] 0 decls
+[2024-11-03 15:05:41.022] [info] inside parse_typeDecls()
+[2024-11-03 15:05:41.022] [debug] 0 structs
+[2024-11-03 15:05:41.022] [info] inside parse_funcs()
+[2024-11-03 15:05:41.022] [debug] parsing function foo
+[2024-11-03 15:05:41.022] [debug] int type
+[2024-11-03 15:05:41.022] [debug] int type
+[2024-11-03 15:05:41.022] [debug] int type
+[2024-11-03 15:05:41.022] [debug] found function local var ret on line 3
+[2024-11-03 15:05:41.022] [debug] int type
+[2024-11-03 15:05:41.022] [debug] stmt:
+[2024-11-03 15:05:41.022] [debug] assign
+[2024-11-03 15:05:41.022] [debug] inside parse_statement
+[2024-11-03 15:05:41.022] [debug] json={"line":4,"source":{"exp":"num","line":4,"value":"0"},"stmt":"assign","target":{"id":"ret","line":4}}
+[2024-11-03 15:05:41.022] [debug] inside parse_assignment
+[2024-11-03 15:05:41.022] [debug] inside parse_lvalue
+[2024-11-03 15:05:41.022] [debug] line = 4
+[2024-11-03 15:05:41.022] [debug] LvalueId
+[2024-11-03 15:05:41.022] [debug] inside LvalueId::LvalueId
+
+[2024-11-03 15:05:41.022] [debug] inside Register::create
+
+[2024-11-03 15:05:41.022] [info] inside Register::Register
+
+[2024-11-03 15:05:41.022] [debug] target parsed, now gonna parse source
+[2024-11-03 15:05:41.022] [debug] inside parse_expr
+[2024-11-03 15:05:41.022] [debug] parsing num expr
+[2024-11-03 15:05:41.022] [debug] stmt:
+[2024-11-03 15:05:41.022] [debug] if
+[2024-11-03 15:05:41.022] [debug] inside parse_statement
+[2024-11-03 15:05:41.022] [debug] json={"guard":{"exp":"binary","lft":{"exp":"id","id":"a","line":6},"line":6,"operator":">","rht":{"exp":"num","line":6,"value":"0"}},"line":6,"stmt":"if","then":{"list":[{"line":8,"source":{"exp":"num","line":8,"value":"1"},"stmt":"assign","target":{"id":"ret","line":8}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"b","line":9},"line":9,"operator":">","rht":{"exp":"num","line":9,"value":"0"}},"line":9,"stmt":"if","then":{"list":[{"line":11,"source":{"exp":"num","line":11,"value":"2"},"stmt":"assign","target":{"id":"ret","line":11}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"c","line":12},"line":12,"operator":">","rht":{"exp":"num","line":12,"value":"0"}},"line":12,"stmt":"if","then":{"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}}],"stmt":"block"}}],"stmt":"block"}}
+[2024-11-03 15:05:41.022] [debug] inside parse_conditional
+[2024-11-03 15:05:41.022] [debug] inside parse_expr
+[2024-11-03 15:05:41.022] [debug] parsing binary expr
+[2024-11-03 15:05:41.022] [debug] inside parse_expr
+[2024-11-03 15:05:41.022] [debug] parsing id expr
+[2024-11-03 15:05:41.022] [debug] IdentifierExpression::IdentifierExpression
+
+[2024-11-03 15:05:41.022] [debug] inside Register::create
+
+[2024-11-03 15:05:41.022] [info] inside Register::Register
+
+[2024-11-03 15:05:41.022] [debug] inside parse_expr
+[2024-11-03 15:05:41.022] [debug] parsing num expr
+[2024-11-03 15:05:41.022] [debug] inside parse_statement
+[2024-11-03 15:05:41.022] [debug] json={"list":[{"line":8,"source":{"exp":"num","line":8,"value":"1"},"stmt":"assign","target":{"id":"ret","line":8}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"b","line":9},"line":9,"operator":">","rht":{"exp":"num","line":9,"value":"0"}},"line":9,"stmt":"if","then":{"list":[{"line":11,"source":{"exp":"num","line":11,"value":"2"},"stmt":"assign","target":{"id":"ret","line":11}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"c","line":12},"line":12,"operator":">","rht":{"exp":"num","line":12,"value":"0"}},"line":12,"stmt":"if","then":{"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}}],"stmt":"block"}}],"stmt":"block"}
+[2024-11-03 15:05:41.022] [debug] inside parse_block
+[2024-11-03 15:05:41.022] [debug] inside parse_statement
+[2024-11-03 15:05:41.022] [debug] json={"line":8,"source":{"exp":"num","line":8,"value":"1"},"stmt":"assign","target":{"id":"ret","line":8}}
+[2024-11-03 15:05:41.022] [debug] inside parse_assignment
+[2024-11-03 15:05:41.022] [debug] inside parse_lvalue
+[2024-11-03 15:05:41.022] [debug] line = 8
+[2024-11-03 15:05:41.022] [debug] LvalueId
+[2024-11-03 15:05:41.022] [debug] inside LvalueId::LvalueId
+
+[2024-11-03 15:05:41.022] [debug] inside Register::create
+
+[2024-11-03 15:05:41.022] [info] inside Register::Register
+
+[2024-11-03 15:05:41.022] [debug] target parsed, now gonna parse source
+[2024-11-03 15:05:41.022] [debug] inside parse_expr
+[2024-11-03 15:05:41.022] [debug] parsing num expr
+[2024-11-03 15:05:41.022] [debug] inside parse_statement
+[2024-11-03 15:05:41.022] [debug] json={"guard":{"exp":"binary","lft":{"exp":"id","id":"b","line":9},"line":9,"operator":">","rht":{"exp":"num","line":9,"value":"0"}},"line":9,"stmt":"if","then":{"list":[{"line":11,"source":{"exp":"num","line":11,"value":"2"},"stmt":"assign","target":{"id":"ret","line":11}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"c","line":12},"line":12,"operator":">","rht":{"exp":"num","line":12,"value":"0"}},"line":12,"stmt":"if","then":{"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}}],"stmt":"block"}}
+[2024-11-03 15:05:41.022] [debug] inside parse_conditional
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing binary expr
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing id expr
+[2024-11-03 15:05:41.023] [debug] IdentifierExpression::IdentifierExpression
+
+[2024-11-03 15:05:41.023] [debug] inside Register::create
+
+[2024-11-03 15:05:41.023] [info] inside Register::Register
+
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing num expr
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"list":[{"line":11,"source":{"exp":"num","line":11,"value":"2"},"stmt":"assign","target":{"id":"ret","line":11}},{"guard":{"exp":"binary","lft":{"exp":"id","id":"c","line":12},"line":12,"operator":">","rht":{"exp":"num","line":12,"value":"0"}},"line":12,"stmt":"if","then":{"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}}],"stmt":"block"}
+[2024-11-03 15:05:41.023] [debug] inside parse_block
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"line":11,"source":{"exp":"num","line":11,"value":"2"},"stmt":"assign","target":{"id":"ret","line":11}}
+[2024-11-03 15:05:41.023] [debug] inside parse_assignment
+[2024-11-03 15:05:41.023] [debug] inside parse_lvalue
+[2024-11-03 15:05:41.023] [debug] line = 11
+[2024-11-03 15:05:41.023] [debug] LvalueId
+[2024-11-03 15:05:41.023] [debug] inside LvalueId::LvalueId
+
+[2024-11-03 15:05:41.023] [debug] inside Register::create
+
+[2024-11-03 15:05:41.023] [info] inside Register::Register
+
+[2024-11-03 15:05:41.023] [debug] target parsed, now gonna parse source
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing num expr
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"guard":{"exp":"binary","lft":{"exp":"id","id":"c","line":12},"line":12,"operator":">","rht":{"exp":"num","line":12,"value":"0"}},"line":12,"stmt":"if","then":{"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}}
+[2024-11-03 15:05:41.023] [debug] inside parse_conditional
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing binary expr
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing id expr
+[2024-11-03 15:05:41.023] [debug] IdentifierExpression::IdentifierExpression
+
+[2024-11-03 15:05:41.023] [debug] inside Register::create
+
+[2024-11-03 15:05:41.023] [info] inside Register::Register
+
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing num expr
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"list":[{"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}],"stmt":"block"}
+[2024-11-03 15:05:41.023] [debug] inside parse_block
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"line":14,"source":{"exp":"num","line":14,"value":"3"},"stmt":"assign","target":{"id":"ret","line":14}}
+[2024-11-03 15:05:41.023] [debug] inside parse_assignment
+[2024-11-03 15:05:41.023] [debug] inside parse_lvalue
+[2024-11-03 15:05:41.023] [debug] line = 14
+[2024-11-03 15:05:41.023] [debug] LvalueId
+[2024-11-03 15:05:41.023] [debug] inside LvalueId::LvalueId
+
+[2024-11-03 15:05:41.023] [debug] inside Register::create
+
+[2024-11-03 15:05:41.023] [info] inside Register::Register
+
+[2024-11-03 15:05:41.023] [debug] target parsed, now gonna parse source
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing num expr
+[2024-11-03 15:05:41.023] [debug] stmt:
+[2024-11-03 15:05:41.023] [debug] return
+[2024-11-03 15:05:41.023] [debug] inside parse_statement
+[2024-11-03 15:05:41.023] [debug] json={"exp":{"exp":"id","id":"ret","line":18},"line":18,"stmt":"return"}
+[2024-11-03 15:05:41.023] [debug] inside parse_nonempty_return
+[2024-11-03 15:05:41.023] [debug] inside parse_expr
+[2024-11-03 15:05:41.023] [debug] parsing id expr
+[2024-11-03 15:05:41.023] [debug] IdentifierExpression::IdentifierExpression
+
+[2024-11-03 15:05:41.023] [debug] inside Register::create
+
+[2024-11-03 15:05:41.023] [info] inside Register::Register
+
+[2024-11-03 15:05:41.023] [debug] int type
+[2024-11-03 15:05:41.023] [debug] done parsing function
+[2024-11-03 15:05:41.023] [debug] Formatter for Function
+[2024-11-03 15:05:41.023] [debug] generating param output
+
+[2024-11-03 15:05:41.023] [debug] function immediately [Function(lineNum = 1,name=foo,retType=IntType()), params = [[Declaration(lineNum = 1,var=a,type=IntType())], [Declaration(lineNum = 1,var=b,type=IntType())], [Declaration(lineNum = 1,var=c,type=IntType())]], locals = [[Declaration(lineNum = 3,var=ret,type=IntType())]]]
+
+[2024-11-03 15:05:41.023] [debug] 1 functions
+[2024-11-03 15:05:41.023] [debug] func name = foo
+[2024-11-03 15:05:41.023] [debug] Formatter for Function
+[2024-11-03 15:05:41.023] [debug] generating param output
+
+[2024-11-03 15:05:41.023] [info] [Function(lineNum = 1,name=foo,retType=IntType()), params = [[Declaration(lineNum = 1,var=a,type=IntType())], [Declaration(lineNum = 1,var=b,type=IntType())], [Declaration(lineNum = 1,var=c,type=IntType())]], locals = [[Declaration(lineNum = 3,var=ret,type=IntType())]]]
+[2024-11-03 15:05:41.023] [info] inside typecheck
+[2024-11-03 15:05:41.023] [info] inside validate_typeDecls
+[2024-11-03 15:05:41.023] [debug] Struct TLE: Number of bindings: 0
+
+[2024-11-03 15:05:41.023] [info] inside validate_decls
+[2024-11-03 15:05:41.023] [debug] Global vars TLE: Number of bindings: 0
+
+[2024-11-03 15:05:41.023] [info] inside validate_funcs
+[2024-11-03 15:05:41.023] [debug] func name = foo
+[2024-11-03 15:05:41.023] [debug] inside Env::addBinding
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [debug] Adding key=a, type=IntType(),scope=1
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [debug] inside Env::addBinding
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [debug] Adding key=b, type=IntType(),scope=1
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [debug] inside Env::addBinding
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [debug] Adding key=c, type=IntType(),scope=1
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [debug] inside Env::addBinding
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [debug] Adding key=ret, type=IntType(),scope=0
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x600002c70198
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] inside Function::typecheck
+
+[2024-11-03 15:05:41.023] [debug] adding binding from _ret to IntType()
+
+[2024-11-03 15:05:41.023] [debug] inside Env::addBinding
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [debug] Adding key=_ret, type=IntType(),scope=2
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [info] inside BlockStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside AssignmentStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside LvalueId::resolveType
+
+[2024-11-03 15:05:41.023] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.023] [debug] looking up ret
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [debug] Local env: Found ret of type IntType(), scope = 0
+
+[2024-11-03 15:05:41.023] [debug] Local env: Found ret of type IntType()
+[2024-11-03 15:05:41.023] [debug] line 4: target type IntType() ~ source type IntType()
+[2024-11-03 15:05:41.023] [debug] equal? true
+[2024-11-03 15:05:41.023] [debug] inside IdentifierExpression::resolveType
+
+[2024-11-03 15:05:41.023] [debug] id = a,lineNum=6
+
+[2024-11-03 15:05:41.023] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.023] [debug] looking up a
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [debug] Local env: Found a of type IntType(), scope = 1
+
+[2024-11-03 15:05:41.023] [debug] set type for id a to IntType()
+
+[2024-11-03 15:05:41.023] [info] inside BlockStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside AssignmentStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside LvalueId::resolveType
+
+[2024-11-03 15:05:41.023] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.023] [debug] looking up ret
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [debug] Local env: Found ret of type IntType(), scope = 0
+
+[2024-11-03 15:05:41.023] [debug] Local env: Found ret of type IntType()
+[2024-11-03 15:05:41.023] [debug] line 8: target type IntType() ~ source type IntType()
+[2024-11-03 15:05:41.023] [debug] equal? true
+[2024-11-03 15:05:41.023] [debug] inside IdentifierExpression::resolveType
+
+[2024-11-03 15:05:41.023] [debug] id = b,lineNum=9
+
+[2024-11-03 15:05:41.023] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.023] [debug] looking up b
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.023] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.023] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.023] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.023] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.023] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.023] [debug] Local env: Found b of type IntType(), scope = 1
+
+[2024-11-03 15:05:41.023] [debug] set type for id b to IntType()
+
+[2024-11-03 15:05:41.023] [info] inside BlockStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside AssignmentStatement::typecheck
+
+[2024-11-03 15:05:41.023] [debug] inside LvalueId::resolveType
+
+[2024-11-03 15:05:41.023] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.023] [debug] looking up ret
+
+[2024-11-03 15:05:41.023] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.024] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.024] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.024] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.024] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.024] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.024] [debug] Local env: Found ret of type IntType(), scope = 0
+
+[2024-11-03 15:05:41.024] [debug] Local env: Found ret of type IntType()
+[2024-11-03 15:05:41.024] [debug] line 11: target type IntType() ~ source type IntType()
+[2024-11-03 15:05:41.024] [debug] equal? true
+[2024-11-03 15:05:41.024] [debug] inside IdentifierExpression::resolveType
+
+[2024-11-03 15:05:41.024] [debug] id = c,lineNum=12
+
+[2024-11-03 15:05:41.024] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.024] [debug] looking up c
+
+[2024-11-03 15:05:41.024] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.024] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.024] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.024] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.024] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.024] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.024] [debug] Local env: Found c of type IntType(), scope = 1
+
+[2024-11-03 15:05:41.024] [debug] set type for id c to IntType()
+
+[2024-11-03 15:05:41.024] [info] inside BlockStatement::typecheck
+
+[2024-11-03 15:05:41.024] [debug] inside AssignmentStatement::typecheck
+
+[2024-11-03 15:05:41.024] [debug] inside LvalueId::resolveType
+
+[2024-11-03 15:05:41.024] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.024] [debug] looking up ret
+
+[2024-11-03 15:05:41.024] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.024] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.024] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.024] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.024] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.024] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.024] [debug] Local env: Found ret of type IntType(), scope = 0
+
+[2024-11-03 15:05:41.024] [debug] Local env: Found ret of type IntType()
+[2024-11-03 15:05:41.024] [debug] line 14: target type IntType() ~ source type IntType()
+[2024-11-03 15:05:41.024] [debug] equal? true
+[2024-11-03 15:05:41.024] [debug] inside ReturnStatement::typecheck
+
+[2024-11-03 15:05:41.024] [debug] inside IdentifierExpression::resolveType
+
+[2024-11-03 15:05:41.024] [debug] id = ret,lineNum=18
+
+[2024-11-03 15:05:41.024] [debug] inside Env::lookup
+
+[2024-11-03 15:05:41.024] [debug] looking up ret
+
+[2024-11-03 15:05:41.024] [debug] inside Env::display
+
+Env addr = 0x7ff7b92a4758
+[2024-11-03 15:05:41.024] [info] _ret: 2 
+entry = 0x600002c704d8
+[2024-11-03 15:05:41.024] [info] a: 1 
+entry = 0x600002c701d8
+[2024-11-03 15:05:41.024] [info] c: 1 
+entry = 0x600002c702d8
+[2024-11-03 15:05:41.024] [info] ret: 0 
+entry = 0x600002c70358
+[2024-11-03 15:05:41.024] [info] b: 1 
+entry = 0x600002c70258
+[2024-11-03 15:05:41.024] [debug] Local env: Found ret of type IntType(), scope = 0
+
+[2024-11-03 15:05:41.024] [debug] set type for id ret to IntType()
+
+[2024-11-03 15:05:41.024] [debug] inside Env::addBinding
+
+Env addr = 0x106dd4460
+[2024-11-03 15:05:41.024] [debug] Adding key=foo, type=IntType(),scope=2
+
+[2024-11-03 15:05:41.024] [debug] inside Env::display
+
+Env addr = 0x106dd4460
+[2024-11-03 15:05:41.024] [info] foo: 2 
+entry = 0x600002c70518
+[2024-11-03 15:05:41.024] [debug] Func TLE: Number of bindings: 1
+Key: foo
+  Entry: Entry with type: IntType()
+
+[2024-11-03 15:05:41.024] [debug] typechecking skipped
+[2024-11-03 15:05:41.024] [info] inside CfgProg::build
+[2024-11-03 15:05:41.024] [debug] Gonna build CFG for function foo
+[2024-11-03 15:05:41.024] [info] inside CfgFunc::build
+[2024-11-03 15:05:41.024] [debug] inside Label::create
+
+[2024-11-03 15:05:41.024] [debug] inside Label::Label
+
+[2024-11-03 15:05:41.024] [debug] IdentifierExpression::IdentifierExpression
+
+[2024-11-03 15:05:41.024] [debug] inside Register::create
+
+[2024-11-03 15:05:41.024] [info] inside Register::Register
+
+[2024-11-03 15:05:41.024] [info] inside BlockStatement::get_cfg
+
+[2024-11-03 15:05:41.024] [debug] 3 stmts to process
+[2024-11-03 15:05:41.024] [debug] stmt = AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt AssignmentStatement(lineNum=4)
+[2024-11-03 15:05:41.024] [info] AbstractStatement::get_cfg
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=4), stmt = AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 0, adding 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 1, added 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] stmt = ConditionalStatement(lineNum=6)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=6)
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:get_cfg
+[2024-11-03 15:05:41.024] [debug] inside BlockStatement:display
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=8, statements=[AssignmentStatement(lineNum=8), ConditionalStatement(lineNum=9), ])
+END OF BLOCKSTATEMENT
+[2024-11-03 15:05:41.024] [info] inside BlockStatement::get_cfg
+
+[2024-11-03 15:05:41.024] [debug] 2 stmts to process
+[2024-11-03 15:05:41.024] [debug] stmt = AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt AssignmentStatement(lineNum=8)
+[2024-11-03 15:05:41.024] [info] AbstractStatement::get_cfg
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=8), stmt = AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 0, adding 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 1, added 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] stmt = ConditionalStatement(lineNum=9)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=9)
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:get_cfg
+[2024-11-03 15:05:41.024] [debug] inside BlockStatement:display
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=11, statements=[AssignmentStatement(lineNum=11), ConditionalStatement(lineNum=12), ])
+END OF BLOCKSTATEMENT
+[2024-11-03 15:05:41.024] [info] inside BlockStatement::get_cfg
+
+[2024-11-03 15:05:41.024] [debug] 2 stmts to process
+[2024-11-03 15:05:41.024] [debug] stmt = AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt AssignmentStatement(lineNum=11)
+[2024-11-03 15:05:41.024] [info] AbstractStatement::get_cfg
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=11), stmt = AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 0, adding 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 1, added 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] stmt = ConditionalStatement(lineNum=12)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt ConditionalStatement(lineNum=12)
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:get_cfg
+[2024-11-03 15:05:41.024] [debug] inside BlockStatement:display
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement:Gonna build cfg for THEN stmt START OF BLOCK STATEMENTS
+BlockStatement(lineNum=14, statements=[AssignmentStatement(lineNum=14), ])
+END OF BLOCKSTATEMENT
+[2024-11-03 15:05:41.024] [info] inside BlockStatement::get_cfg
+
+[2024-11-03 15:05:41.024] [debug] 1 stmts to process
+[2024-11-03 15:05:41.024] [debug] stmt = AssignmentStatement(lineNum=14)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt AssignmentStatement(lineNum=14)
+[2024-11-03 15:05:41.024] [info] AbstractStatement::get_cfg
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=14), stmt = AssignmentStatement(lineNum=14)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 0, adding 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 1, added 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] FINAL # of blocks = 1
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-11-03 15:05:41.024] [debug] Added then block: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 0 children, 1 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=1
+HEAD STMT: ConditionalStatement(lineNum=12)
+
+
+[2024-11-03 15:05:41.024] [debug] Added else DUMMY block
+
+[2024-11-03 15:05:41.024] [debug] Pushing dummy block to blocks vector (not a child of if block)
+[2024-11-03 15:05:41.024] [debug] Created if block w/2 children
+
+[2024-11-03 15:05:41.024] [debug] Head statement: # of stmts = 1
+ConditionalStatement(lineNum=12)STATEMENTS:
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Conditional statement returning 3 blocks
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 3
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+ConditionalStatement(lineNum=12)STATEMENTS:
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] linking prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+ AND
+ new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=12)STATEMENTS:
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Removed new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=12)STATEMENTS:
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+ from new_blocks, now new_blocks size = 2
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = ConditionalStatement(lineNum=12), stmt = ConditionalStatement(lineNum=12)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 1, adding 2 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 3, added 2 blocks
+
+[2024-11-03 15:05:41.024] [debug] FINAL # of blocks = 3
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-11-03 15:05:41.024] [debug] Added then block: Head statement: # of stmts = 2
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=1
+HEAD STMT: ConditionalStatement(lineNum=9)
+
+
+[2024-11-03 15:05:41.024] [debug] Added else DUMMY block
+
+[2024-11-03 15:05:41.024] [debug] Pushing dummy block to blocks vector (not a child of if block)
+[2024-11-03 15:05:41.024] [debug] Created if block w/2 children
+
+[2024-11-03 15:05:41.024] [debug] Head statement: # of stmts = 1
+ConditionalStatement(lineNum=9)STATEMENTS:
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Conditional statement returning 5 blocks
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 5
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+ConditionalStatement(lineNum=9)STATEMENTS:
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] linking prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+ AND
+ new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=9)STATEMENTS:
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Removed new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=9)STATEMENTS:
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+ from new_blocks, now new_blocks size = 4
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = ConditionalStatement(lineNum=9), stmt = ConditionalStatement(lineNum=9)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 1, adding 4 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 5, added 4 blocks
+
+[2024-11-03 15:05:41.024] [debug] FINAL # of blocks = 5
+
+[2024-11-03 15:05:41.024] [debug] ConditionalStatement: Done building CFGs for then and else
+[2024-11-03 15:05:41.024] [debug] Added then block: Head statement: # of stmts = 2
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=1
+HEAD STMT: ConditionalStatement(lineNum=6)
+
+
+[2024-11-03 15:05:41.024] [debug] Added else DUMMY block
+
+[2024-11-03 15:05:41.024] [debug] Pushing dummy block to blocks vector (not a child of if block)
+[2024-11-03 15:05:41.024] [debug] Created if block w/2 children
+
+[2024-11-03 15:05:41.024] [debug] Head statement: # of stmts = 1
+ConditionalStatement(lineNum=6)STATEMENTS:
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Conditional statement returning 7 blocks
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 7
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+ConditionalStatement(lineNum=6)STATEMENTS:
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] linking prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+ AND
+ new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=6)STATEMENTS:
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Removed new_head=Head statement: # of stmts = 1
+ConditionalStatement(lineNum=6)STATEMENTS:
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+ from new_blocks, now new_blocks size = 6
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = ConditionalStatement(lineNum=6), stmt = ConditionalStatement(lineNum=6)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 1, adding 6 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 7, added 6 blocks
+
+[2024-11-03 15:05:41.024] [debug] prev_stmt = ConditionalStatement(lineNum=6)
+
+[2024-11-03 15:05:41.024] [debug] stmt = ReturnStatement(lineNum=18)
+
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Gonna build cfg for stmt ReturnStatement(lineNum=18)
+[2024-11-03 15:05:41.024] [debug] inside ReturnStatement::get_cfg
+
+[2024-11-03 15:05:41.024] [debug] inside LvalueId::LvalueId
+
+[2024-11-03 15:05:41.024] [debug] inside Register::create
+
+[2024-11-03 15:05:41.024] [info] inside Register::Register
+
+[2024-11-03 15:05:41.024] [info] AbstractStatement::get_cfg
+[2024-11-03 15:05:41.024] [debug] BlockStatement:Done building cfg for stmt. size of new blocks = 1
+[2024-11-03 15:05:41.024] [debug] adding return stmt to list of ret blocks:Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] new head has 1 stmts: Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Replacing trailing dummy block for conditional on line 6
+
+[2024-11-03 15:05:41.024] [debug] deleting dummy block with 2 parents: Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] Looking at dummy parent Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+
+[2024-11-03 15:05:41.024] [debug] Replacing dummy child (first child)
+
+[2024-11-03 15:05:41.024] [debug] Looking at dummy parent Head statement: # of stmts = 2
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+DUMMY CHILD with 0 children, 2 parents
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] Replacing dummy child (second child)
+
+[2024-11-03 15:05:41.024] [debug] Removing the dummy bblock from the list of bblocks
+[2024-11-03 15:05:41.024] [debug] prev_stmt = AssignmentStatement(lineNum=18), stmt = AssignmentStatement(lineNum=18)
+
+[2024-11-03 15:05:41.024] [debug] prev_tail = Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] before total # of blocks = 6, adding 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] after total # of blocks = 7, added 1 blocks
+
+[2024-11-03 15:05:41.024] [debug] FINAL # of blocks = 7
+
+[2024-11-03 15:05:41.024] [debug] FINAL return block = Head statement: # of stmts = 1
+ReturnStatement(lineNum=-1)STATEMENTS:
+ReturnStatement(lineNum=-1)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+
+[2024-11-03 15:05:41.024] [debug] adding parent to FINAL return block: Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] inside CfgFunc::display
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 2
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 0
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: # of stmts = 2
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 2
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 0
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: # of stmts = 2
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 0
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 2
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 0
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 21
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 0
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 21
+
+[2024-11-03 15:05:41.024] [debug] pushing child Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 1
+
+[2024-11-03 15:05:41.024] [debug] Already visited this blocks:Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 1
+
+[2024-11-03 15:05:41.024] [debug] Already visited this blocks:Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+
+
+[2024-11-03 15:05:41.024] [debug] popped block Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+[2024-11-03 15:05:41.024] [debug] yay block visited: 1
+
+[2024-11-03 15:05:41.024] [debug] Already visited this blocks:Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+
+
+[2024-11-03 15:05:41.024] [debug] output cfg=foo (ret type = IntType()): 
+PARAMS:
+[Declaration(lineNum = 1,var=a,type=IntType())][Declaration(lineNum = 1,var=b,type=IntType())][Declaration(lineNum = 1,var=c,type=IntType())]
+LOCALS:
+[Declaration(lineNum = 3,var=ret,type=IntType())]BODY:
+START OF BBLOCK #1
+Head statement: # of stmts = 2
+AssignmentStatement(lineNum=4)STATEMENTS:
+AssignmentStatement(lineNum=4)
+ConditionalStatement(lineNum=6)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 0
+PARENTS:
+END OF BBLOCK
+
+
+START OF BBLOCK #2
+Head statement: # of stmts = 2
+AssignmentStatement(lineNum=8)STATEMENTS:
+AssignmentStatement(lineNum=8)
+ConditionalStatement(lineNum=9)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+END OF BBLOCK
+
+
+START OF BBLOCK #3
+Head statement: # of stmts = 1
+AssignmentStatement(lineNum=18)STATEMENTS:
+AssignmentStatement(lineNum=18)
+
+NUMBER OF CHILDREN: 0
+CHILDREN:
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=4)
+END OF BBLOCK
+
+
+START OF BBLOCK #4
+Head statement: # of stmts = 2
+AssignmentStatement(lineNum=11)STATEMENTS:
+AssignmentStatement(lineNum=11)
+ConditionalStatement(lineNum=12)
+
+NUMBER OF CHILDREN: 2
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+END OF BBLOCK
+
+
+START OF BBLOCK #5
+Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+Child # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=18)
+
+NUMBER OF PARENTS: 2
+PARENTS:
+DUMMY parent
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=8)
+END OF BBLOCK
+
+
+START OF BBLOCK #6
+Head statement: # of stmts = 1
+AssignmentStatement(lineNum=14)STATEMENTS:
+AssignmentStatement(lineNum=14)
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 1
+PARENTS:
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+END OF BBLOCK
+
+
+START OF BBLOCK #7
+Head statement: Null stmt, dummy blockSTATEMENTS:
+
+NUMBER OF CHILDREN: 1
+CHILDREN:
+DUMMY CHILD with 1 children, 2 parents
+NUMBER OF PARENTS: 2
+PARENTS:
+Parent # stmts=1
+HEAD STMT: AssignmentStatement(lineNum=14)
+Parent # stmts=2
+HEAD STMT: AssignmentStatement(lineNum=11)
+END OF BBLOCK
+
+
+END OF CFG FOR foo
+
+
+[2024-11-03 15:05:41.024] [debug] 7 blocks seen in CFG, 8 blocks in CfgFunc
+
+Assertion failed: (bfs_blocks==this->blocks.size()), function display, file CfgFunc.cpp, line 170.

@@ -11,11 +11,13 @@ WhileStatement.o DeleteStatement.o ReturnStatement.o ReturnEmptyStatement.o \
 InvocationStatement.o Env.o ReadExpression.o Register.o Bblock.o Lvalue.o \
 NullExpression.o Label.o 
 
-CFG_OBJS=CfgProg.o CfgFunc.o 
+CFG_OBJS=CfgProg.o CfgFunc.o
+
+LLVM_OBJS = Mapping.o
 
 all: cfg
 
-cfg: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS)
+cfg: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS) $(LLVM_OBJS)
 	g++ $(CFLAGS) -o cfg $(TYPECHECKER_OBJS) $(AST_OBJS) $(CFG_OBJS) $(LIBS)
 
 #typechecker: $(AST_OBJS) $(TYPECHECKER_OBJS)

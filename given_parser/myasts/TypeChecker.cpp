@@ -7,15 +7,28 @@
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
-    if(argc != 2) {
-        spdlog::debug("usage: cfg <file>.json");
+    std::string fileName;
+    if(argc < 2) {
+        spdlog::debug("usage: cfg [ -ssa | -stack ] <file>.json");
         return -1;
     }
-    spdlog::debug("Reading file {}",argv[1]);
-    std::ifstream jsonStream(argv[1]); // Open a file for reading
+    if(argc == 3) {
+        std::string llvm = argv[1];
+        fileName = argv[2];
+        if(llvm=="-ssa") use_ssa = true;
+        else if(llvm != "-stack") {
+            spdlog::debug("usage: cfg [ -ssa | -stack ] <file>.json");
+            return -1;
+        }
+    } else {
+        fileName = argv[1];
+    }
+    spdlog::debug("use_ssa? {}\n",use_ssa);
+    spdlog::debug("Reading file {}",fileName);
+    std::ifstream jsonStream(fileName); // Open a file for reading
     //std::ifstream jsonStream("../../scripts/json/stats.json"); // Open a file for reading
     if (!jsonStream.is_open()) {
-        std::cerr << "Error: Could not open the file " << argv[1] << "!" << std::endl;
+        std::cerr << "Error: Could not open the file " << fileName << "!" << std::endl;
         return 1;
     }
     nlohmann::json data = nlohmann::json::parse(jsonStream);

@@ -119,9 +119,12 @@ std::string ConditionalStatement::get_llvm() {
         spdlog::debug("Got elseLabel {}\n",elseLabel->getLabel());
     }
     // Think the only case where afterLabel is non-null is for while stmts. In this case thenLabel should also be non-null and it should be fine that elseLabel is left null...
-    if(!this->afterLabel) {
-        this->afterLabel = Label::create();
-        spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
+        if(!this->afterLabel){
+            this->afterLabel = Label::create();
+            spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
+        } else {
+            spdlog::debug("using pre-existing after label = {}\n",afterLabel->getLabel());
+        }
         if(!this->thenLabel) {
             this->thenLabel = this->afterLabel;
             spdlog::debug("Setting thenLabel to afterLabel {}\n",thenLabel->getLabel());
@@ -129,8 +132,8 @@ std::string ConditionalStatement::get_llvm() {
             this->elseLabel = this->afterLabel;
             spdlog::debug("Setting elseLabel to afterLabel {}\n",elseLabel->getLabel());
         }
-    }
 
+    // Nov 3 2024: remove these labels as now I'm ensuring thenLabel and elseLabel are never null when this line is reached
     auto label_1 = this->thenLabel; // idt then label can ever be null
     auto label_2 = (this->elseLabel==nullptr) ? this->afterLabel : this->elseLabel;
     llvm += this->guard->get_llvm_init();
