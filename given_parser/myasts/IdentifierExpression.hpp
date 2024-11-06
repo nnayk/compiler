@@ -21,6 +21,7 @@ public:
         return fmt::format("IdentifierExpression(lineNum={},id={})\n",lineNum,this->getId());
     }
     std::string get_llvm_init(Bblock &block) override; 
+    std::string get_ssa_init(Bblock &block);
     std::string get_llvm(Bblock &block) override; 
     std::string get_ssa(Bblock &block);
 

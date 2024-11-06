@@ -37,8 +37,8 @@ std::string IdentifierExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     spdlog::debug("id={}\n",id);
     if(use_ssa) {
-        spdlog::debug("in ssa mode, no llvm init needed\n");
-        return "";
+        spdlog::debug("in ssa mode, calling get_ssa_init\n");
+        return this->get_ssa_init(block);
     }
     spdlog::debug("in non-ssa mode, generating llvm init\n");
     if(this->scope == 1) {
@@ -64,7 +64,7 @@ std::string IdentifierExpression::get_llvm_init(Bblock &block) {
 
 std::string IdentifierExpression::get_llvm(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    //if(use_ssa) return this->get_ssa();
+    if(use_ssa) return this->get_ssa(block);
 	auto deref_result = this->deref_result;
     if(deref_result) {
         return this->deref_result->get_llvm();
@@ -74,13 +74,23 @@ std::string IdentifierExpression::get_llvm(Bblock &block) {
     }
 }
 
-std::string IdentifierExpression::get_ssa(Bblock &b) {
+std::string IdentifierExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside IdentifierExpression:{}\n",__func__);
+    std::string llvm = "";
+    // lookup the var in current block
+    return llvm;
+}
+
+std::string IdentifierExpression::get_ssa(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    if(auto reg = b.ssa_map->entries[this->getId()]) {
+    std::string llvm = "";
+    if(auto reg = block.ssa_map->entries[this->getId()]) {
         return reg->get_llvm();
     } else {
         throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));
     }
+
+    return llvm;
 }
 
 } // namespace ast
