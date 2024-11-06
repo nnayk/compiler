@@ -54,7 +54,7 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
     return this->type;
 }
 
-std::string LvalueId::get_llvm_init() {
+std::string LvalueId::get_llvm_init(Bblock &block) {
     spdlog::info("inside LvalueId::{}\n",__func__);
     if(dynamic_pointer_cast<ast::StructType>(this->type)) {
         spdlog::debug("{} is a struct, loading the struct address\n",this->getId());
@@ -70,7 +70,7 @@ std::string LvalueId::get_llvm_init() {
     }
 }
 
-std::string LvalueId::get_llvm() {
+std::string LvalueId::get_llvm(Bblock &block) {
 	spdlog::debug("inside LvalueId::{}\n",__func__);
     return this->result->get_llvm();
 }

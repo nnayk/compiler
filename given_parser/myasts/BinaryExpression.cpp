@@ -59,14 +59,14 @@ std::shared_ptr<ast::Type> BinaryExpression::resolveType(Env &env) {
     return this->type;
 }
 
-std::string BinaryExpression::get_llvm_init() {
+std::string BinaryExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside BinaryExpression::{}\n",__func__);
-	auto llvm_str = this->getLeft()->get_llvm_init();
-    llvm_str += this->getRight()->get_llvm_init();
+	auto llvm_str = this->getLeft()->get_llvm_init(block);
+    llvm_str += this->getRight()->get_llvm_init(block);
 	llvm_str += TAB;
     auto operatorType = this->getOperator();
-	auto left_llvm = this->getLeft()->get_llvm();
-	auto right_llvm = this->getRight()->get_llvm();
+	auto left_llvm = this->getLeft()->get_llvm(block);
+	auto right_llvm = this->getRight()->get_llvm(block);
 	auto type_llvm = this->getLeft()->type->get_llvm();
 	this->result = Register::create();
 	auto result_llvm = this->result->get_llvm();
@@ -95,42 +95,42 @@ std::string BinaryExpression::get_llvm_init() {
 			operator_llvm = "icmp slt";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::GT:
 			spdlog::debug("The operator is GT.");
 			operator_llvm = "icmp sgt";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::LE:
 			spdlog::debug("The operator is LE.");
 			operator_llvm = "icmp sle";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::GE:
 			spdlog::debug("The operator is GE.");
 			operator_llvm = "icmp sge";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::EQ:
 			spdlog::debug("The operator is EQ.");
 			operator_llvm = "icmp eq";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::NE:
 			spdlog::debug("The operator is NE.");
 			operator_llvm = "icmp ne";
             //old_result = this->result;
             //this->result = Register::create();
-            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(block),old_result->get_llvm(block));
 			break;
 		case BinaryExpression::Operator::AND:
 			spdlog::debug("The operator is AND.");
@@ -154,7 +154,7 @@ std::string BinaryExpression::get_llvm_init() {
     return llvm_str;
 }
 
-std::string BinaryExpression::get_llvm() {
+std::string BinaryExpression::get_llvm(Bblock &block) {
 	return this->result->get_llvm();
 }
 

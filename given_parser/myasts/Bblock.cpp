@@ -4,6 +4,11 @@
 #include "AssignmentStatement.hpp"
 
 extern std::string TAB;
+
+Bblock::Bblock(): visited(0) {
+    ssa_map = std::make_shared<Mapping>();
+} 
+
 std::string Bblock::get_llvm() {
     std::string llvm_ir;
     spdlog::debug("inside Bblock::{}",__func__);
@@ -27,7 +32,7 @@ std::string Bblock::get_llvm() {
     }
     for(auto stmt:this->stmts) {
         spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
-        llvm_ir += stmt->get_llvm();
+        llvm_ir += stmt->get_llvm(*this);
     }
     if(this->is_return_block()) {
         spdlog::debug("adding extra br for return block:{}\n",*this);

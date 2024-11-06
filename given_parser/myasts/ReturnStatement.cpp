@@ -23,12 +23,12 @@ void ReturnStatement::typecheck(Env &env, Function &f) {
     this->retType = actual_ret_type;
 }
 
-std::string ReturnStatement::get_llvm() {
+std::string ReturnStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside ReturnStatement::{}\n",__func__);
     assert(this->expression->type);
-    std::string llvm = this->expression->get_llvm_init();
+    std::string llvm = this->expression->get_llvm_init(block);
     spdlog::debug("llvm={}\n",llvm);
-    llvm += TAB+fmt::format("ret {} {}\n",this->retType->get_llvm(),this->expression->get_llvm());
+    llvm += TAB+fmt::format("ret {} {}\n",this->retType->get_llvm(),this->expression->get_llvm(block));
     return llvm;
 }
 

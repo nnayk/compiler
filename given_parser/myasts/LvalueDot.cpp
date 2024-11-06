@@ -76,11 +76,11 @@ std::shared_ptr<Type> LvalueDot::resolveType(Env &env) {
  * resulting register in the LvalueDot::result attribute for each portion of
  * the dot expression
 */
-std::string LvalueDot::get_llvm_init() {
+std::string LvalueDot::get_llvm_init(Bblock &block) {
     spdlog::debug("inside LvalueDot::{}\n",__func__);
     std::string llvm_ir = "";
     spdlog::debug("left = {}\n",this->left->getId());
-    llvm_ir += this->left->get_llvm_init();
+    llvm_ir += this->left->get_llvm_init(block);
     auto reg = std::make_shared<Register>();
     spdlog::debug("Got the next numerical register of {}\n",reg->get_id());
     this->result = reg;
@@ -101,7 +101,7 @@ std::string LvalueDot::get_llvm_init() {
     return llvm_ir;
 }
 
-std::string LvalueDot::get_llvm() {
+std::string LvalueDot::get_llvm(Bblock &block) {
     spdlog::debug("inside LvalueDot::{}\n",__func__);
     spdlog::debug("id={}, llvm = {}\n",this->getId(),this->result->get_llvm());
     if(dynamic_pointer_cast<ast::StructType>(this->type)) {

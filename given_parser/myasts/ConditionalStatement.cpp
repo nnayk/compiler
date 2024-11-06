@@ -99,7 +99,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
     return blocks;
 }
 
-std::string ConditionalStatement::get_llvm() {
+std::string ConditionalStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
     spdlog::debug("line={}\n",this->getLineNum());
     if(this->thenBlock)
@@ -136,17 +136,17 @@ std::string ConditionalStatement::get_llvm() {
     // Nov 3 2024: remove these labels as now I'm ensuring thenLabel and elseLabel are never null when this line is reached
     auto label_1 = this->thenLabel; // idt then label can ever be null
     auto label_2 = (this->elseLabel==nullptr) ? this->afterLabel : this->elseLabel;
-    llvm += this->guard->get_llvm_init();
-    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(),label_1->getLabel(),label_2->getLabel());
+    llvm += this->guard->get_llvm_init(block);
+    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(block),label_1->getLabel(),label_2->getLabel());
     return llvm;
     llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
     //return llvm;
     spdlog::debug("gonna get thenBlock llvm for:{}\n",*thenBlock);
-    llvm += this->thenBlock->get_llvm()+"\n";
+    llvm += this->thenBlock->get_llvm(block)+"\n";
     llvm += TAB+fmt::format("{}:\n",elseLabel->getLabel());
     if(this->elseBlock) {
         spdlog::debug("gonna get elseBlock llvm for:{}\n",*elseBlock);
-        llvm += this->elseBlock->get_llvm()+"\n";
+        llvm += this->elseBlock->get_llvm(block)+"\n";
     }
     spdlog::debug("llvm={}\n",llvm);
     return llvm;

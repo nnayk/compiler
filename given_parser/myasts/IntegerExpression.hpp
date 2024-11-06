@@ -17,7 +17,7 @@ public:
     std::string display() const override {
         return fmt::format("IntegerExpression(lineNum={},value={})\n",lineNum,this->getValue());
     }
-    std::string get_llvm() override; 
+    std::string get_llvm(Bblock &block) override; 
 
 private:
     std::string value; // The integer value as a string

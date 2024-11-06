@@ -11,7 +11,7 @@ std::shared_ptr<Type> TrueExpression::resolveType(Env &env)  {
     return this->type;
 }
 
-std::string TrueExpression::get_llvm() {
+std::string TrueExpression::get_llvm(Bblock &block) {
     return "1";
 }
 

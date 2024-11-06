@@ -25,7 +25,7 @@ public:
         output+="\n";
         return output;
     }
-    std::string get_llvm() override; 
+    std::string get_llvm(Bblock &block) override; 
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;

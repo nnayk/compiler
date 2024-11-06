@@ -5,6 +5,9 @@
 #include "Expression.hpp"
 #include "Type.hpp"
 
+namespace ast {
+    class Expression;
+}
 class Register;
 // global map of all registers
 class Register : public std::enable_shared_from_this<Register> {

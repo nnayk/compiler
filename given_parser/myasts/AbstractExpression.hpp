@@ -12,8 +12,8 @@ protected:
 public:
     // Constructor
     AbstractExpression(int lineNum);
-	virtual std::string get_llvm_init() override;
-	virtual std::string get_llvm() override;
+	virtual std::string get_llvm_init(Bblock &block) override;
+	virtual std::string get_llvm(Bblock &block) override;
     virtual std::shared_ptr<Register> getDerefResult() const override;
     virtual std::shared_ptr<Register> getResult() const override;
 

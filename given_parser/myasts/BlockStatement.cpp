@@ -189,12 +189,12 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
 }
 
 // TODO: delete this as I think bblocks won't have block statements
-std::string BlockStatement::get_llvm() { 
+std::string BlockStatement::get_llvm(Bblock &block) { 
 	spdlog::debug("inside BlockStatement::{}\n",__func__);
 	//std::string llvm_ir="BlockStatement\n";
     std::string llvm_ir = "";
     for(auto stmt : this->statements) {
-        llvm_ir += stmt->get_llvm();
+        llvm_ir += stmt->get_llvm(block);
     }
 	return llvm_ir;
 } 

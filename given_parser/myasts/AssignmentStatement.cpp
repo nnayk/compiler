@@ -25,7 +25,7 @@ std::shared_ptr<Expression> AssignmentStatement::getSource() const {
 }
 
 // Returns the non-llvm SSA string of instructions for the assignment
-std::string AssignmentStatement::get_llvm() {
+std::string AssignmentStatement::get_llvm(Bblock &block) {
 	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
     spdlog::debug("lineNum = {}\n",this->getLineNum());
 	std::string llvm_ir = "";
@@ -36,10 +36,10 @@ std::string AssignmentStatement::get_llvm() {
     assert(this->target->type);
     assert(this->source->type);
 	//TODO: impleement get_llvm_init for expr + lvalue classes
-	std::string target_llvm_init = this->target->get_llvm_init();
+	std::string target_llvm_init = this->target->get_llvm_init(block);
     spdlog::debug("Got target llvm for id {}: {}\n",this->target->getId(),target_llvm_init);
     spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
-    std::string source_llvm_init = this->source->get_llvm_init();
+    std::string source_llvm_init = this->source->get_llvm_init(block);
     spdlog::debug("Got source llvm: {}\n",source_llvm_init);
 	llvm_ir += target_llvm_init;
 	llvm_ir += source_llvm_init;
@@ -48,8 +48,8 @@ std::string AssignmentStatement::get_llvm() {
     // structs are stored in global space), all vars are ptrs and the store
     // instruction will thus be identical for non-ssa which makes things simple!
     std::string type_llvm = this->target->type->get_llvm();
-    auto target_llvm = this->target->get_llvm();
-    auto source_llvm = this->source->get_llvm();
+    auto target_llvm = this->target->get_llvm(block);
+    auto source_llvm = this->source->get_llvm(block);
     if(dynamic_pointer_cast<ast::InvocationExpression>(this->source)) {
         source_llvm = source_llvm.substr(1); // detab
         auto temp_reg = Register::create();
@@ -58,14 +58,14 @@ std::string AssignmentStatement::get_llvm() {
     } else if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
         spdlog::debug("Zero extending binary expression!\n");
         llvm_ir += bin_exp->zext();
-        source_llvm = this->source->get_llvm();
+        source_llvm = this->source->get_llvm(block);
     }
     llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
     spdlog::debug("assignment llvm = {}",llvm_ir);
 	return llvm_ir;
 }
 
-std::string AssignmentStatement::get_ssa(CfgFunc &f) {
+std::string AssignmentStatement::get_ssa(Bblock &block) {
     spdlog::debug("inside AssignmentStatement::{}\n",__func__);
     spdlog::debug("lineNum = {}\n",this->getLineNum());
     std::string ssa = "";
@@ -79,13 +79,13 @@ std::string AssignmentStatement::get_ssa(CfgFunc &f) {
     // otherwise if target is not a struct generate ssa
     // temporary llvm won't change
     // 2. if source is a global (lvalueId should contain a scope field and mark it based on resolveType just like IdExpr does) then generate non-ssa
-    ssa += this->source->get_llvm_init();
+    ssa += this->source->get_llvm_init(block);
     std::shared_ptr<Register> reg;
     const std::type_info& source_type = typeid(this->source->type);
     // if source is an immediate create a pseudo reg
     if((source_type == typeid(IntType)) || (source_type == typeid(BoolType))) {
         // Can get the llvm for immediates (technically it's not non-ssa specific since we're dealing with simple constants...it's just poor nomenclature for the functions which made sense at the time when I was focused on non-ssa)
-        auto val = this->source->get_llvm();
+        auto val = this->source->get_llvm(block);
         reg = Register::create(val,false,true);
         //reg->content_type = 
     // else create a non-pseudo reg
@@ -95,14 +95,14 @@ std::string AssignmentStatement::get_ssa(CfgFunc &f) {
             reg = this->source->getResult();
         } else {
             reg = Register::create();
-            ssa += fmt::format("{} = {}",reg->get_llvm(),this->source->get_llvm());
+            ssa += fmt::format("{} = {}",reg->get_llvm(),this->source->get_llvm(block));
         }
     }
     // add the var mapping to the function map
     // Since structs have already been handled we know we're dealing with an identifier at this point
     auto id_expr = dynamic_pointer_cast<IdentifierExpression>(this->target);
     assert(id_expr);
-    f.ssa_map->addEntry(id_expr->getId(),reg); 
+    //f.ssa_map->addEntry(id_expr->getId(),reg); 
     return ssa;
 }
  

@@ -27,12 +27,12 @@ std::shared_ptr<ast::Type> NewExpression::resolveType(Env &env) {
 	}
 }
 
-std::string NewExpression::get_llvm_init() {
+std::string NewExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside NewExpression::{}\n",__func__);
     this->result = Register::create();
     return TAB+fmt::format("{} = call ptr @malloc(i64 noundef {})\n",this->result->get_llvm(),this->struct_size);
 }
-std::string NewExpression::get_llvm() {
+std::string NewExpression::get_llvm(Bblock &block) {
     return this->result->get_llvm();
 }
 

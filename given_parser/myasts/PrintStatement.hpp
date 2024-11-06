@@ -23,7 +23,7 @@ public:
             return fmt::format("PrintStatement(lineNum={},newLine?={})",lineNum,newLine);
     }
     virtual void typecheck(Env &env, Function &f) override;
-    std::string get_llvm() override;
+    std::string get_llvm(Bblock &block) override;
 };
 
 } // namespace ast

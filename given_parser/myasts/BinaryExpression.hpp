@@ -37,8 +37,8 @@ public:
         return fmt::format("BinaryExpression(lineNum={},left={},operator={},right={}\n)"
                             ,lineNum,*this->getLeft(),static_cast<int>(this->getOperator()),*this->getRight());
     }
-    std::string get_llvm_init() override;
-    std::string get_llvm() override;
+    std::string get_llvm_init(Bblock &block) override;
+    std::string get_llvm(Bblock &block) override;
     std::shared_ptr<Type> resolveType(Env &env) override;
     bool is_i1(); 
     std::string zext(); 

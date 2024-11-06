@@ -27,9 +27,9 @@ public:
     // Getter for source
     std::shared_ptr<Expression> getSource() const;
     
-	virtual std::string get_llvm() override;
+	virtual std::string get_llvm(Bblock &block) override;
 
-    std::string get_ssa(CfgFunc &f);
+    std::string get_ssa(Bblock &block);
 
     std::string display() const override {
         return fmt::format("AssignmentStatement(lineNum={})",lineNum);

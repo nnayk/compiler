@@ -33,7 +33,7 @@ std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
     }
 }
 
-std::string IdentifierExpression::get_llvm_init() {
+std::string IdentifierExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     spdlog::debug("id={}\n",id);
     if(use_ssa) {
@@ -62,7 +62,7 @@ std::string IdentifierExpression::get_llvm_init() {
     return TAB+fmt::format("{} = load {}, ptr {}, align {}\n",deref_llvm,type_llvm,result_llvm,alignment_llvm);
 }
 
-std::string IdentifierExpression::get_llvm() {
+std::string IdentifierExpression::get_llvm(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     //if(use_ssa) return this->get_ssa();
 	auto deref_result = this->deref_result;
@@ -74,9 +74,9 @@ std::string IdentifierExpression::get_llvm() {
     }
 }
 
-std::string IdentifierExpression::get_ssa(CfgFunc &f) {
+std::string IdentifierExpression::get_ssa(Bblock &b) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    if(auto reg = f.ssa_map->entries[this->getId()]) {
+    if(auto reg = b.ssa_map->entries[this->getId()]) {
         return reg->get_llvm();
     } else {
         throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));

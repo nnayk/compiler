@@ -1,25 +1,31 @@
 #ifndef BBLOCK_HPP
 #define BBLOCK_HPP
-#include "Statement.hpp"
+#include <vector>
 #include <memory>
 #include <fmt/core.h>
 #include <unordered_set>
+#include "Statement.hpp"
 #include "Label.hpp"
+#include "Mapping.hpp"
 
 namespace ast {
     class BlockStatement;
     class Statement;
 }
-class Bblock {
-    public:
+
+class Mapping;
+
+class Bblock : public std::enable_shared_from_this<Bblock> {
+    public: 
         std::vector<std::shared_ptr<ast::Statement>> stmts;
         std::vector<std::shared_ptr<Bblock>> parents;
         std::vector<std::shared_ptr<Bblock>> children;
+        std::shared_ptr<Mapping> ssa_map = nullptr;
         std::shared_ptr<Label> label = nullptr;
         std::shared_ptr<Label> jmp_label = nullptr;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
         int visited; // for display purposes
-        Bblock() { visited = 0; }
+        Bblock();
         std::string get_llvm();
         std::string display() const;
         bool is_while_block();

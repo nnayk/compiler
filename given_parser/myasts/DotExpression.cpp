@@ -68,19 +68,19 @@ std::shared_ptr<Type> DotExpression::resolveType(Env &env) {
     return std::make_shared<NullType>(); // ctrl flow should never reac here b/c of the else stmt above
 }
 
-std::string DotExpression::get_llvm_init() {
+std::string DotExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside DotExpression::{}\n",__func__);
     spdlog::debug("id={}\n",this->getId());
     std::string llvm_ir = "";
     //spdlog::debug("left = {}\n",this->getLeft()->getId());
-    llvm_ir += this->getLeft()->get_llvm_init();
+    llvm_ir += this->getLeft()->get_llvm_init(block);
     auto reg = std::make_shared<Register>();
     spdlog::debug("Got the next numerical register of {}\n",reg->get_id());
     this->result = reg;
     auto reg_llvm = this->result->get_llvm();
     //assert(this->getLeft()->getDerefResult());
     //auto left_reg_llvm = this->getLeft()->getDerefResult()->get_llvm();
-    auto left_reg_llvm = this->getLeft()->get_llvm();
+    auto left_reg_llvm = this->getLeft()->get_llvm(block);
     auto left_type = this->getLeftType(); 
     auto struct_name = left_type->getName();
     llvm_ir += TAB+fmt::format("{} = getelementptr inbounds %struct.{}, ptr {}, i32 0, i32 {}\n",reg_llvm,struct_name,left_reg_llvm,this->offset); // Yes the hardcoded i32 parts are intentional based on observing what clang does
@@ -100,7 +100,7 @@ std::string DotExpression::get_llvm_init() {
     return "";
 }
 
-std::string DotExpression::get_llvm() {
+std::string DotExpression::get_llvm(Bblock &block) {
     spdlog::debug("inside DotExpression::{}\n",__func__);
     if(dynamic_pointer_cast<ast::StructType>(this->type)) {
         spdlog::debug("struct type!\n");

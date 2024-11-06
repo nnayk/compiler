@@ -57,12 +57,12 @@ std::shared_ptr<Type> InvocationExpression::resolveType(Env &env) {
     return this->type;
 }
 
-std::string InvocationExpression::get_llvm_init() {
+std::string InvocationExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside InvocationExpression::{}\n",__func__);
 	std::string llvm = ""; 
 	// load each arg
 	for(auto arg : this->arguments) {
-		llvm += arg->get_llvm_init();
+		llvm += arg->get_llvm_init(block);
         if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(arg); bin_exp && bin_exp->is_i1()) {
             spdlog::debug("Zero extending binary expression!\n");
             llvm += bin_exp->zext();
@@ -71,14 +71,14 @@ std::string InvocationExpression::get_llvm_init() {
     return llvm;
 }
  
-std::string InvocationExpression::get_llvm() { 
+std::string InvocationExpression::get_llvm(Bblock &block) { 
     spdlog::debug("inside InvocationExpression::{}\n",__func__);
     std::string llvm = TAB+fmt::format("call {} @{}(",this->type->get_llvm(),this->name);
     int index = 0;
     int args_size = this->arguments.size();
 	for(auto arg : this->arguments) {
 		spdlog::debug("arg={}\n",*arg);
-		llvm += fmt::format("{} noundef {}",arg->type->get_llvm(),arg->get_llvm());
+		llvm += fmt::format("{} noundef {}",arg->type->get_llvm(),arg->get_llvm(block));
         if(index<args_size-1) {
             llvm += ", ";
         } else {

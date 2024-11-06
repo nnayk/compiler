@@ -30,7 +30,7 @@ public:
         return fmt::format("ConditionalStatement(lineNum={})",lineNum);
     }
 	virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
-	virtual std::string get_llvm() override;
+	virtual std::string get_llvm(Bblock &block) override;
 };
 
 } // namespace ast

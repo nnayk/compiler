@@ -28,8 +28,8 @@ std::shared_ptr<Type> UnaryExpression::resolveType(Env &env) {
     }
 }
 
-std::string UnaryExpression::get_llvm() {
-    auto operand_llvm = this->getOperand()->get_llvm();
+std::string UnaryExpression::get_llvm(Bblock &block) {
+    auto operand_llvm = this->getOperand()->get_llvm(block);
     if(dynamic_pointer_cast<ast::IntType>(this->type)) {
         return fmt::format("-{}",operand_llvm);
     } else {

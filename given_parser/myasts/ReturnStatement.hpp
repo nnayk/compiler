@@ -20,7 +20,7 @@ public:
         return fmt::format("ReturnStatement(lineNum={})", this->getLineNum());
     }
      void typecheck(Env &env, Function &f) override;
-     std::string get_llvm() override;
+     std::string get_llvm(Bblock &block) override;
      virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
 };
 

@@ -15,11 +15,11 @@ void InvocationStatement::typecheck(Env &env, Function &f) {
     this->getExpression()->resolveType(env);
 }
 
-std::string InvocationStatement::get_llvm() {
+std::string InvocationStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside InvocationStatement::{}\n",__func__);
-    std::string llvm = this->getExpression()->get_llvm_init();
+    std::string llvm = this->getExpression()->get_llvm_init(block);
     auto expr = this->getExpression();
-    llvm += expr->get_llvm();
+    llvm += expr->get_llvm(block);
     return llvm;
 }
 

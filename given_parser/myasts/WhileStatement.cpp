@@ -40,14 +40,14 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     return blocks;
 }
 
-std::string WhileStatement::get_llvm() {
+std::string WhileStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside WhileStatement::{}\n",__func__);
     std::string llvm = "";
     assert(!this->label); // a parent block should've set this in Bblock::get_llvm() for CondStatement case
     assert(!this->afterLabel); 
     auto body_block = dynamic_pointer_cast<BlockStatement>(this->body);
     for(auto stmt: body_block->statements) {
-        llvm += stmt->get_llvm();
+        llvm += stmt->get_llvm(block);
     }
     return llvm;
 }

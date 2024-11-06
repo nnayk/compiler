@@ -20,9 +20,9 @@ public:
     std::string display() const override {
         return fmt::format("IdentifierExpression(lineNum={},id={})\n",lineNum,this->getId());
     }
-    std::string get_llvm_init() override; 
-    std::string get_llvm() override; 
-    std::string get_ssa(CfgFunc &f);
+    std::string get_llvm_init(Bblock &block) override; 
+    std::string get_llvm(Bblock &block) override; 
+    std::string get_ssa(Bblock &block);
 
 private:
     std::string id;  // Identifier string

@@ -24,7 +24,7 @@ public:
     std::vector<std::shared_ptr<Bblock>> get_cfg() override; 
     std::shared_ptr<Expression> get_guard() { return guard; }
     std::shared_ptr<Statement> get_body() { return body; }
-    std::string get_llvm() override;
+    std::string get_llvm(Bblock &block) override;
 };
 
 } // namespace ast

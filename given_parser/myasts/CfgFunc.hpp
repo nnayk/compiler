@@ -5,7 +5,6 @@
 #include "Bblock.hpp"
 #include "Function.hpp"
 #include "Statement.hpp"
-#include "Mapping.hpp"
 
 namespace ast {
     class Function;
@@ -21,7 +20,6 @@ class CfgFunc {
         std::vector<ast::Declaration> locals;  // Local declarations
         std::shared_ptr<Bblock> return_block = nullptr;
         std::vector<std::shared_ptr<Bblock>> blocks;
-        std::shared_ptr<Mapping> ssa_map = nullptr;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 
 		std::string display() const;

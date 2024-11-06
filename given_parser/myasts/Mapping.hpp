@@ -8,6 +8,7 @@
 #include "Expression.hpp"
 #include "Register.hpp"
 
+class Register;
 
 class Mapping {
 public:

@@ -19,8 +19,8 @@ namespace ast {
       virtual std::string getId() const = 0;
       std::shared_ptr<ast::Type> getType();
       virtual std::shared_ptr<ast::Type> resolveType(Env &env) = 0;
-      virtual std::string get_llvm_init() = 0;
-      virtual std::string get_llvm() = 0;
+      virtual std::string get_llvm_init(Bblock &block) = 0;
+      virtual std::string get_llvm(Bblock &block) = 0;
       std::shared_ptr<Register> getDerefResult(); 
       std::shared_ptr<Register> getResult(); 
 protected:

@@ -23,8 +23,8 @@ public:
         return fmt::format("DotExpression(lineNum={},id={},left={}\n)",lineNum,this->getId(),
                             left);
     }
-    std::string get_llvm_init() override;
-    std::string get_llvm() override;
+    std::string get_llvm_init(Bblock &block) override;
+    std::string get_llvm(Bblock &block) override;
     std::shared_ptr<ast::StructType> getLeftType(); 
     std::shared_ptr<Type> resolveType(Env &env) override; 
 
