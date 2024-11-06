@@ -13,7 +13,6 @@ class Mapping {
 public:
     Mapping() {};
     void addEntry(std::string var,std::shared_ptr<Register> reg);
-private:
     std::unordered_map<std::string,std::shared_ptr<Register>> entries;
 };
 #endif

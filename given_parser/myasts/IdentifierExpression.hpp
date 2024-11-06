@@ -4,6 +4,7 @@
 #include <string>
 #include "AbstractExpression.hpp"
 #include "Register.hpp"
+#include "CfgFunc.hpp"
 
 namespace ast {
 
@@ -21,6 +22,7 @@ public:
     }
     std::string get_llvm_init() override; 
     std::string get_llvm() override; 
+    std::string get_ssa(CfgFunc &f);
 
 private:
     std::string id;  // Identifier string

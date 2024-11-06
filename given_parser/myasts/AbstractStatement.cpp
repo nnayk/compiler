@@ -27,5 +27,4 @@ std::string AbstractStatement::get_llvm() {
     std::string llvm_ir = "AbstractStatement\n";
     return llvm_ir;
 }
-
 }  // namespace ast

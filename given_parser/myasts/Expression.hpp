@@ -4,6 +4,7 @@
 #include "Env.hpp"
 #include "TypeException.hpp"
 //#include "Register.hpp"
+//#include "CfgFunc.hpp"
 
 class Register;
 
@@ -23,6 +24,8 @@ public:
     virtual std::shared_ptr<ast::Type> resolveType(Env &env) {return std::make_shared<IntType>();} //TODO URGENT: implement this for each expr
     virtual std::string get_llvm_init() = 0;
     virtual std::string get_llvm() = 0;
+    // actually idt this is needed
+    //virtual std::string get_ssa(CfgFunction &f) = 0;
     virtual std::string display() const = 0;
     virtual std::shared_ptr<Register> getDerefResult() const = 0;
     virtual std::shared_ptr<Register> getResult() const = 0;

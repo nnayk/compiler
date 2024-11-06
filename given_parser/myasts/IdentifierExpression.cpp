@@ -1,7 +1,9 @@
 #include "IdentifierExpression.hpp"
+#include "InvalidUseException.hpp"
 #include <cassert>
 
 extern std::string TAB;
+extern bool use_ssa;
 namespace ast {
 
 // Constructor
@@ -34,7 +36,15 @@ std::shared_ptr<Type> IdentifierExpression::resolveType(Env &env) {
 std::string IdentifierExpression::get_llvm_init() {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
     spdlog::debug("id={}\n",id);
-    if(this->scope == 1) return "";
+    if(use_ssa) {
+        spdlog::debug("in ssa mode, no llvm init needed\n");
+        return "";
+    }
+    spdlog::debug("in non-ssa mode, generating llvm init\n");
+    if(this->scope == 1) {
+        spdlog::debug("{} is a param (already in a register), no llvm init\n",id);
+        return "";
+    }
     this->deref_result = Register::create();
     auto deref_llvm = this->deref_result->get_llvm();
     spdlog::debug("deref_llvm = {}\n",deref_llvm);
@@ -54,12 +64,22 @@ std::string IdentifierExpression::get_llvm_init() {
 
 std::string IdentifierExpression::get_llvm() {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+    //if(use_ssa) return this->get_ssa();
 	auto deref_result = this->deref_result;
     if(deref_result) {
         return this->deref_result->get_llvm();
     } else {
         assert(this->scope==1);
         return this->result->get_llvm();
+    }
+}
+
+std::string IdentifierExpression::get_ssa(CfgFunc &f) {
+    spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+    if(auto reg = f.ssa_map->entries[this->getId()]) {
+        return reg->get_llvm();
+    } else {
+        throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));
     }
 }
 

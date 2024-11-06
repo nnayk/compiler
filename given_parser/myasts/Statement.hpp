@@ -6,7 +6,7 @@
 #include "Function.hpp"
 #include "TypeException.hpp"
 //#include "Bblock.hpp"
-//#include "CfgFunc.hpp"
+#include "CfgFunc.hpp"
 #include <typeinfo>
 
 class Bblock;

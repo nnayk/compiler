@@ -7,6 +7,11 @@
 #include "Statement.hpp"
 #include "Mapping.hpp"
 
+namespace ast {
+    class Function;
+}
+
+class Bblock;
 class CfgFunc; // forward declare for build method
 class CfgFunc {
     public:

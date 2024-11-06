@@ -104,3 +104,37 @@ bool Bblock::is_cond_block() {
     if(this->stmts.size() && dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1])) return true;
     return false;
 }
+
+std::string Bblock::display() const {
+        auto out = fmt::format("Head statement: ");
+        if(this->stmts.size() > 0) {
+            out += fmt::format("# of stmts = {}\n",this->stmts.size());
+            out += fmt::format("{}",*this->stmts[0]);
+        }else {
+            out += fmt::format("Null stmt, dummy block");
+        }
+        out += fmt::format("STATEMENTS:\n");
+		for(auto stmt : this->stmts) {
+			out += fmt::format("{}\n",*stmt);//->display());
+		}
+		out += fmt::format("\nNUMBER OF CHILDREN: {}\n", this->children.size());
+		out += fmt::format("CHILDREN:\n");
+		for(auto child : this->children) {
+            if(child->stmts.size() > 0) {
+                out += fmt::format("Child # stmts={}\n",child->stmts.size());
+                out += fmt::format("HEAD STMT: {}\n",*(child->stmts[0]));
+            } else {
+                out += fmt::format("DUMMY CHILD with {} children, {} parents",child->children.size(),child->parents.size());
+            }
+		}
+		out += fmt::format("\nNUMBER OF PARENTS: {}\n", this->parents.size());
+		out += fmt::format("PARENTS:\n");
+		for(auto parent : this->parents) {
+            if(parent->stmts.size() > 0) {
+                out += fmt::format("Parent # stmts={}\n",parent->stmts.size());
+                out += fmt::format("HEAD STMT: {}\n",*(parent->stmts[0]));
+            }else
+                out += fmt::format("DUMMY parent\n");
+		}
+		return out;
+}
