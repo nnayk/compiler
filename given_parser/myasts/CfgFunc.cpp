@@ -64,10 +64,21 @@ std::string CfgFunc::get_llvm() {
         stack.push(this->blocks[0]);
         //bool skip_children_llvm = false;
         bool reverse_push = true;
+        bool unvisited_parent = false;
         while(!stack.empty()) {
             //skip_children_llvm = false;
             reverse_push = true;
+            unvisited_parent = false;
             auto block = stack.top();
+            // if there are unvisited parents then explore them first
+            for(auto parent : block->parents) {
+                if(!parent->visited) {
+                    spdlog::debug("unvisited parent {}\n",*parent);
+                    unvisited_parent = true;
+                    stack.push(parent);
+                }
+            }
+            if(unvisited_parent) continue;
             stack.pop();
 			spdlog::debug("popped block {}",*block);
             // TODO: change this check b/c can't print multiple times this way

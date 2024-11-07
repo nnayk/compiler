@@ -7,6 +7,7 @@
 #include "Statement.hpp"
 #include "Label.hpp"
 #include "Mapping.hpp"
+#include "Register.hpp"
 
 namespace ast {
     class BlockStatement;
@@ -31,6 +32,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         bool is_while_block();
         bool is_cond_block();
         bool is_return_block();
+        std::shared_ptr<Register> lookup(std::string id);
 };
 
 //Specialize fmt::formatter for Bblock

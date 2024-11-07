@@ -143,3 +143,28 @@ std::string Bblock::display() const {
 		}
 		return out;
 }
+
+std::shared_ptr<Register> Bblock::lookup(std::string id) {
+    spdlog::debug("inside Bblock::{}\n",__func__);
+    spdlog::debug("Looking up register for id {}\n",id);
+    std::shared_ptr<Register> reg = nullptr;
+    if((reg = this->ssa_map->entries[id])) {
+        spdlog::debug("Found register {}, pseudo = {}\n",*reg,reg->pseudo);
+        return reg;
+    } else {
+        spdlog::debug("Didn't find id in current block, looking at preds\n");
+        auto parents = this->parents;
+        if(parents.size()==1) {
+            spdlog::debug("Only 1 pred, yay!\n");
+            this->ssa_map->entries[id] = parents[0]->lookup(id);
+            return this->ssa_map->entries[id];
+        }
+        spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
+        //TODO: Implement
+        /*
+        for(auto parent : this->parents) {
+        }
+        */
+    }
+    return reg;
+}

@@ -77,7 +77,8 @@ std::string IdentifierExpression::get_llvm(Bblock &block) {
 std::string IdentifierExpression::get_ssa_init(Bblock &block) {
     spdlog::debug("inside IdentifierExpression:{}\n",__func__);
     std::string llvm = "";
-    // lookup the var in current block
+    auto id = this->getId();
+    auto reg = block.lookup(id);
     return llvm;
 }
 

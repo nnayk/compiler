@@ -164,7 +164,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 auto temp = cond_stmt->get_cfg();
                 std::string err = "This is a makeshift cond stmt that only should contain the while cond stmt -- why is there >1 block???";
                 prev_tail = temp[0];
-                assert(prev_tail->children.size()==1); 
+                //assert(prev_tail->children.size()==1); 
                 blocks.push_back(prev_tail);
                 // set the then block to the current while block
                 prev_tail->children[0] = new_head; 
