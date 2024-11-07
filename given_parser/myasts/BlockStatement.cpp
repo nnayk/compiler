@@ -74,7 +74,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 std::string err = "Probably a while conditional stmt (see WhileStatement::get_cfg";
                 assert(dummy_block->stmts.size()==0 && err.c_str());
                 for(auto parent : dummy_block->parents) {
-                    spdlog::debug("Looking at dummy parent {}\n",*parent);
+                    spdlog::debug("Looking at dummy parent wit size {}: {}\n",parent->children.size(),*parent);
                     assert(0 <= parent->children.size() && parent->children.size() <= 2);
                     if(parent->children[0] == dummy_block) {
                         spdlog::debug("Replacing dummy child (first child)\n");
@@ -100,10 +100,11 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             new_head->parents.push_back(prev_tail);
             if(dynamic_pointer_cast<ast::WhileStatement>(prev_stmt)) {
                 assert(prev_blocks.size()==1);
-                auto prev_head = prev_blocks[0];
-                spdlog::debug("prev_head = {}\n",*prev_head);
+                //auto prev_head = prev_blocks[0];
+                //spdlog::debug("prev_head = {}\n",*prev_head);
+                spdlog::debug("prev_tail = {}\n",*prev_tail);
                 //assert(prev_head->parents.size() == 1);
-                for(auto parent : prev_head->parents) {
+                for(auto parent : prev_tail->parents) {
                     auto cond_parent = dynamic_pointer_cast<ConditionalStatement>(parent->stmts[parent->stmts.size()-1]);
                     assert(cond_parent);
                     //cond_parent->elseBlock = stmt;
@@ -150,9 +151,10 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             // For now I perform this cast to while stmt in order to access its guard + body attrs when creating the cond stmt
             auto while_stmt = static_pointer_cast<WhileStatement>(stmt);
             auto cond_stmt = std::make_shared<ConditionalStatement>(while_stmt->getLineNum(),while_stmt->get_guard(),while_stmt->get_body(),nullptr);
-            if(prev_tail) {
+			if(prev_tail) {
                 if(dynamic_pointer_cast<WhileStatement>(prev_stmt)) {
-                  //for(auto parent : 
+                  //for(auto parent :
+                  // TODO
                 } else {
                     for(auto parent : new_head->parents) {
                         spdlog::debug("Adding while conditional to parent {}\n",*parent);
@@ -161,14 +163,32 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                   }
                 }
             } else {
+                spdlog::debug("prev_tail is null, creating a makeshit cond block\n");
+                spdlog::debug("new head = {}\n",*new_head);
                 auto temp = cond_stmt->get_cfg();
+                //auto cond_parent = std::make_shared<Bblock>();
+                //cond_parent->stmts.push_back(cond_stmt);
                 std::string err = "This is a makeshift cond stmt that only should contain the while cond stmt -- why is there >1 block???";
                 prev_tail = temp[0];
+                //prev_tail = cond_parent;
                 //assert(prev_tail->children.size()==1); 
                 blocks.push_back(prev_tail);
-                // set the then block to the current while block
+                //auto dummy_child = prev_tail->children[1];
+                //assert(dummy_child->stmts.size()==0);
+                //assert(dummy_child->parents.size()==2);
+                // remove the link between dummy and uneeded then block (it's
+                // gonna be replaced by the current while block generated)
+                //auto old_then = dummy_child->parents[0];
+                // check it's the then stmt which should only be pointing to the dummy
+                //assert(old_then->children.size()==1);
+                //new_head->children.push_back(dummy_child);
+                //dummy_child->parents[0] = new_head;
+                // set the then block to current while block
                 prev_tail->children[0] = new_head; 
+                //prev_tail->children.push_back(new_head); 
                 new_head->parents.push_back(prev_tail);
+                spdlog::debug("makeshift cond block = {}\n",*prev_tail);
+                spdlog::debug("NOW new head = {}\n",*new_head);
             }
         }
         // TODO: once bblock merging is done (see above TODO) these will have

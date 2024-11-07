@@ -36,7 +36,7 @@ std::string Bblock::get_llvm() {
     }
     if(this->is_return_block()) {
         spdlog::debug("adding extra br for return block:{}\n",*this);
-        llvm_ir += TAB+"br label %return\n";
+        llvm_ir += TAB+"br label %Lreturn\n";
     }
     if(is_cond_block()) {
         spdlog::debug("dealing with cond  block...\n");

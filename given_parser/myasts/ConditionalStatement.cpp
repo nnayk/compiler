@@ -69,7 +69,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         else_blocks[0]->parents.push_back(if_block);
         spdlog::debug("Added else block: {}\n",*else_blocks[0]);
     } else {
-        // if the then block was empty and now the else block was empty then there's already a parent-child relatonship between if block and dummy block. so don't do anything now.
+        // if the then block was empty and now the else block was empty then there's already a parent-child relatonship between if block and dummy block. so don't do anything now. UPDATE: this case will be impossible once I just skip over such useless if statements...
         auto existing_relationship = std::find(if_block->children.begin(),if_block->children.end(),dummy_block);
         if(existing_relationship == if_block->children.end()) {
             if_block->children.push_back(dummy_block);
