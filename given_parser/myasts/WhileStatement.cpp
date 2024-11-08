@@ -20,23 +20,28 @@ void WhileStatement::typecheck(Env &env, Function &f) {
 std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     spdlog::debug("WhileStatement:{}\n",__func__);
 	std::vector<std::shared_ptr<Bblock>> blocks;
-    // return the blocks with the body and create a final IF block for the cond
-    blocks = this->body->get_cfg();
-    auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,shared_from_this(),nullptr);
+    // TODO: check if the body is empty... it'd be nice to "support" infinite loops :)
+    assert(this->body); 
+    //blocks = this->body->get_cfg();
+    //auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,shared_from_this(),nullptr);
+    auto cond_stmt = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,this->body,nullptr);
     assert(!cond_stmt->elseBlock);
-    std::shared_ptr<Bblock> tail_block;
-    if(blocks.size() > 0) {
-        tail_block = blocks[blocks.size()-1];
-        spdlog::debug("WhileStatement: picked tail block {}\n",*tail_block );
-        tail_block->stmts.push_back(cond_stmt);
-    // UPDATE: 10/28 9:35 pm -- this else case is not needed since the loop will be infinite
-    // if the body is empty...though it'd still be nice to "support" these kinds of infinite
-    // loops :)
-    } else {
-        std::string err = "URGENT: Update ConditionalStatement get_cfg to deal w/cases where else and/or then are nullptrs -- here both are null";
-        assert(true && err.c_str());
-        tail_block = cond_stmt->get_cfg()[0]; // incomplete...
-    }
+    blocks = cond_stmt->get_cfg();
+    //assert(blocks.size()==3);
+    auto if_block = blocks[0];
+    assert(if_block->children.size()==2);
+    auto dummy_block = if_block->children[1];
+    assert(dummy_block->stmts.size()==0);
+    assert(dummy_block->parents.size()==2);
+    std::shared_ptr<Bblock> thenBlock = if_block->children[0];
+    auto final_body_block = dummy_block->parents[0];
+    assert(final_body_block != if_block);
+    // Add conditional stmt to last block in body block
+    final_body_block->stmts.push_back(cond_stmt);
+    // Add self loop (as 1st child)
+    final_body_block->children[0] = thenBlock;
+    thenBlock->parents.push_back(final_body_block);
+    final_body_block->children.push_back(dummy_block);
     return blocks;
 }
 

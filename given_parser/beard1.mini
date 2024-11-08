@@ -1,6 +1,7 @@
 fun foo(int a, int b, int c) int
 {
   int ret;
+  int y;
   ret = 0;
 
   if(a>0)
@@ -13,7 +14,11 @@ fun foo(int a, int b, int c) int
       {
         ret = 3;
       }
+      print 1;
     }
+    print 2;
+  } else {
+    y = 5;
   }
   return ret;
 } 

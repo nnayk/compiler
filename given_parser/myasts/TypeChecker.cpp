@@ -72,8 +72,8 @@ declare i32 @scanf(i8*, ...)
 @.read = private unnamed_addr constant [4 x i8] c"%ld\00", align 1
 @.read_scratch = common global i32 0, align 4
               )"; 
-    llvm += cfg_prog->get_llvm();
-    spdlog::info("LLVM IR:\n{}",llvm);
+    //llvm += cfg_prog->get_llvm();
+    //spdlog::info("LLVM IR:\n{}",llvm);
     return 0;
 }
 
