@@ -23,6 +23,7 @@ class CfgFunc {
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 
 		std::string display() const;
+        void create_labels();
    private:
         CfgFunc(std::string name,std::vector<ast::Declaration> params,std::shared_ptr<ast::Type> retType,std::vector<ast::Declaration> locals); //std::vector<Bblock> blocks);
 };

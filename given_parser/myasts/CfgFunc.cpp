@@ -18,6 +18,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     spdlog::info("inside CfgFunc::{}",__func__);
     //auto cfg_func = std::make_shared<CfgFunc>();  
     //auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(std::move(f.params),std::move(f.retType),std::move(f.locals),std::vector<Bblock>()));
+    //Construct CFG
     auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(f.name,std::move(f.params),std::move(f.retType),std::move(f.locals)));//,std::vector<Bblock>()));
     cfg_func->return_block = std::make_shared<Bblock>();
     cfg_func->return_block->label = Label::create("return");
@@ -36,7 +37,69 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
         block->children.push_back(cfg_func->return_block);
         cfg_func->return_block->parents.push_back(block);
     }
+    spdlog::debug("CFG construction complete, gonna create labels for each block now!\n");
+    // CFG construction done at this point, assign labels to each block
+    cfg_func->create_labels();
     return cfg_func;
+}
+
+void CfgFunc::create_labels() {
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
+    if(this->blocks.size() > 0) {
+        std::stack<std::shared_ptr<Bblock>> stack;
+        stack.push(this->blocks[0]);
+        bool reverse_push = true;
+        bool unvisited_parent = false;
+        while(!stack.empty()) {
+            reverse_push = true;
+            unvisited_parent = false;
+            auto block = stack.top();
+            // if there are unvisited parents then explore them first
+            for(auto parent : block->parents) {
+                if(!parent->visited) {
+                    spdlog::debug("unvisited parent (no label) {}\n",*parent);
+                    unvisited_parent = true;
+                    stack.push(parent);
+                }
+            }
+            if(unvisited_parent) continue;
+            stack.pop();
+			spdlog::debug("popped block {}",*block);
+            // TODO: change this check b/c can't print multiple times this way
+            if(block->visited == 1) {
+                spdlog::debug("Yalready visited block {}\n",*block);
+                continue;
+            }
+            // gen label here?
+            block->label = Label::create();
+            block->visited = 1;
+            std::shared_ptr<ast::Statement> stmt = nullptr;
+            auto num_stmts = block->stmts.size();
+            if(num_stmts) {
+                spdlog::debug("NOT a dummy block!\n");
+            } else {
+                spdlog::debug("dummy block!\n");
+            }
+            // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
+            if(reverse_push) {
+				for (auto it = block->children.rbegin(); it != block->children.rend(); ++it) {
+					std::cout << *it << " ";
+                    //spdlog::debug("pushing *it {}",*it);
+                    stack.push(*it);
+				}
+            } else {
+                for(auto child : block->children) {
+                    spdlog::debug("pushing child {}",*child);
+                    //if(skip_children_llvm) child->emit_llvm = false;
+                    stack.push(child);
+                }
+            }
+        }
+    }
+    // mark each block as unvisited
+    for(auto block : this->blocks) {
+        block->visited = 0;
+    }
 }
 
 std::string CfgFunc::get_llvm() {
@@ -96,18 +159,7 @@ std::string CfgFunc::get_llvm() {
             std::shared_ptr<ast::Statement> stmt = nullptr;
             auto num_stmts = block->stmts.size();
             if(num_stmts) {
-                stmt = block->stmts[num_stmts-1];
-                if(auto cond_stmt =  dynamic_pointer_cast<ast::ConditionalStatement>(stmt)) {
-                    // Recall both then and else stmts cannot be null b/c
-                    // BlockStatement::get_llvm() would've just ignored this
-                    // Conditional statement
-                    if((cond_stmt->thenLabel == cond_stmt->afterLabel) ) {
-                        spdlog::debug("not reverse pushing for cond_stmt {}\n");//,*cond_stmt);
-                        reverse_push = false;
-                    }
-                    //spdlog::debug("skipping children llvm due to conditional stmt {}\n",*stmt);
-                    //skip_children_llvm = true;
-                }
+                spdlog::debug("not a dummy block!\n");
             } else {
                 spdlog::debug("dummy block!\n");
             }
@@ -127,7 +179,6 @@ std::string CfgFunc::get_llvm() {
             }
         }
     }
-	llvm_ir += "}";
     return llvm_ir;
 }
 

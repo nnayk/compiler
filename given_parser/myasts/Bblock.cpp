@@ -21,6 +21,7 @@ std::string Bblock::get_llvm() {
     if(jmp_label) spdlog::debug("jmp label = {}\n",jmp_label->getLabel());
     else spdlog::debug("null jump label\n");
     // the while processing must be done b4 processing the stmts b/c the thenLabel and afterLabel need to be set b4 getting the llvm for the while conditional stmt. For the cond stmt after the for loop processing it later is ok since it just decides the labels for its children.
+    // 11/8/24: SAFE TO DELETE I BELIEVE!!!
     if(is_while_block()) {
         spdlog::debug("dealing with while block...\n");
         assert(this->jmp_label); // parent cond should've set this
@@ -38,6 +39,7 @@ std::string Bblock::get_llvm() {
         spdlog::debug("adding extra br for return block:{}\n",*this);
         llvm_ir += TAB+"br label %Lreturn\n";
     }
+    // 11/8/24: SAFE TO DELETE I BELIEVE!!! HOWEVER NEED TO ADD SOME CHECKS TO ADD a br to child label if applicable!!
     if(is_cond_block()) {
         spdlog::debug("dealing with cond  block...\n");
         auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1]);
@@ -111,7 +113,15 @@ bool Bblock::is_cond_block() {
 }
 
 std::string Bblock::display() const {
-        auto out = fmt::format("Head statement: ");
+        spdlog::debug("inside Bblock::{}\n",__func__);
+        std::string out = "";
+        if(this->label) {
+            spdlog::debug("label exists: {}\n",this->label->getLabel());
+            out += fmt::format("Label {}\n",this->label->getLabel());
+        } else {
+            spdlog::debug("Label dne yet!\n");
+        }
+        out += fmt::format("Head statement: ");
         if(this->stmts.size() > 0) {
             out += fmt::format("# of stmts = {}\n",this->stmts.size());
             out += fmt::format("{}",*this->stmts[0]);
