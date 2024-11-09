@@ -102,52 +102,11 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
 std::string ConditionalStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
     spdlog::debug("line={}\n",this->getLineNum());
-    if(this->thenBlock)
-        spdlog::debug("then={}\n",*this->thenBlock);
-    if(this->elseBlock)
-        spdlog::debug("else={}\n",*this->elseBlock);
-    spdlog::debug(fmt::format("{}\n",static_cast<Statement &>(*this)));
-    std::string llvm = "";
-    bool empty_then = !this->thenBlock || (dynamic_pointer_cast<BlockStatement>(this->thenBlock) && (!dynamic_pointer_cast<BlockStatement>(this->thenBlock)->statements.size()));
-    bool empty_else = !this->elseBlock || (dynamic_pointer_cast<BlockStatement>(this->elseBlock) && (!dynamic_pointer_cast<BlockStatement>(this->elseBlock)->statements.size()));
-    if(!empty_then &&!this->thenLabel) {
-        this->thenLabel = Label::create();
-        spdlog::debug("Got thenLabel {}\n",thenLabel->getLabel());
-    }
-    if(!empty_else &&!this->elseLabel) {
-        this->elseLabel = Label::create();
-        spdlog::debug("Got elseLabel {}\n",elseLabel->getLabel());
-    }
-    // Think the only case where afterLabel is non-null is for while stmts. In this case thenLabel should also be non-null and it should be fine that elseLabel is left null...
-        if(!this->afterLabel){
-            this->afterLabel = Label::create();
-            spdlog::debug("Got afterLabel {}\n",afterLabel->getLabel());
-        } else {
-            spdlog::debug("using pre-existing after label = {}\n",afterLabel->getLabel());
-        }
-        if(!this->thenLabel) {
-            this->thenLabel = this->afterLabel;
-            spdlog::debug("Setting thenLabel to afterLabel {}\n",thenLabel->getLabel());
-        } else if(!this->elseLabel) {
-            this->elseLabel = this->afterLabel;
-            spdlog::debug("Setting elseLabel to afterLabel {}\n",elseLabel->getLabel());
-        }
-
-    // Nov 3 2024: remove these labels as now I'm ensuring thenLabel and elseLabel are never null when this line is reached
-    auto label_1 = this->thenLabel; // idt then label can ever be null
-    auto label_2 = (this->elseLabel==nullptr) ? this->afterLabel : this->elseLabel;
-    llvm += this->guard->get_llvm_init(block);
-    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(block),label_1->getLabel(),label_2->getLabel());
-    return llvm;
-    llvm += TAB+fmt::format("{}:\n",thenLabel->getLabel());
-    //return llvm;
-    spdlog::debug("gonna get thenBlock llvm for:{}\n",*thenBlock);
-    llvm += this->thenBlock->get_llvm(block)+"\n";
-    llvm += TAB+fmt::format("{}:\n",elseLabel->getLabel());
-    if(this->elseBlock) {
-        spdlog::debug("gonna get elseBlock llvm for:{}\n",*elseBlock);
-        llvm += this->elseBlock->get_llvm(block)+"\n";
-    }
+	assert(block->children.size()==2);
+	auto thenLabel = block->children[0]->label->getLabel();
+	auto elseLabel = block->children[1]->label->getLabel();
+    std::string llvm = this->guard->get_llvm_init(block);
+    llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(block),thenLabel,elseLabel);
     spdlog::debug("llvm={}\n",llvm);
     return llvm;
 }
