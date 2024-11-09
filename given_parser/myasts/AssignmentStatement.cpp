@@ -62,6 +62,17 @@ std::string AssignmentStatement::get_llvm(Bblock &block) {
     }
     llvm_ir += TAB+fmt::format("store {} {}, ptr {}, align {}\n",type_llvm,source_llvm,target_llvm,this->target->type->alignment());
     spdlog::debug("assignment llvm = {}",llvm_ir);
+    //special case return stmt
+    if(this->target->getId() == "_ret") {
+        for(auto child : block.children) {
+            if(child->final_return_block) {
+                spdlog::debug("found final return block child, gonnabreak to it\n");
+                auto return_label = child->label->getLabel();
+                spdlog::debug("return label = {}\n",return_label);
+                llvm_ir += fmt::format("br label {}\n",return_label);
+            }
+        }
+    }
 	return llvm_ir;
 }
 

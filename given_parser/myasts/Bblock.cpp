@@ -12,72 +12,23 @@ Bblock::Bblock(): visited(0) {
 std::string Bblock::get_llvm() {
     std::string llvm_ir;
     spdlog::debug("inside Bblock::{}",__func__);
-    if(label) 
-    {
-        spdlog::debug("bblock label = {}\n",label->getLabel());
-        llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
-    }
-
-    if(jmp_label) spdlog::debug("jmp label = {}\n",jmp_label->getLabel());
-    else spdlog::debug("null jump label\n");
-    // the while processing must be done b4 processing the stmts b/c the thenLabel and afterLabel need to be set b4 getting the llvm for the while conditional stmt. For the cond stmt after the for loop processing it later is ok since it just decides the labels for its children.
-    // 11/8/24: SAFE TO DELETE I BELIEVE!!!
-    if(is_while_block()) {
-        spdlog::debug("dealing with while block...\n");
-        assert(this->jmp_label); // parent cond should've set this
-        auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1]);
-        assert(cond_stmt);
-        assert(!cond_stmt->elseBlock); // all while conditionals should have a null elseBlock
-        cond_stmt->thenLabel = this->label;
-        cond_stmt->afterLabel = this->jmp_label;
-    }
+    assert(label);
+    spdlog::debug("bblock label = {}\n",label->getLabel());
+    llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
     for(auto stmt:this->stmts) {
         spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
         llvm_ir += stmt->get_llvm(*this);
     }
+    if(this->children.size()==1) {
+        spdlog::debug("adding extra br\n");
+        llvm_ir += TAB+fmt::format("br label {}",this->children[0]->label->getLabel());
+    }
+    /*
     if(this->is_return_block()) {
         spdlog::debug("adding extra br for return block:{}\n",*this);
         llvm_ir += TAB+"br label %Lreturn\n";
     }
-    // 11/8/24: SAFE TO DELETE I BELIEVE!!! HOWEVER NEED TO ADD SOME CHECKS TO ADD a br to child label if applicable!!
-    if(is_cond_block()) {
-        spdlog::debug("dealing with cond  block...\n");
-        auto cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1]);
-        spdlog::debug("cond_stmt = {}\n",*this->stmts[this->stmts.size()-1]);
-        //assert(!this->jmp_label);
-        // Get the after block and assign it the after label chosen by the cond stmt
-        std::shared_ptr<Bblock> after_block = nullptr;
-        auto thenBblock = dynamic_pointer_cast<Bblock>(this->children[0]);
-        assert(thenBblock);
-        // Nov 3 2024: handle cases where then and/or else block is also a conditional... in this case we need to update their afterLabels
-        if(cond_stmt->thenLabel != cond_stmt->afterLabel) {
-            thenBblock->label = cond_stmt->thenLabel;
-            thenBblock->jmp_label = cond_stmt->afterLabel;
-        } else {
-            spdlog::debug("then bblock is after bblock\n");
-            thenBblock->label = cond_stmt->afterLabel;
-            thenBblock->jmp_label = nullptr;
-        }
-        auto elseBblock = dynamic_pointer_cast<Bblock>(this->children[1]);
-        assert(elseBblock);
-        if(cond_stmt->elseLabel != cond_stmt->afterLabel) {
-            elseBblock->label = cond_stmt->elseLabel;
-            elseBblock->jmp_label = cond_stmt->afterLabel;
-        } else {
-            spdlog::debug("else bblock is after bblock\n");
-            elseBblock->label = cond_stmt->afterLabel;
-            elseBblock->jmp_label = nullptr;
-        }
-
-        // Assign label to after block if not done yet (i.e. then and else are both noth equal to after block) 
-        if((cond_stmt->thenLabel != cond_stmt->afterLabel ) && (cond_stmt->elseLabel != cond_stmt->afterLabel)) {
-            // Not true for while block as it also has a self loop -- URGENT: also not true for nested ifs as then block would have 2 children then. FIX THIS SO WE ITERATE OVER EACH CHILDREN, SKIPPING THE CHILD IF IT'S EQUAL TO THE THEN BLOCK. ALSO MAY NEED TO ITERATE OVER THE ELSE BLOCK AS WELL
-            //assert(thenBblock->children.size()==1);
-            thenBblock->children[0]->label = cond_stmt->afterLabel;
-        }
-    } else if(!is_while_block() && this->jmp_label) {
-        llvm_ir += TAB+fmt::format("br label %{}\n",jmp_label->getLabel());
-    }
+    */
     return llvm_ir+"\n";
 }
 
@@ -87,10 +38,8 @@ bool Bblock::is_return_block() {
         auto asgn_stmt = dynamic_pointer_cast<ast::AssignmentStatement>(this->stmts[size-1]);
         if(asgn_stmt && asgn_stmt->getTarget()->getId() == "_ret") {
             spdlog::debug("yes, it's a return block:{}\n",*this);
-            if(this->children.size()==1) {
-                return true;
-            assert(this->children.size()==0); // got THE return block
-            }
+            assert(this->children.size()==1 || this->children.size()==2); 
+            return true;
         }
     }
     return false;

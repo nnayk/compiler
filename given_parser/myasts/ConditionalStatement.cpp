@@ -102,9 +102,9 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
 std::string ConditionalStatement::get_llvm(Bblock &block) {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
     spdlog::debug("line={}\n",this->getLineNum());
-	assert(block->children.size()==2);
-	auto thenLabel = block->children[0]->label->getLabel();
-	auto elseLabel = block->children[1]->label->getLabel();
+	assert(block.children.size()==2);
+	auto thenLabel = block.children[0]->label->getLabel();
+	auto elseLabel = block.children[1]->label->getLabel();
     std::string llvm = this->guard->get_llvm_init(block);
     llvm += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_llvm(block),thenLabel,elseLabel);
     spdlog::debug("llvm={}\n",llvm);

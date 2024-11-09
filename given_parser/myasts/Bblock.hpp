@@ -26,6 +26,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         std::shared_ptr<Label> jmp_label = nullptr;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
         int visited; // for display purposes
+        bool final_return_block = false;
         Bblock();
         std::string get_llvm();
         std::string display() const;

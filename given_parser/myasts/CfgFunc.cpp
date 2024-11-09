@@ -21,13 +21,14 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     //Construct CFG
     auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(f.name,std::move(f.params),std::move(f.retType),std::move(f.locals)));//,std::vector<Bblock>()));
     cfg_func->return_block = std::make_shared<Bblock>();
-    cfg_func->return_block->label = Label::create("return");
+    //cfg_func->return_block->label = Label::create("return");
     auto ret_expr = std::make_shared<ast::IdentifierExpression>(-1,"_ret");
     ret_expr->type = cfg_func->retType;
     auto ret_stmt = std::make_shared<ast::ReturnStatement>(-1,ret_expr);
     ret_stmt->final_return = true;
     ret_stmt->retType = cfg_func->retType;
     cfg_func->return_block->stmts.push_back(ret_stmt);
+    cfg_func->return_block->final_return_block = true;
     cfg_func->blocks = f.body->get_cfg();
     cfg_func->blocks.push_back(cfg_func->return_block);
     spdlog::debug("FINAL return block = {}\n",*cfg_func->return_block);
@@ -143,15 +144,17 @@ std::string CfgFunc::get_llvm() {
             }
             if(unvisited_parent) continue;
             stack.pop();
-			spdlog::debug("popped block {}",*block);
+			spdlog::debug("popped block with label {}: {}",block->label->getLabel(),*block);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) {
                 spdlog::debug("Yalready visited block {}\n",*block);
                 continue;
             }
             if(block->emit_llvm) {
+                auto block_label = block->label->getLabel();
+                spdlog::debug("gonna fetch llvm for block {}\n",block_label);
                 llvm_ir += block->get_llvm();
-                spdlog::debug("NOT skipping llvm for block {}\n",*block);
+                spdlog::debug("NOT skipping llvm for block with label {}: {}\n",block_label,*block);
             } else {
                 spdlog::debug("skipping llvm for block {}\n",*block);
             }
@@ -206,7 +209,7 @@ std::string CfgFunc::display() const {
         while(!queue.empty()) {
             auto block = queue.front();
             queue.pop();
-			spdlog::debug("popped block {}",*block);
+			spdlog::debug("CfgFunc popped block {}",*block);
             spdlog::debug("yay block visited: {}\n",block->visited);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) 
