@@ -11,6 +11,8 @@
 #include "Label.hpp"
 
 std::string TAB="\t";
+extern bool use_ssa;
+
 CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::shared_ptr<ast::Type> retType, std::vector<ast::Declaration> locals) : name(name), params(params), retType(retType), locals(locals) {
 }
 
@@ -120,28 +122,107 @@ std::string CfgFunc::get_llvm() {
 	}  
     llvm_ir += ") ";
     llvm_ir += "{\n";
-    // add local vars
-    for (size_t i = 0; i < this->locals.size(); ++i) {
-		llvm_ir += TAB+this->locals[i].get_llvm_init("local");
-	}  
+
+    if(use_ssa) {
+        llvm_ir += this->get_ssa();
+    } else {
+        // add local vars
+        for (size_t i = 0; i < this->locals.size(); ++i) {
+            llvm_ir += TAB+this->locals[i].get_llvm_init("local");
+        }  
+        //add LLVM IR for body
+        if(this->blocks.size() > 0) {
+            std::stack<std::shared_ptr<Bblock>> stack;
+            stack.push(this->blocks[0]);
+            //bool skip_children_llvm = false;
+            bool reverse_push = true;
+            bool unvisited_parent = false;
+            while(!stack.empty()) {
+                spdlog::debug("LLVM START OF WHILE LOOP\n");
+                //skip_children_llvm = false;
+                reverse_push = true;
+                unvisited_parent = false;
+                auto block = stack.top();
+                spdlog::debug("LLVM considering block {}\n",block->label->getLabel());
+                // if there are unvisited parents then explore them first
+                for(auto parent : block->parents) {
+                    if(!parent->visited && !block->is_loopback_parent(parent)) {
+                        spdlog::debug("LLVM unvisited parent {}\n",*parent);
+                        unvisited_parent = true;
+                        stack.push(parent);
+                    }
+                }
+                if(unvisited_parent) continue;
+                stack.pop();
+                spdlog::debug("LLVM popped block with label {}",block->label->getLabel());
+                // TODO: change this check b/c can't print multiple times this way
+                if(block->visited == 1) {
+                    spdlog::debug("LLVM Yalready visited block {}\n",block->label->getLabel());
+                    continue;
+                }
+                if(block->emit_llvm) {
+                    auto block_label = block->label->getLabel();
+                    spdlog::debug("LLVM gonna fetch llvm for block {}\n",block_label);
+                    llvm_ir += block->get_llvm();
+                    spdlog::debug("LLVM NOT skipping llvm for block with label {}: {}\n",block_label,*block);
+                } else {
+                    spdlog::debug("skipping llvm for block {}\n",block->label->getLabel());
+                }
+                block->visited = 1;
+                std::shared_ptr<ast::Statement> stmt = nullptr;
+                auto num_stmts = block->stmts.size();
+                if(num_stmts) {
+                    spdlog::debug("not a dummy block!\n");
+                } else {
+                    spdlog::debug("dummy block!\n");
+                }
+                // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
+                if(reverse_push) {
+                    for (auto it = block->children.rbegin(); it != block->children.rend(); ++it) {
+                        std::cout << *it << " ";
+                        //spdlog::debug("pushing *it {}",*it);
+                        stack.push(*it);
+                    }
+                } else {
+                    for(auto child : block->children) {
+                        spdlog::debug("pushing child {}",*child);
+                        //if(skip_children_llvm) child->emit_llvm = false;
+                        stack.push(child);
+                    }
+                }
+            }
+        }
+    }
+    llvm_ir += "}\n";
+    return llvm_ir;
+}
+
+std::string CfgFunc::get_ssa() {
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
+    std::string ssa = "";
+    // Step 1: Resolve var usages
+    for(auto block : this->blocks) {
+        
+    }
+    // Step 2: Fill unsealed blocks
+    // Step 3: Remove non-trivial phis
+    // Step 4: Generate ssa llvm
     //add LLVM IR for body
     if(this->blocks.size() > 0) {
         std::stack<std::shared_ptr<Bblock>> stack;
         stack.push(this->blocks[0]);
-        //bool skip_children_llvm = false;
         bool reverse_push = true;
         bool unvisited_parent = false;
         while(!stack.empty()) {
-            spdlog::debug("LLVM START OF WHILE LOOP\n");
-            //skip_children_llvm = false;
+            spdlog::debug("SSA START OF WHILE LOOP\n");
             reverse_push = true;
             unvisited_parent = false;
             auto block = stack.top();
-            spdlog::debug("LLVM considering block {}\n",block->label->getLabel());
+            spdlog::debug("SSA considering block {}\n",block->label->getLabel());
             // if there are unvisited parents then explore them first
             for(auto parent : block->parents) {
                 if(!parent->visited && !block->is_loopback_parent(parent)) {
-                    spdlog::debug("LLVM unvisited parent {}\n",*parent);
+                    spdlog::debug("SSA unvisited parent {}\n",*parent);
                     unvisited_parent = true;
                     stack.push(parent);
                 }
@@ -157,7 +238,7 @@ std::string CfgFunc::get_llvm() {
             if(block->emit_llvm) {
                 auto block_label = block->label->getLabel();
                 spdlog::debug("LLVM gonna fetch llvm for block {}\n",block_label);
-                llvm_ir += block->get_llvm();
+                ssa += block->get_llvm();
                 spdlog::debug("LLVM NOT skipping llvm for block with label {}: {}\n",block_label,*block);
             } else {
                 spdlog::debug("skipping llvm for block {}\n",block->label->getLabel());
@@ -186,8 +267,9 @@ std::string CfgFunc::get_llvm() {
             }
         }
     }
-    return llvm_ir;
+    return ssa;
 }
+
 
 // BFS display of each block in the CFG
 std::string CfgFunc::display() const {

@@ -84,14 +84,12 @@ std::string IdentifierExpression::get_ssa_init(Bblock &block) {
 
 std::string IdentifierExpression::get_ssa(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    std::string llvm = "";
     if(auto reg = block.ssa_map->entries[this->getId()]) {
         return reg->get_llvm();
     } else {
         throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));
     }
-
-    return llvm;
+    return "";
 }
 
 } // namespace ast

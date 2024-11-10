@@ -24,8 +24,8 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         std::vector<std::shared_ptr<Bblock>> children;
         std::shared_ptr<Mapping> ssa_map = nullptr;
         std::shared_ptr<Label> label = nullptr;
-        std::shared_ptr<Label> jmp_label = nullptr;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
+        bool sealed = true; // basically if a block has a potential future pred. (which can only be the case with while body blocks) then it will be unsealed until the future pred. is sealed.
         int visited; // for CFG traversal purposes
         bool final_return_block = false;
         Bblock();
