@@ -200,11 +200,19 @@ std::string CfgFunc::get_llvm() {
 std::string CfgFunc::get_ssa() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
     std::string ssa = "";
-    // Step 1: Resolve var usages
+    std::string block_label = "";
+    // Step 1: Resolve var usages by creating phis
     for(auto block : this->blocks) {
-        
+        block_label = block->label->getLabel();
+        if(block->parents.size() > 1) {
+            spdlog::debug("Bblock {} has {} parents, gonna create phis\n",block_label,block->parents.size());
+            block->add_phis(locals);
+            spdlog::debug("after adding phis is block unsealed? {}",block->sealed);
+        } else {
+            spdlog::debug("block {} only has 1 parent, already sealed!\n",block_label);
+        }
     }
-    // Step 2: Fill unsealed blocks
+    // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
     // Step 3: Remove non-trivial phis
     // Step 4: Generate ssa llvm
     //add LLVM IR for body

@@ -36,6 +36,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         bool is_return_block();
         std::shared_ptr<Register> lookup(std::string id);
         bool is_loopback_parent(std::shared_ptr<Bblock> target);
+        void add_phis(std::vector<ast::Declaration> locals); 
 };
 
 //Specialize fmt::formatter for Bblock

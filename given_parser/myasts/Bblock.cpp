@@ -136,3 +136,12 @@ bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
     spdlog::debug("is a loopback parent? {}\n",found);
     return found;
 }
+
+void Bblock::add_phis(std::vector<ast::Declaration> locals) {
+    spdlog::debug("inside Bblock::add_phis\n");
+    // Loop over each local var
+        // consider each actual parent and look up the var -- then add the (parent,register) pair to this block's list of phis. Also assign a register to each phi. Then add the (var,register) mapping to the ssa_map for this block. IGNORE LOOPBACK PARENTS IN THE LOOP -- INSTEAD AFTER THE LOOP IF A BLOCK HAS A LOOPBACK PARENT MARK IT AS UNSEALED! 
+    if(auto loopback_parent_count = this->loopback_parents.size()) {
+        assert(loopback_parent_count==1);
+    }
+}
