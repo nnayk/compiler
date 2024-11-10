@@ -36,11 +36,16 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     std::shared_ptr<Bblock> thenBlock = if_block->children[0];
     auto final_body_block = dummy_block->parents[0];
     assert(final_body_block != if_block);
+    // It's possible that the final body block is itsel a dummy (i.e. if within
+    // a while. In this case reset the visited from dummy default (currenlty 21
+    // to 0)
+    if(final_body_block->stmts.size()==0) final_body_block->visited = 0;
     // Add conditional stmt to last block in body block
     final_body_block->stmts.push_back(cond_stmt);
     // Add self loop (as 1st child)
     final_body_block->children[0] = thenBlock;
     thenBlock->parents.push_back(final_body_block);
+    thenBlock->loopback_parents.push_back(final_body_block);
     final_body_block->children.push_back(dummy_block);
     return blocks;
 }

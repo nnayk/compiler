@@ -55,9 +55,11 @@ void CfgFunc::create_labels() {
             reverse_push = true;
             unvisited_parent = false;
             auto block = stack.top();
+            spdlog::debug("stack size = {}\n",stack.size());
+            spdlog::debug("considering block {}\n",*block);
             // if there are unvisited parents then explore them first
             for(auto parent : block->parents) {
-                if(!parent->visited) {
+                if(!parent->visited && !block->is_loopback_parent(parent)) {
                     spdlog::debug("unvisited parent (no label) {}\n",*parent);
                     unvisited_parent = true;
                     stack.push(parent);
@@ -84,7 +86,7 @@ void CfgFunc::create_labels() {
             // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
             if(reverse_push) {
 				for (auto it = block->children.rbegin(); it != block->children.rend(); ++it) {
-					std::cout << *it << " ";
+					std::cout << "LABEL pushing " << *it << " ";
                     //spdlog::debug("pushing *it {}",*it);
                     stack.push(*it);
 				}
@@ -130,33 +132,35 @@ std::string CfgFunc::get_llvm() {
         bool reverse_push = true;
         bool unvisited_parent = false;
         while(!stack.empty()) {
+            spdlog::debug("LLVM START OF WHILE LOOP\n");
             //skip_children_llvm = false;
             reverse_push = true;
             unvisited_parent = false;
             auto block = stack.top();
+            spdlog::debug("LLVM considering block {}\n",block->label->getLabel());
             // if there are unvisited parents then explore them first
             for(auto parent : block->parents) {
-                if(!parent->visited) {
-                    spdlog::debug("unvisited parent {}\n",*parent);
+                if(!parent->visited && !block->is_loopback_parent(parent)) {
+                    spdlog::debug("LLVM unvisited parent {}\n",*parent);
                     unvisited_parent = true;
                     stack.push(parent);
                 }
             }
             if(unvisited_parent) continue;
             stack.pop();
-			spdlog::debug("popped block with label {}: {}",block->label->getLabel(),*block);
+			spdlog::debug("LLVM popped block with label {}",block->label->getLabel());
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) {
-                spdlog::debug("Yalready visited block {}\n",*block);
+                spdlog::debug("LLVM Yalready visited block {}\n",block->label->getLabel());
                 continue;
             }
             if(block->emit_llvm) {
                 auto block_label = block->label->getLabel();
-                spdlog::debug("gonna fetch llvm for block {}\n",block_label);
+                spdlog::debug("LLVM gonna fetch llvm for block {}\n",block_label);
                 llvm_ir += block->get_llvm();
-                spdlog::debug("NOT skipping llvm for block with label {}: {}\n",block_label,*block);
+                spdlog::debug("LLVM NOT skipping llvm for block with label {}: {}\n",block_label,*block);
             } else {
-                spdlog::debug("skipping llvm for block {}\n",*block);
+                spdlog::debug("skipping llvm for block {}\n",block->label->getLabel());
             }
             block->visited = 1;
             std::shared_ptr<ast::Statement> stmt = nullptr;
@@ -209,12 +213,13 @@ std::string CfgFunc::display() const {
         while(!queue.empty()) {
             auto block = queue.front();
             queue.pop();
-			spdlog::debug("CfgFunc popped block {}",*block);
-            spdlog::debug("yay block visited: {}\n",block->visited);
+			spdlog::debug("CfgFunc popped block with label {}",block->label->getLabel());
+            //spdlog::debug("{}\n",*block);
+            spdlog::debug("yay block {} popped, has it been visited? {}\n",block->label->getLabel(),block->visited);
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) 
             {
-                spdlog::debug("Already visited this blocks:{}\n",*block);
+                spdlog::debug("Already visited this block: {}\n",block->label->getLabel());
                 continue;
             }
 			bfs_blocks++;

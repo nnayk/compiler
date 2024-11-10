@@ -20,12 +20,13 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
     public: 
         std::vector<std::shared_ptr<ast::Statement>> stmts;
         std::vector<std::shared_ptr<Bblock>> parents;
+        std::vector<std::shared_ptr<Bblock>> loopback_parents;
         std::vector<std::shared_ptr<Bblock>> children;
         std::shared_ptr<Mapping> ssa_map = nullptr;
         std::shared_ptr<Label> label = nullptr;
         std::shared_ptr<Label> jmp_label = nullptr;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
-        int visited; // for display purposes
+        int visited; // for CFG traversal purposes
         bool final_return_block = false;
         Bblock();
         std::string get_llvm();
@@ -34,6 +35,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         bool is_cond_block();
         bool is_return_block();
         std::shared_ptr<Register> lookup(std::string id);
+        bool is_loopback_parent(std::shared_ptr<Bblock> target);
 };
 
 //Specialize fmt::formatter for Bblock

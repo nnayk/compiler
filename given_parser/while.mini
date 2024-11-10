@@ -1,13 +1,12 @@
 fun main() int {
     int x;
     x = 3;
-    while(true) {
-        x = x+3;
+    while(x>0) {
         x = x-1;
         if(x/2==4) {
             return 2;
         } else {
-            print 3; 
+            print x; 
         }
     }
     print 5;

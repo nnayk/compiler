@@ -4,6 +4,8 @@
 #include "BlockStatement.hpp"
 #include <unordered_set>
 #include <cassert>
+#include <fstream>
+#include <iostream>
 
 int main(int argc, char *argv[]) {
     spdlog::set_level(spdlog::level::debug); // Set global log level to debug
@@ -74,6 +76,7 @@ declare i32 @scanf(i8*, ...)
               )"; 
     llvm += cfg_prog->get_llvm();
     spdlog::info("LLVM IR:\n{}",llvm);
+	write_file(llvm,"llvm.ll");
     return 0;
 }
 
@@ -203,3 +206,19 @@ void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs) {
     }
 }
 
+void write_file(std::string content, std::string filename) {
+    // Create an ofstream object for file output
+    std::ofstream outfile(filename);
+
+    // Check if the file opened successfully
+    if (outfile.is_open()) {
+        // Write the string to the file
+        outfile << content;
+        // Close the file
+        outfile.close();
+        std::cout << "Content written to " << filename << " successfully." << std::endl;
+    } else {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+		assert(0);
+    }
+}

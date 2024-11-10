@@ -18,10 +18,11 @@ std::string Bblock::get_llvm() {
     for(auto stmt:this->stmts) {
         spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
         llvm_ir += stmt->get_llvm(*this);
+        spdlog::debug("Finished get_llvm() for {}\n",*stmt);
     }
-    if(this->children.size()==1) {
+    if(this->children.size()==1 && !this->children[0]->final_return_block) {
         spdlog::debug("adding extra br\n");
-        llvm_ir += TAB+fmt::format("br label {}",this->children[0]->label->getLabel());
+        llvm_ir += TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
     }
     /*
     if(this->is_return_block()) {
@@ -126,4 +127,12 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
         */
     }
     return reg;
+}
+
+bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
+    spdlog::debug("inside Bblock::{}\n",__func__);
+    auto source = this->loopback_parents;
+    bool found =  std::find(source.begin(),source.end(),target) != source.end();
+    spdlog::debug("is a loopback parent? {}\n",found);
+    return found;
 }

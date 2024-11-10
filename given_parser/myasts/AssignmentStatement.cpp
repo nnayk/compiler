@@ -69,7 +69,7 @@ std::string AssignmentStatement::get_llvm(Bblock &block) {
                 spdlog::debug("found final return block child, gonnabreak to it\n");
                 auto return_label = child->label->getLabel();
                 spdlog::debug("return label = {}\n",return_label);
-                llvm_ir += fmt::format("br label {}\n",return_label);
+                llvm_ir += TAB+fmt::format("br label %{}\n",return_label);
             }
         }
     }

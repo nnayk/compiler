@@ -23,4 +23,5 @@ void typecheck(ast::Program &p,std::shared_ptr<Env> tle);
 void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &typeDecls);
 void validate_decls(std::vector<std::shared_ptr<ast::Declaration>> &decls);
 void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs);
+void write_file(std::string content,std::string filename);
 #endif

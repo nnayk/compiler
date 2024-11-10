@@ -93,7 +93,7 @@ std::vector<std::shared_ptr<Bblock>> ConditionalStatement::get_cfg() {
         spdlog::debug("NOT pushing dummy block to blocks vector again (child of if block)");
     }
     spdlog::debug("Created if block w/{} children\n",if_block->children.size());
-    spdlog::debug("{}\n",*blocks[0]);
+    //spdlog::debug("{}\n",*blocks[0]);
     spdlog::debug("Conditional statement returning {} blocks\n",blocks.size());
     assert(if_block->visited==0);
     return blocks;
