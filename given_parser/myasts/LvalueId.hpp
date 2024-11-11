@@ -17,6 +17,7 @@ public:
     std::shared_ptr<Type> resolveType(Env &env) override;
     std::string get_llvm_init(Bblock &block) override;
     std::string get_llvm(Bblock &block) override;
+    virtual void resolve_def() override;
 
 private:
     int lineNum;      // Line number in source code

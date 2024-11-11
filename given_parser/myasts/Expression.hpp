@@ -32,6 +32,7 @@ public:
     virtual std::string display() const = 0;
     virtual std::shared_ptr<Register> getDerefResult() const = 0;
     virtual std::shared_ptr<Register> getResult() const = 0;
+    virtual void resolve_uses() = 0;
 protected:
     std::shared_ptr<Register> result = nullptr; // register where the expression result is stored
     std::shared_ptr<Register> deref_result = nullptr; 

@@ -1,0 +1,5 @@
+fun foo(int x, bool y,int z) int{
+    int q;
+    q=3;
+    return 2;
+}

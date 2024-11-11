@@ -8,7 +8,7 @@ namespace ast {
 LvalueId::LvalueId(int lineNum, const std::string& id)
     : lineNum(lineNum), id(id) {
         spdlog::debug("inside LvalueId::{}\n",__func__);
-        result = Register::create(id); 
+        result = Register::create(id); // TODO: change this!!! should only be for non-ssa (basically move this to get_llvm_init)
         //TODO: Think content type is not needed in Register class since I'm resolving type and storing it as an attr in Lvalue itself
         //result->content_type =  this->type;
     }
@@ -73,6 +73,12 @@ std::string LvalueId::get_llvm_init(Bblock &block) {
 std::string LvalueId::get_llvm(Bblock &block) {
 	spdlog::debug("inside LvalueId::{}\n",__func__);
     return this->result->get_llvm();
+}
+
+void LvalueId::resolve_def() {
+    spdlog::debug("inside LvalueId::{}\n",__func__);
+    //assert(!this->result);
+    this->result = Register::create();
 }
 
 } // namespace ast

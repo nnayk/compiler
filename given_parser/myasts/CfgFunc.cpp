@@ -202,24 +202,15 @@ std::string CfgFunc::get_ssa() {
     std::string ssa = "";
     std::string block_label = "";
     std::vector<std::shared_ptr<Bblock>> unsealed_blocks;
+    auto head_block = blocks[0];
     // Step 0: Add param entries to L0
-    // Step 1: Resolve var usages by creating phis
+    head_block->add_initial_mapping(this->params);
+    spdlog::debug("HEAD BLOCK MAPPING: {}\n",*head_block->ssa_map);
+    spdlog::debug("Done with initial mapping!\n");
+    // Step 1: Resolve var defs+uses for each statement in the block
     for(auto block : this->blocks) {
-        block_label = block->label->getLabel();
-        // ignore L0 and any blocks w/only 1 pred.
-        if(block->parents.size() > 1) {
-            spdlog::debug("Bblock {} has {} parents, gonna create phis\n",block_label,block->parents.size());
-            block->add_phis(locals,params);
-            spdlog::debug("after adding phis is block unsealed? {}",block->sealed);
-            if(!block->sealed) {
-                spdlog::debug("Adding {} to list of unsealaed blocks\n",block_label);
-                unsealed_blocks.push_back(block);
-            }
-            block->resolve_def_uses();
-        } else {
-            spdlog::debug("block {} only has 1 parent, already sealed!\n",block_label);
-        }
-    }
+        block->resolve_def_uses();
+    } 
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
     // Step 3: Remove non-trivial phis
     // Step 4: Generate ssa llvm

@@ -27,4 +27,9 @@ std::string AbstractStatement::get_llvm(Bblock &block) {
     std::string llvm_ir = "AbstractStatement\n";
     return llvm_ir;
 }
+
+void AbstractStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside AbstractStatement::{}\n",__func__);
+}
+
 }  // namespace ast

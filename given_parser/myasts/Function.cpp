@@ -19,7 +19,9 @@ Typecheck the given function as follows:
 void Function::typecheck(Env env) { //TODO: check that env is a copy of tle
     spdlog::info("inside Function::{}\n",__func__);
     spdlog::debug("adding binding from _ret to {}\n",*this->retType);
-    env.addBinding("_ret",std::make_shared<Entry>(this->retType));
+    auto ret_entry = std::make_shared<Entry>(this->retType);
+    ret_entry->scope = 0;
+    env.addBinding("_ret",ret_entry);
     body->typecheck(env,*this);        
     // TODO:#2+#3 from description
     return;

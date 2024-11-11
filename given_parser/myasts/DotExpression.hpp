@@ -9,7 +9,7 @@
 
 namespace ast {
 
-class DotExpression : public AbstractExpression {
+class DotExpression : public AbstractExpression, public std::enable_shared_from_this<DotExpression> {
 public:
     int offset;
     // Constructor
@@ -26,7 +26,8 @@ public:
     std::string get_llvm_init(Bblock &block) override;
     std::string get_llvm(Bblock &block) override;
     std::shared_ptr<ast::StructType> getLeftType(); 
-    std::shared_ptr<Type> resolveType(Env &env) override; 
+    std::shared_ptr<Type> resolveType(Env &env) override;
+    std::string get_topmost_id();
 
 private:
     std::shared_ptr<Expression> left_;  // Left expression

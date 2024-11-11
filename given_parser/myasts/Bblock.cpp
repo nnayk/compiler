@@ -4,6 +4,7 @@
 #include "AssignmentStatement.hpp"
 
 extern std::string TAB;
+extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
 
 Bblock::Bblock(): visited(0) {
     ssa_map = std::make_shared<Mapping>();
@@ -162,6 +163,23 @@ void Bblock::add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Decl
     // TODO: do the same as above but for params (rn will not test w/params but need to support this...)
 }
 
+void Bblock::add_initial_mapping(std::vector<ast::Declaration> params) {
+    assert(this->parents.size()==0);
+    assert(this->label->getLabel()=="L0");
+    spdlog::debug("inside Bblock::{}\n",__func__);
+    for(auto param: params) {
+        auto name = param.getName(); 
+        assert(all_regs.find(name) == all_regs.end());
+        auto reg = Register::create(name);
+        this->ssa_map->addEntry(name,reg);
+    }
+}
+
 void Bblock::resolve_def_uses() {
     spdlog::debug("inside Bblock::{}\n",__func__);
+    for(auto stmt : this->stmts) {
+        spdlog::debug("resolving def/uses for stmt {}\n",*stmt); 
+        stmt->resolve_def_uses(*this);
+    }
+    spdlog::debug("done resolving def uses\n");
 }

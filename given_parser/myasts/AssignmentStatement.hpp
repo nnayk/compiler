@@ -34,6 +34,8 @@ public:
     std::string display() const override {
         return fmt::format("AssignmentStatement(lineNum={})",lineNum);
     }
+
+    virtual void resolve_def_uses(Bblock &block) override;
 };
 
 }  // namespace ast

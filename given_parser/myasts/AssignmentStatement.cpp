@@ -3,6 +3,7 @@
 #include "InvocationExpression.hpp"
 #include "BinaryExpression.hpp"
 #include "IdentifierExpression.hpp"
+#include "DotExpression.hpp"
 #include "Mapping.hpp"
 
 extern std::string TAB;
@@ -135,6 +136,22 @@ void AssignmentStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("equal? {}",typesAreEqual);
     // add the lhs to the env UPDATE: DONT THINK THIS IS NEEDED
     //env.addBinding(target->getId(),std::make_shared<Entry>(targetType));
+}
+
+void AssignmentStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside AssignmentStatement::{}\n",__func__);
+    // Crucial that usages are resolved first b/c it's possible that the user
+    // attempts to do smth like x=x+1 where x has not been defined yet...resolving
+    // usages would catch this undefined usage error
+    this->source->resolve_uses();
+    this->target->resolve_def();
+    std::string var = "";
+    if(auto dot_expr = dynamic_pointer_cast<DotExpression>(this->target)) {
+        var = dot_expr->get_topmost_id();
+    } else {
+        var = this->target->getId();
+    }
+    block.ssa_map->addEntry(var,this->target->getResult());
 }
 
 

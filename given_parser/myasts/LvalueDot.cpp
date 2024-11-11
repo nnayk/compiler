@@ -1,4 +1,5 @@
 #include "LvalueDot.hpp"
+#include "LvalueId.hpp"
 #include <cassert>
 
 extern std::string TAB;
@@ -111,6 +112,24 @@ std::string LvalueDot::get_llvm(Bblock &block) {
         return this->deref_result->get_llvm();
     }
     return this->result->get_llvm();
+}
+
+std::string LvalueDot::get_topmost_id() {
+	spdlog::debug("inside LvalueDot::{}\n",__func__);
+	auto curr = shared_from_this();
+    while(true) {
+        auto left = curr->getLeft();
+        if(auto lvalue_id = dynamic_pointer_cast<LvalueId>(curr)) {
+            return lvalue_id->getId();
+        } else {
+            curr = dynamic_pointer_cast<LvalueDot>(curr->getLeft());
+            assert(curr);
+        }
+    }
+}
+
+void LvalueDot::resolve_def() {
+    spdlog::debug("inside LvalueDot::{}\n",__func__);
 }
 
 } // namespace ast

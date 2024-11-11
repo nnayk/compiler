@@ -21,8 +21,8 @@ public:
     virtual ~AbstractExpression() {}
     // Getter for lineNum
     int getLineNum() const;
+    virtual void resolve_uses() override;
 };
-
 }  // namespace ast
 
 #endif  // ABSTRACT_EXPRESSION_HPP

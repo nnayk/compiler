@@ -76,6 +76,9 @@ declare i32 @scanf(i8*, ...)
               )"; 
     if(use_ssa) {
         spdlog::debug("gonna fetch ssa\n");
+        llvm += cfg_prog->get_llvm();
+        spdlog::info("LLVM IR:\n{}",llvm);
+        write_file(llvm,"llvm.ll");
     } else {
         spdlog::debug("gonna fetch NON-ssa\n");
         llvm += cfg_prog->get_llvm();

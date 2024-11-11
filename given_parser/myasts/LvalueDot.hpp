@@ -7,7 +7,7 @@
 
 namespace ast {
 
-class LvalueDot : public Lvalue {
+class LvalueDot : public Lvalue, public std::enable_shared_from_this<LvalueDot> {
 public:
     int lineNum;                          // Line number in source code
     std::shared_ptr<Lvalue> left;     // Left expression
@@ -25,6 +25,8 @@ public:
     std::string get_llvm_init(Bblock &block) override;
     std::string get_llvm(Bblock &block) override;
     std::shared_ptr<ast::StructType> getLeftType();
+    std::string get_topmost_id();
+    virtual void resolve_def() override;
 };
 
 } // namespace ast

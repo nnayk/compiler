@@ -1,4 +1,5 @@
 #include "DotExpression.hpp"
+#include "IdentifierExpression.hpp"
 
 extern std::string TAB;
 
@@ -110,6 +111,22 @@ std::string DotExpression::get_llvm(Bblock &block) {
     return this->deref_result->get_llvm();
     //return this->result->get_llvm();
 }
+
+// TODO: Think I can delete this, had meant to add this for LvalueDot...
+std::string DotExpression::get_topmost_id() {
+    spdlog::debug("inside DotExpression::{}\n",__func__);
+    auto curr = shared_from_this();
+    while(true) {
+        auto left = curr->getLeft();
+        if(auto id_expr = dynamic_pointer_cast<IdentifierExpression>(curr)) {
+            return id_expr->getId();
+        } else {
+            curr = dynamic_pointer_cast<DotExpression>(curr->getLeft());
+            assert(curr);
+        }
+    }
+}
+
 
 } // namespace ast
 
