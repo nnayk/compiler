@@ -137,11 +137,31 @@ bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
     return found;
 }
 
-void Bblock::add_phis(std::vector<ast::Declaration> locals) {
+void Bblock::add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Declaration> params) {
     spdlog::debug("inside Bblock::add_phis\n");
+    assert(this->parents.size()>1);
+    //std::shared_ptr<Register> parent_reg = nullptr;
+    std::shared_ptr<Register> reg = nullptr;
+    // not needed for L0 (in fact we'll get UndefinedUsage Error)
     // Loop over each local var
-        // consider each actual parent and look up the var -- then add the (parent,register) pair to this block's list of phis. Also assign a register to each phi. Then add the (var,register) mapping to the ssa_map for this block. IGNORE LOOPBACK PARENTS IN THE LOOP -- INSTEAD AFTER THE LOOP IF A BLOCK HAS A LOOPBACK PARENT MARK IT AS UNSEALED! 
-    if(auto loopback_parent_count = this->loopback_parents.size()) {
-        assert(loopback_parent_count==1);
+    for(auto local : locals) {
+        // create a new phi object
+        for(auto parent : this->parents) {
+            if(this->is_loopback_parent(parent)) {
+                spdlog::debug("skipping loopback parent {}\n",*parent);
+                this->sealed = false;
+            } else {
+                // TODO: implement Bblock::lookup
+                //reg = parent->lookup(local);
+                assert(reg);
+                this->ssa_map->addEntry(local.getName(),reg);
+                // create the phi pair and add it to the phi object
+            }
+        }
     }
+    // TODO: do the same as above but for params (rn will not test w/params but need to support this...)
+}
+
+void Bblock::resolve_def_uses() {
+    spdlog::debug("inside Bblock::{}\n",__func__);
 }

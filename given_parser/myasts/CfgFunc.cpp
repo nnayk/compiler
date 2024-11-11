@@ -201,13 +201,21 @@ std::string CfgFunc::get_ssa() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
     std::string ssa = "";
     std::string block_label = "";
+    std::vector<std::shared_ptr<Bblock>> unsealed_blocks;
+    // Step 0: Add param entries to L0
     // Step 1: Resolve var usages by creating phis
     for(auto block : this->blocks) {
         block_label = block->label->getLabel();
+        // ignore L0 and any blocks w/only 1 pred.
         if(block->parents.size() > 1) {
             spdlog::debug("Bblock {} has {} parents, gonna create phis\n",block_label,block->parents.size());
-            block->add_phis(locals);
+            block->add_phis(locals,params);
             spdlog::debug("after adding phis is block unsealed? {}",block->sealed);
+            if(!block->sealed) {
+                spdlog::debug("Adding {} to list of unsealaed blocks\n",block_label);
+                unsealed_blocks.push_back(block);
+            }
+            block->resolve_def_uses();
         } else {
             spdlog::debug("block {} only has 1 parent, already sealed!\n",block_label);
         }

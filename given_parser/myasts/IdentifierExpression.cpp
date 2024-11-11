@@ -10,6 +10,7 @@ namespace ast {
 IdentifierExpression::IdentifierExpression(int lineNum, const std::string& id)
     : AbstractExpression(lineNum), id(id) {
         spdlog::debug("IdentifierExpression::{}\n",__func__);
+        // TODO: move this to get_llvm as it's inaccurate for ssa
         this->result = Register::create(id);
     }
 

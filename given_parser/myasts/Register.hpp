@@ -25,7 +25,7 @@ class Register : public std::enable_shared_from_this<Register> {
         std::string get_llvm();
         //std::string use_llvm(std::shared_ptr<ast::Expression>);
     private:
-        std::vector<std::shared_ptr<ast::Expression>> references; // for quickly updating a register's usage for SSA trivial phi deletion
+        std::vector<std::shared_ptr<ast::Expression>> exp_references; // for quickly updating a register's usage for SSA trivial phi deletion
         std::string prefix;
         std::string id;
         static int reg;
