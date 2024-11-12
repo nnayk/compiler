@@ -128,8 +128,10 @@ std::string LvalueDot::get_topmost_id() {
     }
 }
 
-void LvalueDot::resolve_def() {
+void LvalueDot::resolve_def(std::string &source_immediate) {
     spdlog::debug("inside LvalueDot::{}\n",__func__);
+    // No need to create a register for the attribute, just want to resolve the "outermost" struct var...
+    this->getLeft()->resolve_def(source_immediate);
 }
 
 } // namespace ast

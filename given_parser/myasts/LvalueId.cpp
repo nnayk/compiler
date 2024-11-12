@@ -41,6 +41,7 @@ std::shared_ptr<Type> LvalueId::resolveType(Env &env) {
         auto it = globalsTLE.bindings.find(id); 
         this->type = it->second->type;
 		spdlog::debug("Global env: Found {} of type {}",id,*this->type);
+        // NOTE: p sure this will cause a seg fault since result wouldn't have been set yet...instead create an attr for LvalueId to mark as global...
         this->result->set_global_prefix();
     // look in global struct env
     } else if(structTLE.bindings.find(id) != structTLE.bindings.end()) {
@@ -75,10 +76,15 @@ std::string LvalueId::get_llvm(Bblock &block) {
     return this->result->get_llvm();
 }
 
-void LvalueId::resolve_def() {
+void LvalueId::resolve_def(std::string &source_immediate) {
     spdlog::debug("inside LvalueId::{}\n",__func__);
     //assert(!this->result);
-    this->result = Register::create();
+    if(source_immediate.length()) {
+        // TODO: Here I assume we have a local var...but it could be a global very well. ctrl+f for "NOTE" in this file to see my idea about adding an "is_global" field to Lvalue..
+        this->result = Register::create(source_immediate,false,true);
+    } else {
+        this->result = Register::create();
+    }
 }
 
 } // namespace ast

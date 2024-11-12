@@ -32,6 +32,7 @@ public:
     virtual std::string display() const = 0;
     virtual std::shared_ptr<Register> getDerefResult() const = 0;
     virtual std::shared_ptr<Register> getResult() const = 0;
+    // The purpose of this is for the expression to determine a register for each usage of a variable. This is done by looking up the variable in question and then assigning the result attr to the resolved register
     virtual void resolve_uses() = 0;
 protected:
     std::shared_ptr<Register> result = nullptr; // register where the expression result is stored

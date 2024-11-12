@@ -27,5 +27,10 @@ std::string PrintStatement::get_llvm(Bblock &block) {
     return llvm;
 }
 
+void PrintStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside PrintStatement::{}\n",__func__);
+    this->expression->resolve_uses();    
+}
+
 } // namespace ast
 

@@ -26,7 +26,7 @@ public:
     std::string get_llvm(Bblock &block) override;
     std::shared_ptr<ast::StructType> getLeftType();
     std::string get_topmost_id();
-    virtual void resolve_def() override;
+    virtual void resolve_def(std::string &source_immediate) override;
 };
 
 } // namespace ast

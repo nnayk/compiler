@@ -92,6 +92,8 @@ std::string AssignmentStatement::get_ssa(Bblock &block) {
     // temporary llvm won't change
     // 2. if source is a global (lvalueId should contain a scope field and mark it based on resolveType just like IdExpr does) then generate non-ssa
     ssa += this->source->get_llvm_init(block);
+    // NOTE: A LOT OF THIS WILL NEED TO BE DELETED/MODIFIED NOW THAT I'VE ADDED
+    // RESOLVE_DEF_USAGES, ETC.
     std::shared_ptr<Register> reg;
     const std::type_info& source_type = typeid(this->source->type);
     // if source is an immediate create a pseudo reg
@@ -144,7 +146,15 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     // attempts to do smth like x=x+1 where x has not been defined yet...resolving
     // usages would catch this undefined usage error
     this->source->resolve_uses();
-    this->target->resolve_def();
+    const std::type_info& source_type = typeid(this->source->type);
+    std::string source_immediate = "";
+    // if source is an immediate create a pseudo reg
+    if((source_type == typeid(IntType)) || (source_type == typeid(BoolType))) {
+        spdlog::debug("source {} is an immediate\n",*source);
+        source_immediate = this->source->get_llvm(block);
+        spdlog::debug("source = {}\n",source_immediate);
+    }
+    this->target->resolve_def(source_immediate);
     std::string var = "";
     if(auto dot_expr = dynamic_pointer_cast<DotExpression>(this->target)) {
         var = dot_expr->get_topmost_id();

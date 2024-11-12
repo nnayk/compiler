@@ -22,7 +22,7 @@ namespace ast {
       virtual std::string get_llvm_init(Bblock &block) = 0;
       virtual std::string get_llvm(Bblock &block) = 0;
 	  // Assign a register to the lvalue result attr
-      virtual void resolve_def() = 0;
+      virtual void resolve_def(std::string &source_immediate) = 0;
       std::shared_ptr<Register> getDerefResult(); 
       std::shared_ptr<Register> getResult(); 
 protected:
