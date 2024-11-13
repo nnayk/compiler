@@ -10,7 +10,7 @@ Label::Label(const std::string &id) : id(id) {
 
 std::shared_ptr<Label> Label::create(const std::string &id) {
     spdlog::debug("inside Label::{}\n",__func__);
-    return std::make_shared<Label>(id);
+    return std::shared_ptr<Label>(new Label(id));
 }
 
 std::string Label::getLabel() {

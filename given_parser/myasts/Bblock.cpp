@@ -2,6 +2,7 @@
 #include "ConditionalStatement.hpp"
 #include "BlockStatement.hpp"
 #include "AssignmentStatement.hpp"
+#include "UseBeforeInitException.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
@@ -115,13 +116,17 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
     } else {
         spdlog::debug("Didn't find id in current block, looking at preds\n");
         auto parents = this->parents;
-        if(parents.size()==1) {
+        if(parents.size()==0) {
+            assert(this->label->getLabel()=="L0");
+            spdlog::debug("Uninitialized var {}\n",id);
+        } else if(parents.size()==1) {
             spdlog::debug("Only 1 pred, yay!\n");
             this->ssa_map->entries[id] = parents[0]->lookup(id);
             return this->ssa_map->entries[id];
         } else {
             spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
             //TODO: Implement. Consider sealed vs unsealed blocks
+            //auto phi = std::make_shared<Phi>();
             for(auto parent : this->parents) {
                 if(this->is_loopback_parent(parent)) {
                 spdlog::debug("skipping loopback parent {}\n",*parent);

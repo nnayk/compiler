@@ -82,7 +82,7 @@ std::string LvalueDot::get_llvm_init(Bblock &block) {
     std::string llvm_ir = "";
     spdlog::debug("left = {}\n",this->left->getId());
     llvm_ir += this->left->get_llvm_init(block);
-    auto reg = std::make_shared<Register>();
+    auto reg = Register::create();
     spdlog::debug("Got the next numerical register of {}\n",reg->get_id());
     this->result = reg;
     auto reg_llvm = this->result->get_llvm();
@@ -92,7 +92,7 @@ std::string LvalueDot::get_llvm_init(Bblock &block) {
     llvm_ir += TAB+fmt::format("{} = getelementptr inbounds %struct.{}, ptr {}, i32 0, i32 {}\n",reg_llvm,struct_name,left_reg_llvm,this->offset); // Yes the hardcoded i32 parts are intentional based on observing what clang does
     if(dynamic_pointer_cast<ast::StructType>(this->type)) { 
         spdlog::debug("{} is a struct, loading the struct address\n",this->getId());
-        this->deref_result = std::make_shared<Register>();
+        this->deref_result = Register::create();
         auto struct_ptr_llvm = this->deref_result->get_llvm();
         llvm_ir += TAB+fmt::format("{} = load ptr, ptr {}, align {}\n",struct_ptr_llvm,reg_llvm,this->getType()->alignment());
     } else {

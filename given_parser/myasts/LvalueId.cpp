@@ -62,7 +62,7 @@ std::string LvalueId::get_llvm_init(Bblock &block) {
         spdlog::debug("{} is a struct, loading the struct address\n",this->getId());
         auto reg_llvm = this->result->get_llvm(); // llvm for the double ptr to the struct
         auto alignment = this->type->alignment();
-        this->deref_result = std::make_shared<Register>();
+        this->deref_result = Register::create();
         auto struct_ptr_llvm = this->deref_result->get_llvm(); // llvm for the ptr to the struct
         return TAB+fmt::format("{} = load ptr, ptr {}, align {}\n",struct_ptr_llvm,reg_llvm,alignment);
     } else {

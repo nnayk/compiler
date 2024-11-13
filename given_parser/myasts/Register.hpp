@@ -16,7 +16,6 @@ class Register : public std::enable_shared_from_this<Register> {
         static std::string GLOBAL_PREFIX;
         std::shared_ptr<ast::Type> content_type; // type of the value in register
         bool pseudo = false;
-        Register(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
         static std::shared_ptr<Register> create(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
         void set_global(); // Discovered that an ID was global when resolving type and now must adjust the register prefix
         std::string get_id();
@@ -25,6 +24,7 @@ class Register : public std::enable_shared_from_this<Register> {
         std::string get_llvm();
         //std::string use_llvm(std::shared_ptr<ast::Expression>);
     private:
+        Register(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
         std::vector<std::shared_ptr<ast::Expression>> exp_references; // for quickly updating a register's usage for SSA trivial phi deletion
         std::string prefix;
         std::string id;

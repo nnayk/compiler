@@ -22,7 +22,7 @@ std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_g
         assert(id=="_ret"); // rn this is the only case where the same id can be passed to create I believe
         return all_regs[id];
     }
-    auto reg = std::make_shared<Register>(id,is_global,is_pseudo);
+    auto reg = std::shared_ptr<Register>(new Register(id,is_global,is_pseudo));
     all_regs[id] = reg->shared_from_this();
     return reg;
 }
