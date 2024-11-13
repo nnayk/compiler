@@ -93,5 +93,12 @@ std::string IdentifierExpression::get_ssa(Bblock &block) {
     return "";
 }
 
+void IdentifierExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+   auto reg = block.lookup(this->getId());   
+   spdlog::debug("resolved {} on line {} to register {}\n",this->getId(),this->getLineNum(),*reg);
+   this->result = reg;
+}
+
 } // namespace ast
 

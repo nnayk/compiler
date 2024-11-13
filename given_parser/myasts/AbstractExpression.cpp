@@ -30,7 +30,7 @@ std::shared_ptr<Register> AbstractExpression::getDerefResult() const {
     return this->deref_result;
 }
 
-void AbstractExpression::resolve_uses() {
+void AbstractExpression::resolve_uses(Bblock &block) {
     spdlog::debug("AbstractExpression::{}\n",__func__);
 }
 

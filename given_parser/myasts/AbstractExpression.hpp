@@ -21,7 +21,7 @@ public:
     virtual ~AbstractExpression() {}
     // Getter for lineNum
     int getLineNum() const;
-    virtual void resolve_uses() override;
+    virtual void resolve_uses(Bblock &block) override;
 };
 }  // namespace ast
 

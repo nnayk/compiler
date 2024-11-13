@@ -5,9 +5,11 @@
 #include "IdentifierExpression.hpp"
 #include "DotExpression.hpp"
 #include "Mapping.hpp"
+#include "utils.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
+extern bool use_ssa;
 
 namespace ast {
 
@@ -145,14 +147,16 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     // Crucial that usages are resolved first b/c it's possible that the user
     // attempts to do smth like x=x+1 where x has not been defined yet...resolving
     // usages would catch this undefined usage error
-    this->source->resolve_uses();
-    const std::type_info& source_type = typeid(this->source->type);
+    this->source->resolve_uses(block);
+    auto source_type = this->source->type;
     std::string source_immediate = "";
     // if source is an immediate create a pseudo reg
-    if((source_type == typeid(IntType)) || (source_type == typeid(BoolType))) {
+    if(is_immediate(this->source)) {
         spdlog::debug("source {} is an immediate\n",*source);
         source_immediate = this->source->get_llvm(block);
         spdlog::debug("source = {}\n",source_immediate);
+    } else {
+        spdlog::debug("source {} is NOT an immediate\n",*source);
     }
     this->target->resolve_def(source_immediate);
     std::string var = "";
@@ -163,6 +167,5 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     }
     block.ssa_map->addEntry(var,this->target->getResult());
 }
-
 
 }  // namespace ast

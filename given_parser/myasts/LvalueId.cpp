@@ -1,6 +1,7 @@
 #include "LvalueId.hpp"
 
 extern std::string TAB;
+extern bool use_ssa;
 
 namespace ast {
 
@@ -8,7 +9,7 @@ namespace ast {
 LvalueId::LvalueId(int lineNum, const std::string& id)
     : lineNum(lineNum), id(id) {
         spdlog::debug("inside LvalueId::{}\n",__func__);
-        result = Register::create(id); // TODO: change this!!! should only be for non-ssa (basically move this to get_llvm_init)
+        if(!use_ssa) result = Register::create(id); // TODO: change this!!! should only be for non-ssa (basically move this to get_llvm_init)
         //TODO: Think content type is not needed in Register class since I'm resolving type and storing it as an attr in Lvalue itself
         //result->content_type =  this->type;
     }
@@ -79,6 +80,7 @@ std::string LvalueId::get_llvm(Bblock &block) {
 void LvalueId::resolve_def(std::string &source_immediate) {
     spdlog::debug("inside LvalueId::{}\n",__func__);
     //assert(!this->result);
+    spdlog::debug("source_immediate = {}\n",source_immediate);
     if(source_immediate.length()) {
         // TODO: Here I assume we have a local var...but it could be a global very well. ctrl+f for "NOTE" in this file to see my idea about adding an "is_global" field to Lvalue..
         this->result = Register::create(source_immediate,false,true);

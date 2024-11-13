@@ -14,6 +14,8 @@ int main(int argc, char *argv[]) {
         spdlog::debug("usage: cfg [ -ssa | -stack ] <file>.json");
         return -1;
     }
+    // TODO: delete when done testing ssa 
+    use_ssa=true;
     if(argc == 3) {
         std::string llvm = argv[1];
         fileName = argv[2];

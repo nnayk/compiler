@@ -210,7 +210,8 @@ std::string CfgFunc::get_ssa() {
     // Step 1: Resolve var defs+uses for each statement in the block
     for(auto block : this->blocks) {
         block->resolve_def_uses();
-    } 
+    }
+    return ssa;
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
     // Step 3: Remove non-trivial phis
     // Step 4: Generate ssa llvm

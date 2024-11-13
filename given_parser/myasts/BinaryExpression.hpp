@@ -42,6 +42,7 @@ public:
     std::shared_ptr<Type> resolveType(Env &env) override;
     bool is_i1(); 
     std::string zext(); 
+    void resolve_uses(Bblock &block) override;
 };
 
 }  // namespace ast

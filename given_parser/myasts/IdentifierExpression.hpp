@@ -24,6 +24,7 @@ public:
     std::string get_ssa_init(Bblock &block);
     std::string get_llvm(Bblock &block) override; 
     std::string get_ssa(Bblock &block);
+    void resolve_uses(Bblock &block) override;
 
 private:
     std::string id;  // Identifier string

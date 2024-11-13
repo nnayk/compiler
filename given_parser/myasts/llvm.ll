@@ -10,15 +10,5 @@ declare i32 @scanf(i8*, ...)
               
 
 define noundef i64 @foo(i64 noundef %x, i8 noundef %y, i64 noundef %z) {
-
-	L0:
-	store i64 3, ptr %1, align 8
-	store i64 2, ptr %2, align 8
-	br label %L1
-
-
-	L1:
-	ret i64 %2
-
 }
 

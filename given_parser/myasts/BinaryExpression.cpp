@@ -185,4 +185,11 @@ std::string BinaryExpression::zext() {
     return TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
 }
 
+void BinaryExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+    left->resolve_uses(block);
+    right->resolve_uses(block);
+}
+
+
 }  // namespace ast
