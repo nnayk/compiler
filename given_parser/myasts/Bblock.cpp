@@ -110,7 +110,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
     spdlog::debug("Looking up register for id {}\n",id);
     std::shared_ptr<Register> reg = nullptr;
     if((reg = this->ssa_map->entries[id])) {
-        spdlog::debug("Found register {}, pseudo = {}\n",*reg,reg->pseudo);
+        spdlog::debug("Resolved var {} to register {}\n",id,*reg);
         return reg;
     } else {
         spdlog::debug("Didn't find id in current block, looking at preds\n");
@@ -119,13 +119,23 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
             spdlog::debug("Only 1 pred, yay!\n");
             this->ssa_map->entries[id] = parents[0]->lookup(id);
             return this->ssa_map->entries[id];
+        } else {
+            spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
+            //TODO: Implement. Consider sealed vs unsealed blocks
+            for(auto parent : this->parents) {
+                if(this->is_loopback_parent(parent)) {
+                spdlog::debug("skipping loopback parent {}\n",*parent);
+                this->sealed = false;
+                } else {
+                    auto reg = parent->lookup(id);
+                    assert(reg);
+                    auto parent_label = parent->label->getLabel();
+                    assert(parent_label != "");
+                    spdlog::debug("parent {} resolved var {} to register {}\n",parent_label,id,*reg);
+                    // create the phi pair and add it to the phi object
+                }
+            }
         }
-        spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
-        //TODO: Implement
-        /*
-        for(auto parent : this->parents) {
-        }
-        */
     }
     return reg;
 }
