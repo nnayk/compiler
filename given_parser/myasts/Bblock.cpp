@@ -3,6 +3,7 @@
 #include "BlockStatement.hpp"
 #include "AssignmentStatement.hpp"
 #include "UseBeforeInitException.hpp"
+#include "Phi.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
@@ -109,8 +110,7 @@ std::string Bblock::display() const {
 std::shared_ptr<Register> Bblock::lookup(std::string id) {
     spdlog::debug("inside Bblock::{}\n",__func__);
     spdlog::debug("Looking up register for id {}\n",id);
-    std::shared_ptr<Register> reg = nullptr;
-    if((reg = this->ssa_map->entries[id])) {
+    if(auto reg = this->ssa_map->entries[id]) {
         spdlog::debug("Resolved var {} to register {}\n",id,*reg);
         return reg;
     } else {
@@ -118,7 +118,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
         auto parents = this->parents;
         if(parents.size()==0) {
             assert(this->label->getLabel()=="L0");
-            spdlog::debug("Uninitialized var {}\n",id);
+            throw UseBeforeInitException(fmt::format("Uninitialized var {}\n",id));
         } else if(parents.size()==1) {
             spdlog::debug("Only 1 pred, yay!\n");
             this->ssa_map->entries[id] = parents[0]->lookup(id);
@@ -126,23 +126,29 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
         } else {
             spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
             //TODO: Implement. Consider sealed vs unsealed blocks
-            //auto phi = std::make_shared<Phi>();
+            auto phi = std::make_shared<Phi>();
             for(auto parent : this->parents) {
                 if(this->is_loopback_parent(parent)) {
-                spdlog::debug("skipping loopback parent {}\n",*parent);
-                this->sealed = false;
+                    spdlog::debug("skipping loopback parent {}\n",*parent);
+                    this->sealed = false;
                 } else {
-                    auto reg = parent->lookup(id);
-                    assert(reg);
+                    auto parent_reg = parent->lookup(id);
+                    assert(parent_reg);
                     auto parent_label = parent->label->getLabel();
                     assert(parent_label != "");
-                    spdlog::debug("parent {} resolved var {} to register {}\n",parent_label,id,*reg);
+                    spdlog::debug("parent {} resolved var {} to parent_register {}\n",parent_label,id,*parent_reg);
                     // create the phi pair and add it to the phi object
+                    phi->addEntry(parent_label,parent_reg);
                 }
             }
+            auto assignee = Register::create();
+            // assign a register to the phi instruction and return it (also make sure to set phi assignee attr to the register AND also set phi block attr accordingly)
+            phi->assignee = assignee;
+            phi->block = shared_from_this();
+            this->ssa_map->addEntry(id,assignee);
+            return assignee;
         }
     }
-    return reg;
 }
 
 bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
