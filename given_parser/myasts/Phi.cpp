@@ -16,3 +16,9 @@ std::string Phi::display() const {
     } 
     return out;
 }
+
+std::string Phi::get_ssa() {
+    spdlog::debug("inside Phi::{}\n",__func__);
+    std::string ssa = "";
+    return ssa;
+}

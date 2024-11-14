@@ -41,32 +41,30 @@ std::string Bblock::get_llvm() {
 }
 
 std::string Bblock::get_ssa() {
-    std::string llvm_ir;
+    std::string ssa = "";
     spdlog::debug("inside Bblock::{}",__func__);
     assert(label);
     spdlog::debug("bblock label = {}\n",label->getLabel());
-    llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
-    for(auto stmt:this->stmts) {
-        spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
-        llvm_ir += stmt->get_llvm(*this);
-        spdlog::debug("Finished get_llvm() for {}\n",*stmt);
+    ssa += "\n"+TAB+label->getLabel()+":\n"; 
+    spdlog::debug("Gonna add ssa for the {} phis\n",this->phis.size());
+    for(auto phi : this->phis) {
+        ssa += phi->get_ssa();
     }
-    spdlog::debug("finished llvm gen for nested stmts for bblock label = {}\n",label->getLabel());
-    // The 2nd condition is necessary as the AssignmentStatement::get_llvm() for _ret would've already
+    for(auto stmt:this->stmts) {
+        spdlog::debug("Invoking get_ssa() for {}\n",*stmt);
+        ssa += stmt->get_ssa(*this);
+        spdlog::debug("Finished get_ssa() for {}\n",*stmt);
+    }
+    spdlog::debug("finished ssa gen for nested stmts for bblock label = {}\n",label->getLabel());
+    // The 2nd condition is necessary as the AssignmentStatement::get_ssa() for _ret would've already
     // added the br to the final return bblock
     if(this->children.size()==1 && !this->children[0]->final_return_block) { 
         spdlog::debug("adding extra br\n");
-        auto br_llvm = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
-        spdlog::debug("br_llvm = {}\n",br_llvm);
-        llvm_ir += br_llvm; 
+        auto br_ssa = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+        spdlog::debug("br_ssa = {}\n",br_ssa);
+        ssa += br_ssa; 
     }
-    /*
-    if(this->is_return_block()) {
-        spdlog::debug("adding extra br for return block:{}\n",*this);
-        llvm_ir += TAB+"br label %Lreturn\n";
-    }
-    */
-    return llvm_ir+"\n";
+    return ssa+"\n";
 }
 
 std::string Bblock::display() const {

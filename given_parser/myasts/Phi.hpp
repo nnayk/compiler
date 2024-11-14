@@ -12,6 +12,7 @@ class Phi {
         Phi() {};
         void addEntry(std::string label,std::shared_ptr<Register> reg);
         std::string display() const;
+        std::string get_ssa();
 };
 
 template <>

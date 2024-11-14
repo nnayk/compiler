@@ -13,11 +13,21 @@ define i32 @main() #0 {
   %5 = load i32, ptr %3, align 4
   %6 = add nsw i32 4, %5
   store i32 %6, ptr %4, align 4
-  %7 = load i32, ptr %4, align 4
-  %8 = sub nsw i32 0, %7
-  store i32 %8, ptr %2, align 4
-  %9 = load i32, ptr %2, align 4
-  ret i32 %9
+  %7 = load i32, ptr %2, align 4
+  %8 = icmp sgt i32 %7, 3
+  br i1 %8, label %9, label %10
+
+9:                                                ; preds = %0
+  store i32 86, ptr %2, align 4
+  br label %11
+
+10:                                               ; preds = %0
+  store i32 32, ptr %2, align 4
+  br label %11
+
+11:                                               ; preds = %10, %9
+  %12 = load i32, ptr %2, align 4
+  ret i32 %12
 }
 
 attributes #0 = { noinline nounwind ssp uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }

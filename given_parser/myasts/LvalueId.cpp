@@ -77,6 +77,16 @@ std::string LvalueId::get_llvm(Bblock &block) {
     return this->result->get_llvm();
 }
 
+std::string LvalueId::get_ssa(Bblock &block) {
+	spdlog::debug("inside LvalueId::{}\n",__func__);
+    return this->result->get_llvm();
+}
+
+std::string LvalueId::get_ssa_init(Bblock &block) {
+	spdlog::debug("inside LvalueId::{}\n",__func__);
+    return this->get_llvm_init(block);
+}
+
 void LvalueId::resolve_def(std::string &source_immediate) {
     spdlog::debug("inside LvalueId::{}\n",__func__);
     //assert(!this->result);

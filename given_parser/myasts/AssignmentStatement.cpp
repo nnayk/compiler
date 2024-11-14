@@ -54,6 +54,7 @@ std::string AssignmentStatement::get_llvm(Bblock &block) {
     std::string type_llvm = this->target->type->get_llvm();
     auto target_llvm = this->target->get_llvm(block);
     auto source_llvm = this->source->get_llvm(block);
+    // TODO: P sure this case is messed up since InvocExpr already performs an ssignment... see the note at InvocExpr::get_llvm abt seg fault
     if(dynamic_pointer_cast<ast::InvocationExpression>(this->source)) {
         source_llvm = source_llvm.substr(1); // detab
         auto temp_reg = Register::create();
@@ -78,6 +79,49 @@ std::string AssignmentStatement::get_llvm(Bblock &block) {
         }
     }
 	return llvm_ir;
+}
+
+// Returns the SSA string of instructions for the assignment
+std::string AssignmentStatement::get_ssa(Bblock &block) {
+	spdlog::debug("inside AssignmentStatement:{}\n",__func__);
+    spdlog::debug("lineNum = {}\n",this->getLineNum());
+	std::string ssa = "";
+    spdlog::debug("source = {}\n",*(this->source));
+    assert(this->source);
+    assert(this->target);
+    assert(this->target->type);
+    assert(this->source->type);
+	std::string target_ssa_init = this->target->get_ssa_init(block);
+    spdlog::debug("Got target ssa for id {}: {}\n",this->target->getId(),target_ssa_init);
+    spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
+    std::string source_ssa_init = this->source->get_ssa_init(block);
+    spdlog::debug("Got source ssa: {}\n",source_ssa_init);
+	ssa += target_ssa_init;
+	ssa += source_ssa_init;
+
+	//Add ssa ir to perform the assignment
+    std::string type_ssa = this->target->type->get_llvm(); // TODO P3: create get_ssa for all type classes
+    auto target_ssa = this->target->get_ssa(block);
+    auto source_ssa = this->source->get_ssa(block);
+    // TODO: Add check for invocation (+ global) -- here we'd need a store instruction
+    if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
+        spdlog::debug("Zero extending binary expression!\n");
+        ssa += bin_exp->zext();
+        this->target->setResult(bin_exp->getResult());
+    }
+    spdlog::debug("assignment ssa = {}",ssa);
+    //special case return stmt
+    if(this->target->getId() == "_ret") {
+        for(auto child : block.children) {
+            if(child->final_return_block) {
+                spdlog::debug("found final return block child, gonnabreak to it\n");
+                auto return_label = child->label->getLabel();
+                spdlog::debug("return label = {}\n",return_label);
+                ssa += TAB+fmt::format("br label %{}\n",return_label);
+            }
+        }
+    }
+	return ssa;
 }
 
 void AssignmentStatement::typecheck(Env &env, Function &f) {

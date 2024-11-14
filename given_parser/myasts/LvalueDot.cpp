@@ -114,6 +114,16 @@ std::string LvalueDot::get_llvm(Bblock &block) {
     return this->result->get_llvm();
 }
 
+std::string LvalueDot::get_ssa_init(Bblock &block) {
+	spdlog::debug("inside LvalueDot::{}\n",__func__);
+    return this->get_llvm_init(block);
+}
+
+std::string LvalueDot::get_ssa(Bblock &block) {
+	spdlog::debug("inside LvalueDot::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 std::string LvalueDot::get_topmost_id() {
 	spdlog::debug("inside LvalueDot::{}\n",__func__);
 	auto curr = shared_from_this();

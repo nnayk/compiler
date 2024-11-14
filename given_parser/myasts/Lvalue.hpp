@@ -21,6 +21,8 @@ namespace ast {
       virtual std::shared_ptr<ast::Type> resolveType(Env &env) = 0;
       virtual std::string get_llvm_init(Bblock &block) = 0;
       virtual std::string get_llvm(Bblock &block) = 0;
+      virtual std::string get_ssa_init(Bblock &block) = 0;
+      virtual std::string get_ssa(Bblock &block) = 0;
 	  // Assign a register to the lvalue result attr
       virtual void resolve_def(std::string &source_immediate) = 0;
       std::shared_ptr<Register> getDerefResult(); 

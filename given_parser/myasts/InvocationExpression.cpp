@@ -73,6 +73,7 @@ std::string InvocationExpression::get_llvm_init(Bblock &block) {
  
 std::string InvocationExpression::get_llvm(Bblock &block) { 
     spdlog::debug("inside InvocationExpression::{}\n",__func__);
+    // TODO: P sure this will seg fault since result wou;dn't have been set I believe...
     std::string llvm = TAB+fmt::format("{} = call {} @{}(",this->result->get_llvm(),this->type->get_llvm(),this->name);
     int index = 0;
     int args_size = this->arguments.size();
@@ -96,12 +97,14 @@ std::string InvocationExpression::get_ssa_init(Bblock &block) {
     for(auto arg : this->arguments) {
         ssa += arg->get_llvm_init(block);
     }
+    ssa += this->get_llvm(block); // this takes care of the function call as well
     return ssa;
 }
 
 std::string InvocationExpression::get_ssa(Bblock &block) {
     spdlog::debug("inside InvocationExpression::{}\n",__func__);
-    return this->get_llvm(block);
+    return this->result->get_llvm();
+    //return this->get_llvm(block);
 }
 
 void InvocationExpression::resolve_uses(Bblock &block) {

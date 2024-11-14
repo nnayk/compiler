@@ -41,5 +41,6 @@ void Register::set_global_prefix() {
 
 std::string Register::get_llvm() {
     //this->references.push_back(e);
-    return this->prefix+this->id;
+    if(this->pseudo) return this->id;
+    else return this->prefix+this->id;
 }

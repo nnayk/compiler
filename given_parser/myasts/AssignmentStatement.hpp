@@ -28,6 +28,7 @@ public:
     std::shared_ptr<Expression> getSource() const;
     
 	virtual std::string get_llvm(Bblock &block) override;
+	virtual std::string get_ssa(Bblock &block) override;
 
     //virtual std::string get_ssa(Bblock &block) override;
 

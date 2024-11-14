@@ -201,7 +201,7 @@ void BinaryExpression::resolve_uses(Bblock &block) {
 std::string BinaryExpression::get_ssa_init(Bblock &block) {
     spdlog::debug("inside BinaryExpression::{}\n",__func__);
     assert(this->result);
-    return this->get_ssa_init(block);
+    return this->get_llvm_init(block);
 }
 
 std::string BinaryExpression::get_ssa(Bblock &block) {

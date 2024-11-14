@@ -211,11 +211,11 @@ std::string CfgFunc::get_ssa() {
     for(auto block : this->blocks) {
         block->resolve_def_uses();
     }
-    return ssa;
+    //return ssa;
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
     // Step 3: Remove non-trivial phis
-    // Step 4: Generate ssa llvm
-    //add LLVM IR for body
+    // Step 4: Generate ssa ssa
+    //add ssa IR for body
     if(this->blocks.size() > 0) {
         std::stack<std::shared_ptr<Bblock>> stack;
         stack.push(this->blocks[0]);
@@ -237,19 +237,19 @@ std::string CfgFunc::get_ssa() {
             }
             if(unvisited_parent) continue;
             stack.pop();
-			spdlog::debug("LLVM popped block with label {}",block->label->getLabel());
+			spdlog::debug("ssa popped block with label {}",block->label->getLabel());
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) {
-                spdlog::debug("LLVM Yalready visited block {}\n",block->label->getLabel());
+                spdlog::debug("ssa Yalready visited block {}\n",block->label->getLabel());
                 continue;
             }
             if(block->emit_llvm) {
                 auto block_label = block->label->getLabel();
-                spdlog::debug("LLVM gonna fetch llvm for block {}\n",block_label);
-                ssa += block->get_llvm();
-                spdlog::debug("LLVM NOT skipping llvm for block with label {}: {}\n",block_label,*block);
+                spdlog::debug("ssa gonna fetch ssa for block {}\n",block_label);
+                ssa += block->get_ssa();
+                spdlog::debug("ssa NOT skipping ssa for block with label {}: {}\n",block_label,*block);
             } else {
-                spdlog::debug("skipping llvm for block {}\n",block->label->getLabel());
+                spdlog::debug("skipping ssa for block {}\n",block->label->getLabel());
             }
             block->visited = 1;
             std::shared_ptr<ast::Statement> stmt = nullptr;
@@ -259,7 +259,7 @@ std::string CfgFunc::get_ssa() {
             } else {
                 spdlog::debug("dummy block!\n");
             }
-            // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the llvm for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
+            // if the block is a conditional (either a single conditional stmt or ends in a conditional then skip the ssa for the children as they would've already been handled by the if block  -- they should still be pushed however as in the case of an if w/non-empty then and non-empty else 
             if(reverse_push) {
 				for (auto it = block->children.rbegin(); it != block->children.rend(); ++it) {
 					std::cout << *it << " ";
@@ -269,7 +269,7 @@ std::string CfgFunc::get_ssa() {
             } else {
                 for(auto child : block->children) {
                     spdlog::debug("pushing child {}",*child);
-                    //if(skip_children_llvm) child->emit_llvm = false;
+                    //if(skip_children_ssa) child->emit_ssa = false;
                     stack.push(child);
                 }
             }

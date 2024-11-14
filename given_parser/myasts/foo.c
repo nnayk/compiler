@@ -3,8 +3,11 @@
 int main() {
     int x,y,z;
     z = 4+y;
-    //scanf("Enter int: %d\n",&z);
-    x=-z;
+    if(x>3) {
+        x=86;
+    } else {
+        x=32;
+    }
     return x;
 }
 

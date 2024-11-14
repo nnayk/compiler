@@ -17,6 +17,8 @@ public:
     std::shared_ptr<Type> resolveType(Env &env) override;
     std::string get_llvm_init(Bblock &block) override;
     std::string get_llvm(Bblock &block) override;
+    virtual std::string get_ssa_init(Bblock &block) override;
+    virtual std::string get_ssa(Bblock &block) override;
     virtual void resolve_def(std::string &source_immediate) override;
 
 private:
