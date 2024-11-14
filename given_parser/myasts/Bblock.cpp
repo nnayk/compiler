@@ -3,7 +3,6 @@
 #include "BlockStatement.hpp"
 #include "AssignmentStatement.hpp"
 #include "UseBeforeInitException.hpp"
-#include "Phi.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
@@ -148,6 +147,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
             spdlog::debug("Created phi for id {} with assignee {}:\n",id,*assignee);
             spdlog::debug("{}\n",*phi);
             this->ssa_map->addEntry(id,assignee);
+            this->phis.push_back(phi);
             return assignee;
         }
     }

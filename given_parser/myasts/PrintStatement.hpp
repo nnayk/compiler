@@ -24,6 +24,7 @@ public:
     }
     virtual void typecheck(Env &env, Function &f) override;
     std::string get_llvm(Bblock &block) override;
+    virtual std::string get_ssa(Bblock &block) override;
     virtual void resolve_def_uses(Bblock &block) override;
 };
 

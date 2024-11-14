@@ -70,7 +70,7 @@ std::string BinaryExpression::get_llvm_init(Bblock &block) {
 	auto right_llvm = this->getRight()->get_llvm(block);
 	auto type_llvm = this->getLeft()->type->get_llvm();
 	if(!this->result) { 
-        assert(use_ssa);
+        assert(!use_ssa);
         this->result = Register::create();
     }
 	auto result_llvm = this->result->get_llvm();

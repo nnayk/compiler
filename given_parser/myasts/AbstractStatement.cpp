@@ -28,6 +28,11 @@ std::string AbstractStatement::get_llvm(Bblock &block) {
     return llvm_ir;
 }
 
+std::string AbstractStatement::get_ssa(Bblock &block) {
+    spdlog::debug("inside AbstractStatement::{}", __func__);
+    return "";
+}
+
 void AbstractStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside AbstractStatement::{}\n",__func__);
 }

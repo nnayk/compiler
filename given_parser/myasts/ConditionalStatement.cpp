@@ -111,6 +111,11 @@ std::string ConditionalStatement::get_llvm(Bblock &block) {
     return llvm;
 }
 
+std::string ConditionalStatement::get_ssa(Bblock &block) {
+    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 void ConditionalStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
     this->guard->resolve_uses(block);

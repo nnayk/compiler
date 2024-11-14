@@ -27,6 +27,11 @@ std::string PrintStatement::get_llvm(Bblock &block) {
     return llvm;
 }
 
+std::string PrintStatement::get_ssa(Bblock &block) {
+    spdlog::debug("inside PrintStatement::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 void PrintStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside PrintStatement::{}\n",__func__);
     this->expression->resolve_uses(block);    

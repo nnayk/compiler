@@ -80,49 +80,6 @@ std::string AssignmentStatement::get_llvm(Bblock &block) {
 	return llvm_ir;
 }
 
-std::string AssignmentStatement::get_ssa(Bblock &block) {
-    spdlog::debug("inside AssignmentStatement::{}\n",__func__);
-    spdlog::debug("lineNum = {}\n",this->getLineNum());
-    std::string ssa = "";
-    spdlog::debug("source = {}\n",*(this->source));
-    assert(this->source);
-    assert(this->target);
-    assert(this->target->type);
-    assert(this->source->type);
-    // TODO:
-    // 1. if target is a struct then just generate non-ssa llvm
-    // otherwise if target is not a struct generate ssa
-    // temporary llvm won't change
-    // 2. if source is a global (lvalueId should contain a scope field and mark it based on resolveType just like IdExpr does) then generate non-ssa
-    ssa += this->source->get_llvm_init(block);
-    // NOTE: A LOT OF THIS WILL NEED TO BE DELETED/MODIFIED NOW THAT I'VE ADDED
-    // RESOLVE_DEF_USAGES, ETC.
-    std::shared_ptr<Register> reg;
-    const std::type_info& source_type = typeid(this->source->type);
-    // if source is an immediate create a pseudo reg
-    if((source_type == typeid(IntType)) || (source_type == typeid(BoolType))) {
-        // Can get the llvm for immediates (technically it's not non-ssa specific since we're dealing with simple constants...it's just poor nomenclature for the functions which made sense at the time when I was focused on non-ssa)
-        auto val = this->source->get_llvm(block);
-        reg = Register::create(val,false,true);
-        //reg->content_type = 
-    // else create a non-pseudo reg
-    } else {
-        // if source isn't a binary expression then we need to create the lvalue register and add the llvm 
-        if(dynamic_pointer_cast<BinaryExpression>(this->source)) {
-            reg = this->source->getResult();
-        } else {
-            reg = Register::create();
-            ssa += fmt::format("{} = {}",reg->get_llvm(),this->source->get_llvm(block));
-        }
-    }
-    // add the var mapping to the function map
-    // Since structs have already been handled we know we're dealing with an identifier at this point
-    auto id_expr = dynamic_pointer_cast<IdentifierExpression>(this->target);
-    assert(id_expr);
-    //f.ssa_map->addEntry(id_expr->getId(),reg); 
-    return ssa;
-}
- 
 void AssignmentStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("inside AssignmentStatement::{}\n",__func__);
     // Get the type of the lhs and rhs

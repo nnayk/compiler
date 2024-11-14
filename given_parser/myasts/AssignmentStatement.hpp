@@ -29,7 +29,7 @@ public:
     
 	virtual std::string get_llvm(Bblock &block) override;
 
-    std::string get_ssa(Bblock &block);
+    //virtual std::string get_ssa(Bblock &block) override;
 
     std::string display() const override {
         return fmt::format("AssignmentStatement(lineNum={})",lineNum);
