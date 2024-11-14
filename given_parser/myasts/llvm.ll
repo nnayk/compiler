@@ -9,16 +9,15 @@ declare i32 @scanf(i8*, ...)
 @.read_scratch = common global i32 0, align 4
               
 
-define noundef i64 @foo(i64 noundef %x, i8 noundef %y, i64 noundef %z) {
+define noundef i8 @foo() {
 
 	L0:
-	%1 = add i64 4, 3
-	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef -%1)
+	%1 = xor i1 0, 1
 	br label %L1
 
 
 	L1:
-	ret i64 2
+	ret i8 %1
 
 }
 

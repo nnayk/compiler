@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include "utils.hpp"
 
+extern std::string TAB;
 namespace ast {
 
 UnaryExpression::UnaryExpression(int lineNum, Operator operatorType, std::shared_ptr<Expression> operand)
@@ -59,10 +60,10 @@ std::string UnaryExpression::get_ssa_init(Bblock &block) {
         spdlog::debug("expresion is NOT an immediate, llvm init needed\n");
         if(dynamic_pointer_cast<ast::IntType>(this->type)) {
             spdlog::debug("{} is an int, gonna negate it!\n",*operand);
-            return fmt::format("{} = sub i32 0, {}\n",this->result->get_llvm(),operand->get_llvm(block));
+            return TAB+fmt::format("{} = sub i32 0, {}\n",this->result->get_llvm(),operand->get_llvm(block));
         } else {
             spdlog::debug("{} is a bool, gonna negate it!\n",*operand);
-            return fmt::format("{} = xor i1 {}, 1\n",this->result->get_llvm(),operand->get_llvm(block));
+            return TAB+fmt::format("{} = xor i1 {}, 1\n",this->result->get_llvm(),operand->get_llvm(block));
         }
     }
 }

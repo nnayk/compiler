@@ -1,0 +1,7 @@
+fun foo() bool {
+    bool f;
+    bool q;
+    f=false;
+    q = !f;
+    return q;
+}
