@@ -34,6 +34,8 @@ public:
     }
     std::string get_llvm_init(Bblock &block) override;
     std::string get_llvm(Bblock &block) override;
+    virtual std::string get_ssa_init(Bblock &block) override;
+    virtual std::string get_ssa(Bblock &block) override;
     void resolve_uses(Bblock &block) override;
 };
 

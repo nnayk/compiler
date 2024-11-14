@@ -18,6 +18,7 @@ public:
         return fmt::format("IntegerExpression(lineNum={},value={})\n",lineNum,this->getValue());
     }
     std::string get_llvm(Bblock &block) override; 
+    virtual std::string get_ssa(Bblock &block) override;
     void resolve_uses(Bblock &block) override;
 private:
     std::string value; // The integer value as a string

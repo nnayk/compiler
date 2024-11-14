@@ -13,6 +13,7 @@ public:
         return fmt::format("TrueExpression(lineNum={})\n",lineNum);
     }
     std::string get_llvm(Bblock &block) override;
+    std::string get_ssa(Bblock &block) override;
     void resolve_uses(Bblock &block) override;
 };
 

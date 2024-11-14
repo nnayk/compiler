@@ -1,6 +1,8 @@
 #include "NewExpression.hpp"
 
 extern std::string TAB;
+extern bool use_ssa;
+
 namespace ast {
 
 // Constructor
@@ -29,7 +31,10 @@ std::shared_ptr<ast::Type> NewExpression::resolveType(Env &env) {
 
 std::string NewExpression::get_llvm_init(Bblock &block) {
     spdlog::debug("inside NewExpression::{}\n",__func__);
-    this->result = Register::create();
+    if(!this->result) {
+        assert(!use_ssa);
+        this->result = Register::create();
+    }
     return TAB+fmt::format("{} = call ptr @malloc(i64 noundef {})\n",this->result->get_llvm(),this->struct_size);
 }
 std::string NewExpression::get_llvm(Bblock &block) {
@@ -42,6 +47,15 @@ void NewExpression::resolve_uses(Bblock &block) {
     spdlog::debug("chose register {} for NewExpression on line {}\n",*this->result,this->getLineNum());
 }
 
+std::string NewExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside NewExpression::{}\n",__func__);
+    return this->get_llvm_init(block);
+}
+
+std::string NewExpression::get_ssa(Bblock &block) {
+    spdlog::debug("inside NewExpression::{}\n",__func__);
+    return this->get_llvm(block);
+}
 
 } // namespace ast
 

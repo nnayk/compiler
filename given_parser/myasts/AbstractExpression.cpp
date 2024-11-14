@@ -34,4 +34,14 @@ void AbstractExpression::resolve_uses(Bblock &block) {
     spdlog::debug("AbstractExpression::{}\n",__func__);
 }
 
+std::string AbstractExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside AbstractExpression::{}\n",__func__);
+    return "";
+}
+
+std::string AbstractExpression::get_ssa(Bblock &block) {
+    spdlog::debug("inside AbstractExpression::{}\n",__func__);
+    return "";
+}
+
 }  // namespace ast

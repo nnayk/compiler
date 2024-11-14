@@ -1,5 +1,7 @@
 #include "UnaryExpression.hpp"
+#include "IdentifierExpression.hpp"
 #include <typeinfo>
+#include "utils.hpp"
 
 namespace ast {
 
@@ -40,6 +42,34 @@ std::string UnaryExpression::get_llvm(Bblock &block) {
             return "1";
         }
     }
+}
+
+std::string UnaryExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside UnaryExpression::{}\n",__func__);
+    auto operand = this->operand;
+    assert(operand);
+    // NOTE: since get_llvm+init only handle immediates rn, I'm rewriting the logic in get_ssa+init to handle immediates as well as variables
+    if(is_immediate(operand)) {
+        spdlog::debug("expresion is an immediate, no llvm init needed\n");
+        return "";
+    } else {
+        // Not supporting negations of compound expressions (ex. -(4+5)) for
+        // now. So the only other possibility is an IdExpr.
+        assert(dynamic_pointer_cast<ast::IdentifierExpression>(operand));
+        spdlog::debug("expresion is NOT an immediate, llvm init needed\n");
+        if(dynamic_pointer_cast<ast::IntType>(this->type)) {
+            spdlog::debug("{} is an int, gonna negate it!\n",*operand);
+            return fmt::format("{} = sub i32 0, {}\n",this->result->get_llvm(),operand->get_llvm(block));
+        } else {
+            spdlog::debug("{} is a bool, gonna negate it!\n",*operand);
+            return fmt::format("{} = xor i1 {}, 1\n",this->result->get_llvm(),operand->get_llvm(block));
+        }
+    }
+}
+
+std::string UnaryExpression::get_ssa(Bblock &block) {
+    spdlog::debug("inside UnaryExpression::{}\n",__func__);
+    return this->result->get_llvm();
 }
 
 void UnaryExpression::resolve_uses(Bblock &block) {

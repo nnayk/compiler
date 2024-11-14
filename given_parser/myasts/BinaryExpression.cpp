@@ -3,6 +3,7 @@
 #include "TypeException.hpp"
 
 extern std::string TAB;
+extern bool use_ssa;
 
 namespace ast {
 
@@ -68,11 +69,14 @@ std::string BinaryExpression::get_llvm_init(Bblock &block) {
 	auto left_llvm = this->getLeft()->get_llvm(block);
 	auto right_llvm = this->getRight()->get_llvm(block);
 	auto type_llvm = this->getLeft()->type->get_llvm();
-	this->result = Register::create();
+	if(!this->result) { 
+        assert(use_ssa);
+        this->result = Register::create();
+    }
 	auto result_llvm = this->result->get_llvm();
 	std::string operator_llvm = "";
-    std::string extra_str = "";
-    std::shared_ptr<Register> old_result = nullptr;
+    //std::string extra_str = "";
+    //std::shared_ptr<Register> old_result = nullptr;
 	switch (operatorType) {
 		case BinaryExpression::Operator::PLUS:
 			spdlog::debug("The operator is PLUS.");
@@ -137,24 +141,25 @@ std::string BinaryExpression::get_llvm_init(Bblock &block) {
 			operator_llvm = "and";
             //old_result = this->result;
             //this->result = Register::create();
-            extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
 			break;
 		case BinaryExpression::Operator::OR:
 			spdlog::debug("The operator is OR.");
 			operator_llvm = "or";
             //old_result = this->result;
             //this->result = Register::create();
-            extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_llvm(),old_result->get_llvm());
 			break;
 		default:
 			throw TypeException("Unknown operator!");
 	} 
 	llvm_str += fmt::format("{} = {} {} {}, {}\n",result_llvm,operator_llvm,type_llvm,left_llvm,right_llvm);
-    llvm_str += extra_str;
+    //llvm_str += extra_str;
     return llvm_str;
 }
 
 std::string BinaryExpression::get_llvm(Bblock &block) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
 	return this->result->get_llvm();
 }
 
@@ -191,6 +196,17 @@ void BinaryExpression::resolve_uses(Bblock &block) {
     right->resolve_uses(block);
 	this->result = Register::create();
     spdlog::debug("chose register {} for BinaryExpression on line {}\n",*this->result,this->getLineNum());
+}
+
+std::string BinaryExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+    assert(this->result);
+    return this->get_ssa_init(block);
+}
+
+std::string BinaryExpression::get_ssa(Bblock &block) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+    return this->get_llvm(block);
 }
 
 

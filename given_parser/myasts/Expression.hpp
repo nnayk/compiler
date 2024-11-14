@@ -27,6 +27,8 @@ public:
     virtual std::shared_ptr<ast::Type> resolveType(Env &env) {return std::make_shared<IntType>();} //TODO URGENT: implement this for each expr
     virtual std::string get_llvm_init(Bblock &block) = 0;
     virtual std::string get_llvm(Bblock &block) = 0;
+    virtual std::string get_ssa_init(Bblock &block) = 0;
+    virtual std::string get_ssa(Bblock &block) = 0;
     // actually idt this is needed
     //virtual std::string get_ssa(CfgFunction &f) = 0;
     virtual std::string display() const = 0;

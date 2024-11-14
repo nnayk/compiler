@@ -4,7 +4,7 @@ fun main() int {
     if(x>5) {
         x=2;
         x=5;
-        x=9;
+        x=9; # TODO: test unary by changing this to -9
     } else {
         x=4;
         x=8;

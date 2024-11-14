@@ -14,6 +14,8 @@ public:
     AbstractExpression(int lineNum);
 	virtual std::string get_llvm_init(Bblock &block) override;
 	virtual std::string get_llvm(Bblock &block) override;
+	virtual std::string get_ssa_init(Bblock &block) override;
+	virtual std::string get_ssa(Bblock &block) override;
     virtual std::shared_ptr<Register> getDerefResult() const override;
     virtual std::shared_ptr<Register> getResult() const override;
 

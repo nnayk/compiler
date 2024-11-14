@@ -73,7 +73,7 @@ std::string InvocationExpression::get_llvm_init(Bblock &block) {
  
 std::string InvocationExpression::get_llvm(Bblock &block) { 
     spdlog::debug("inside InvocationExpression::{}\n",__func__);
-    std::string llvm = TAB+fmt::format("call {} @{}(",this->type->get_llvm(),this->name);
+    std::string llvm = TAB+fmt::format("{} = call {} @{}(",this->result->get_llvm(),this->type->get_llvm(),this->name);
     int index = 0;
     int args_size = this->arguments.size();
 	for(auto arg : this->arguments) {
@@ -88,6 +88,20 @@ std::string InvocationExpression::get_llvm(Bblock &block) {
 	}
 	// call the function
 	return llvm;
+}
+
+std::string InvocationExpression::get_ssa_init(Bblock &block) {
+    spdlog::debug("inside InvocationExpression::{}\n",__func__);
+    std::string ssa = "";
+    for(auto arg : this->arguments) {
+        ssa += arg->get_llvm_init(block);
+    }
+    return ssa;
+}
+
+std::string InvocationExpression::get_ssa(Bblock &block) {
+    spdlog::debug("inside InvocationExpression::{}\n",__func__);
+    return this->get_llvm(block);
 }
 
 void InvocationExpression::resolve_uses(Bblock &block) {

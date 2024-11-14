@@ -1,5 +1,3 @@
-AbstractExpression.cpp
-BinaryExpression.cpp
 DotExpression.cpp
 InvocationExpression.cpp
 NewExpression.cpp
