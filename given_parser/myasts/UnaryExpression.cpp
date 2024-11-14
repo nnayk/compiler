@@ -42,5 +42,11 @@ std::string UnaryExpression::get_llvm(Bblock &block) {
     }
 }
 
+void UnaryExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside UnaryExpression::{}\n",__func__);
+    this->result = Register::create();
+    spdlog::debug("chose register {} for UnaryExpression on line {}\n",*this->result,this->getLineNum());
+}
+
 } // namespace ast
 

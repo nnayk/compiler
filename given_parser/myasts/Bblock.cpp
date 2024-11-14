@@ -145,6 +145,8 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
             // assign a register to the phi instruction and return it (also make sure to set phi assignee attr to the register AND also set phi block attr accordingly)
             phi->assignee = assignee;
             phi->block = shared_from_this();
+            spdlog::debug("Created phi for id {} with assignee {}:\n",id,*assignee);
+            spdlog::debug("{}\n",*phi);
             this->ssa_map->addEntry(id,assignee);
             return assignee;
         }

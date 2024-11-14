@@ -20,5 +20,11 @@ std::string IntegerExpression::get_llvm(Bblock &block) {
     return this->value;
 }
 
+void IntegerExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside IntegerExpression::{}\n",__func__);
+    auto id = this->get_llvm(block);
+    this->result = Register::create(id,false,true);
+}
+
 } // namespace ast
 

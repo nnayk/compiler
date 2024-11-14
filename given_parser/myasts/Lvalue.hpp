@@ -24,7 +24,8 @@ namespace ast {
 	  // Assign a register to the lvalue result attr
       virtual void resolve_def(std::string &source_immediate) = 0;
       std::shared_ptr<Register> getDerefResult(); 
-      std::shared_ptr<Register> getResult(); 
+      std::shared_ptr<Register> getResult();
+      void setResult(std::shared_ptr<Register> reg);
 protected:
      std::shared_ptr<Register> result; // register where the lvalue is stored
      std::shared_ptr<Register> deref_result = nullptr; // only for structs -- to store the single pointer

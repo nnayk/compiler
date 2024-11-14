@@ -36,6 +36,12 @@ std::string NewExpression::get_llvm(Bblock &block) {
     return this->result->get_llvm();
 }
 
+void NewExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside NewExpression::{}\n",__func__);
+    this->result = Register::create();
+    spdlog::debug("chose register {} for NewExpression on line {}\n",*this->result,this->getLineNum());
+}
+
 
 } // namespace ast
 

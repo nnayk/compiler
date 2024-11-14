@@ -6,7 +6,6 @@
 #include "DotExpression.hpp"
 #include "Mapping.hpp"
 #include "utils.hpp"
-#include "LvalueId.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
@@ -149,17 +148,6 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     // attempts to do smth like x=x+1 where x has not been defined yet...resolving
     // usages would catch this undefined usage error
     this->source->resolve_uses(block);
-    auto source_result = this->source->getResult();
-    assert(source_result);
-    spdlog::debug("source result reg = {}\n",*source_result);
-    // LvalueIds can just reuse the source's result register
-    if(dynamic_pointer_cast<LvalueId>(this->target)) {
-        spdlog::debug("LvalueId {}, reusing source result {}\n",this->target->getId(),*source_result);
-        this->target->setResult(source_result);
-        block.ssa_map->addEntry(this->target->getId(),source_result);
-    } else {
-        spdlog::debug("Target is an LvalueDot (id = {}), skipping for now!",this->target->getId());
-    }
     /*
     auto source_type = this->source->type;
     std::string source_immediate = "";
@@ -180,11 +168,9 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     }*/
     // if dealing with an LvalueId then update the mapping. For LvalueDots doesn't make sense
     // since we only want mappings from the top level id to the RHS result register
-    /*
     if() {
     }
     block.ssa_map->addEntry(var,this->target->getResult());
-    */
 }
 
 }  // namespace ast

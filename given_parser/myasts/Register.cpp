@@ -11,7 +11,7 @@ Register::Register(const std::string &id,const bool &is_global,const bool &is_ps
     this->pseudo = is_pseudo;
     this->prefix = prefix;
     spdlog::info("inside Register::{}\n",__func__);
-    if(id==std::to_string(reg)) reg++;
+    if(id==std::to_string(reg) && !is_pseudo) reg++;
 }
 
 std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_global,const bool &is_pseudo) {
@@ -19,11 +19,11 @@ std::shared_ptr<Register> Register::create(const std::string &id,const bool&is_g
     spdlog::debug("id={},is_global={},is_pseudo={}\n",id,is_global,is_pseudo);
     if(!is_pseudo && all_regs.find(id) != all_regs.end()) {
         spdlog::debug("register {} already exists!\n",id);
-        assert(id=="_ret"); // rn this is the only case where the same id can be passed to create I believe
+        //assert(id=="_ret"); // rn this is the only case where the same id can be passed to create I believe
         return all_regs[id];
     }
     auto reg = std::shared_ptr<Register>(new Register(id,is_global,is_pseudo));
-    all_regs[id] = reg->shared_from_this();
+    if(!is_pseudo) all_regs[id] = reg->shared_from_this();
     return reg;
 }
 

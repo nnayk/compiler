@@ -25,12 +25,12 @@ public:
         output+="\n";
         return output;
     }
-    std::string get_llvm(Bblock &block) override; 
+    std::string get_llvm(Bblock &block) override;
+    std::shared_ptr<Type> resolveType(Env &env) override;
+    void resolve_uses(Bblock &block) override;
 private:
     Operator operatorType;
     std::shared_ptr<Expression> operand;
-    std::shared_ptr<Type> resolveType(Env &env) override;
-
 };
 
 }

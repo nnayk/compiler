@@ -15,5 +15,11 @@ std::string TrueExpression::get_llvm(Bblock &block) {
     return "1";
 }
 
+void TrueExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside TrueExpression::{}\n",__func__);
+    auto id = this->get_llvm(block);
+    this->result = Register::create(id,false,true);
+}
+
 } // namespace ast
 

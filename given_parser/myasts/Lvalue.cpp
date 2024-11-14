@@ -14,4 +14,9 @@ std::shared_ptr<Register> Lvalue::getDerefResult() {
     return this->deref_result;
 }
 
+void Lvalue::setResult(std::shared_ptr<Register> reg) {
+    spdlog::debug("inside Lvalue::{}\n",__func__);
+    this->result = reg;
+}
+
 }

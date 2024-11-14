@@ -43,6 +43,11 @@ std::vector<std::shared_ptr<Bblock>> ReturnStatement::get_cfg() {
     return blocks;
 }
 
+void ReturnStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside ReturnStatement::{}\n",__func__);
+    this->expression->resolve_uses(block);    
+}
+
 
 
 } // namespace ast

@@ -23,6 +23,7 @@ public:
     std::string get_llvm_init(Bblock &block) override; 
     std::string get_llvm(Bblock &block) override; 
     std::shared_ptr<Type> resolveType(Env &env) override;
+    void resolve_uses(Bblock &block) override;
 
 private:
     std::string id; // The identifier for the type being instantiated

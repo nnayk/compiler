@@ -17,6 +17,7 @@ public:
     std::string display() const override {
         return fmt::format("DeleteStatement(lineNum={})",lineNum);
     }
+    virtual void resolve_def_uses(Bblock &block) override;
 
 private:
     std::shared_ptr<Expression> expression_;

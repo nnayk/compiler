@@ -21,6 +21,7 @@ public:
 	
 	void typecheck(Env &env, Function &f) override;
     virtual std::string get_llvm(Bblock &block) override;
+    virtual void resolve_def_uses(Bblock &block) override;
 
 private:
     std::shared_ptr<Expression> expression; // The expression to be invoked

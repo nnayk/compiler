@@ -13,7 +13,8 @@ public:
     std::string display() const override {
         return fmt::format("FalseExpression(lineNum={})\n",lineNum);
     }
-    std::string get_llvm(Bblock &block) override; 
+    std::string get_llvm(Bblock &block) override;
+    void resolve_uses(Bblock &block) override;
 };
 
 } // namespace ast

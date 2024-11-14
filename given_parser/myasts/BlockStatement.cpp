@@ -150,6 +150,14 @@ std::string BlockStatement::get_llvm(Bblock &block) {
     }
 	return llvm_ir;
 } 
+/*
+void BlockStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside BlockStatement::{}\n",__func__);
+    for(auto stmt : this->statements) {
+        stmt->resolve_def_uses(block);
+    }
+}
+*/
 
 /*
 std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {

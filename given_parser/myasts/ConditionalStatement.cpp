@@ -111,5 +111,13 @@ std::string ConditionalStatement::get_llvm(Bblock &block) {
     return llvm;
 }
 
+void ConditionalStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    this->guard->resolve_uses(block);
+    this->thenBlock->resolve_def_uses(block);
+    this->elseBlock->resolve_def_uses(block);
+}
+
+
 } // namespace ast
 

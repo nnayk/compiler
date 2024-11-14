@@ -14,5 +14,10 @@ std::shared_ptr<Expression> DeleteStatement::getExpression() const {
 void DeleteStatement::typecheck(Env &env, Function &f) {
 }
 
+void DeleteStatement::resolve_def_uses(Bblock &block) {
+    spdlog::debug("inside DeleteStatement::{}\n",__func__);
+    this->getExpression()->resolve_uses(block);
+}
+
 } // namespace ast
 

@@ -90,5 +90,14 @@ std::string InvocationExpression::get_llvm(Bblock &block) {
 	return llvm;
 }
 
+void InvocationExpression::resolve_uses(Bblock &block) {
+    spdlog::debug("inside InvocationExpression::{}\n",__func__);
+	for(auto arg : this->arguments) {
+	    arg->resolve_uses(block);
+    }
+    this->result = Register::create();
+    spdlog::debug("chose register {} for InvocationExpression on line {}\n",*this->result,this->getLineNum());
+}
+
 } // namespace ast
 

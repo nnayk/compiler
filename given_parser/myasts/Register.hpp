@@ -35,7 +35,9 @@ class Register : public std::enable_shared_from_this<Register> {
 template <>
 struct fmt::formatter<Register> : fmt::formatter<std::string> {
        auto format(Register &r, format_context &ctx) const ->decltype(ctx.out()) {
-            return fmt::format_to(ctx.out(),"Register(id = {}, pseudo = {}",r.get_id(), r.pseudo);
+           std::string prefix = "";
+            if(!r.pseudo) prefix = r.get_prefix();
+            return fmt::format_to(ctx.out(),"Register(id = {}{}, pseudo = {})",prefix,r.get_id(), r.pseudo);
        }
 };
 

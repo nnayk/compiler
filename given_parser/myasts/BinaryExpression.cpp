@@ -189,6 +189,8 @@ void BinaryExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside BinaryExpression::{}\n",__func__);
     left->resolve_uses(block);
     right->resolve_uses(block);
+	this->result = Register::create();
+    spdlog::debug("chose register {} for BinaryExpression on line {}\n",*this->result,this->getLineNum());
 }
 
 

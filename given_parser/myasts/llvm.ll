@@ -9,6 +9,6 @@ declare i32 @scanf(i8*, ...)
 @.read_scratch = common global i32 0, align 4
               
 
-define noundef i64 @foo(i64 noundef %x, i8 noundef %y, i64 noundef %z) {
+define noundef i64 @main() {
 }
 
