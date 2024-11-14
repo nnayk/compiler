@@ -33,10 +33,8 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         bool final_return_block = false;
         Bblock();
         std::string get_llvm();
+        std::string get_ssa();
         std::string display() const;
-        bool is_while_block();
-        bool is_cond_block();
-        bool is_return_block();
         std::shared_ptr<Register> lookup(std::string id);
         bool is_loopback_parent(std::shared_ptr<Bblock> target);
         void add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Declaration> params);

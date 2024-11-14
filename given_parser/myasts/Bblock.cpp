@@ -22,9 +22,14 @@ std::string Bblock::get_llvm() {
         llvm_ir += stmt->get_llvm(*this);
         spdlog::debug("Finished get_llvm() for {}\n",*stmt);
     }
-    if(this->children.size()==1 && !this->children[0]->final_return_block) {
+    spdlog::debug("finished llvm gen for nested stmts for bblock label = {}\n",label->getLabel());
+    // The 2nd condition is necessary as the AssignmentStatement::get_llvm() for _ret would've already
+    // added the br to the final return bblock
+    if(this->children.size()==1 && !this->children[0]->final_return_block) { 
         spdlog::debug("adding extra br\n");
-        llvm_ir += TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+        auto br_llvm = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+        spdlog::debug("br_llvm = {}\n",br_llvm);
+        llvm_ir += br_llvm; 
     }
     /*
     if(this->is_return_block()) {
@@ -35,33 +40,33 @@ std::string Bblock::get_llvm() {
     return llvm_ir+"\n";
 }
 
-bool Bblock::is_return_block() {
-    spdlog::debug("inside Bblock::{}\n",__func__);
-    if(auto size = this->stmts.size()) {
-        auto asgn_stmt = dynamic_pointer_cast<ast::AssignmentStatement>(this->stmts[size-1]);
-        if(asgn_stmt && asgn_stmt->getTarget()->getId() == "_ret") {
-            spdlog::debug("yes, it's a return block:{}\n",*this);
-            assert(this->children.size()==1 || this->children.size()==2); 
-            return true;
-        }
+std::string Bblock::get_ssa() {
+    std::string llvm_ir;
+    spdlog::debug("inside Bblock::{}",__func__);
+    assert(label);
+    spdlog::debug("bblock label = {}\n",label->getLabel());
+    llvm_ir += "\n"+TAB+label->getLabel()+":\n";  
+    for(auto stmt:this->stmts) {
+        spdlog::debug("Invoking get_llvm() for {}\n",*stmt);
+        llvm_ir += stmt->get_llvm(*this);
+        spdlog::debug("Finished get_llvm() for {}\n",*stmt);
     }
-    return false;
-}
-
-bool Bblock::is_while_block() {
-    spdlog::debug("inside Bblock::{}\n",__func__);
-    // If there's a self loop it must be a while block
-   for(auto child : this->children) {
-       if(child.get()==this) return true;
-   }
-   return false;
-}
-
-bool Bblock::is_cond_block() {
-    spdlog::debug("inside Bblock::{}\n",__func__);
-    if(this->is_while_block()) return false;
-    if(this->stmts.size() && dynamic_pointer_cast<ast::ConditionalStatement>(this->stmts[this->stmts.size()-1])) return true;
-    return false;
+    spdlog::debug("finished llvm gen for nested stmts for bblock label = {}\n",label->getLabel());
+    // The 2nd condition is necessary as the AssignmentStatement::get_llvm() for _ret would've already
+    // added the br to the final return bblock
+    if(this->children.size()==1 && !this->children[0]->final_return_block) { 
+        spdlog::debug("adding extra br\n");
+        auto br_llvm = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+        spdlog::debug("br_llvm = {}\n",br_llvm);
+        llvm_ir += br_llvm; 
+    }
+    /*
+    if(this->is_return_block()) {
+        spdlog::debug("adding extra br for return block:{}\n",*this);
+        llvm_ir += TAB+"br label %Lreturn\n";
+    }
+    */
+    return llvm_ir+"\n";
 }
 
 std::string Bblock::display() const {
