@@ -16,8 +16,8 @@ define i32 @main() #0 {
   br label %5
 
 5:                                                ; preds = %4, %3
-  %.0 = phi i32 [ 86, %3 ], [ 32, %4 ]
-  ret i32 %.0
+  %6 = phi i32 [ 86, %3 ], [ 32, %4 ]
+  ret i32 %6
 }
 
 attributes #0 = { noinline nounwind ssp uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "tune-cpu"="generic" }

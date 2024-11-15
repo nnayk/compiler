@@ -19,6 +19,14 @@ std::string Phi::display() const {
 
 std::string Phi::get_ssa() {
     spdlog::debug("inside Phi::{}\n",__func__);
-    std::string ssa = "";
+    std::string ssa = "phi ";
+    spdlog::debug("Considering phi with {} entries\n",this->entries.size());
+    for (auto it = this->entries.begin(); it != this->entries.end(); ++it) {
+        auto label = it->first;
+        auto reg = it->second;
+        spdlog::debug("label = {}\n",label);
+        spdlog::debug("assignee reg = {}\n",*reg);
+        ssa += 
+    } 
     return ssa;
 }

@@ -9,6 +9,7 @@ class Phi {
         std::unordered_map<std::string,std::shared_ptr<Register>> entries;
         std::shared_ptr<Register> assignee = nullptr; // register that's assigned to this phi
         std::shared_ptr<Bblock> block = nullptr; // block that contains this phi
+        std::shared_ptr<ast::Type> type = nullptr; // type of the value in register
         Phi() {};
         void addEntry(std::string label,std::shared_ptr<Register> reg);
         std::string display() const;

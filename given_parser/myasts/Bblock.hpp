@@ -9,6 +9,7 @@
 #include "Mapping.hpp"
 #include "Register.hpp"
 #include "Phi.hpp"
+#include "IdentifierExpression.hpp"
 
 namespace ast {
     class BlockStatement;
