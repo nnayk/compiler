@@ -32,7 +32,6 @@ std::string PrintStatement::get_ssa(Bblock &block) {
     std::string formatter = "@.print";
     if(this->getNewLine()) formatter += "ln";
     std::string ssa  = this->expression->get_ssa_init(block); 
-    Register::create();
     ssa +=  TAB+fmt::format("call i32 (ptr, ...) @printf(ptr noundef {}, i64 noundef {})\n",formatter,this->expression->get_ssa(block)); 
     return ssa;
 }
@@ -40,6 +39,8 @@ std::string PrintStatement::get_ssa(Bblock &block) {
 void PrintStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside PrintStatement::{}\n",__func__);
     this->expression->resolve_uses(block);    
+    // dummy register for the print call to make clang happy
+    Register::create();
 }
 
 } // namespace ast

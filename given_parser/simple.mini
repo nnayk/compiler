@@ -1,5 +1,7 @@
 fun main() int {
-    int x;
-    x=3;
-    return x;
+    int q;
+    q=3;
+    q=4+3;
+    print -q;
+    return q+2;
 }
