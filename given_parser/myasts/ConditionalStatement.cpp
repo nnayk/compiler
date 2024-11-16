@@ -113,7 +113,14 @@ std::string ConditionalStatement::get_llvm(Bblock &block) {
 
 std::string ConditionalStatement::get_ssa(Bblock &block) {
     spdlog::debug("inside ConditionalStatement::{}\n",__func__);
-    return this->get_llvm(block);
+    spdlog::debug("line={}\n",this->getLineNum());
+	assert(block.children.size()==2);
+	auto thenLabel = block.children[0]->label->getLabel();
+	auto elseLabel = block.children[1]->label->getLabel();
+    std::string ssa = this->guard->get_ssa_init(block);
+    ssa += TAB+fmt::format("br i1 {}, label %{}, label %{}\n",this->guard->get_ssa(block),thenLabel,elseLabel);
+    spdlog::debug("ssa={}\n",ssa);
+    return ssa;
 }
 
 void ConditionalStatement::resolve_def_uses(Bblock &block) {

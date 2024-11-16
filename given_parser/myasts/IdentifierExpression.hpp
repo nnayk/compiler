@@ -8,7 +8,7 @@
 
 namespace ast {
 
-class IdentifierExpression : public AbstractExpression {
+class IdentifierExpression : public AbstractExpression, public std::enable_shared_from_this<IdentifierExpression> {
 public:
     int scope = 0;
     // Constructor

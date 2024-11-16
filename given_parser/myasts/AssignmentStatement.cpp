@@ -101,8 +101,8 @@ std::string AssignmentStatement::get_ssa(Bblock &block) {
 
 	//Add ssa ir to perform the assignment
     std::string type_ssa = this->target->type->get_llvm(); // TODO P3: create get_ssa for all type classes
-    auto target_ssa = this->target->get_ssa(block);
     auto source_ssa = this->source->get_ssa(block);
+    auto target_ssa = this->target->get_ssa(block);
     // TODO: Add check for invocation (+ global) -- here we'd need a store instruction
     if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
         spdlog::debug("Zero extending binary expression!\n");

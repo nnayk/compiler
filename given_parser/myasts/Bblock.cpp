@@ -3,6 +3,7 @@
 #include "BlockStatement.hpp"
 #include "AssignmentStatement.hpp"
 #include "UseBeforeInitException.hpp"
+#include "IdentifierExpression.hpp"
 
 extern std::string TAB;
 extern std::unordered_map<std::string,std::shared_ptr<Register>> all_regs;
@@ -109,8 +110,9 @@ std::string Bblock::display() const {
 		return out;
 }
 
-std::shared_ptr<Register> Bblock::lookup(std::string id) {
+std::shared_ptr<Register> Bblock::lookup(std::shared_ptr<ast::IdentifierExpression> id_expr) {
     spdlog::debug("inside Bblock::{}\n",__func__);
+    auto id = id_expr->getId();
     spdlog::debug("Looking up register for id {}\n",id);
     if(auto reg = this->ssa_map->entries[id]) {
         spdlog::debug("Resolved var {} to register {}\n",id,*reg);
@@ -123,7 +125,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
             throw UseBeforeInitException(fmt::format("Uninitialized var {}\n",id));
         } else if(parents.size()==1) {
             spdlog::debug("Only 1 pred, yay!\n");
-            this->ssa_map->entries[id] = parents[0]->lookup(id);
+            this->ssa_map->entries[id] = parents[0]->lookup(id_expr);
             return this->ssa_map->entries[id];
         } else {
             spdlog::debug("Multiple preds, gotta create a phi instruction!\n");
@@ -134,7 +136,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
                     spdlog::debug("skipping loopback parent {}\n",*parent);
                     this->sealed = false;
                 } else {
-                    auto parent_reg = parent->lookup(id);
+                    auto parent_reg = parent->lookup(id_expr);
                     assert(parent_reg);
                     auto parent_label = parent->label->getLabel();
                     assert(parent_label != "");
@@ -146,6 +148,7 @@ std::shared_ptr<Register> Bblock::lookup(std::string id) {
             auto assignee = Register::create();
             // assign a register to the phi instruction and return it (also make sure to set phi assignee attr to the register AND also set phi block attr accordingly)
             phi->assignee = assignee;
+            phi->type = id_expr->type;
             phi->block = shared_from_this();
             spdlog::debug("Created phi for id {} with assignee {}:\n",id,*assignee);
             spdlog::debug("{}\n",*phi);

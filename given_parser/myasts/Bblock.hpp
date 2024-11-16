@@ -9,11 +9,11 @@
 #include "Mapping.hpp"
 #include "Register.hpp"
 #include "Phi.hpp"
-#include "IdentifierExpression.hpp"
 
 namespace ast {
     class BlockStatement;
     class Statement;
+    class IdentifierExpression;
 }
 
 class Mapping;
@@ -36,7 +36,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         std::string get_llvm();
         std::string get_ssa();
         std::string display() const;
-        std::shared_ptr<Register> lookup(std::string id);
+        std::shared_ptr<Register> lookup(std::shared_ptr<ast::IdentifierExpression> id_expr);
         bool is_loopback_parent(std::shared_ptr<Bblock> target);
         void add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Declaration> params);
         void add_initial_mapping(std::vector<ast::Declaration> params);

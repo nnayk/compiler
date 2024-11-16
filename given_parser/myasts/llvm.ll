@@ -12,15 +12,26 @@ declare i64 @scanf(ptr, ...)
 define noundef i64 @main() {
 
 	L0:
-	%1 = add i64 4, 3
-	%2 = sub i64 0, %1
-	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef %2)
-	%4 = add i64 %1, 2
-	br label %L1
+	%1 = icmp sgt i64 3, 5
+	br i1 %1, label %L1, label %L2
 
 
 	L1:
-	ret i64 %4
+	br label %L3
+
+	L2:
+	br label %L3
+
+	L3:
+	%2 = phi i64 [ 7, %L2 ],[ 9, %L1 ]
+	%3 = add i64 3, %2
+	%4 = add i64 %3, 9
+	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef %4)
+	br label %L4
+
+
+	L4:
+	ret i64 9
 
 }
 

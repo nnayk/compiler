@@ -82,8 +82,9 @@ std::string IdentifierExpression::get_ssa_init(Bblock &block) {
 
 std::string IdentifierExpression::get_ssa(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    if(auto reg = block.ssa_map->entries[this->getId()]) {
-        return reg->get_llvm();
+    spdlog::debug("line = {}\n",this->getLineNum());
+    if(this->result) {
+        return this->result->get_llvm();
     } else {
         throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));
     }
@@ -92,7 +93,7 @@ std::string IdentifierExpression::get_ssa(Bblock &block) {
 
 void IdentifierExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-   auto reg = block.lookup(this->getId());   
+   auto reg = block.lookup(shared_from_this());   
    spdlog::debug("resolved IdExpression {} on line {} to register {}\n",this->getId(),this->getLineNum(),*reg);
    this->result = reg;
 }
