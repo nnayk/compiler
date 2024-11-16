@@ -41,6 +41,7 @@ std::vector<std::shared_ptr<Bblock>> WhileStatement::get_cfg() {
     // to 0)
     if(final_body_block->stmts.size()==0) final_body_block->visited = 0;
     // Add conditional stmt to last block in body block
+    //auto cond_stmt_copy = std::make_shared<ConditionalStatement>(this->lineNum,this->guard,this->body,nullptr);
     final_body_block->stmts.push_back(cond_stmt);
     // Add self loop (as 1st child)
     final_body_block->children[0] = thenBlock;

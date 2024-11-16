@@ -209,6 +209,7 @@ std::string CfgFunc::get_ssa() {
     spdlog::debug("Done with initial mapping!\n");
     // Step 1: Resolve var defs+uses for each statement in the block
     for(auto block : this->blocks) {
+        spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
         block->resolve_def_uses();
     }
     //return ssa;

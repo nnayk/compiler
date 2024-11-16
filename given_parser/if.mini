@@ -2,13 +2,13 @@ fun main() int {
     int x;
     x=3;
     if(x>5) {
-        x=2;
+        x=2+4;
         x=5;
-        x=9; # TODO: test unary by changing this to -9
+        x=9-8; # TODO: test unary by changing this to -9
     } else {
         x=4;
         x=8;
-        x=7;
+        x=7+x;
     }
     x=3+x;
     print x+9;
