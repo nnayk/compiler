@@ -38,3 +38,12 @@ std::string CfgProg::get_llvm() {
     return llvm_ir;
 }
 
+std::string CfgProg::get_asm() {
+    spdlog::debug("inside CfgProg::{}\n",__func__);
+    std::string arm = "fp .req x29\nlr .req x30\n.arch armv8-a\n.text\n\n\n";
+    for(auto func : this->funcs) {
+        arm += fmt::format("{}\n",func->get_asm());
+    }
+    return arm;
+}
+

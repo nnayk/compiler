@@ -124,6 +124,12 @@ std::string AssignmentStatement::get_ssa(Bblock &block) {
 	return ssa;
 }
 
+std::string AssignmentStatement::get_arm(Bblock &block) {
+    spdlog::debug("inside AssignmentStatement::{}\n",__func__);
+    std::string arm = "";
+    return arm;
+}
+
 void AssignmentStatement::typecheck(Env &env, Function &f) {
     spdlog::debug("inside AssignmentStatement::{}\n",__func__);
     // Get the type of the lhs and rhs

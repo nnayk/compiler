@@ -22,6 +22,7 @@ class CfgFunc {
         std::vector<std::shared_ptr<Bblock>> blocks;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 
+        std::string get_asm(); 
 		std::string display() const;
         void create_labels();
         std::string get_ssa(); 

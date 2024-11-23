@@ -12,6 +12,8 @@ class CfgProg {
         std::vector<std::shared_ptr<CfgFunc>> funcs;     // Pointer to Declaration objects (pointer to global var declarations)
         static std::shared_ptr<CfgProg> build(ast::Program &p);
         std::string get_llvm(); // Returns the LLVM IR for the entire program
+        std::string get_asm(); // Returns the asm for the entire program
+        
     private: 
         CfgProg(std::vector<std::shared_ptr<ast::TypeDeclaration>> typeDecls,std::vector<std::shared_ptr<ast::Declaration>> globals, std::vector<std::shared_ptr<CfgFunc>> funcs ); 
 };

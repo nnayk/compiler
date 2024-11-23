@@ -87,6 +87,11 @@ declare i64 @scanf(ptr, ...)
         spdlog::info("LLVM IR:\n{}",llvm);
         write_file(llvm,"llvm.ll");
     }
+    
+    spdlog::debug("gonna fetch asm for the program\n");
+    auto arm = cfg_prog->get_asm();
+    spdlog::info("ARM:\n{}",arm);
+    write_file(arm,"arm.ll");
     return 0;
 }
 

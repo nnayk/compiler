@@ -212,3 +212,13 @@ void Bblock::resolve_def_uses() {
     }
     spdlog::debug("done resolving def uses\n");
 }
+
+std::string Bblock::get_arm() {
+    spdlog::debug("inside BBlock::{}\n",__func__);
+    std::string arm = "";
+    for(auto stmt : this->stmts) {
+        arm += stmt->get_arm(*this);
+    }
+    return arm;
+}
+

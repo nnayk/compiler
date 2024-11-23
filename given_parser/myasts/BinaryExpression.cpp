@@ -209,5 +209,103 @@ std::string BinaryExpression::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+std::string BinaryExpression::get_arm_init(Bblock &block) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+	auto arm_str = this->getLeft()->get_llvm_init(block);
+    arm_str += this->getRight()->get_llvm_init(block);
+	arm_str += TAB;
+    auto operatorType = this->getOperator();
+	auto left_arm = this->getLeft()->get_llvm(block);
+	auto right_arm = this->getRight()->get_llvm(block);
+	auto type_arm = this->getLeft()->type->get_llvm();
+	if(!this->result) { 
+        assert(!use_ssa);
+        this->result = Register::create();
+    }
+	auto result_arm = this->result->get_llvm();
+	std::string operator_arm = "";
+    //std::string extra_str = "";
+    //std::shared_ptr<Register> old_result = nullptr;
+	switch (operatorType) {
+		case BinaryExpression::Operator::PLUS:
+			spdlog::debug("The operator is PLUS.");
+			operator_arm = "add";
+			break;
+		case BinaryExpression::Operator::MINUS:
+			spdlog::debug("The operator is MINUS.");
+			operator_arm = "sub";
+			break;
+		case BinaryExpression::Operator::TIMES:
+			spdlog::debug("The operator is TIMES.");
+			operator_arm = "mul";
+			break;
+		case BinaryExpression::Operator::DIVIDE:
+			spdlog::debug("The operator is DIVIDE.");
+			operator_arm = "sdiv";
+			break;
+		case BinaryExpression::Operator::LT:
+			spdlog::debug("The operator is LT.");
+			operator_arm = "icmp slt";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::GT:
+			spdlog::debug("The operator is GT.");
+			operator_arm = "icmp sgt";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::LE:
+			spdlog::debug("The operator is LE.");
+			operator_arm = "icmp sle";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::GE:
+			spdlog::debug("The operator is GE.");
+			operator_arm = "icmp sge";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::EQ:
+			spdlog::debug("The operator is EQ.");
+			operator_arm = "icmp eq";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::NE:
+			spdlog::debug("The operator is NE.");
+			operator_arm = "icmp ne";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(block),old_result->get_llvm(block));
+			break;
+		case BinaryExpression::Operator::AND:
+			spdlog::debug("The operator is AND.");
+			operator_arm = "and";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(),old_result->get_llvm());
+			break;
+		case BinaryExpression::Operator::OR:
+			spdlog::debug("The operator is OR.");
+			operator_arm = "or";
+            //old_result = this->result;
+            //this->result = Register::create();
+            //extra_str = TAB + fmt::format("{} = zext i1 {} to i8\n",this->result->get_arm(),old_result->get_llvm());
+			break;
+		default:
+			throw TypeException("Unknown operator!");
+	} 
+	arm_str += fmt::format("{} {}, {}, {}\n",operator_arm,result_arm,left_arm,right_arm);
+    //arm_str += extra_str;
+    return arm_str;
+}
+
 
 }  // namespace ast

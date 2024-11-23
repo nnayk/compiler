@@ -33,6 +33,11 @@ std::string AbstractStatement::get_ssa(Bblock &block) {
     return "";
 }
 
+std::string AbstractStatement::get_arm(Bblock &block) {
+    spdlog::debug("inside AbstractStatement::{}", __func__);
+    return "";
+}
+
 void AbstractStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside AbstractStatement::{}\n",__func__);
 }

@@ -44,4 +44,9 @@ std::string AbstractExpression::get_ssa(Bblock &block) {
     return "";
 }
 
+std::string AbstractExpression::get_arm_init(Bblock &block) {
+    spdlog::debug("inside AbstractExpression::{}\n",__func__);
+    return "";
+}
+
 }  // namespace ast

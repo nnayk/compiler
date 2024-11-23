@@ -41,6 +41,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         void add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Declaration> params);
         void add_initial_mapping(std::vector<ast::Declaration> params);
         void resolve_def_uses(); // traverses each stmt, updating each expression with its result register and updating mapping for each assignment encountered
+        std::string get_arm();
 };
 
 //Specialize fmt::formatter for Bblock

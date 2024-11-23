@@ -1,0 +1,9 @@
+fun main() int {
+    int x;
+    x=3+4;
+    if(x<2) {
+    } else {
+        print x-9;
+    }
+    return x+8;
+}

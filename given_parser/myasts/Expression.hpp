@@ -29,6 +29,7 @@ public:
     virtual std::string get_llvm(Bblock &block) = 0;
     virtual std::string get_ssa_init(Bblock &block) = 0;
     virtual std::string get_ssa(Bblock &block) = 0;
+    virtual std::string get_arm_init(Bblock &block) = 0;
     // actually idt this is needed
     //virtual std::string get_ssa(CfgFunction &f) = 0;
     virtual std::string display() const = 0;
