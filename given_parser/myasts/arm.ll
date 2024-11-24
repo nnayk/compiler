@@ -6,6 +6,6 @@ lr .req x30
 
 .global main
 main:
-stp fp, lr [sp,-80] !
-ldp fp, lr [sp], 80
+stp fp, lr [sp,-48] !
+ldp fp, lr [sp], 48
 

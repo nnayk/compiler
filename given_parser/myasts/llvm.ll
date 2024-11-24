@@ -12,11 +12,8 @@ declare i64 @scanf(ptr, ...)
 define noundef i64 @main() {
 
 	L0:
-	br label %L1
-
-
-	L1:
-	ret i64 1
+	%1 = icmp sgt i64 3, 4
+	%2 = zext i1 %1 to i8
 
 }
 

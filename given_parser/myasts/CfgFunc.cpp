@@ -208,9 +208,15 @@ std::string CfgFunc::get_ssa() {
     spdlog::debug("HEAD BLOCK MAPPING: {}\n",*head_block->ssa_map);
     spdlog::debug("Done with initial mapping!\n");
     // Step 1: Resolve var defs+uses for each statement in the block
+    spdlog::debug("number of blocks : {}\n",this->blocks.size());
     for(auto block : this->blocks) {
-        spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
+        if(block->final_return_block) {
+            spdlog::debug("no need to call resolve_def_uses for final ret block\n");
+            continue;
+        } else {
+            spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
         block->resolve_def_uses();
+        }
     }
     //return ssa;
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
