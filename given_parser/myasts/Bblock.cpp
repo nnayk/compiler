@@ -216,6 +216,7 @@ void Bblock::resolve_def_uses() {
 std::string Bblock::get_arm() {
     spdlog::debug("inside BBlock::{}\n",__func__);
     std::string arm = "";
+    arm += "\n"+TAB+label->getLabel()+":\n";  
     for(auto stmt : this->stmts) {
         arm += stmt->get_arm(*this);
     }

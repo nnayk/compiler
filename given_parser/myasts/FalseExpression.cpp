@@ -19,6 +19,11 @@ std::string FalseExpression::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+std::string FalseExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside FalseExpression::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 void FalseExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside FalseExpression::{}\n",__func__);
     auto id = this->get_llvm(block);

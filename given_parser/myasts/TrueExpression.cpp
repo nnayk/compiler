@@ -22,6 +22,11 @@ std::string TrueExpression::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+std::string TrueExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside TrueExpression::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 void TrueExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside TrueExpression::{}\n",__func__);
     auto id = this->get_llvm(block);

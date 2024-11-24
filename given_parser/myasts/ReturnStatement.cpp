@@ -37,6 +37,11 @@ std::string ReturnStatement::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+std::string ReturnStatement::get_arm(Bblock &block) {
+    spdlog::debug("inside ReturnStatement::{}\n",__func__);
+    return TAB+"ret\n";
+}
+
 std::vector<std::shared_ptr<Bblock>> ReturnStatement::get_cfg() {
     spdlog::debug("inside ReturnStatement::{}\n",__func__);
     auto lvalue = std::make_shared<LvalueId>(this->getLineNum(),"_ret");

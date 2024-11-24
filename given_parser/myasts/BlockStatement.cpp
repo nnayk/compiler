@@ -150,6 +150,15 @@ std::string BlockStatement::get_llvm(Bblock &block) {
     }
 	return llvm_ir;
 } 
+
+std::string BlockStatement::get_arm(Bblock &block) { 
+	spdlog::debug("inside BlockStatement::{}\n",__func__);
+    std::string arm = "";
+    for(auto stmt : this->statements) {
+        arm += stmt->get_arm(block);
+    }
+	return arm;
+}
 /*
 void BlockStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside BlockStatement::{}\n",__func__);

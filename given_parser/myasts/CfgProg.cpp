@@ -40,7 +40,13 @@ std::string CfgProg::get_llvm() {
 
 std::string CfgProg::get_asm() {
     spdlog::debug("inside CfgProg::{}\n",__func__);
-    std::string arm = "fp .req x29\nlr .req x30\n.arch armv8-a\n.text\n\n\n";
+    std::string arm = ".data\n";
+    arm += "fmt: .asciz \"%d\\n\"\n";
+    arm += "fmtn: .asciz \"%d\\n\"\n";
+    arm += "fp .req x29\nlr .req x30\n\n\n";
+    arm += ".arch armv8-a\n\n\n";
+    arm += ".text\n";
+    // TODO: add bss section
     for(auto func : this->funcs) {
         arm += fmt::format("{}\n",func->get_asm());
     }

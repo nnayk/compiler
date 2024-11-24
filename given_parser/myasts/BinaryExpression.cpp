@@ -224,7 +224,7 @@ std::string BinaryExpression::get_arm_init(Bblock &block) {
         assert(!use_ssa);
         this->result = Register::create();
     }
-	auto result_arm = this->result->get_llvm();
+	auto result_arm = this->result->get_arm();
     spdlog::debug("result arm = {}\n",result_arm);
 	std::string operator_arm = "";
     // TODO: add special handling for binary bool expr

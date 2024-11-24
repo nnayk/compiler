@@ -44,3 +44,9 @@ std::string Register::get_llvm() {
     if(this->pseudo) return this->id;
     else return this->prefix+this->id;
 }
+
+std::string Register::get_arm() {
+    //this->references.push_back(e);
+    if(this->pseudo) return this->id;
+    else return "x"+this->id;
+}

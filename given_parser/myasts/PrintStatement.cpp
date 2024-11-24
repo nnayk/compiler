@@ -43,5 +43,22 @@ void PrintStatement::resolve_def_uses(Bblock &block) {
     Register::create();
 }
 
+std::string PrintStatement::get_arm(Bblock &block) {
+    spdlog::debug("inside PrintStatement::{}\n",__func__);
+    std::string arm = "";
+    // Move the print format into x0 (i.e. first arg to printf) 
+    if(this->newLine) {
+        arm += "adrp x0, fmtn\n";
+    arm += "add x0, x0, :lo12:fmtn\n";
+    } else {
+        arm += "adrp x0, fmt\n";
+        arm += "add x0, x0, :lo12:fmt\n";
+    }
+    // Move the integer print into x1 (i.e. 2nd arg to printf)
+    arm += fmt::format("mov x1, {}\n",this->getExpression()->get_arm(block));
+    arm += "bl printf\n";
+    return arm;
+}
+
 } // namespace ast
 

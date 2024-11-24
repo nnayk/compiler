@@ -357,7 +357,7 @@ std::string CfgFunc::get_asm() {
     // Add prologue
 	// Step 1: Calculate sp adjustment based on # of local vars (Even if 0 local vars are present still we must push the fp + lr onto stack...note technically if the function doesn't make any invocations then this is unneeded but I don't want to deal with that for now so just gonna save/restore fp+lr)
 	auto sp_adjustment = (this->locals.size()+2)*16; // +2 for fp + lr
-	arm += TAB+fmt::format("stp fp, lr [sp,-{}] !\n",sp_adjustment);
+	arm += TAB+fmt::format("stp fp, lr, [sp,-{}] !\n",sp_adjustment);
 	// Step 2: Save callee saved regs? idt this will be needed for this program tbh
 	// Step 3: Perfom modified DFS to translate each line in each block
 	if(this->blocks.size() > 0) {
@@ -405,7 +405,7 @@ std::string CfgFunc::get_asm() {
 	}
 	
     // Add epilogue
-	arm += TAB+fmt::format("ldp fp, lr [sp], {}\n",sp_adjustment);	
+	arm += TAB+fmt::format("ldp fp, lr, [sp], {}\n",sp_adjustment);	
     return arm;
 }
 

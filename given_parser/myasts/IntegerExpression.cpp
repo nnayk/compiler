@@ -28,6 +28,11 @@ std::string IntegerExpression::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+std::string IntegerExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside IntegerExpression::{}\n",__func__);
+    return this->get_llvm(block);
+}
+
 void IntegerExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside IntegerExpression::{}\n",__func__);
     auto id = this->get_llvm(block);

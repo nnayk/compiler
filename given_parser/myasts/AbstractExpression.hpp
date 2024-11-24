@@ -25,6 +25,7 @@ public:
     // Getter for lineNum
     int getLineNum() const;
     virtual void resolve_uses(Bblock &block) override;
+    virtual std::string get_arm(Bblock &block) override;
 };
 }  // namespace ast
 

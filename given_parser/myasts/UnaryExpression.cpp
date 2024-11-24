@@ -79,5 +79,9 @@ void UnaryExpression::resolve_uses(Bblock &block) {
     spdlog::debug("chose register {} for UnaryExpression on line {}\n",*this->result,this->getLineNum());
 }
 
+std::string UnaryExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside UnaryExpression::{}\n",__func__);
+}
+
 } // namespace ast
 

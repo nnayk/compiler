@@ -49,4 +49,9 @@ std::string AbstractExpression::get_arm_init(Bblock &block) {
     return "";
 }
 
+std::string AbstractExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside AbstractExpression::{}\n",__func__);
+    return "x"+this->result->get_id();
+}
+
 }  // namespace ast

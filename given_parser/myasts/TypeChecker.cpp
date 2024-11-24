@@ -80,7 +80,7 @@ declare i64 @scanf(ptr, ...)
         spdlog::debug("gonna fetch ssa\n");
         llvm += cfg_prog->get_llvm();
         spdlog::info("LLVM IR:\n{}",llvm);
-        write_file(llvm,"llvm.ll");
+        write_file(llvm,"ssa.ll");
     } else {
         spdlog::debug("gonna fetch NON-ssa\n");
         llvm += cfg_prog->get_llvm();
