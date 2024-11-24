@@ -28,6 +28,7 @@ namespace ast {
       std::shared_ptr<Register> getDerefResult(); 
       std::shared_ptr<Register> getResult();
       void setResult(std::shared_ptr<Register> reg);
+      virtual std::string get_arm_init(Bblock &block) = 0;
 protected:
      std::shared_ptr<Register> result; // register where the lvalue is stored
      std::shared_ptr<Register> deref_result = nullptr; // only for structs -- to store the single pointer

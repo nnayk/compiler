@@ -126,7 +126,41 @@ std::string AssignmentStatement::get_ssa(Bblock &block) {
 
 std::string AssignmentStatement::get_arm(Bblock &block) {
     spdlog::debug("inside AssignmentStatement::{}\n",__func__);
-    std::string arm = "";
+    spdlog::debug("lineNum = {}\n",this->getLineNum());
+	std::string arm = "";
+    spdlog::debug("source = {}\n",*(this->source));
+    assert(this->source);
+    assert(this->target);
+    assert(this->target->type);
+    assert(this->source->type);
+	std::string target_arm_init = this->target->get_arm_init(block);
+    spdlog::debug("Got target arm for id {}: {}\n",this->target->getId(),target_arm_init);
+    spdlog::debug("Target id = {}, type = {}\n",this->target->getId(), *this->target->type);
+    std::string source_arm_init = this->source->get_arm_init(block);
+    spdlog::debug("Got source arm: {}\n",source_arm_init);
+	arm += target_arm_init;
+	arm += source_arm_init;
+    std::string type_arm = this->target->type->get_llvm(); // TODO P3: create get_arm for all type classes
+    // TODO: Add check for invocation (+ global) -- here we'd need a store instruction
+    // TODO: Look into this if stmt + special case return stmt below
+    if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
+        spdlog::debug("Zero extending binary expression!\n");
+        // TODO: create an arm zext (ie.. just ANDs w/#1)
+        arm += bin_exp->zext();
+        this->target->setResult(bin_exp->getResult());
+    }
+    spdlog::debug("assignment arm = {}",arm);
+    //special case return stmt
+    if(this->target->getId() == "_ret") {
+        for(auto child : block.children) {
+            if(child->final_return_block) {
+                spdlog::debug("found final return block child, gonnabreak to it\n");
+                auto return_label = child->label->getLabel();
+                spdlog::debug("return label = {}\n",return_label);
+                arm += TAB+fmt::format("br label %{}\n",return_label);
+            }
+        }
+    }
     return arm;
 }
 

@@ -29,6 +29,7 @@ public:
     std::shared_ptr<ast::StructType> getLeftType();
     std::string get_topmost_id();
     virtual void resolve_def(std::string &source_immediate) override;
+    virtual std::string get_arm_init(Bblock &block) override;
 };
 
 } // namespace ast

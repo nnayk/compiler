@@ -224,6 +224,7 @@ std::string BinaryExpression::get_arm_init(Bblock &block) {
     }
 	auto result_arm = this->result->get_llvm();
 	std::string operator_arm = "";
+    // TODO: add special handling for binary bool expr
     //std::string extra_str = "";
     //std::shared_ptr<Register> old_result = nullptr;
 	switch (operatorType) {

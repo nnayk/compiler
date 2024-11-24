@@ -87,6 +87,13 @@ std::string LvalueId::get_ssa_init(Bblock &block) {
     return this->get_llvm_init(block);
 }
 
+std::string LvalueId::get_arm_init(Bblock &block) {
+    spdlog::debug("inside LvalueId::{}\n",__func__);
+    std::string arm = "";
+    // TODO: extra instructions for struct needed (i.e. load its address)
+    return arm;
+}
+
 void LvalueId::resolve_def(std::string &source_immediate) {
     spdlog::debug("inside LvalueId::{}\n",__func__);
     //assert(!this->result);
@@ -98,6 +105,8 @@ void LvalueId::resolve_def(std::string &source_immediate) {
         this->result = Register::create();
     }
 }
+
+
 
 } // namespace ast
 

@@ -20,6 +20,7 @@ public:
     virtual std::string get_ssa_init(Bblock &block) override;
     virtual std::string get_ssa(Bblock &block) override;
     virtual void resolve_def(std::string &source_immediate) override;
+    virtual std::string get_arm_init(Bblock &block) override;
 
 private:
     int lineNum;      // Line number in source code
