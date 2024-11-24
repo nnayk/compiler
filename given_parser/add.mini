@@ -1,0 +1,4 @@
+fun main() int {
+    int  x;
+    x = 3+4;
+}

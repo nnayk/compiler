@@ -25,7 +25,8 @@ class CfgFunc {
         std::string get_asm(); 
 		std::string display() const;
         void create_labels();
-        std::string get_ssa(); 
+        std::string get_ssa();
+        void reset_visited();
    private:
         CfgFunc(std::string name,std::vector<ast::Declaration> params,std::shared_ptr<ast::Type> retType,std::vector<ast::Declaration> locals); //std::vector<Bblock> blocks);
 };

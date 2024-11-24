@@ -194,6 +194,7 @@ std::string CfgFunc::get_llvm() {
         }
     }
     llvm_ir += "}\n";
+    this->reset_visited();
     return llvm_ir;
 }
 
@@ -215,7 +216,7 @@ std::string CfgFunc::get_ssa() {
             continue;
         } else {
             spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
-        block->resolve_def_uses();
+            block->resolve_def_uses();
         }
     }
     //return ssa;
@@ -282,6 +283,7 @@ std::string CfgFunc::get_ssa() {
             }
         }
     }
+    this->reset_visited();
     // TODO: Run optimizations on post-LLVM CFG 
     return ssa;
 }
@@ -348,14 +350,14 @@ std::string CfgFunc::display() const {
 
 std::string CfgFunc::get_asm() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
-    this->get_llvm();
+    //this->get_llvm();
     // TODO: Run optimizations on post-LLVM CFG
     std::string arm = fmt::format(".global {}\n",this->name);
 	arm += fmt::format("{}:\n",this->name);
     // Add prologue
 	// Step 1: Calculate sp adjustment based on # of local vars (Even if 0 local vars are present still we must push the fp + lr onto stack...note technically if the function doesn't make any invocations then this is unneeded but I don't want to deal with that for now so just gonna save/restore fp+lr)
 	auto sp_adjustment = (this->locals.size()+2)*16; // +2 for fp + lr
-	arm += fmt::format("stp fp, lr [sp,-{}] !\n",sp_adjustment);
+	arm += TAB+fmt::format("stp fp, lr [sp,-{}] !\n",sp_adjustment);
 	// Step 2: Save callee saved regs? idt this will be needed for this program tbh
 	// Step 3: Perfom modified DFS to translate each line in each block
 	if(this->blocks.size() > 0) {
@@ -403,7 +405,13 @@ std::string CfgFunc::get_asm() {
 	}
 	
     // Add epilogue
-	arm += fmt::format("ldp fp, lr [sp], {}\n",sp_adjustment);	
+	arm += TAB+fmt::format("ldp fp, lr [sp], {}\n",sp_adjustment);	
     return arm;
 }
 
+void CfgFunc::reset_visited() {
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
+    for(auto block : this->blocks) {
+        block->visited = 0;
+    }
+}

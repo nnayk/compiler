@@ -74,6 +74,7 @@ std::string BinaryExpression::get_llvm_init(Bblock &block) {
         this->result = Register::create();
     }
 	auto result_llvm = this->result->get_llvm();
+    spdlog::debug("result llvm = {}\n",result_llvm);
 	std::string operator_llvm = "";
     //std::string extra_str = "";
     //std::shared_ptr<Register> old_result = nullptr;
@@ -209,6 +210,7 @@ std::string BinaryExpression::get_ssa(Bblock &block) {
     return this->get_llvm(block);
 }
 
+// This function assumes get_llvm_init has already been called
 std::string BinaryExpression::get_arm_init(Bblock &block) {
     spdlog::debug("inside BinaryExpression::{}\n",__func__);
 	auto arm_str = this->getLeft()->get_llvm_init(block);
@@ -223,6 +225,7 @@ std::string BinaryExpression::get_arm_init(Bblock &block) {
         this->result = Register::create();
     }
 	auto result_arm = this->result->get_llvm();
+    spdlog::debug("result arm = {}\n",result_arm);
 	std::string operator_arm = "";
     // TODO: add special handling for binary bool expr
     //std::string extra_str = "";
