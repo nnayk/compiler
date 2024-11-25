@@ -211,10 +211,11 @@ std::string CfgFunc::get_ssa() {
     // Step 1: Resolve var defs+uses for each statement in the block
     spdlog::debug("number of blocks : {}\n",this->blocks.size());
     for(auto block : this->blocks) {
+        /*
         if(block->final_return_block) {
             spdlog::debug("no need to call resolve_def_uses for final ret block\n");
-            continue;
         } else {
+        */
             spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
             block->resolve_def_uses();
             if(!block->sealed) {
@@ -226,7 +227,7 @@ std::string CfgFunc::get_ssa() {
                 }
                 assert(block->loopback_parents.size()==1);
             }
-        }
+        //}
     }
     //return ssa;
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
@@ -243,7 +244,11 @@ std::string CfgFunc::get_ssa() {
             }
         }
     }
+    spdlog::debug("Gonna remove non-trivial phis!\n");
     // Step 3: Remove non-trivial phis
+    for(auto block : this->blocks) {
+        block->prune_phis();
+    }
     // Step 4: Generate ssa ssa
     //add ssa IR for body
     if(this->blocks.size() > 0) {

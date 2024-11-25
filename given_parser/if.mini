@@ -12,5 +12,5 @@ fun main() int {
     }
     x=3+x;
     print x+9;
-    return 9;
+    return 9*x;
 }

@@ -190,6 +190,10 @@ void Bblock::resolve_def_uses() {
     spdlog::debug("done resolving def uses\n");
 }
 
+void Bblock::prune_phis() {
+    spdlog::debug("inside Bblock::{}\n",__func__);
+}
+
 std::string Bblock::get_arm() {
     spdlog::debug("inside BBlock::{}\n",__func__);
     std::string arm = "";

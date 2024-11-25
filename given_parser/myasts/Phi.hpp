@@ -1,9 +1,12 @@
 #ifndef __PHI__HPP__
 #define __PHI__HPP__
 #include "Register.hpp"
-#include "IdentifierExpression.hpp"
 #include <fmt/core.h>
 #include <fmt/format.h>
+
+namespace ast { 
+    class IdentifierExpression;
+}
 
 class Phi {
     public:

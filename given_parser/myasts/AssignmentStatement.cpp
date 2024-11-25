@@ -197,6 +197,7 @@ void AssignmentStatement::resolve_def_uses(Bblock &block) {
     if(dynamic_pointer_cast<LvalueId>(this->target)) {
         spdlog::debug("LvalueId {}, reusing source result {}\n",this->target->getId(),*source_result);
         this->target->setResult(source_result);
+        spdlog::debug("adding ssa_map entry for {}\n",this->target->getId());
         block.ssa_map->addEntry(this->target->getId(),source_result);
     } else {
         spdlog::debug("Target is an LvalueDot (id = {}), skipping for now!",this->target->getId());

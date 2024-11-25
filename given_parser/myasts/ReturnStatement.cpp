@@ -34,6 +34,8 @@ std::string ReturnStatement::get_llvm(Bblock &block) {
 
 std::string ReturnStatement::get_ssa(Bblock &block) {
     spdlog::debug("inside ReturnStatement::{}\n",__func__);
+    auto ret_val = block.ssa_map->entries["_ret"];
+    spdlog::debug("found ret_val {}\n",*ret_val); 
     return this->get_llvm(block);
 }
 

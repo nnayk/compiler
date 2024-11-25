@@ -29,7 +29,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         std::shared_ptr<Label> label = nullptr;
         std::vector<std::shared_ptr<Phi>> phis;
         bool emit_llvm = true; // only used by conditionals for then/else blocks for now
-        bool sealed  = false; // basically if a block has a potential future pred. (which can only be the case with while body blocks) then it will be unsealed until the future pred. is sealed.
+        bool sealed  = true; // basically if a block has a potential future pred. (which can only be the case with while body blocks) then it will be unsealed until the future pred. is sealed.
         int visited; // for CFG traversal purposes
         bool final_return_block = false;
         Bblock();
@@ -42,6 +42,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         void add_initial_mapping(std::vector<ast::Declaration> params);
         void resolve_def_uses(); // traverses each stmt, updating each expression with its result register and updating mapping for each assignment encountered
         std::string get_arm();
+        void prune_phis();
 };
 
 //Specialize fmt::formatter for Bblock
