@@ -315,7 +315,6 @@ std::string CfgFunc::get_ssa() {
     return ssa;
 }
 
-
 // BFS display of each block in the CFG
 std::string CfgFunc::display() const {
     spdlog::debug("inside CfgFunc::{}",__func__);

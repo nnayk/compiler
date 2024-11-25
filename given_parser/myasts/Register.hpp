@@ -23,6 +23,7 @@ class Register : public std::enable_shared_from_this<Register> {
         void set_global_prefix();
         std::string get_llvm();
         std::string get_arm();
+        void replace_reg(std::shared_ptr<Register> sub);
         //std::string use_llvm(std::shared_ptr<ast::Expression>);
     private:
         Register(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);

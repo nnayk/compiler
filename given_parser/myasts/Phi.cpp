@@ -1,5 +1,6 @@
 #include "Phi.hpp"
 #include "IdentifierExpression.hpp"
+#include <unordered_set>
 
 extern std::string TAB;
 
@@ -36,4 +37,11 @@ std::string Phi::get_ssa() {
     spdlog::debug("phi ssa = {}\n",ssa);
     assert(ssa[ssa.size()-1]==',');
     return ssa.substr(0,ssa.size()-1)+"\n";
+}
+
+std::shared_ptr<Register>> Phi::is_trivial() {
+    spdlog::debug("inside Phi::{}\n",__func__);
+    std::unordered_set<std::shared_ptr<Register>> regs;
+    assert(regs.size()==1);
+    return *regs.begin();
 }
