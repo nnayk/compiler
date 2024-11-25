@@ -35,10 +35,11 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         is_ret_stmt = dynamic_pointer_cast<ReturnStatement>(stmt) != nullptr;
         is_while_stmt = dynamic_pointer_cast<WhileStatement>(stmt) != nullptr;
         is_cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(stmt) != nullptr;
+        auto new_blocks = stmt->get_cfg();
+        auto new_head = new_blocks[0];
         if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
         spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
-        auto new_blocks = stmt->get_cfg();
         if(is_ret_stmt) {
             stmt = new_blocks[0]->stmts[0];
             assert(dynamic_pointer_cast<AssignmentStatement>(stmt));
@@ -50,7 +51,6 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
             stmt = cond_stmt;
         }
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
-        auto new_head = new_blocks[0];
         if(is_ret_stmt) {
             auto ret_block = new_head;
             // if we're gonna merge this block with prev then add prev_tail to the list of return block.

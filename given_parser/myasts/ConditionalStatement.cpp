@@ -130,6 +130,5 @@ void ConditionalStatement::resolve_def_uses(Bblock &block) {
     //this->elseBlock->resolve_def_uses(block);
 }
 
-
 } // namespace ast
 

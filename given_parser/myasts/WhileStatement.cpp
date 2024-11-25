@@ -63,5 +63,11 @@ std::string WhileStatement::get_llvm(Bblock &block) {
     return llvm;
 }
 
+std::string WhileStatement::get_ssa(Bblock &block) {
+    spdlog::debug("inside WhileStatement::{}\n",__func__);
+    std::string arm = "";
+    return arm;
+}
+
 } // namespace ast
 

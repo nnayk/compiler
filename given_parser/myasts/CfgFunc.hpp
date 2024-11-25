@@ -20,6 +20,7 @@ class CfgFunc {
         std::vector<ast::Declaration> locals;  // Local declarations
         std::shared_ptr<Bblock> return_block = nullptr;
         std::vector<std::shared_ptr<Bblock>> blocks;
+        std::vector<std::shared_ptr<Bblock>> unsealed_blocks;
         static std::shared_ptr<CfgFunc> build(ast::Function &f);
         std::string get_llvm(); 
         std::string get_asm(); 

@@ -217,10 +217,32 @@ std::string CfgFunc::get_ssa() {
         } else {
             spdlog::debug("resolving bblock {} defs+uses\n",block->label->getLabel());
             block->resolve_def_uses();
+            if(!block->sealed) {
+                spdlog::debug("pushing unsealed block to list:{}\n",*block);
+                this->unsealed_blocks.push_back(block);
+                spdlog::debug("# of loopback parents : {}\n",block->loopback_parents.size());
+                for(auto parent : block->loopback_parents) {
+                    spdlog::debug("loopback parent label = {}\n",parent->label->getLabel());
+                }
+                assert(block->loopback_parents.size()==1);
+            }
         }
     }
     //return ssa;
     // Step 2: Fill unsealed blocks (as their loopback parents are now safe to consider)
+    spdlog::debug("# of unsealed blocks: {}\n",this->unsealed_blocks.size());
+    for(auto block : this->unsealed_blocks) {
+        spdlog::debug("sealing block with {} phis : {}\n",*block,block->phis.size());
+        // Update the phi based on the loopback parent
+        for(auto phi : block->phis) {
+            //spdlog::debug("filling phi w/id {}\n",*phi->id_expr);
+            for(auto loopback : block->loopback_parents) {
+                auto reg = loopback->lookup(phi->id_expr);
+                auto label = loopback->label->getLabel();
+                phi->addEntry(label,reg);
+            }
+        }
+    }
     // Step 3: Remove non-trivial phis
     // Step 4: Generate ssa ssa
     //add ssa IR for body

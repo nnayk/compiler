@@ -135,7 +135,8 @@ std::shared_ptr<Register> Bblock::lookup(std::shared_ptr<ast::IdentifierExpressi
                 if(this->is_loopback_parent(parent)) {
                     spdlog::debug("skipping loopback parent {}\n",*parent);
                     this->sealed = false;
-                } else {
+                } 
+                else {
                     auto parent_reg = parent->lookup(id_expr);
                     assert(parent_reg);
                     auto parent_label = parent->label->getLabel();
@@ -143,6 +144,7 @@ std::shared_ptr<Register> Bblock::lookup(std::shared_ptr<ast::IdentifierExpressi
                     spdlog::debug("parent {} resolved var {} to parent_register {}\n",parent_label,id,*parent_reg);
                     // create the phi pair and add it to the phi object
                     phi->addEntry(parent_label,parent_reg);
+                    phi->id_expr = id_expr;
                 }
             }
             auto assignee = Register::create();
@@ -165,31 +167,6 @@ bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
     bool found =  std::find(source.begin(),source.end(),target) != source.end();
     spdlog::debug("is a loopback parent? {}\n",found);
     return found;
-}
-
-void Bblock::add_phis(std::vector<ast::Declaration> locals,std::vector<ast::Declaration> params) {
-    spdlog::debug("inside Bblock::add_phis\n");
-    assert(this->parents.size()>1);
-    //std::shared_ptr<Register> parent_reg = nullptr;
-    std::shared_ptr<Register> reg = nullptr;
-    // not needed for L0 (in fact we'll get UndefinedUsage Error)
-    // Loop over each local var
-    for(auto local : locals) {
-        // create a new phi object
-        for(auto parent : this->parents) {
-            if(this->is_loopback_parent(parent)) {
-                spdlog::debug("skipping loopback parent {}\n",*parent);
-                this->sealed = false;
-            } else {
-                // TODO: implement Bblock::lookup
-                //reg = parent->lookup(local);
-                assert(reg);
-                this->ssa_map->addEntry(local.getName(),reg);
-                // create the phi pair and add it to the phi object
-            }
-        }
-    }
-    // TODO: do the same as above but for params (rn will not test w/params but need to support this...)
 }
 
 void Bblock::add_initial_mapping(std::vector<ast::Declaration> params) {

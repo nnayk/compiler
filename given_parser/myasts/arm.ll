@@ -11,15 +11,25 @@ lr .req x30
 .text
 .global main
 main:
-	stp fp, lr, [sp,-64] !
+	stp fp, lr, [sp,-48] !
 
 	L0:
-	add x1, 3, 4
-	add x2, 0, 9
-	add x3, %1, %2
-	br label %L1
 
 	L1:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, x2
+bl printf
+	sub x4, %2, 1
+
+	L2:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, x7
+bl printf
+	br label %L3
+
+	L3:
 	ret
-	ldp fp, lr, [sp], 64
+	ldp fp, lr, [sp], 48
 

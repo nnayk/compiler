@@ -81,6 +81,8 @@ void UnaryExpression::resolve_uses(Bblock &block) {
 
 std::string UnaryExpression::get_arm(Bblock &block) {
     spdlog::debug("inside UnaryExpression::{}\n",__func__);
+    std::string arm = "";
+    return arm;
 }
 
 } // namespace ast
