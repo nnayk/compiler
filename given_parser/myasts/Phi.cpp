@@ -39,9 +39,11 @@ std::string Phi::get_ssa() {
     return ssa.substr(0,ssa.size()-1)+"\n";
 }
 
-std::shared_ptr<Register>> Phi::is_trivial() {
+std::shared_ptr<Register> Phi::is_trivial() {
     spdlog::debug("inside Phi::{}\n",__func__);
     std::unordered_set<std::shared_ptr<Register>> regs;
-    assert(regs.size()==1);
-    return *regs.begin();
+    // TODO: consider each register in entries and if they're all the same then assignee is trivial. Otherwise return null
+    //assert(regs.size()==1);
+    //return *regs.begin();
+    return nullptr;
 }

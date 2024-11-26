@@ -16,25 +16,25 @@ main:
 	L0:
 
 	L1:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, 9
+bl printf
 
 	L2:
 adrp x0, fmt
 add x0, x0, :lo12:fmt
-mov x1, 3
+mov x1, 8
 bl printf
 
 	L3:
-
-	L4:
 adrp x0, fmt
 add x0, x0, :lo12:fmt
-mov x1, 2
+mov x1, x4
 bl printf
+	br label %L4
 
-	L5:
-	br label %L6
-
-	L6:
+	L4:
 	ret
 	ldp fp, lr, [sp], 48
 

@@ -1,0 +1,11 @@
+fun main() int {
+    int x;
+    x=3;
+    if(x>2) {
+        print 9;
+    } else {
+        print 8;
+    }
+    print x;
+    return x;
+}

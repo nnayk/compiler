@@ -46,6 +46,7 @@ public:
     bool is_i1(); 
     std::string zext(); 
     void resolve_uses(Bblock &block) override;
+    virtual void replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub) override;
 };
 
 }  // namespace ast

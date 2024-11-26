@@ -19,6 +19,7 @@ public:
     virtual std::string get_arm_init(Bblock &block) override; 
     virtual std::shared_ptr<Register> getDerefResult() const override;
     virtual std::shared_ptr<Register> getResult() const override;
+    virtual void replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub) override;
 
     // Virtual destructor to allow proper cleanup of derived objects
     virtual ~AbstractExpression() {}

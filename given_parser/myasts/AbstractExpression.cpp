@@ -54,4 +54,10 @@ std::string AbstractExpression::get_arm(Bblock &block) {
     return "x"+this->result->get_id();
 }
 
+void AbstractExpression::replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub) {
+    spdlog::debug("inside AbstractExpression::{}\n",__func__);
+    spdlog::debug("subbing {} for {}\n",*sub,*target);
+    this->result = sub;
+}
+
 }  // namespace ast

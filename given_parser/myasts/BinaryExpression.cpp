@@ -311,5 +311,11 @@ std::string BinaryExpression::get_arm_init(Bblock &block) {
     return arm_str;
 }
 
+void BinaryExpression::replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub) {
+    spdlog::debug("inside BinaryExpression::{}\n",__func__);
+    this->left->replace_reg(target,sub);
+    this->right->replace_reg(target,sub);
+    this->result = sub;
+}
 
 }  // namespace ast

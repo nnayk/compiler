@@ -16,7 +16,8 @@ class Phi {
         std::shared_ptr<ast::Type> type = nullptr; // type of the value in register
         std::shared_ptr<ast::IdentifierExpression> id_expr = nullptr; 
         Phi() {};
-        void addEntry(std::string label,std::shared_ptr<Register> isplay() const;
+        void addEntry(std::string label,std::shared_ptr<Register> reg);
+        std::string display() const;
         std::string get_ssa();
         std::shared_ptr<Register> is_trivial();
 };
