@@ -9,7 +9,8 @@
 
 namespace ast {
 
-class BinaryExpression : public AbstractExpression {
+class BinaryExpression : public AbstractExpression, 
+    public std::enable_shared_from_this<BinaryExpression> {
 public:
     enum class Operator {
         TIMES, DIVIDE, PLUS, MINUS, LT, GT, LE, GE, EQ, NE, AND, OR

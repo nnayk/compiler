@@ -38,7 +38,7 @@ public:
     virtual std::shared_ptr<Register> getResult() const = 0;
     // The purpose of this is for the expression to determine a register for each usage of a variable. This is done by looking up the variable in question and then assigning the result attr to the resolved register
     virtual void resolve_uses(Bblock &block) = 0;
-    virtual void replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub);
+    virtual void replace_reg(std::shared_ptr<Register> target,std::shared_ptr<Register> sub) = 0;
 protected:
     std::shared_ptr<Register> result = nullptr; // register where the expression result is stored
     std::shared_ptr<Register> deref_result = nullptr; 

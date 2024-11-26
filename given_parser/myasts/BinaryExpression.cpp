@@ -196,6 +196,7 @@ void BinaryExpression::resolve_uses(Bblock &block) {
     left->resolve_uses(block);
     right->resolve_uses(block);
 	this->result = Register::create();
+    this->result->add_exp(shared_from_this());
     spdlog::debug("chose register {} for BinaryExpression on line {}\n",*this->result,this->getLineNum());
 }
 

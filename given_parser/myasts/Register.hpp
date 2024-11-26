@@ -9,6 +9,7 @@ namespace ast {
     class Expression;
 }
 class Register;
+class Phi;
 // global map of all registers
 class Register : public std::enable_shared_from_this<Register> {
     public:
@@ -24,10 +25,13 @@ class Register : public std::enable_shared_from_this<Register> {
         std::string get_llvm();
         std::string get_arm();
         void replace_reg(std::shared_ptr<Register> sub);
+        void add_exp(std::shared_ptr<ast::Expression> exp); 
+        void add_phi(std::shared_ptr<Phi> phi); 
         //std::string use_llvm(std::shared_ptr<ast::Expression>);
     private:
         Register(const std::string &id = std::to_string(reg),const bool &is_global=false,const bool &is_pseudo=false);
         std::vector<std::shared_ptr<ast::Expression>> exp_references; // for quickly updating a register's usage for SSA trivial phi deletion
+        std::vector<std::shared_ptr<Phi>> phi_refs; // for quickly updating a register's usage for SSA trivial phi deletion
         std::string prefix;
         std::string id;
         static int reg;

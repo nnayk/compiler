@@ -1,4 +1,5 @@
 #include "Register.hpp"
+#include "Phi.hpp"
 #include <spdlog/spdlog.h>
 
 int Register::reg = 1;
@@ -56,4 +57,13 @@ void Register::replace_reg(std::shared_ptr<Register> sub) {
     for(auto exp : this->exp_references) {
         exp->replace_reg(shared_from_this(),sub);
     }
+}
+
+void Register::add_exp(std::shared_ptr<ast::Expression> exp) {
+    spdlog::debug("inside Register::{}\n",__func__);
+    this->exp_references.push_back(exp);
+}
+
+void Register::add_phi(std::shared_ptr<Phi> phi) {
+    spdlog::debug("inside Register::{}\n",__func__);
 }
