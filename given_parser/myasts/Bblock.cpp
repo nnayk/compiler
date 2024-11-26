@@ -150,6 +150,8 @@ std::shared_ptr<Register> Bblock::lookup(std::shared_ptr<ast::IdentifierExpressi
             auto assignee = Register::create();
             // assign a register to the phi instruction and return it (also make sure to set phi assignee attr to the register AND also set phi block attr accordingly)
             phi->assignee = assignee;
+            spdlog::debug("Adding phi reference for register {} to phi {}\n",*phi->assignee,*phi);
+            phi->assignee->add_phi(phi);
             phi->type = id_expr->type;
             phi->block = shared_from_this();
             spdlog::debug("Created phi for id {} with assignee {}:\n",id,*assignee);
