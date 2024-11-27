@@ -30,7 +30,7 @@ bl printf
 	L3:
 adrp x0, fmt
 add x0, x0, :lo12:fmt
-mov x1, x4
+mov x1, x3
 bl printf
 	br label %L4
 

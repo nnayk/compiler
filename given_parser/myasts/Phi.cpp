@@ -41,9 +41,15 @@ std::string Phi::get_ssa() {
 
 std::shared_ptr<Register> Phi::is_trivial() {
     spdlog::debug("inside Phi::{}\n",__func__);
-    std::unordered_set<std::shared_ptr<Register>> regs;
     // TODO: consider each register in entries and if they're all the same then assignee is trivial. Otherwise return null
-    //assert(regs.size()==1);
-    //return *regs.begin();
-    return nullptr;
+    //if(this) spdlog::debug("goos sanity check!\n");
+    spdlog::debug("num entries = {}\n",this->entries.size());
+    auto it = this->entries.begin();
+    auto first_reg = it->second;
+    for(++it; it != this->entries.end(); ++it) {
+        if(it->second != first_reg) {
+            return nullptr;
+        }
+    }
+    return first_reg;
 }

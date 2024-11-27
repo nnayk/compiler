@@ -96,6 +96,7 @@ void IdentifierExpression::resolve_uses(Bblock &block) {
    auto reg = block.lookup(shared_from_this());   
    spdlog::debug("resolved IdExpression {} on line {} to register {}\n",this->getId(),this->getLineNum(),*reg);
    this->result = reg;
+   this->result->add_exp(shared_from_this());
 }
 
 } // namespace ast

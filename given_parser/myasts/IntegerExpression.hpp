@@ -6,7 +6,8 @@
 
 namespace ast {
 
-class IntegerExpression : public AbstractExpression {
+class IntegerExpression : public AbstractExpression,
+    public std::enable_shared_from_this<IntegerExpression> {
 public:
     // Constructor
     IntegerExpression(int lineNum, const std::string& value);

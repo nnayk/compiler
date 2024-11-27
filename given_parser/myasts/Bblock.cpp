@@ -196,13 +196,17 @@ void Bblock::prune_phis() {
     spdlog::debug("inside Bblock::{}\n",__func__);
     for(auto it = this->phis.begin(); it != this->phis.end();) {
         std::shared_ptr<Phi> phi = *it;
+        spdlog::debug("considering if phi is trivial: {}\n",*phi);
         // Step 1: Remove phi if needed
         if(auto sub = phi->is_trivial()) {
-            this->phis.erase(it);
+            spdlog::debug("YES it's trivial\n");
+            it = this->phis.erase(it);
             // Step 2: Update all references that uses the removed assignee from step 1
             phi->assignee->replace_reg(sub); 
+        } else {
+            spdlog::debug("NO it's NOT trivial\n");
+            ++it;
         }
-        ++it;
     }
 }
 

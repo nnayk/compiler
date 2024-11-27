@@ -54,6 +54,7 @@ std::string Register::get_arm() {
 
 void Register::replace_reg(std::shared_ptr<Register> sub) {
     spdlog::debug("inside Register::{}\n",__func__);
+    spdlog::debug("number of exp refs = {}\n",this->exp_references.size());
     for(auto exp : this->exp_references) {
         exp->replace_reg(shared_from_this(),sub);
     }

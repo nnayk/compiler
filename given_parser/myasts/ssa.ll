@@ -25,13 +25,12 @@ define noundef i64 @main() {
 	br label %L3
 
 	L3:
-	%4 = phi i64 [ 3, %L2 ],[ 3, %L1 ]
-	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef %4)
+	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef 3)
 	br label %L4
 
 
 	L4:
-	ret i64 %4
+	ret i64 3
 
 }
 

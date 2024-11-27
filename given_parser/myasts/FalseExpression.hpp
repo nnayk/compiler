@@ -5,7 +5,8 @@
 
 namespace ast {
 
-class FalseExpression : public AbstractExpression {
+class FalseExpression : public AbstractExpression, 
+    public std::enable_shared_from_this<FalseExpression> {
 public:
     // Constructor
     FalseExpression(int lineNum);

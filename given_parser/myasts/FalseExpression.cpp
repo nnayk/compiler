@@ -30,6 +30,7 @@ void FalseExpression::resolve_uses(Bblock &block) {
     // I don't think it matters if is_global is set to true or false here...
     // We're dealing with an immediate, not a variable so it doesn't matter
     this->result = Register::create(id,false,true);
+    this->result->add_exp(shared_from_this());
 }
 
 } // namespace ast
