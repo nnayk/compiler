@@ -37,6 +37,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         is_cond_stmt = dynamic_pointer_cast<ast::ConditionalStatement>(stmt) != nullptr;
         auto new_blocks = stmt->get_cfg();
         auto new_head = new_blocks[0];
+        std::shared_ptr<Bblock> ret_block = nullptr;
         if(prev_stmt) spdlog::debug("prev_stmt = {}\n",*prev_stmt);
         spdlog::debug("stmt = {}\n",*stmt);
         spdlog::debug("BlockStatement:Gonna build cfg for stmt {}",*stmt);
@@ -52,7 +53,9 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
         }
         spdlog::debug("BlockStatement:Done building cfg for stmt. size of new blocks = {}",new_blocks.size());
         if(is_ret_stmt) {
-            auto ret_block = new_head;
+            ret_block = new_head;
+            spdlog::debug("marking block as ret block\n",*ret_block);
+            ret_block->is_return_block = true;
             // if we're gonna merge this block with prev then add prev_tail to the list of return block.
             // The cases we won't merge is if prev_tail is an if (we'll just replace the dummy then with 
             // curr block) or if prev_stmt was a while. TODO: make a boolean "merge" that tells whether to merge prev and curr or not
@@ -115,12 +118,14 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                 spdlog::debug("Removed new_head={} from new_blocks, now new_blocks size = {}\n",*new_head,new_blocks.size());
                 if(is_cond_stmt || is_while_stmt) {
                     for(auto child : new_head->children) {
-                        prev_tail->children.push_back(child);
+                        if(!ret_block) prev_tail->children.push_back(child);
                         blocks.erase(std::remove(blocks.begin(),blocks.end(),new_head),blocks.end()); 
                         // Remove the "temp" if block parent which is now obsolete
                         child->parents.erase(std::remove(child->parents.begin(),child->parents.end(),new_head),child->parents.end());
                         child->parents.push_back(prev_tail);
                     }
+                } else if(is_ret_stmt) {
+                    prev_tail->is_return_block = true;
                 }
             }
         // TODO: once bblock merging is done (see above TODO) these will have

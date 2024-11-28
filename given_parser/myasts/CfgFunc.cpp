@@ -35,7 +35,8 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     cfg_func->blocks.push_back(cfg_func->return_block);
     spdlog::debug("FINAL return block = {}\n",*cfg_func->return_block);
     auto body_block = dynamic_pointer_cast<ast::BlockStatement>(f.body);
-    for(auto block : body_block->return_bblocks) {
+    for(auto block : cfg_func->blocks) {
+        if(!block->is_return_block) continue;
         spdlog::debug("adding parent to FINAL return block: {}\n",*block);
         block->children.push_back(cfg_func->return_block);
         cfg_func->return_block->parents.push_back(block);
@@ -48,6 +49,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
 
 void CfgFunc::create_labels() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
+    spdlog::debug("num blocks = {}\n",this->blocks.size());
     if(this->blocks.size() > 0) {
         std::stack<std::shared_ptr<Bblock>> stack;
         stack.push(this->blocks[0]);
@@ -58,7 +60,7 @@ void CfgFunc::create_labels() {
             unvisited_parent = false;
             auto block = stack.top();
             spdlog::debug("stack size = {}\n",stack.size());
-            spdlog::debug("considering block {}\n",*block);
+            spdlog::debug("label considering block {}\n",*block);
             // if there are unvisited parents then explore them first
             for(auto parent : block->parents) {
                 if(!parent->visited && !block->is_loopback_parent(parent)) {
@@ -78,6 +80,7 @@ void CfgFunc::create_labels() {
             // gen label here?
             block->label = Label::create();
             block->visited = 1;
+            spdlog::debug("Assigned block label {}\n",block->label->getLabel());
             std::shared_ptr<ast::Statement> stmt = nullptr;
             auto num_stmts = block->stmts.size();
             if(num_stmts) {

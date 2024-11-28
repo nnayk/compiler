@@ -16,22 +16,19 @@ main:
 	L0:
 
 	L1:
-adrp x0, fmt
-add x0, x0, :lo12:fmt
-mov x1, 9
-bl printf
+	add x2, 2, 4
+	sub x3, 9, 8
 
 	L2:
-adrp x0, fmt
-add x0, x0, :lo12:fmt
-mov x1, 8
-bl printf
+	add x4, 7, 8
 
 	L3:
+	add x6, 3, %5
 adrp x0, fmt
 add x0, x0, :lo12:fmt
-mov x1, x3
+mov x1, x7
 bl printf
+	mul x9, 9, %6
 	br label %L4
 
 	L4:

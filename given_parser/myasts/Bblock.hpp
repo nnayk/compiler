@@ -32,6 +32,7 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         bool sealed  = true; // basically if a block has a potential future pred. (which can only be the case with while body blocks) then it will be unsealed until the future pred. is sealed.
         int visited; // for CFG traversal purposes
         bool final_return_block = false;
+        bool is_return_block = false;
         Bblock();
         std::string get_llvm();
         std::string get_ssa();

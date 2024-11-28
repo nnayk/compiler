@@ -26,9 +26,10 @@ std::string Bblock::get_llvm() {
     spdlog::debug("finished llvm gen for nested stmts for bblock label = {}\n",label->getLabel());
     // The 2nd condition is necessary as the AssignmentStatement::get_llvm() for _ret would've already
     // added the br to the final return bblock
-    if(this->children.size()==1 && !this->children[0]->final_return_block) { 
-        spdlog::debug("adding extra br\n");
-        auto br_llvm = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+    if(this->children.size()==1 && !this->children[0]->final_return_block) {
+        auto child = this->children[0];
+        spdlog::debug("Bblock yadding extra br from {} to child {}\n",this->label->getLabel(),child->label->getLabel());
+        auto br_llvm = TAB+fmt::format("br label %{}",child->label->getLabel());
         spdlog::debug("br_llvm = {}\n",br_llvm);
         llvm_ir += br_llvm; 
     }
@@ -60,8 +61,10 @@ std::string Bblock::get_ssa() {
     // The 2nd condition is necessary as the AssignmentStatement::get_ssa() for _ret would've already
     // added the br to the final return bblock
     if(this->children.size()==1 && !this->children[0]->final_return_block) { 
+        auto child = this->children[0];
+        spdlog::debug("Bblock ssa yadding extra br from {} to child {}\n",this->label->getLabel(),child->label->getLabel());
         spdlog::debug("adding extra br\n");
-        auto br_ssa = TAB+fmt::format("br label %{}",this->children[0]->label->getLabel());
+        auto br_ssa = TAB+fmt::format("br label %{}",child->label->getLabel());
         spdlog::debug("br_ssa = {}\n",br_ssa);
         ssa += br_ssa; 
     }
@@ -91,21 +94,31 @@ std::string Bblock::display() const {
 		out += fmt::format("\nNUMBER OF CHILDREN: {}\n", this->children.size());
 		out += fmt::format("CHILDREN:\n");
 		for(auto child : this->children) {
-            if(child->stmts.size() > 0) {
-                out += fmt::format("Child # stmts={}\n",child->stmts.size());
-                out += fmt::format("HEAD STMT: {}\n",*(child->stmts[0]));
-            } else {
-                out += fmt::format("DUMMY CHILD with {} children, {} parents",child->children.size(),child->parents.size());
+            if(child->label) {
+                out += fmt::format("Child label = {}\n",child->label->getLabel());
+            }
+            else {
+                if(child->stmts.size() > 0) {
+                    out += fmt::format("Child # stmts={}\n",child->stmts.size());
+                    out += fmt::format("HEAD STMT: {}\n",*(child->stmts[0]));
+                } else {
+                    out += fmt::format("DUMMY CHILD with {} children, {} parents",child->children.size(),child->parents.size());
+                }
             }
 		}
 		out += fmt::format("\nNUMBER OF PARENTS: {}\n", this->parents.size());
 		out += fmt::format("PARENTS:\n");
 		for(auto parent : this->parents) {
-            if(parent->stmts.size() > 0) {
-                out += fmt::format("Parent # stmts={}\n",parent->stmts.size());
-                out += fmt::format("HEAD STMT: {}\n",*(parent->stmts[0]));
-            }else
-                out += fmt::format("DUMMY parent\n");
+            if(parent->label) {
+                out += fmt::format("Parent label = {}\n",parent->label->getLabel());
+            }
+            else { 
+                if(parent->stmts.size() > 0) {
+                    out += fmt::format("Parent # stmts={}\n",parent->stmts.size());
+                    out += fmt::format("HEAD STMT: {}\n",*(parent->stmts[0]));
+                }else
+                    out += fmt::format("DUMMY parent\n");
+            }
 		}
 		return out;
 }
@@ -177,7 +190,8 @@ void Bblock::add_initial_mapping(std::vector<ast::Declaration> params) {
     spdlog::debug("inside Bblock::{}\n",__func__);
     for(auto param: params) {
         auto name = param.getName(); 
-        assert(all_regs.find(name) == all_regs.end());
+        spdlog::debug("considering param {}\n",name);
+        //assert(all_regs.find(name) == all_regs.end());
         auto reg = Register::create(name);
         this->ssa_map->addEntry(name,reg);
     }
