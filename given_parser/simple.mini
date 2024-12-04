@@ -2,6 +2,7 @@ fun main() int {
     int q;
     q=3;
     q=4+3;
+    print -8;
     print -q;
     return q+2;
 }

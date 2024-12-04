@@ -1,7 +1,10 @@
 fun main() int {
     int x;
+    bool y;
+    y = !true;
     x=3;
+    print 9;
     print x;
-    print x+3-2 endl;
+    #print x+3-2 endl;
     return x;
 }

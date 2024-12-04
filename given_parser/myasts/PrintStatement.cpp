@@ -49,7 +49,7 @@ std::string PrintStatement::get_arm(Bblock &block) {
     // Move the print format into x0 (i.e. first arg to printf) 
     if(this->newLine) {
         arm += "adrp x0, fmtn\n";
-    arm += "add x0, x0, :lo12:fmtn\n";
+        arm += "add x0, x0, :lo12:fmtn\n";
     } else {
         arm += "adrp x0, fmt\n";
         arm += "add x0, x0, :lo12:fmt\n";

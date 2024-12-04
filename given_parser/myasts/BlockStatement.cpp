@@ -124,6 +124,7 @@ std::vector<std::shared_ptr<Bblock>> BlockStatement::get_cfg() {
                         child->parents.erase(std::remove(child->parents.begin(),child->parents.end(),new_head),child->parents.end());
                         child->parents.push_back(prev_tail);
                     }
+                // Update prev_tail as it not contains a return stmt (and ret_block (i.e. new_head) from earlier is useless at this point)
                 } else if(is_ret_stmt) {
                     prev_tail->is_return_block = true;
                 }

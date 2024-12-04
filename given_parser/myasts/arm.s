@@ -14,13 +14,11 @@ main:
 	stp fp, lr, [sp,-48] !
 
 	L0:
-	add x1, 4, 3
-adrp x0, fmt
-add x0, x0, :lo12:fmt
-mov x1, 
-bl printf
-	add x4, %1, 2
-	b L1
+    adrp x0, fmt
+    add x0, x0, :lo12:fmt
+    mov x1, 3
+    bl printf
+	br label L1
 
 	L1:
 	ret

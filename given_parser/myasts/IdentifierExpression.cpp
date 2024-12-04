@@ -91,6 +91,23 @@ std::string IdentifierExpression::get_ssa(Bblock &block) {
     return "";
 }
 
+std::string IdentifierExpression::get_arm_init(Bblock &block) {
+    spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+    std::string arm = fmt::format("arm {}, [sp, {}]",this->get_arm(block),this->stack_offset);
+    return arm;
+}
+
+std::string IdentifierExpression::get_arm(Bblock &block) {
+    spdlog::debug("inside IdentifierExpression::{}\n",__func__);
+    spdlog::debug("line = {}\n",this->getLineNum());
+    if(this->result) {
+        return this->result->get_arm();
+    } else {
+        throw InvalidUseException(fmt::format("Use of uninitialized var {}\n",this->getId()));
+    }
+    return "";
+}
+
 void IdentifierExpression::resolve_uses(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
    auto reg = block.lookup(shared_from_this());   

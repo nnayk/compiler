@@ -11,6 +11,7 @@ namespace ast {
 class IdentifierExpression : public AbstractExpression, public std::enable_shared_from_this<IdentifierExpression> {
 public:
     int scope = 0;
+    int stack_offset = 0;
     // Constructor
     IdentifierExpression(int lineNum, const std::string& id);
 
@@ -25,6 +26,8 @@ public:
     std::string get_llvm(Bblock &block) override; 
     std::string get_ssa(Bblock &block) override;
     void resolve_uses(Bblock &block) override;
+    virtual std::string get_arm_init(Bblock &block) override;
+    virtual std::string get_arm(Bblock &block) override; 
 
 private:
     std::string id;  // Identifier string

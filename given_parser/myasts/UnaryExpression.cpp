@@ -82,6 +82,27 @@ void UnaryExpression::resolve_uses(Bblock &block) {
 std::string UnaryExpression::get_arm(Bblock &block) {
     spdlog::debug("inside UnaryExpression::{}\n",__func__);
     std::string arm = "";
+    auto operand = this->getOperand();
+    auto reg_arm = operand->get_arm(block);
+    // Integer type
+    if(auto type = dynamic_pointer_cast<IntType>(operand->type)) { 
+        //IntExpr
+        if(auto exp = dynamic_pointer_cast<IntegerExpression>(operand)) {
+            return "-" + reg_arm; 
+        }
+        //IdExpr
+        else {
+            arm += operand->get_arm_init(block);
+            arm += fmt::format("neg {}, {}\n",reg_arm,reg_arm);
+        }
+    // Boolean type
+    } else if(auto type = dynamic_pointer_cast<BoolType>(operand->type)) {
+        if(auto exp = dynamic_pointer_cast<IdentifierExpression>(operand)) {
+            arm += operand->get_arm_init(block);
+            arm += fmt::format("eor {}, {}\n",reg_arm,reg_arm);
+        }
+        return operand->get_llvm(block); 
+    } 
     return arm;
 }
 
