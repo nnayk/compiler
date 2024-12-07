@@ -130,5 +130,15 @@ void ConditionalStatement::resolve_def_uses(Bblock &block) {
     //this->elseBlock->resolve_def_uses(block);
 }
 
+std::string ConditionalStatement::get_arm(Bblock &block) {
+    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    std::string arm = "";
+    // TODO: support chained conditions, rn only assuming 1 condition
+    arm += guard->get_arm_init(block);
+    // Bool Type
+    // Binary Expression -- need to determine the appropriate operator to use (i.e. bgt,ble,be,etc.)
+    return arm;
+}
+
 } // namespace ast
 

@@ -13,14 +13,15 @@ define noundef i64 @main() {
 
 	L0:
 	%1 = add i64 4, 3
-	%2 = sub i64 0, %q
 	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef %2)
-	%4 = add i64 %1, 2
+	%4 = sub i64 0, %q
+	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef %4)
+	%6 = add i64 %1, 2
 	br label %L1
 
 
 	L1:
-	ret i64 %4
+	ret i64 %6
 
 }
 

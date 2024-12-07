@@ -5,6 +5,7 @@
 #include "Bblock.hpp"
 #include "Function.hpp"
 #include "Statement.hpp"
+#include <unordered_map>
 
 namespace ast {
     class Function;
@@ -14,6 +15,7 @@ class Bblock;
 class CfgFunc; // forward declare for build method
 class CfgFunc {
     public:
+        std::shared_ptr<std::unordered_map<std::string,int>> stack_offsets;
 		std::string name;
         std::vector<ast::Declaration> params;  // Function parameters
         std::shared_ptr<ast::Type> retType = nullptr;  // Return type
@@ -28,6 +30,7 @@ class CfgFunc {
         void create_labels();
         std::string get_ssa();
         void reset_visited();
+        void assign_stack_offsets(); 
    private:
         CfgFunc(std::string name,std::vector<ast::Declaration> params,std::shared_ptr<ast::Type> retType,std::vector<ast::Declaration> locals); //std::vector<Bblock> blocks);
 };

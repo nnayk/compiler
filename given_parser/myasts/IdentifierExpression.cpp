@@ -93,7 +93,7 @@ std::string IdentifierExpression::get_ssa(Bblock &block) {
 
 std::string IdentifierExpression::get_arm_init(Bblock &block) {
     spdlog::debug("inside IdentifierExpression::{}\n",__func__);
-    std::string arm = fmt::format("arm {}, [sp, {}]",this->get_arm(block),this->stack_offset);
+    std::string arm = fmt::format("ldr {}, [sp, {}]",this->get_arm(block),this->stack_offset);
     return arm;
 }
 

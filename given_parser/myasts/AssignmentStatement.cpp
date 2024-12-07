@@ -141,6 +141,10 @@ std::string AssignmentStatement::get_arm(Bblock &block) {
 	arm += target_arm_init;
 	arm += source_arm_init;
     std::string type_arm = this->target->type->get_llvm(); // TODO P3: create get_arm for all type classes
+    // think this only works for LvalueId assignment
+    int offset = (*block.stack_offsets)[this->target->getId()];
+    arm += TAB+fmt::format("str {}, [sp, {}]\n",this->source->get_arm(block),(offset+2)*8);
+    // TODO: consider struct assignment
     // TODO: Add check for invocation (+ global) -- here we'd need a store instruction
     // TODO: Look into this if stmt + special case return stmt below
     if(auto bin_exp = dynamic_pointer_cast<BinaryExpression>(this->source); bin_exp && bin_exp->is_i1()) {
@@ -160,7 +164,7 @@ std::string AssignmentStatement::get_arm(Bblock &block) {
                 arm += TAB+fmt::format("b {}\n",return_label);
             }
         }
-    }
+    } 
     return arm;
 }
 

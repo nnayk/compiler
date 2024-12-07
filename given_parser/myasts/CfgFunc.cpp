@@ -22,6 +22,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     //auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(std::move(f.params),std::move(f.retType),std::move(f.locals),std::vector<Bblock>()));
     //Construct CFG
     auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(f.name,std::move(f.params),std::move(f.retType),std::move(f.locals)));//,std::vector<Bblock>()));
+    cfg_func->assign_stack_offsets();
     cfg_func->return_block = std::make_shared<Bblock>();
     //cfg_func->return_block->label = Label::create("return");
     auto ret_expr = std::make_shared<ast::IdentifierExpression>(-1,"_ret");
@@ -35,7 +36,11 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     cfg_func->blocks.push_back(cfg_func->return_block);
     spdlog::debug("FINAL return block = {}\n",*cfg_func->return_block);
     auto body_block = dynamic_pointer_cast<ast::BlockStatement>(f.body);
+    // This loop has 2 purposes:
+    // 1. Add parent/child relationship for return blocks
+    // 2. Init the stack_offsets map for each bblock
     for(auto block : cfg_func->blocks) {
+        block->stack_offsets = cfg_func->stack_offsets;
         if(!block->is_return_block) continue;
         spdlog::debug("adding parent to FINAL return block: {}\n",*block);
         block->children.push_back(cfg_func->return_block);
@@ -443,4 +448,27 @@ void CfgFunc::reset_visited() {
     for(auto block : this->blocks) {
         block->visited = 0;
     }
+}
+
+void CfgFunc::assign_stack_offsets() {
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
+    this->stack_offsets = std::make_shared<std::unordered_map<std::string,int>>();
+	int offset = 0; 
+    for(auto local : this->locals) {
+	   auto name = local.getName();
+       (*this->stack_offsets)[name] = offset;
+	   spdlog::debug("assigning stack offset {} to var {}\n",offset,name);
+       offset++;
+    }
+}
+
+void CfgFunc::reg_alloc() {
+    spdlog::debug("inside CfgFunc::{}\n",__func__);
+    for(auto block : this->blocks) {
+        // Create def/use sets
+    }
+    // Construct livein/out sets
+    // Construct interference graph
+    // Convert colors to phys registers
+    // For each block, update the virtual registers for each instruction
 }

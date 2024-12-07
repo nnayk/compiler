@@ -21,6 +21,7 @@ class Phi;
 
 class Bblock : public std::enable_shared_from_this<Bblock> {
     public: 
+        std::shared_ptr<std::unordered_map<std::string,int>> stack_offsets;
         std::vector<std::shared_ptr<ast::Statement>> stmts;
         std::vector<std::shared_ptr<Bblock>> parents;
         std::vector<std::shared_ptr<Bblock>> loopback_parents;
