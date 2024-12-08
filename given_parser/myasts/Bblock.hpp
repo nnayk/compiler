@@ -34,6 +34,10 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         int visited; // for CFG traversal purposes
         bool final_return_block = false;
         bool is_return_block = false;
+        std::vector<std::shared_ptr<Register>> defs;
+        std::vector<std::shared_ptr<Register>> uses;
+        std::vector<std::shared_ptr<Register>> livein;
+        std::vector<std::shared_ptr<Register>> liveout;
         Bblock();
         std::string get_llvm();
         std::string get_ssa();
@@ -45,6 +49,8 @@ class Bblock : public std::enable_shared_from_this<Bblock> {
         void resolve_def_uses(); // traverses each stmt, updating each expression with its result register and updating mapping for each assignment encountered
         std::string get_arm();
         void prune_phis();
+        void track_def_uses();
+        void track_liveness();
 };
 
 //Specialize fmt::formatter for Bblock

@@ -185,8 +185,11 @@ bool Bblock::is_loopback_parent(std::shared_ptr<Bblock> target) {
 }
 
 void Bblock::add_initial_mapping(std::vector<ast::Declaration> params) {
+    spdlog::debug("inside Bblock::{}\n",__func__);
     assert(this->parents.size()==0);
-    assert(this->label->getLabel()=="L0");
+    assert(this->label);
+    spdlog::debug("label = {}\n",this->label->getLabel());
+    //assert(this->label->getLabel()=="L0");
     spdlog::debug("inside Bblock::{}\n",__func__);
     for(auto param: params) {
         auto name = param.getName(); 
@@ -232,5 +235,10 @@ std::string Bblock::get_arm() {
         arm += stmt->get_arm(*this);
     }
     return arm;
+}
+
+void Bblock::track_def_uses() {
+    spdlog::debug("inside BBlock::{}\n",__func__);
+
 }
 

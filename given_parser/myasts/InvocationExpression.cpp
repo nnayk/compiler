@@ -82,11 +82,10 @@ std::string InvocationExpression::get_llvm(Bblock &block) {
 		llvm += fmt::format("{} noundef {}",arg->type->get_llvm(),arg->get_llvm(block));
         if(index<args_size-1) {
             llvm += ", ";
-        } else {
-            llvm += ")";
-        }
+        } 
 		index++;
 	}
+    llvm += ")\n";
 	// call the function
 	return llvm;
 }

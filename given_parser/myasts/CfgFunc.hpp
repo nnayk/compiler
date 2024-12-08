@@ -31,6 +31,7 @@ class CfgFunc {
         std::string get_ssa();
         void reset_visited();
         void assign_stack_offsets(); 
+        void reg_alloc(); 
    private:
         CfgFunc(std::string name,std::vector<ast::Declaration> params,std::shared_ptr<ast::Type> retType,std::vector<ast::Declaration> locals); //std::vector<Bblock> blocks);
 };

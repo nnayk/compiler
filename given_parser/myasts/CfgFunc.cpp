@@ -18,6 +18,7 @@ CfgFunc::CfgFunc(std::string name,std::vector<ast::Declaration> params, std::sha
 
 std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     spdlog::info("inside CfgFunc::{}",__func__);
+    spdlog::debug("func = {}\n",f.name);
     //auto cfg_func = std::make_shared<CfgFunc>();  
     //auto cfg_func = std::shared_ptr<CfgFunc>(new CfgFunc(std::move(f.params),std::move(f.retType),std::move(f.locals),std::vector<Bblock>()));
     //Construct CFG
@@ -46,15 +47,20 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
         block->children.push_back(cfg_func->return_block);
         cfg_func->return_block->parents.push_back(block);
     }
-    spdlog::debug("CFG construction complete, gonna create labels for each block now!\n");
+    spdlog::debug("CFG construction complete for func {}, gonna create labels for each block now!\n",cfg_func->name);
     // CFG construction done at this point, assign labels to each block
+    spdlog::debug("CFG for func {}:{}\n",cfg_func->name,*cfg_func);
     cfg_func->create_labels();
+    for(auto block : cfg_func->blocks) {
+        spdlog::debug("block = {}\n",*block);
+        assert(block->label);
+    }
     return cfg_func;
 }
 
 void CfgFunc::create_labels() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
-    spdlog::debug("num blocks = {}\n",this->blocks.size());
+    spdlog::debug("num blocks for func {} = {}\n",this->name,this->blocks.size());
     if(this->blocks.size() > 0) {
         std::stack<std::shared_ptr<Bblock>> stack;
         stack.push(this->blocks[0]);
@@ -347,9 +353,11 @@ std::string CfgFunc::display() const {
         while(!queue.empty()) {
             auto block = queue.front();
             queue.pop();
-			spdlog::debug("CfgFunc popped block with label {}",block->label->getLabel());
-            //spdlog::debug("{}\n",*block);
-            spdlog::debug("yay block {} popped, has it been visited? {}\n",block->label->getLabel(),block->visited);
+			if(block->label) {
+                spdlog::debug("CfgFunc popped block with label {}",block->label->getLabel());
+                //spdlog::debug("{}\n",*block);
+                spdlog::debug("yay block {} popped, has it been visited? {}\n",block->label->getLabel(),block->visited);
+            }
             // TODO: change this check b/c can't print multiple times this way
             if(block->visited == 1) 
             {
@@ -466,8 +474,10 @@ void CfgFunc::reg_alloc() {
     spdlog::debug("inside CfgFunc::{}\n",__func__);
     for(auto block : this->blocks) {
         // Create def/use sets
+        block->track_def_uses();
     }
-    // Construct livein/out sets
+    // Construct livein/out sets (bottom up approach)
+    //block->track_liveness();
     // Construct interference graph
     // Convert colors to phys registers
     // For each block, update the virtual registers for each instruction
