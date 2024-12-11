@@ -1,3 +1,8 @@
 fun main() int {
-    return true;
+    if(true) {
+        print 3;
+    } else {
+        return;
+    }
+    return 9;
 }

@@ -59,6 +59,15 @@ void ReturnStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside ReturnStatement::{}\n",__func__);
     this->expression->resolve_uses(block);    
 }
+ 
+bool ReturnStatement::guarantees_return(std::shared_ptr<Type> type) {
+    spdlog::debug("inside ReturnStatement::{}\n",__func__);
+    // typeid doesn't like expression arguments due to unintended side effects that could mess with the expression's type. Hence I de-reference beforehand.
+    const Type&  actual_type= *this->retType;
+    const Type &expected_type = *type;
+    if(typeid(actual_type)==typeid(expected_type)) return true;
+    return false;
+}
 
 
 

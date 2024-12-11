@@ -140,5 +140,18 @@ std::string ConditionalStatement::get_arm(Bblock &block) {
     return arm;
 }
 
+bool ConditionalStatement::guarantees_return(std::shared_ptr<Type> type) {
+    spdlog::debug("inside ConditionalStatement::{}\n",__func__);
+    auto then_returns = this->thenBlock->guarantees_return(type);
+    auto else_returns = this->elseBlock->guarantees_return(type);
+    spdlog::debug("then_returns = {}, else_returns = {}\n",then_returns,else_returns);
+    if( then_returns && else_returns ) {
+        spdlog::debug("yes!!!\n");
+        return true;
+    }
+    return false;
+}
+
+
 } // namespace ast
 

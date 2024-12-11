@@ -1,4 +1,5 @@
 #include "Function.hpp"
+#include "BlockStatement.hpp"
 #include <spdlog/spdlog.h>
 
 namespace ast {
@@ -25,6 +26,12 @@ void Function::typecheck(Env env) { //TODO: check that env is a copy of tle
     body->typecheck(env,*this);        
     // TODO:#2+#3 from description
     return;
+}
+
+void Function::return_check() {
+    spdlog::info("inside Function::{}\n",__func__);
+    auto body_block = dynamic_pointer_cast<BlockStatement>(this->body);
+    body_block->return_check(this->retType);
 }
 
 const std::string& Function::getName() const {

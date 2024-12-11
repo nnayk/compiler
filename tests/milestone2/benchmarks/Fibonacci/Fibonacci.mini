@@ -14,8 +14,9 @@ fun computeFib(int input) int {
 
 fun main() int {
    int input;
-
-   input = read;
+    
+   input = 3;
+   //input = read;
    print computeFib(input) endl;
    
    return 0;

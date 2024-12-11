@@ -27,6 +27,7 @@ public:
              const std::vector<Declaration>& locals,
              std::shared_ptr<Statement> body);
     void typecheck(Env env);
+    void return_check();
 };
 
 } // namespace ast

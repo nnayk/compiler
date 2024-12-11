@@ -42,4 +42,9 @@ void AbstractStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside AbstractStatement::{}\n",__func__);
 }
 
+bool AbstractStatement::guarantees_return(std::shared_ptr<Type> type) {
+    spdlog::debug("inside AbstractStatement::{}\n",__func__);
+    return false;
+}
+
 }  // namespace ast

@@ -1,0 +1,13 @@
+fun foo(int x,int y) int {
+    print x/y;
+    return x*y;
+}
+
+fun main() int {
+    int x;
+    x=76;
+    print x;
+    x=foo(x,98);
+    print x;
+    return 6;
+}

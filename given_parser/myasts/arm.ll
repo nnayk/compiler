@@ -9,28 +9,48 @@ lr .req x30
 
 
 .text
-.global main
-main:
+.global foo
+foo:
 	stp fp, lr, [sp,-48] !
 
 	L0:
 	str 3, [sp, 16]
-	add x1, 4, 3
-	str x1, [sp, 16]
-adrp x0, fmt
-add x0, x0, :lo12:fmt
-mov x1, -8
-bl printf
-adrp x0, fmt
-add x0, x0, :lo12:fmt
-mov x1, ldr xq, [sp, 0]neg xq, xq
-
-bl printf
-	add x6, %1, 2
-	str x6, [sp, 16]
-	b L1
+	icmp sgt x5, %4, 0
 
 	L1:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, x2
+bl printf
+	sub x4, %2, 1
+	str x4, [sp, 16]
+	icmp sgt x5, %4, 0
+
+	L2:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, x7
+bl printf
+	str 2, [sp, 16]
+	b L3
+
+	L3:
 	ret
 	ldp fp, lr, [sp], 48
+
+.global main
+main:
+	stp fp, lr, [sp,-32] !
+
+	L4:
+adrp x0, fmt
+add x0, x0, :lo12:fmt
+mov x1, x9
+bl printf
+	str 3, [sp, 16]
+	b L5
+
+	L5:
+	ret
+	ldp fp, lr, [sp], 32
 

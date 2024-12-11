@@ -17,6 +17,7 @@ public:
     // Constructor
     BlockStatement(int lineNum, const std::vector<std::shared_ptr<Statement>>& statements);
     virtual void typecheck(Env &env, Function &f) override;
+    void return_check(std::shared_ptr<Type> retType);
 
 	// Static method to create an empty block
 	static std::shared_ptr<BlockStatement> emptyBlock();

@@ -2,7 +2,9 @@
 #include "ConditionalStatement.hpp" // used during cfg construction
 #include "WhileStatement.hpp" // used during cfg construction
 #include "ReturnStatement.hpp" // used during cfg construction
+#include "ReturnEmptyStatement.hpp" // used during cfg construction
 #include "AssignmentStatement.hpp" // used during cfg construction
+#include "TypeException.hpp"
 #include <cassert>
 
 namespace ast {
@@ -165,6 +167,37 @@ std::string BlockStatement::get_arm(Bblock &block) {
     }
 	return arm;
 }
+
+void BlockStatement::return_check(std::shared_ptr<Type> retType) {
+    spdlog::debug("inside BlockStatement::{}\n",__func__);
+    if(dynamic_pointer_cast<VoidType>(retType)) {
+        spdlog::debug("function return type is void, skipping return_check!\n");
+        return;
+    }
+    for(auto stmt : this->statements) {
+        if(stmt->guarantees_return(retType)) {
+            spdlog::debug("Statement on line {} guarantees a return!\n");
+            return;
+        } else if(auto ret_empty = dynamic_pointer_cast<ReturnEmptyStatement>(stmt)) 
+        {
+            throw TypeException(fmt::format("Expected return type {}, saw return type VOID on line {}\n",*retType,stmt->getLineNum()));    
+        }
+    }
+    throw TypeException(fmt::format("Not all paths return type {}\n",*retType));
+}
+
+bool BlockStatement::guarantees_return(std::shared_ptr<Type> type) {
+    spdlog::debug("inside BlockStatement::{}\n",__func__);
+    for(auto stmt : this->statements) {
+        spdlog::debug("stmt = {}\n",*stmt);
+        if(stmt->guarantees_return(type)) {
+            spdlog::debug("yes guarantees!\n");
+            return true;
+        }
+    }
+    return false;
+}
+
 /*
 void BlockStatement::resolve_def_uses(Bblock &block) {
     spdlog::debug("inside BlockStatement::{}\n",__func__);

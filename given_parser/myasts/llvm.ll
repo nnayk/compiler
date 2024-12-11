@@ -10,40 +10,31 @@ declare i64 @scanf(ptr, ...)
               
 
 define noundef i64 @main() {
+	%x = alloca i64, align 8
 
 	L0:
-	%1 = icmp sgt i64 3, 0
-	br i1 %1, label %L1, label %L2
+	store i64 3, ptr %x, align 8
+	%1 = load i64, ptr %x, align 8
+	%2 = icmp sgt i64 %1, 5
+	br i1 %2, label %L1, label %L2
 
 
 	L1:
-	br label %L3
+	store i64 1, ptr %_ret, align 8
+	br label %L4
+
 
 	L2:
+	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef 5)
 	br label %L3
 
 	L3:
-	%2 = phi i64 [ 7, %L2 ],[ 5, %L1 ]
-	%6 = phi i64 [ 0, %L2 ],[ 0, %L1 ]
-	%9 = icmp sgt i64 %5, 0
-	br i1 %9, label %L4, label %L5
+	call i32 (ptr, ...) @printf(ptr noundef @.print, i64 noundef 9)
 
 
 	L4:
-	%4 = phi i64 [ %2, %L3 ]
-	%7 = phi i64 [ %6, %L3 ]
-	%5 = sub i64 %4, 1
-	%8 = add i64 %7, 4
-	%9 = icmp sgt i64 %5, 0
-	br i1 %9, label %L4, label %L5
-
-
-	L5:
-	br label %L6
-
-
-	L6:
-	ret i64 %_ret
+	%5 = load i64, ptr %_ret, align 8
+	ret i64 %5
 
 }
 

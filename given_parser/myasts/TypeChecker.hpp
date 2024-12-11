@@ -20,6 +20,7 @@ ast::Program p;
 bool use_ssa = false;
 
 void typecheck(ast::Program &p,std::shared_ptr<Env> tle);
+void return_check(ast::Program &p);
 void validate_typeDecls(std::vector<std::shared_ptr<ast::TypeDeclaration>> &typeDecls);
 void validate_decls(std::vector<std::shared_ptr<ast::Declaration>> &decls);
 void validate_funcs(std::vector<std::shared_ptr<ast::Function>> &funcs);

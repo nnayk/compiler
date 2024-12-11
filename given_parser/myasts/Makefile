@@ -15,10 +15,10 @@ CFG_OBJS=CfgProg.o CfgFunc.o
 
 LLVM_OBJS = Mapping.o
 
-all: cfg
+all: mini
 
-cfg: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS) $(LLVM_OBJS)
-	g++ $(CFLAGS) -o cfg $(TYPECHECKER_OBJS) $(AST_OBJS) $(CFG_OBJS) $(LIBS)
+mini: $(AST_OBJS) $(TYPECHECKER_OBJS) $(CFG_OBJS) $(LLVM_OBJS)
+	g++ $(CFLAGS) -o mini $(TYPECHECKER_OBJS) $(AST_OBJS) $(CFG_OBJS) $(LIBS)
 
 #typechecker: $(AST_OBJS) $(TYPECHECKER_OBJS)
 #	g++ $(CFLAGS) -o typechecker $(TYPECHECKER_OBJS) $(AST_OBJS) $(LIBS)
@@ -32,4 +32,4 @@ cleano:
 	rm -rf *.o
 
 clean:
-	rm -f *.o typechecker cfg
+	rm -f *.o typechecker mini 

@@ -18,6 +18,7 @@ class Function;
 class Statement {
     // This is an empty interface, can add virtual methods if needed in future
 public:
+    bool return_eq = false;
     virtual ~Statement() = default; // Virtual destructor for proper cleanup of derived classes
     virtual int getLineNum() const =0;
     virtual std::string display() const = 0;
@@ -29,6 +30,7 @@ public:
     virtual std::vector<std::shared_ptr<Bblock>> get_cfg() = 0;
     // The purpose of this function is for the statement to resolve all variable usages for its expression components (see resolve_uses in Expression.hpp for details on that). 
     virtual void resolve_def_uses(Bblock &block) = 0;
+    virtual bool guarantees_return(std::shared_ptr<Type> type) = 0;
 };
 
 } // namespace ast

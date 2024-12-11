@@ -1,4 +1,4 @@
-fun main() int {
+fun foo() int {
     int x;
     x=3;
     while(x>0) {
@@ -7,4 +7,9 @@ fun main() int {
     }
     print x+2;
     return 2;
+}
+
+fun main() int {
+    print foo();
+    return 3;
 }

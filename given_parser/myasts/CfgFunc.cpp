@@ -49,7 +49,7 @@ std::shared_ptr<CfgFunc> CfgFunc::build(ast::Function &f) {
     }
     spdlog::debug("CFG construction complete for func {}, gonna create labels for each block now!\n",cfg_func->name);
     // CFG construction done at this point, assign labels to each block
-    spdlog::debug("CFG for func {}:{}\n",cfg_func->name,*cfg_func);
+    //spdlog::debug("CFG for func {}:{}\n",cfg_func->name,*cfg_func);
     cfg_func->create_labels();
     for(auto block : cfg_func->blocks) {
         spdlog::debug("block = {}\n",*block);

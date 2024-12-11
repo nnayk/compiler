@@ -34,6 +34,7 @@ public:
 	virtual std::string get_llvm(Bblock &block) override;
     virtual std::string get_ssa(Bblock &block) override;
     virtual void resolve_def_uses(Bblock &block) override;
+    virtual bool guarantees_return(std::shared_ptr<Type> type) override; 
 };
 
 } // namespace ast

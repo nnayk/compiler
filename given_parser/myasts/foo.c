@@ -1,14 +1,15 @@
 #include <stdio.h>
 
 int main() {
-    int x,y,z;
-    z = 4+y;
-    if(x>3) {
-        x=86;
-    } else {
-        x=32;
+    int x;
+    scanf("%d",&x);
+    if(x>0) {
+        return 9;
     }
-    return x;
+
+    //if(x<0) {
+    //    return 5;
+    //}
 }
 
 

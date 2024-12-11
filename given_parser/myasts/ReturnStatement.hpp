@@ -25,6 +25,7 @@ public:
      virtual std::string get_arm(Bblock &block) override;
      virtual std::vector<std::shared_ptr<Bblock>> get_cfg() override;
      virtual void resolve_def_uses(Bblock &block) override;
+     virtual bool guarantees_return(std::shared_ptr<Type> type) override; 
 };
 
 } // namespace ast

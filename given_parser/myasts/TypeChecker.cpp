@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     // TODO: delete when done testing ssa 
-    use_ssa=true;
     if(argc == 3) {
         std::string llvm = argv[1];
         fileName = argv[2];
@@ -62,7 +61,7 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<std::string> errPtr = std::make_shared<std::string>("");
 	std::shared_ptr<Env> tle = std::make_shared<Env>();
     typecheck(p,tle);
-    spdlog::debug("typechecking skipped");
+    return_check(p);
     //spdlog::debug("typechecking passed");
     auto cfg_prog = CfgProg::build(p);
     spdlog::info("CFG: {}",*cfg_prog);
@@ -89,9 +88,9 @@ declare i64 @scanf(ptr, ...)
     }
     
     spdlog::debug("gonna fetch asm for the program\n");
-    auto arm = cfg_prog->get_asm();
-    spdlog::info("ARM:\n{}",arm);
-    write_file(arm,"arm.ll");
+    //auto arm = cfg_prog->get_asm();
+    //spdlog::info("ARM:\n{}",arm);
+    //write_file(arm,"arm.ll");
     return 0;
 }
 
@@ -109,6 +108,13 @@ void typecheck(ast::Program &p,std::shared_ptr<Env> tle) {
     spdlog::debug("Global vars TLE: {}",globalsTLE);
     validate_funcs(p.funcs);
     spdlog::debug("Func TLE: {}",funcTLE);
+}
+
+void return_check(ast::Program &p) {
+    spdlog::info("inside {}",__func__);
+    for(auto func : p.funcs) {
+        func->return_check();
+    }
 }
 
 /*
